@@ -1,4 +1,12 @@
-version: '3.3'
+version: '3.7'
+
+secrets:
+    secret_wordpress_db_name:
+        file: ./secrets/secret_wordpress_db_name.txt
+    secret_wordpress_db_password:
+        file: ./secrets/secret_wordpress_db_password.txt
+    secret_wordpress_db_user:
+        file: ./secrets/secret_wordpress_db_user.txt
 
 services:
     db:
@@ -6,11 +14,15 @@ services:
         restart: always
         volumes:
             - ./data/db:/var/lib/mysql
+        secrets:
+            - secret_wordpress_db_name
+            - secret_wordpress_db_password
+            - secret_wordpress_db_user
         environment:
-            MYSQL_ROOT_PASSWORD: wordpressrootpw
-            MYSQL_DATABASE: wordpress
-            MYSQL_USER: wordpress
-            MYSQL_PASSWORD: wordpress
+            MYSQL_ROOT_PASSWORD: mysqlrootpw
+            MYSQL_DATABASE_FILE: /run/secrets/secret_wordpress_db_name
+            MYSQL_PASSWORD_FILE: /run/secrets/secret_wordpress_db_password
+            MYSQL_USER_FILE: /run/secrets/secret_wordpress_db_user
 
     # PHP FPM services requests over port 9000
     php:
@@ -21,10 +33,15 @@ services:
         volumes:
             - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
             - ./wordpress:/var/www/html
+        secrets:
+            - secret_wordpress_db_name
+            - secret_wordpress_db_password
+            - secret_wordpress_db_user
         environment:
             WORDPRESS_DB_HOST: db:3306
-            WORDPRESS_DB_USER: wordpress
-            WORDPRESS_DB_PASSWORD: wordpress
+            WORDPRESS_DB_NAME_FILE: /run/secrets/secret_wordpress_db_name
+            WORDPRESS_DB_PASSWORD_FILE: /run/secrets/secret_wordpress_db_password
+            WORDPRESS_DB_USER_FILE: /run/secrets/secret_wordpress_db_user
 
     web:
         image: nginx
