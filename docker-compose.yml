@@ -7,12 +7,15 @@ secrets:
         file: ./secrets/secret_wordpress_db_password.txt
     secret_wordpress_db_user:
         file: ./secrets/secret_wordpress_db_user.txt
+    secret_wordpress_table_prefix:
+        file: ./secrets/secret_wordpress_table_prefix.txt
 
 services:
     db:
         image: mysql:5.7
         restart: always
         volumes:
+            - ./sql:/docker-entrypoint-initdb.d
             - ./data/db:/var/lib/mysql
         secrets:
             - secret_wordpress_db_name
@@ -37,11 +40,13 @@ services:
             - secret_wordpress_db_name
             - secret_wordpress_db_password
             - secret_wordpress_db_user
+            - secret_wordpress_table_prefix
         environment:
             WORDPRESS_DB_HOST: db:3306
             WORDPRESS_DB_NAME_FILE: /run/secrets/secret_wordpress_db_name
             WORDPRESS_DB_PASSWORD_FILE: /run/secrets/secret_wordpress_db_password
             WORDPRESS_DB_USER_FILE: /run/secrets/secret_wordpress_db_user
+            WORDPRESS_TABLE_PREFIX_FILE: /run/secrets/secret_wordpress_table_prefix
 
     web:
         image: nginx
@@ -65,7 +70,7 @@ services:
             # persistent certs
             - ./ssl_certs:/var/lib/https-portal
         environment:
-            DOMAINS: 'localhost -> http://web:80'
+            DOMAINS: 'www.goldeimer.lc -> http://web:80'
             STAGE: local
             FORCE_RENEW: 'true'
             CLIENT_MAX_BODY_SIZE: 64M
