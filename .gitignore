@@ -1,3 +1,6 @@
 data
 ssl_certs
 wordpress
+
+# rsync'ed selected dynamic prdocution assets
+/synced-prod-content
