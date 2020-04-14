@@ -46,7 +46,8 @@ __syncNumericDir()
 
 trap __trapCtrlC INT
 
-printf "\n>> %s '%s'\n" "Creating temporary sshfs mountpoint"
+printf "\n>> %s '%s'\n" \
+       "Creating temporary sshfs mountpoint" \
        $_sshfsMountpoint
 mkdir -p "$_sshfsMountpoint"
 
@@ -61,8 +62,10 @@ __syncDir "wp-content/plugins" "wp-content"
 __syncDir "wp-content/themes/enfold" "wp-content/themes"
 __syncDir "wp-content/themes/enfold-child" "wp-content/themes"
 
-__syncNumericDir "wp-content/uploads" "wp-content"
 __syncDir "wp-content/uploads/dynamic_avia" "wp-content/uploads"
+__syncNumericDir "wp-content/uploads" "wp-content"
+
+__syncDir "jtl"
 
 printf "\n>> %s\n" "Unmounting production sshfs mount"
 fusermount3 -u "$_sshfsMountpoint"
