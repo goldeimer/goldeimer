@@ -1,22 +1,49 @@
 version: '3.7'
 
 secrets:
+    secret_jtl_db_name:
+        file: ./secrets/secret_jtl_db_name.txt
+    secret_jtl_db_password:
+        file: ./secrets/secret_jtl_db_password.txt
+    secret_jtl_db_user:
+        file: ./secrets/secret_jtl_db_user.txt
+
     secret_wordpress_db_name:
         file: ./secrets/secret_wordpress_db_name.txt
     secret_wordpress_db_password:
         file: ./secrets/secret_wordpress_db_password.txt
     secret_wordpress_db_user:
         file: ./secrets/secret_wordpress_db_user.txt
+
     secret_wordpress_table_prefix:
         file: ./secrets/secret_wordpress_table_prefix.txt
 
 services:
-    db:
+    # TODO: Combined RDS host for both schemas?
+    db_jtl:
+        image: mysql:5.7
+        restart: always
+        volumes:
+            - ./sql/jtl.init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./run/data/db/jtl:/var/lib/mysql
+        secrets:
+            - secret_jtl_db_name
+            - secret_jtl_db_password
+            - secret_jtl_db_user
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE_FILE: /run/secrets/secret_jtl_db_name
+            MYSQL_PASSWORD_FILE: /run/secrets/secret_jtl_db_password
+            MYSQL_USER_FILE: /run/secrets/secret_jtl_db_user
+
+    db_wp:
         image: mysql:5.7
         restart: always
         volumes:
             - ./sql/wordpress.init.sql:/docker-entrypoint-initdb.d/init.sql
-            - ./run/data/db:/var/lib/mysql
+            - ./run/data/db/wp:/var/lib/mysql
+        ports:
+            - 3307:3306
         secrets:
             - secret_wordpress_db_name
             - secret_wordpress_db_password
@@ -27,11 +54,12 @@ services:
             MYSQL_PASSWORD_FILE: /run/secrets/secret_wordpress_db_password
             MYSQL_USER_FILE: /run/secrets/secret_wordpress_db_user
 
-    # PHP FPM services requests over port 9000
     php:
+        # `php-fpm` services requests over port 9000
         image: wordpress:5-fpm
         depends_on:
-            - db
+            - db_jtl
+            - db_wp
         restart: always
         volumes:
             - ./etc/php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
@@ -42,7 +70,7 @@ services:
             - secret_wordpress_db_user
             - secret_wordpress_table_prefix
         environment:
-            WORDPRESS_DB_HOST: db:3306
+            WORDPRESS_DB_HOST: db_wp:3306
             WORDPRESS_DB_NAME_FILE: /run/secrets/secret_wordpress_db_name
             WORDPRESS_DB_PASSWORD_FILE: /run/secrets/secret_wordpress_db_password
             WORDPRESS_DB_USER_FILE: /run/secrets/secret_wordpress_db_user

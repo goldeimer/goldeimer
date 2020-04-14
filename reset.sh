@@ -7,7 +7,7 @@ printf ">> %s\n" "Stopping and removing containers..."
 docker-compose kill
 docker-compose rm -f
 
-printf ">> %s\n" "Removing database, wordpress, and logs..."
+printf ">> %s\n" "Removing database, web apps, and logs..."
 
 rm -rf "$_projectAbspath/sql/wordpress.init.sql"
 
