@@ -36,9 +36,6 @@ services:
         volumes:
             - ./etc/php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
             - ./run/wordpress:/var/www/html
-            # - ./run/wp-content/plugins:/var/www/html/wp-content/plugins
-            # - ./run/wp-content/themes:/var/www/html/wp-content/themes
-            # - ./run/wp-content/uploads:/var/www/html/wp-content/uploads
         secrets:
             - secret_wordpress_db_name
             - secret_wordpress_db_password

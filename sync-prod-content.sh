@@ -46,13 +46,11 @@ __syncNumericDir()
 
 trap __trapCtrlC INT
 
-printf "\n>> %s '%s'\n" \
-       "Creating temporary sshfs mountpoint" \
+printf "\n>> %s '%s'\n" "Creating temporary sshfs mountpoint"
        $_sshfsMountpoint
 mkdir -p "$_sshfsMountpoint"
 
-printf "\n>> %s\n" \
-       "Attaching production to sshfs mountpoint"
+printf "\n>> %s\n" "Attaching production to sshfs mountpoint"
 # Requires suiting entry in `~/.ssh/config`
 sshfs goldeimer:"$_remoteWebrootAbspath" "$_sshfsMountpoint"
 
