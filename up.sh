@@ -4,6 +4,28 @@ _projectAbspath="$(dirname "$(readlink -f "$0")")"
 
 _destDir="$_projectAbspath/run/wordpress/wp-content"
 _sourceDir="$_projectAbspath/synced-prod-content/wp-content"
+_sqlDir="$_projectAbspath/sql"
+
+__exitOnMissingDbDump()
+{
+    # TODO: Automate pulling db data
+    # - ssh tunnel through the webhost as a jumphost
+    # - scripted dumping
+
+    _sqlFilename="$1"
+
+    if [ ! -s "$_sqlDir/$_sqlFilename" ]; then
+        printf ">> [ERROR] %s \n" "Missing db dump: '$_sqlFilename'"
+        exit 1
+    fi
+}
+
+# __exitOnMissingDbDump "jtl.sql"
+__exitOnMissingDbDump "wordpress.sql"
+
+printf ">> %s\n" "Replacing TLD in URL paths in databse dumps ('de' --> 'lc')"
+cp -r "$_sqlDir/wordpress.sql" "$_sqlDir/wordpress.init.sql"
+sed -i -e 's/goldeimer\.de/goldeimer.lc/g' "$_sqlDir/wordpress.init.sql"
 
 printf ">> %s\n" "Running 'docker-compose up [...]"
 docker-compose up --remove-orphans -d https-portal
