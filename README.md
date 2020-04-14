@@ -1,2 +1,3 @@
-Goldeimer's WordPress ("Enfold" Child) Theme
-===
+# Goldeimer's WordPress Theme
+
+Child theme of commercially available parent, namely "Enfold".

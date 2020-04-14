@@ -2,7 +2,7 @@
 
 
 /// -------------------------------- php util ---------------------------------
-/// php ...
+/// Free utility functions, that the damn language lacks.
 
 function endsWith($haystack, $needle)
 {
@@ -19,13 +19,15 @@ function endsWith($haystack, $needle)
 
 /// -------------------------------- dev util ---------------------------------
 
+// @brief Dumps information on the host's PHP configuration on screen,
+//        if requested with the correct `GET` request query arg.
 function devPhpInfo()
 {
     if (
-        ! empty($_SERVER['HTTP_HOST'])
-        && endsWith($_SERVER['HTTP_HOST'], 'goldeimer.lc')
-        && ! empty($_GET['phpinfo'])
+        ! empty($_GET['phpinfo'])
         && $_GET['phpinfo'] === 'true'
+        && ! empty($_SERVER['HTTP_HOST'])
+        && endsWith($_SERVER['HTTP_HOST'], 'goldeimer.lc')
     ) {
         phpinfo();
     }
@@ -41,7 +43,9 @@ add_action(
 
 /// ---------------------------- 3rd party filters ----------------------------
 
-// TODO: Figure out why this is needed. Document.
+// TODO(Johannes):
+// Figure out why this is needed. Document.
+// (Predates my time.)
 function av_change_logo($logo)
 {
     if (is_page(13893))
@@ -59,7 +63,9 @@ add_filter(
 );
 
 
-// TODO: Figure out why this is needed. Document.
+// TODO(Johannes):
+// Figure out why this is needed. Document.
+// (Predates my time.)
 function av_change_logo_link($link)
 {
     if (is_page(13893))
