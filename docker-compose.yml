@@ -15,14 +15,14 @@ services:
         image: mysql:5.7
         restart: always
         volumes:
-            - ./sql:/docker-entrypoint-initdb.d
-            - ./data/db:/var/lib/mysql
+            - ./sql/wordpress.init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./run/data/db:/var/lib/mysql
         secrets:
             - secret_wordpress_db_name
             - secret_wordpress_db_password
             - secret_wordpress_db_user
         environment:
-            MYSQL_ROOT_PASSWORD: mysqlrootpw
+            MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE_FILE: /run/secrets/secret_wordpress_db_name
             MYSQL_PASSWORD_FILE: /run/secrets/secret_wordpress_db_password
             MYSQL_USER_FILE: /run/secrets/secret_wordpress_db_user
@@ -35,7 +35,10 @@ services:
         restart: always
         volumes:
             - ./etc/php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-            - ./wordpress:/var/www/html
+            - ./run/wordpress:/var/www/html
+            # - ./run/wp-content/plugins:/var/www/html/wp-content/plugins
+            # - ./run/wp-content/themes:/var/www/html/wp-content/themes
+            # - ./run/wp-content/uploads:/var/www/html/wp-content/uploads
         secrets:
             - secret_wordpress_db_name
             - secret_wordpress_db_password
@@ -55,8 +58,8 @@ services:
         restart: always
         volumes:
             - ./etc/nginx.conf:/etc/nginx/conf.d/default.conf
-            - ./wordpress:/var/www/html
-            - ./logs:/var/log/nginx
+            - ./run/wordpress:/var/www/html
+            - ./run/logs:/var/log/nginx
 
     https-portal:
         image: steveltn/https-portal:1
@@ -68,7 +71,7 @@ services:
         restart: always
         volumes:
             # persistent certs
-            - ./ssl_certs:/var/lib/https-portal
+            - ./run/ssl_certs:/var/lib/https-portal
         environment:
             DOMAINS: 'www.goldeimer.lc -> http://web:80'
             STAGE: local
