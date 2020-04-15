@@ -1,44 +1,17 @@
 <?php
 
 
-/// -------------------------------- php util ---------------------------------
-/// Free utility functions, that the damn language lacks.
-
-function endsWith($haystack, $needle)
+if (! defined('GOLDEIMER_THEME_ABSPATH'))
 {
-    $length = strlen($needle);
-
-    if ($length === 0)
-    {
-        return true;
-    }
-
-    return (substr($haystack, -$length) === $needle);
+    define(
+        'GOLDEIMER_THEME_ABSPATH',
+        get_stylesheet_directory()
+    );
 }
 
 
-/// -------------------------------- dev util ---------------------------------
-
-// @brief Dumps information on the host's PHP configuration on screen,
-//        if requested with the correct `GET` request query arg.
-function devPhpInfo()
-{
-    if (
-        ! empty($_GET['phpinfo'])
-        && $_GET['phpinfo'] === 'true'
-        && ! empty($_SERVER['HTTP_HOST'])
-        && endsWith($_SERVER['HTTP_HOST'], 'goldeimer.lc')
-    ) {
-        phpinfo();
-    }
-}
-
-add_action(
-    'wp_loaded',
-    'devPhpInfo',
-    10,
-    2
-);
+require_once(GOLDEIMER_THEME_ABSPATH.'/util/dev-util.php');
+require_once(GOLDEIMER_THEME_ABSPATH.'/util/php-util.php');
 
 
 /// ---------------------------- 3rd party filters ----------------------------
