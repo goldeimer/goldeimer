@@ -6,7 +6,7 @@ _projectAbspath="$(dirname "$(readlink -f "$0")")"
 # parent directory.
 _projectParentDir="$(dirname "$_projectAbspath")"
 
-_destDir="$_projectParentDir/docker-env/run/wordpress/wp-content/themes/enfold-child"
+_destDir="$_projectParentDir/goldeimer-dockerized-staging-environment/run/wordpress/wp-content/themes/enfold-child"
 
 printf ">> %s\n" "Copying unmodified source to staging destination"
 sudo cp -r "$_projectAbspath/src/"* "$_destDir"
