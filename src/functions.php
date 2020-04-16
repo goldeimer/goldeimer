@@ -13,6 +13,8 @@ if (! defined('GOLDEIMER_THEME_ABSPATH'))
 require_once(GOLDEIMER_THEME_ABSPATH.'/util/dev-util.php');
 require_once(GOLDEIMER_THEME_ABSPATH.'/util/php-util.php');
 
+require_once(GOLDEIMER_THEME_ABSPATH.'/shortcode/shortcode-iframe-embed.php');
+
 
 /// ---------------------------- 3rd party filters ----------------------------
 
