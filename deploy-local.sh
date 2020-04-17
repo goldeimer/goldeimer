@@ -8,8 +8,8 @@ _projectParentDir="$(dirname "$_projectAbspath")"
 
 _destDir="$_projectParentDir/goldeimer-dockerized-staging-environment/run/wordpress/wp-content/themes/enfold-child"
 
-printf ">> %s\n" "Copying unmodified source to staging destination"
-sudo cp -r "$_projectAbspath/src/"* "$_destDir"
+printf ">> %s\n" "Copying theme files to staging destination"
+sudo cp -r "$_projectAbspath/wordpress-theme/"* "$_destDir"
 
 printf ">> %s\n" "Passing ownership to html:html (33:33)"
 sudo chown -R 33:33 "$_destDir"

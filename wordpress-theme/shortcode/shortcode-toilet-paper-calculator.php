@@ -12,7 +12,7 @@ function registerToiletPaperCalculator()
     wp_register_script(
         SCRIPT_HANDLE,
         plugins_url(
-            '/js/toilet_paper_calculator_standalone.bundle.js',
+            'static/js/toilet_paper_calculator_standalone.bundle.js',
             __FILE__
         ),
         array(),
@@ -32,7 +32,7 @@ function shortcodeToiletPaperCalculator($attributes)
 {
     wp_enqueue_script(SCRIPT_HANDLE);
 
-    return '<div id="react-app-toilet-paper-calculator"></div>';
+    return '<div id="react-app-container-toilet-paper-calculator"></div>';
 }
 
 add_shortcode(
