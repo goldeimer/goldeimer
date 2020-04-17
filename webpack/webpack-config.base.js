@@ -5,6 +5,15 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestWebpackPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const makeNamePreserveRelativeAssetDirectory = f => {
+    const srcDirName = path.relative(
+        path.join(__dirname, '..', 'src'),
+        path.dirname(f)
+    );
+
+    return `${srcDirName}/[name].[ext]`;
+}
+
 module.exports = {
     entry: {
         toilet_paper_calculator_standalone: path.resolve(
@@ -37,6 +46,7 @@ module.exports = {
                 },
             },
             {
+                // TODO: media-query-splitting-plugin
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     {
@@ -52,15 +62,21 @@ module.exports = {
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    'file-loader',
-                ],
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: makeNamePreserveRelativeAssetDirectory,
+                    },
+                },
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    'file-loader',
-                ],
+                use: {
+                    loader: 'file-loader',
+                    options: {
+                        name: makeNamePreserveRelativeAssetDirectory,
+                    },
+                },
             },
         ],
     },
