@@ -1,7 +1,7 @@
 <?php
 
 
-require_once(GOLDEIMER_THEME_ABSPATH.'/util/php-util.php');
+require_once GOLDEIMER_THEME_ABSPATH.'/util/php-util.php';
 
 
 /// -------------------------------- dev util ---------------------------------

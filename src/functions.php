@@ -10,9 +10,9 @@ if (! defined('GOLDEIMER_THEME_ABSPATH'))
 }
 
 
-require_once(GOLDEIMER_THEME_ABSPATH.'/include/filter-p-bank.php');
-require_once(GOLDEIMER_THEME_ABSPATH.'/shortcode/shortcode-iframe-embed.php');
-require_once(GOLDEIMER_THEME_ABSPATH.'/util/dev-util.php');
+require_once GOLDEIMER_THEME_ABSPATH.'/include/filter-p-bank.php';
+require_once GOLDEIMER_THEME_ABSPATH.'/shortcode/shortcode-iframe-embed.php';
+require_once GOLDEIMER_THEME_ABSPATH.'/util/dev-util.php';
 
 
 ?>
