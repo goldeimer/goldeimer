@@ -1,11 +1,9 @@
 const path = require('path');
 const { DIST_PATH, PUBLIC_PATH, SRC_PATH } = require('./path');
 
-
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestWebpackPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 
 module.exports = {
     entry: {
