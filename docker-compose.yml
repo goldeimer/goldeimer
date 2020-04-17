@@ -56,7 +56,7 @@ services:
 
     php:
         # `php-fpm` services requests over port 9000
-        image: wordpress:5-fpm
+        image: wordpress:4.9-fpm
         depends_on:
             - db_jtl
             - db_wp
@@ -64,6 +64,11 @@ services:
         volumes:
             - ./etc/php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
             - ./run/wordpress:/var/www/html
+        extra_hosts:
+            # facilitate loopback requests
+            - "localhost:172.18.0.1"
+            - "goldeimer.de:172.18.0.1"
+            - "www.goldeimer.de:172.18.0.1"
         secrets:
             - secret_wordpress_db_name
             - secret_wordpress_db_password
