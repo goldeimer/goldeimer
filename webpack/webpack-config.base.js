@@ -1,18 +1,27 @@
 const path = require('path');
-const { DIST_PATH, PUBLIC_PATH, SRC_PATH } = require('./path');
+const {
+    DIST_PATH,
+    PUBLIC_PATH,
+    SRC_PATH,
+    SRC_COMPONENT_PATH,
+    SRC_JS_PATH,
+} = require('./path');
+
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestWebpackPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const makeNamePreserveRelativeAssetDirectory = f => {
+
+const makeNamePreserveRelativeAssetDirectory = (file) => {
     const srcDirName = path.relative(
         path.join(__dirname, '..', 'src'),
-        path.dirname(f)
+        path.dirname(file)
     );
 
     return `${srcDirName}/[name].[ext]`;
-}
+};
+
 
 module.exports = {
     entry: {
@@ -20,11 +29,11 @@ module.exports = {
             SRC_PATH, 'js', 'ToiletPaperCalculatorStandalone.js'
         ),
         wordpress_theme_main: path.resolve(
-            SRC_PATH, 'css', 'WordPressThemeMain.css'
+            SRC_PATH, 'css', 'wordpress-theme-main.css'
         ),
     },
     output: {
-        filename: '[name].bundle.js',
+        filename: 'js/[name].bundle.js',
         path: DIST_PATH,
         publicPath: PUBLIC_PATH,
     },
@@ -32,10 +41,17 @@ module.exports = {
         new CleanWebpackPlugin(),
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
+            filename: 'css/[name].css',
+            chunkFilename: 'css/[id].css',
         }),
     ],
+    resolve: {
+        alias: {
+            components: SRC_COMPONENT_PATH,
+            js: SRC_JS_PATH,
+        },
+        extensions: ['.js', '.jsx', '.json',],
+    },
     module: {
         rules: [
             {

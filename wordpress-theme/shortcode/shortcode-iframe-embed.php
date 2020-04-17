@@ -2,6 +2,7 @@
 
 
 /// ------------------------------ iframe embed -------------------------------
+/// @shortcode [goldeimer-iframe-embed]
 
 
 function shortcodeIframeEmbed($attributes)
@@ -20,6 +21,3 @@ add_shortcode(
     'goldeimer-iframe-embed',
     'shortcodeIframeEmbed'
 );
-
-
-?>

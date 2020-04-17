@@ -49,6 +49,3 @@ add_filter(
     'avf_logo_link',
     'avChangeLogoLinkOnPBankPage'
 );
-
-
-?>
