@@ -4,13 +4,17 @@ const { DIST_PATH, PUBLIC_PATH, SRC_PATH } = require('./path');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestWebpackPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
     entry: {
         toilet_paper_calculator_standalone: path.resolve(
             SRC_PATH, 'js', 'ToiletPaperCalculatorStandalone.js'
-        )
+        ),
+        wordpress_theme_main: path.resolve(
+            SRC_PATH, 'css', 'WordPressThemeMain.css'
+        ),
     },
     output: {
         filename: '[name].bundle.js',
@@ -20,6 +24,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new ManifestWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css',
+        }),
     ],
     module: {
         rules: [
@@ -31,10 +39,17 @@ module.exports = {
                 },
             },
             {
-                test: /\.css$/,
+                test: /\.(sa|sc|c)ss$/,
                 use: [
-                    'style-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            // hmr: process.env.NODE_ENV === 'development',
+                        },
+                    },
                     'css-loader',
+                    // 'postcss-loader',
+                    'sass-loader',
                 ],
             },
             {
