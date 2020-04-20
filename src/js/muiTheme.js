@@ -1,11 +1,25 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 
+const colorPrimary = '#ffe300';
+
 const headingBaseTypography = {
     fontFamily: 'veneer !important',
 };
 
 const muiTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: colorPrimary,
+        },
+        secondary: {
+            // placeholder color, TBD w/ @Manou
+            main: '#795548',
+        },
+    },
+    shape: {
+        borderRadius: 0,
+    },
     typography: {
         fontFamily: 'museo',
         h1: headingBaseTypography,
@@ -18,4 +32,7 @@ const muiTheme = createMuiTheme({
 });
 
 
-export default muiTheme;
+export {
+    muiTheme as default,
+    colorPrimary,
+};
