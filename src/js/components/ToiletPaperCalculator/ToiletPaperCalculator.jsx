@@ -20,6 +20,101 @@ import InputSelect from
 import ToiletPaperCalculatorResult from
        './ToiletPaperCalculatorResult/ToiletPaperCalculatorResult';
 
+import {
+    DAYS_PER_MONTH,
+    PIECES_PER_ROLL,
+    ROLLS_PER_PACKAGE,
+    SUBSCRIPTION_PERIODS_IN_MONTHS,
+    SUBSCRIPTION_SIZES_IN_PACKAGES,
+} from './constants';
+
+
+const makeSubscriptionPerPeriodCopy = (months) =>
+{
+    if (months === 1)
+    {
+        return 'jeden Monat';
+    }
+
+    return `alle ${months} Monate`;
+}
+
+const makeSubscriptionUrl = (months, packages) =>
+{
+    const prefix = 'https://goldeimer.de/jtl/Dein-persoenliches-Goldeimer-ABO';
+
+    const makeSubscriptionUrlSuffix = (months) =>
+    (
+        makeSubscriptionPerPeriodCopy(months).replace(/\s/g, '-')
+    );
+
+    return `${prefix}-${packages}-Packungen-${makeSubscriptionUrlSuffix(months)}`;
+};
+
+
+const makeNormalizedSubscriptArray = () =>
+{
+    let normalizedSubscriptArray = [];
+
+    for (let months of SUBSCRIPTION_PERIODS_IN_MONTHS)
+    {
+        for (let packages of SUBSCRIPTION_SIZES_IN_PACKAGES)
+        {
+            const rollsPerMonth = packages * ROLLS_PER_PACKAGE / months;
+
+            normalizedSubscriptArray.push({
+                months,
+                packages,
+                perPeriodCopy: makeSubscriptionPerPeriodCopy(months),
+                rollsPerMonth,
+                url: makeSubscriptionUrl(months, packages),
+            });
+        }
+    }
+
+    normalizedSubscriptArray.sort(
+        (subA, subB) =>
+        {
+            if (subA.rollsPerMonth < subB.rollsPerMonth) return -1;
+            if (subA.rollsPerMonth > subB.rollsPerMonth) return 1;
+
+            if (subA.months < subB.months) return -1;
+            if (subA.months > subB.months) return 1;
+
+            return 0;
+        }
+    );
+
+    return normalizedSubscriptArray;
+};
+
+
+const findBestFittingSubscription = (
+    subscriptions,
+    requiredRollsPerMonth,
+    selectedMonths
+) => {
+    let bestFit = null;
+
+    for (let subscription of subscriptions)
+    {
+        if (subscription.rollsPerMonth > requiredRollsPerMonth)
+        {
+            if (
+                ! bestFit
+                || (
+                    bestFit.months < selectedMonths
+                    && subscription.rollsPerMonth <= bestFit.rollsPerMonth
+                )
+            ) {
+                bestFit = subscription;
+            } else {
+                return bestFit;
+            }
+        }
+    }
+};
+
 
 const Form = styled.form`
     margin: 0 auto;
@@ -29,31 +124,42 @@ const Form = styled.form`
 `;
 
 
-const DAYS_PER_WEEK = 7;
-const PIECES_PER_ROLL = 150;
-
-
 const ToiletPaperCalculator = () =>
 {
+    // user input
     const [form, setFormValues] = useState({
         dailyPissCount: 0,
         dailyShitCount: 0,
+        periodInMonths: 1,
         personsInHousehold: 0,
         piecesPerPiss: 0,
         piecesPerWipe: 0,
-        weeksInQuarantine: 1,
         wipesPerShit: 0,
     });
 
-    const [requiredRolls, setRequiredRolls] = useState(0);
+    const normalizedSubscriptArray = makeNormalizedSubscriptArray();
+
+    // input dependent state
+    const [
+        requiredRollsPerMonth,
+        setRequiredRollsPerMonth
+    ] = useState(0);
+    const [
+        requiredRollsPerSelectedPeriod,
+        setRequiredRollsPerSelectedPeriod,
+    ] = useState(0);
+    const [
+        bestFittingSubscription,
+        setBestFittingSubscription,
+    ] = useState(normalizedSubscriptArray[0]);
 
     const {
         dailyPissCount,
         dailyShitCount,
+        periodInMonths,
         personsInHousehold,
         piecesPerPiss,
         piecesPerWipe,
-        weeksInQuarantine,
         wipesPerShit,
     } = form;
 
@@ -65,7 +171,7 @@ const ToiletPaperCalculator = () =>
         });
     };
 
-    const calculateRequiredRolls = () =>
+    const calculateRequiredRollsPerMonth = () =>
     {
         const piecesPerPersonPerDay = (
             dailyShitCount * wipesPerShit * piecesPerWipe
@@ -73,14 +179,26 @@ const ToiletPaperCalculator = () =>
         );
 
         return Math.ceil(
-            piecesPerPersonPerDay * weeksInQuarantine * DAYS_PER_WEEK
+            piecesPerPersonPerDay * DAYS_PER_MONTH
             / PIECES_PER_ROLL
         );
     };
 
     useEffect(
         () => {
-            setRequiredRolls(calculateRequiredRolls())
+            const requiredRollsPerMonth = calculateRequiredRollsPerMonth();
+
+            setRequiredRollsPerMonth(requiredRollsPerMonth);
+            setRequiredRollsPerSelectedPeriod(
+                requiredRollsPerMonth * periodInMonths
+            );
+            setBestFittingSubscription(
+                findBestFittingSubscription(
+                    normalizedSubscriptArray,
+                    requiredRollsPerMonth,
+                    periodInMonths,
+                )
+            );
         },
         [form]
     )
@@ -149,28 +267,35 @@ const ToiletPaperCalculator = () =>
                     </FormField>
                 </FormSection>
                 <FormSection
-                    title='Quarantäne'
+                    title='Zeitraum'
                 >
-                    <FormField label='Zeitraum in Quarantäne'>
+                    <FormField label={
+                            'Für welchen Zeitraum möchtest Du deinen '.concat(
+                                'Klopapier Verbrauch planen?',
+                            )
+                        }
+                    >
                         <InputSelect
                             options={
                                 [
-                                    {label: 'Eine Woche', value: 1},
-                                    {label: 'Zwei Wochen', value: 2},
-                                    {label: 'Drei Wochen', value: 3},
-                                    {label: 'Vier Wochen', value: 4},
+                                    {label: 'Ein Monat', value: 1},
+                                    {label: 'Zwei Monate', value: 2},
+                                    {label: 'Ein Viertel Jahr', value: 3},
+                                    {label: 'Ein halbes Jahr', value: 6},
+                                    {label: 'Ein Jahr', value: 12},
                                 ]
                             }
                             setValue={
-                                (value) => setValue('weeksInQuarantine', value)
+                                (value) => setValue('periodInMonths', value)
                             }
-                            value={weeksInQuarantine}
+                            value={periodInMonths}
                         />
                     </FormField>
                 </FormSection>
             </Form>
             <ToiletPaperCalculatorResult
-                requiredRolls={requiredRolls}
+                bestFittingSubscription={bestFittingSubscription}
+                requiredRollsPerSelectedPeriod={requiredRollsPerSelectedPeriod}
             />
         </ThemeProvider>
     );

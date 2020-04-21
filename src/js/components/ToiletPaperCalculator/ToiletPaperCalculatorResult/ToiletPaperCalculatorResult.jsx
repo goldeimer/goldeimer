@@ -23,7 +23,7 @@ const MainSpan = styled.div`
     font-size: 2em;
 `;
 
-const FootnoteP = styled.p`
+const BaseP = styled.p`
     margin-top: 20px;
     font-family: "Museo", sans serif !important;
     font-weight: 700 !important;
@@ -31,18 +31,62 @@ const FootnoteP = styled.p`
     text-align: center;
 `;
 
+const FootnoteP = styled(BaseP)`
+    font-size: 12px !important;
+`;
 
-const ToiletPaperCalculatorResult = ({requiredRolls}) =>
-(
+const SubscriptionP = styled(BaseP)`
+    font-size: 17px !important;
+`;
+
+const SubscriptionA = styled.a`
+    display: inline-block;
+
+    height: auto !important;
+    width: auto !important;
+    margin: 13px 0;
+    padding: 15px 30px 13px;
+    font-family: "Museo", sans-serif;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase !important;
+    background-color: transparent !important;
+    color: #000 !important;
+    border: #000 solid 2px !important;
+    border-radius: 0px !important;
+    transition: 0.3s;
+
+    &:hover {
+        opacity: 1 !important;
+        background-color: #000 !important;
+        color: #FFF !important;
+    }
+`;
+
+
+const ToiletPaperCalculatorResult = ({
+    bestFittingSubscription,
+    requiredRollsPerSelectedPeriod,
+}) => (
     <WrapDiv>
         <MainDiv>
             Du brauchst
             <MainSpan>
-                {requiredRolls} Rollen
+                {requiredRollsPerSelectedPeriod} Rollen
             </MainSpan>
             Goldeimer Klopapier!*
             <br />
         </MainDiv>
+        <SubscriptionP>
+            Das für dich passendste
+            <a href={bestFittingSubscription.url}>Klopapier-Abo</a>
+            sind {bestFittingSubscription.packages} Pakete
+            {` ${bestFittingSubscription.perPeriodCopy}`}.
+        </SubscriptionP>
+        <SubscriptionA href={bestFittingSubscription.url}>
+            Jetzt abonnieren
+        </SubscriptionA>
         <FootnoteP>
             *Nicht mit eingerechnet ist der zusätzliche Verbrauch von Klopapier, während der Periode. Je nach Intensität solltest Du etwas mehr Klopapier einkalkulieren!
         </FootnoteP>
@@ -51,7 +95,14 @@ const ToiletPaperCalculatorResult = ({requiredRolls}) =>
 
 
 ToiletPaperCalculatorResult.propTypes = {
-    requiredRolls: PropTypes.number.isRequired,
+    bestFittingSubscription: PropTypes.exact({
+        months: PropTypes.number,
+        packages: PropTypes.number,
+        perPeriodCopy: PropTypes.string,
+        rollsPerMonth: PropTypes.number,
+        url: PropTypes.string,
+    }).isRequired,
+    requiredRollsPerSelectedPeriod: PropTypes.number.isRequired,
 }
 
 
