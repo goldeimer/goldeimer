@@ -1,0 +1,5 @@
+# runtime data while containers are up
+/run
+
+# rsync'ed selected dynamic prdocution assets
+/synced-prod-content
