@@ -1,12 +1,16 @@
 #!/usr/bin/sh
+#
+# @brief Deploys built theme and template files to local development
+#        environment.
+#
+# TODO:
+# - add JTL template
+# - integrate with webpack's file watcher
+
 
 _projectAbspath="$(dirname "$(readlink -f "$0")")"
 
-# This assumes all relevant remote repos to have been cloned into the same
-# parent directory.
-_projectParentDir="$(dirname "$_projectAbspath")"
-
-_destDir="$_projectParentDir/goldeimer-dockerized-staging-environment/run/wordpress/wp-content/themes/enfold-child"
+_destDir="$_projectAbspath/docker/run/wordpress/wp-content/themes/enfold-child"
 
 printf ">> %s\n" "Copying theme files to staging destination"
 sudo cp -r "$_projectAbspath/wordpress-theme/"* "$_destDir"

@@ -1,8 +1,8 @@
 #!/usr/bin/sh
 
-_projectAbspath="$(dirname "$(readlink -f "$0")")"
-_productionContentSyncDir="$_projectAbspath/synced-prod-content"
-_secretPath="$_projectAbspath/secrets/secret_remote_webroot_abspath.txt"
+_dockerAbspath="$(dirname "$(readlink -f "$0")")"
+_productionContentSyncDir="$_dockerAbspath/synced-prod-content"
+_secretPath="$_dockerAbspath/secrets/secret_remote_webroot_abspath.txt"
 _sshfsMountpoint="/tmp/goldeimer-prod"
 
 __exitOnMissingSecret()

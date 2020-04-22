@@ -1,10 +1,10 @@
 #!/usr/bin/sh
 
-_projectAbspath="$(dirname "$(readlink -f "$0")")"
+_dockerAbspath="$(dirname "$(readlink -f "$0")")"
 
-_destDir="$_projectAbspath/run/wordpress/wp-content"
-_sourceDir="$_projectAbspath/synced-prod-content/wp-content"
-_sqlDir="$_projectAbspath/sql"
+_destDir="$_dockerAbspath/run/wordpress/wp-content"
+_sourceDir="$_dockerAbspath/synced-prod-content/wp-content"
+_sqlDir="$_dockerAbspath/sql"
 
 __exitOnMissingDbDump()
 {
