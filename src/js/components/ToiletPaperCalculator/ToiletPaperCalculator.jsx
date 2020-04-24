@@ -52,9 +52,9 @@ const makeSubscriptionUrl = (months, packages) =>
 };
 
 
-const makeNormalizedSubscriptArray = () =>
+const makeNormalizedSubscriptionArray = () =>
 {
-    let normalizedSubscriptArray = [];
+    let normalizedSubscriptionArray = [];
 
     for (let months of SUBSCRIPTION_PERIODS_IN_MONTHS)
     {
@@ -62,7 +62,7 @@ const makeNormalizedSubscriptArray = () =>
         {
             const rollsPerMonth = packages * ROLLS_PER_PACKAGE / months;
 
-            normalizedSubscriptArray.push({
+            normalizedSubscriptionArray.push({
                 months,
                 packages,
                 perPeriodCopy: makeSubscriptionPerPeriodCopy(months),
@@ -72,7 +72,7 @@ const makeNormalizedSubscriptArray = () =>
         }
     }
 
-    normalizedSubscriptArray.sort(
+    normalizedSubscriptionArray.sort(
         (subA, subB) =>
         {
             if (subA.rollsPerMonth < subB.rollsPerMonth) return -1;
@@ -85,7 +85,7 @@ const makeNormalizedSubscriptArray = () =>
         }
     );
 
-    return normalizedSubscriptArray;
+    return normalizedSubscriptionArray;
 };
 
 
@@ -137,7 +137,7 @@ const ToiletPaperCalculator = () =>
         wipesPerShit: 0,
     });
 
-    const normalizedSubscriptArray = makeNormalizedSubscriptArray();
+    const normalizedSubscriptionArray = makeNormalizedSubscriptionArray();
 
     // input dependent state
     const [
@@ -151,7 +151,7 @@ const ToiletPaperCalculator = () =>
     const [
         bestFittingSubscription,
         setBestFittingSubscription,
-    ] = useState(normalizedSubscriptArray[0]);
+    ] = useState(normalizedSubscriptionArray[0]);
 
     const {
         dailyPissCount,
@@ -194,7 +194,7 @@ const ToiletPaperCalculator = () =>
             );
             setBestFittingSubscription(
                 findBestFittingSubscription(
-                    normalizedSubscriptArray,
+                    normalizedSubscriptionArray,
                     requiredRollsPerMonth,
                     periodInMonths,
                 )
