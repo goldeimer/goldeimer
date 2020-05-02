@@ -25,6 +25,9 @@ const makeNamePreserveRelativeAssetDirectory = (file) => {
 
 module.exports = {
     entry: {
+        merchant_map_standalone: path.resolve(
+            SRC_PATH, 'js', 'MerchantMapStandalone.js'
+        ),
         toilet_paper_calculator_standalone: path.resolve(
             SRC_PATH, 'js', 'ToiletPaperCalculatorStandalone.js'
         ),
