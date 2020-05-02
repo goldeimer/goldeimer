@@ -11,6 +11,54 @@ const GOOGLE_SPREADSHEET_DOCUMENT_ID_GOLDEIMER =
 const GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER = '164271551';
 
 
+const BRANDS = {
+    Goldeimer: 'goldeimer',
+    VivaConAgua: 'vca',
+};
+
+const MERCHANT_TYPE = {
+    Retail: 'retail',
+    Wholesale: 'wholesale',
+};
+
+
+const legacyGoldeimerDataToGeoJson = (data) =>
+(
+    {
+        type: 'FeatureCollection',
+        features: Array.prototype.map.call(
+            data,
+            (entry) => (
+                {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [
+                            entry.Longitude,
+                            entry.Latitude,
+                        ],
+                    },
+                    properties: {
+                        address: {
+                            city: entry.Stadt,
+                            country: 'Deutschland',
+                            street: entry.Location,
+                        },
+                        brand: BRANDS.Goldeimer,
+                        merchantType:
+                            entry.l === 'Großmengen'
+                            ? MERCHANT_TYPE.Wholesale
+                            : MERCHANT_TYPE.Retail,
+                        name: entry.Title,
+                        url: entry.Description,
+                    },
+                }
+            )
+        ),
+    }
+);
+
+
 const getMerchantDataGoldeimer = async () =>
 {
     const result = await parseGoogleSheet(
@@ -18,8 +66,8 @@ const getMerchantDataGoldeimer = async () =>
         GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER
     );
 
-    return result;
-}
+    return legacyGoldeimerDataToGeoJson(result);
+};
 
 
 const getMerchantDataVca = async () =>
@@ -34,12 +82,20 @@ const getMerchantDataVca = async () =>
     {
         console.log(error);
 
-        return [];
+        return null;
     }
-}
-
-
-export {
-    getMerchantDataGoldeimer,
-    getMerchantDataVca,
 };
+
+
+const getMerchantData = async () =>
+{
+    const data = await getMerchantDataGoldeimer();
+    const dataVca = await getMerchantDataVca();
+
+    data.features = data.features.concat(dataVca.features);
+
+    return data;
+};
+
+
+export default getMerchantData;

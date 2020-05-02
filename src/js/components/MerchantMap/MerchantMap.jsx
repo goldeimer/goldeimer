@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
-import MapGL from 'react-map-gl';
+import React, { useEffect, useRef, useState, } from 'react';
+import { ThemeProvider, } from '@material-ui/core/styles';
+import MapGL, { Source, Layer, } from 'react-map-gl';
 
 import muiTheme from 'js/muiTheme';
 
 import {
-    getMerchantDataGoldeimer,
-    getMerchantDataVca,
-} from './getMerchantData';
+    clusterLayer,
+    clusterCountLayer,
+    unclusteredPointLayer,
+} from './layers';
+
+import getMerchantData from './getMerchantData';
 
 
 const MAP_STYLE_URL = 'https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=ELs001Fn1Ojoa3POXZTf';
@@ -15,12 +18,13 @@ const MAP_STYLE_URL = 'https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a58
 
 const MerchantMap = () =>
 {
-    const [merchantDataGoldeimer, setMerchantDataGoldeimer] = useState(null);
-    const [merchantDataVca, setMerchantDataVca] = useState(null);
+    const sourceRef = useRef();
+
+    const [merchantData, setMerchantData] = useState(null);
 
     const [viewport, setViewport] = useState({
-        latitude: 51.2,
-        longitude: 10.4,
+        latitude: 50.75,
+        longitude: 10,
         zoom: 5,
         bearing: 0,
         pitch: 0
@@ -28,18 +32,12 @@ const MerchantMap = () =>
 
     useEffect(
         () => {
-            const fetchDataGoldeimer = async () => {
-                const data = await getMerchantDataGoldeimer();
-                setMerchantDataGoldeimer(data);
+            const fetchData = async () => {
+                const data = await getMerchantData();
+                setMerchantData(data);
             };
 
-            const fetchDataVca = async () => {
-                const data = await getMerchantDataVca();
-                setMerchantDataVca(data);
-            };
-
-            fetchDataGoldeimer();
-            fetchDataVca();
+            fetchData();
         },
         []
     );
@@ -50,26 +48,27 @@ const MerchantMap = () =>
                 {...viewport}
                 width="100vw"
                 height="100vh"
+                //interactiveLayerIds={[clusterLayer.id]}
+                mapboxApiAccessToken={''}
                 mapStyle={MAP_STYLE_URL}
                 onViewportChange={(nextViewport) => setViewport(nextViewport)}
-                mapboxApiAccessToken={''}
-            />
-            <h1>Merchant Map</h1>
-            <code>
-                {
-                    merchantDataGoldeimer
-                    ? JSON.stringify(merchantDataGoldeimer[0])
-                    : ''
+            >
+            {
+                merchantData
+                && <Source
+                    type="geojson"
+                    data={merchantData}
+                    cluster={true}
+                    clusterMaxZoom={14}
+                    clusterRadius={50}
+                    ref={sourceRef}
+                >
+                    <Layer {...clusterLayer} />
+                    <Layer {...clusterCountLayer} />
+                    <Layer {...unclusteredPointLayer} />
+                </Source>
                 }
-            </code>
-            <br />
-            <code>
-                {
-                    merchantDataVca
-                    ? JSON.stringify(merchantDataVca[0])
-                    : ''
-                }
-            </code>
+            </MapGL>
         </ThemeProvider>
     );
 }
