@@ -4,21 +4,31 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import muiTheme from 'js/muiTheme';
 
-import getMerchantData from './getMerchantData';
+import {
+    getMerchantDataGoldeimer,
+    getMerchantDataVca,
+} from './getMerchantData';
 
 
 const MerchantMap = () =>
 {
-    const [merchantData, setMerchantData] = useState(null);
+    const [merchantDataGoldeimer, setMerchantDataGoldeimer] = useState(null);
+    const [merchantDataVca, setMerchantDataVca] = useState(null);
 
     useEffect(
         () => {
-            const fetchData = async () => {
-                const data = await getMerchantData();
-                setMerchantData(data);
+            const fetchDataGoldeimer = async () => {
+                const data = await getMerchantDataGoldeimer();
+                setMerchantDataGoldeimer(data);
             };
 
-            fetchData();
+            const fetchDataVca = async () => {
+                const data = await getMerchantDataVca();
+                setMerchantDataVca(data);
+            };
+
+            fetchDataGoldeimer();
+            fetchDataVca();
         },
         []
     );
@@ -26,7 +36,23 @@ const MerchantMap = () =>
     return (
         <ThemeProvider theme={muiTheme}>
             <h1>Merchant Map</h1>
-            <code>{JSON.stringify(merchantData)}</code>
+            <code>
+                {
+                    merchantDataGoldeimer
+                    ? JSON.stringify(merchantDataGoldeimer[0])
+                    : ''
+                }
+            </code>
+            <br />
+            <br />
+            <br />
+            <code>
+                {
+                    merchantDataVca
+                    ? JSON.stringify(merchantDataVca[0])
+                    : ''
+                }
+            </code>
         </ThemeProvider>
     );
 }
