@@ -31,6 +31,8 @@ $sql = $dbh->prepare(
 
 $sql->execute();
 
+header('Content-Type: application/json');
+
 echo json_encode(
     $sql->fetchAll(PDO::FETCH_ASSOC)
 );
