@@ -42,6 +42,50 @@ const MerchantMap = () =>
         []
     );
 
+    const onViewportChange = (nextViewport) => setViewport(nextViewport);
+
+    const onClusterClick = (feature) =>
+    {
+        const clusterId = feature.properties.cluster_id;
+        const mapboxSource = sourceRef.current.getSource();
+
+        mapboxSource.getClusterExpansionZoom(
+            clusterId,
+            (err, zoom) =>
+            {
+                if (err) {
+                    return;
+                }
+
+                onViewportChange(
+                    {
+                        ...viewport,
+                        longitude: feature.geometry.coordinates[0],
+                        latitude: feature.geometry.coordinates[1],
+                        zoom,
+                        transitionDuration: 500
+                    }
+                );
+            }
+        );
+    };
+
+    const onClick = (event) =>
+    {
+        const feature = event.features[0];
+
+        switch (feature.layer.id)
+        {
+            case clusterLayer.id:
+            case clusterCountLayer.id:
+                onClusterClick(feature);
+                break;
+
+            case unclusteredPointLayer.id:
+                break;
+        }
+    }
+
     return (
         <ThemeProvider theme={muiTheme}>
             <MapGL
@@ -51,7 +95,8 @@ const MerchantMap = () =>
                 //interactiveLayerIds={[clusterLayer.id]}
                 mapboxApiAccessToken={''}
                 mapStyle={MAP_STYLE_URL}
-                onViewportChange={(nextViewport) => setViewport(nextViewport)}
+                onClick={onClick}
+                onViewportChange={onViewportChange}
             >
             {
                 merchantData
