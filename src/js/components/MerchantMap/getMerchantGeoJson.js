@@ -59,7 +59,7 @@ const legacyGoldeimerDataToGeoJson = (data) =>
 );
 
 
-const getMerchantDataGoldeimer = async () =>
+const getMerchantGeoJsonGoldeimer = async () =>
 {
     const result = await parseGoogleSheet(
         GOOGLE_SPREADSHEET_DOCUMENT_ID_GOLDEIMER,
@@ -70,7 +70,7 @@ const getMerchantDataGoldeimer = async () =>
 };
 
 
-const getMerchantDataVca = async () =>
+const getMerchantGeoJsonVca = async () =>
 {
     try
     {
@@ -87,15 +87,15 @@ const getMerchantDataVca = async () =>
 };
 
 
-const getMerchantData = async () =>
+const getMerchantGeoJson = async () =>
 {
-    const data = await getMerchantDataGoldeimer();
-    const dataVca = await getMerchantDataVca();
+    const geoJson = await getMerchantGeoJsonGoldeimer();
+    const geoJsonVca = await getMerchantGeoJsonVca();
 
-    data.features = data.features.concat(dataVca.features);
+    geoJson.features = geoJson.features.concat(geoJsonVca.features);
 
-    return data;
+    return geoJson;
 };
 
 
-export default getMerchantData;
+export default getMerchantGeoJson;

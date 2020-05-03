@@ -10,7 +10,8 @@ import {
     unclusteredPointLayer,
 } from './layers';
 
-import getMerchantData from './getMerchantData';
+import getMerchantGeoJson from './getMerchantGeoJson';
+import parseGeoJsonFeatureProperties from './util/parseGeoJsonFeatureProperties';
 
 
 const MAP_STYLE_URL = 'https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=ELs001Fn1Ojoa3POXZTf';
@@ -20,7 +21,7 @@ const MerchantMap = () =>
 {
     const sourceRef = useRef();
 
-    const [merchantData, setMerchantData] = useState(null);
+    const [merchantGeoJson, setMerchantGeoJson] = useState(null);
 
     const [viewport, setViewport] = useState({
         latitude: 50.75,
@@ -32,19 +33,19 @@ const MerchantMap = () =>
 
     useEffect(
         () => {
-            const fetchData = async () => {
-                const data = await getMerchantData();
-                setMerchantData(data);
+            const fetchGeoJson = async () => {
+                const geoJson = await getMerchantGeoJson();
+                setMerchantGeoJson(geoJson);
             };
 
-            fetchData();
+            fetchGeoJson();
         },
         []
     );
 
-    const onViewportChange = (nextViewport) => setViewport(nextViewport);
+    const handleViewportChange = (nextViewport) => setViewport(nextViewport);
 
-    const onClusterClick = (feature) =>
+    const handleClusterClick = (feature) =>
     {
         const clusterId = feature.properties.cluster_id;
         const mapboxSource = sourceRef.current.getSource();
@@ -70,19 +71,31 @@ const MerchantMap = () =>
         );
     };
 
-    const onClick = (event) =>
+    const handleMarkerClick = (feature) =>
     {
-        const feature = event.features[0];
+        console.log(parseGeoJsonFeatureProperties(feature));
+    }
 
-        switch (feature.layer.id)
+    const handleClick = (event) =>
+    {
+        if ('features' in event && event.features.length)
         {
-            case clusterLayer.id:
-            case clusterCountLayer.id:
-                onClusterClick(feature);
-                break;
+            const feature = event.features[0];
 
-            case unclusteredPointLayer.id:
-                break;
+            if ('layer' in feature)
+            {
+                switch (feature.layer.id)
+                {
+                    case clusterLayer.id:
+                    case clusterCountLayer.id:
+                        handleClusterClick(feature);
+                        break;
+
+                    case unclusteredPointLayer.id:
+                        handleMarkerClick(feature);
+                        break;
+                }
+            }
         }
     }
 
@@ -90,19 +103,25 @@ const MerchantMap = () =>
         <ThemeProvider theme={muiTheme}>
             <MapGL
                 {...viewport}
-                width="100vw"
-                height="100vh"
-                //interactiveLayerIds={[clusterLayer.id]}
-                mapboxApiAccessToken={''}
+                width='100vw'
+                height='100vh'
+                interactiveLayerIds={
+                    [
+                        clusterLayer.id,
+                        clusterCountLayer.id,
+                        unclusteredPointLayer.id,
+                    ]
+                }
+                mapboxApiAccessToken=''
                 mapStyle={MAP_STYLE_URL}
-                onClick={onClick}
-                onViewportChange={onViewportChange}
+                onClick={handleClick}
+                onViewportChange={handleViewportChange}
             >
             {
-                merchantData
+                merchantGeoJson
                 && <Source
-                    type="geojson"
-                    data={merchantData}
+                    type='geojson'
+                    data={merchantGeoJson}
                     cluster={true}
                     clusterMaxZoom={14}
                     clusterRadius={50}

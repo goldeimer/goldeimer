@@ -21,7 +21,9 @@ function dbRowToGeoJsonFeature($row)
                 'country' => $row['country'],
                 'street' => $row['street'],
             ],
-            'brand' => 'vca',  // vs. 'goldeimer'
+            'brands' => [
+                'vca',  // vs. 'goldeimer'
+            ],
             'merchantType' => 'retail',  // vs. 'wholesale'
             'name' => $row['name'],
             'url' => $row['url'],
