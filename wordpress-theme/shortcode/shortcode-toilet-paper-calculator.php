@@ -5,7 +5,7 @@
 /// @shortcode [goldeimer-toilet-paper-calculator]
 
 
-const SCRIPT_HANDLE = 'goldeimer-toilet-paper-calculator-standalone-bundle';
+const SCRIPT_HANDLE = 'goldeimer-toilet-paper-calculator-script-handle';
 
 
 function registerToiletPaperCalculator()
@@ -13,7 +13,7 @@ function registerToiletPaperCalculator()
     wp_register_script(
         SCRIPT_HANDLE,
         get_stylesheet_directory_uri() .
-            '/static/js/toilet_paper_calculator_standalone.bundle.js',
+            '/static/js/toilet_paper_calculator.bundle.js',
         array(),
         '1',
         true

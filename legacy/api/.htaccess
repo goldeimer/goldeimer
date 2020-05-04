@@ -1,7 +1,7 @@
 # @see http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea
 <FilesMatch "^get-merchants-vca\.php$">
     <IfModule mod_headers.c>
-        SetEnvIf Origin "http(s)?://(www\.)?(goldeimer.lc|vivaconagua.org)$" AccessControlAllowOrigin=$0
+        SetEnvIf Origin "http(s)?://((map|www)\.)?(goldeimer.lc|vivaconagua.org)$" AccessControlAllowOrigin=$0
         Header add Access-Control-Allow-Origin %{AccessControlAllowOrigin}e env=AccessControlAllowOrigin
         Header merge Vary Origin
     </IfModule>

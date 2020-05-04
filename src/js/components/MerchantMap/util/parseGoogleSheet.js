@@ -1,10 +1,8 @@
 import Papa from 'papaparse';
 
 
-const parseGoogleSheet = async (documentId, sheetGid) =>
+const parseGoogleSheet = async (url) =>
 {
-    const url = `https://docs.google.com/spreadsheets/d/${documentId}/pub?output=csv&gid=${sheetGid}`;
-
     const parseFile = (url) =>
     {
         return new Promise(

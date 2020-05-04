@@ -5,7 +5,7 @@
 /// @shortcode [goldeimer-merchant-map]
 
 
-const SCRIPT_HANDLE = 'goldeimer-merchant-map-standalone-bundle';
+const SCRIPT_HANDLE = 'goldeimer-merchant-map-script-handle';
 
 
 function registerMerchantMap()
@@ -13,7 +13,7 @@ function registerMerchantMap()
     wp_register_script(
         SCRIPT_HANDLE,
         get_stylesheet_directory_uri() .
-            '/static/js/merchant_map_standalone.bundle.js',
+            '/static/js/merchant_map.bundle.js',
         array(),
         '1',
         true

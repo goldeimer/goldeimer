@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, } from 'react';
 import { ThemeProvider, } from '@material-ui/core/styles';
 import MapGL, { Source, Layer, } from 'react-map-gl';
 
-import muiTheme from 'js/muiTheme';
+import muiTheme from 'config/muiTheme';
 
 import {
     clusterLayer,

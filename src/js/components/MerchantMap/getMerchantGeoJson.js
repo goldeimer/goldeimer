@@ -5,10 +5,8 @@ import parseGoogleSheet from './util/parseGoogleSheet'
 
 const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants';
 
-const GOOGLE_SPREADSHEET_DOCUMENT_ID_GOLDEIMER =
-    '1Uk34qKL3uI1DRjHcFAETIj9dXJ0QEiWZFtHHBHY_SRo';
-
-const GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER = '164271551';
+const GOOGLE_SPREADSHEET_URL =
+'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuJMztp6DfBGPv5X1ZvRhNUL95-GTXoxADEhh3XiWzmZYyaWrytx3E4-_8eb7AkW_nFuuj9Nn5fJoh/pub?gid=164271551&single=true&output=csv';
 
 
 const BRANDS = {
@@ -61,10 +59,7 @@ const legacyGoldeimerDataToGeoJson = (data) =>
 
 const getMerchantGeoJsonGoldeimer = async () =>
 {
-    const result = await parseGoogleSheet(
-        GOOGLE_SPREADSHEET_DOCUMENT_ID_GOLDEIMER,
-        GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER
-    );
+    const result = await parseGoogleSheet(GOOGLE_SPREADSHEET_URL);
 
     return legacyGoldeimerDataToGeoJson(result);
 };

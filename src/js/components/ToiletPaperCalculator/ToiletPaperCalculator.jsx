@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import muiTheme from 'js/muiTheme';
+import muiTheme from 'config/muiTheme';
 
 import FormField from
        'components/Form/FormField/FormField';
