@@ -12,8 +12,8 @@ printf ">> %s\n" "Removing database, web apps, and logs..."
 rm -rf "$_dockerAbspath/sql/wordpress.init.sql"
 
 rm -rf "$_dockerAbspath/run/data/"
-rm -rf "$_dockerAbspath/run/logs/"
+rm -rf "$_dockerAbspath/run/log/"
 rm -rf "$_dockerAbspath/run/wordpress/"
 
 # TODO: Add cmdline arg to optionally reset certs
-# rm -rf "$_dockerAbspath/run/ssl_certs/"
+# rm -rf "$_dockerAbspath/run/ssl-certs/"
