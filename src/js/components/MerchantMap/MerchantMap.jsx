@@ -125,6 +125,7 @@ const MerchantMap = () =>
                     cluster={true}
                     clusterMaxZoom={14}
                     clusterRadius={50}
+                    generateId={true}
                     ref={sourceRef}
                 >
                     <Layer {...clusterLayer} />

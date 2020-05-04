@@ -17,9 +17,11 @@ const muiTheme = createMuiTheme({
             main: '#795548',
         },
     },
-    shape: {
-        borderRadius: 0,
-    },
+// TBD w/ @Manou:
+//
+//     shape: {
+//         borderRadius: 0,
+//     },
     typography: {
         fontFamily: 'museo',
         h1: headingBaseTypography,
