@@ -1,14 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
-import SaveIcon from '@material-ui/icons/Save';
-import PrintIcon from '@material-ui/icons/Print';
-import ShareIcon from '@material-ui/icons/Share';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+
 
 const useStyles = makeStyles((theme) => ({
     speedDial: {
@@ -18,24 +15,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const actions = [
-{ icon: <FileCopyIcon />, name: 'Copy' },
-{ icon: <SaveIcon />, name: 'Save' },
-{ icon: <PrintIcon />, name: 'Print' },
-{ icon: <ShareIcon />, name: 'Share' },
-{ icon: <FavoriteIcon />, name: 'Like' },
-];
 
-const FloatingActionButton = () =>
+const FloatingActionButton = ({ actions, setAction, openIcon = null }) =>
 {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
-    const handleClose = () => {
+    const handleClick = (event) =>
+    {
+        console.log(event);
+        setOpen(false);
+        // setAction()
+    };
+
+    const handleClose = () =>
+    {
         setOpen(false);
     };
 
-    const handleOpen = () => {
+    const handleOpen = () =>
+    {
         setOpen(true);
     };
 
@@ -43,28 +42,47 @@ const FloatingActionButton = () =>
         <SpeedDial
             ariaLabel=""
             className={classes.speedDial}
-            icon={<SpeedDialIcon />}
+            icon={<SpeedDialIcon openIcon={openIcon} />}
             onClose={handleClose}
             onOpen={handleOpen}
             open={open}
             direction='up'
         >
             {
-                actions.map(
-                    (action) =>
+                Object.entries(actions).map(
+                    ([key, action]) =>
                     (
                         <SpeedDialAction
-                            key={action.name}
                             icon={action.icon}
-                            tooltipTitle={action.name}
-                            onClick={handleClose}
+                            key={action.id}
+                            onClick={handleClick}
+                            // TODO:
+                            // Would need refining of logic *and* styling.
+                            // tooltipOpen={! window.USER_CAN_HOVER}
+                            tooltipTitle={action.label}
                         />
                     )
                 )
             }
         </SpeedDial>
     );
-}
+};
+
+
+FloatingActionButton.propTypes = {
+    actions: PropTypes.objectOf(
+        PropTypes.exact({
+            icon: PropTypes.element,
+            // TODO: Compare against enum of available actions, validate values.
+            id: PropTypes.string,
+            label: PropTypes.string,
+        })
+    ).isRequired,
+    openIcon: PropTypes.oneOfType(
+        PropTypes.node,
+        PropTypes.null
+    ),
+};
 
 
 export default FloatingActionButton;
