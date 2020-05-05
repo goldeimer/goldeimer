@@ -8,28 +8,23 @@ import {
 
 import FilterListIcon from '@material-ui/icons/FilterList';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
-import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
 import Action from './Action';
 
 
 const ACTIONS = {
-    location: {
-        icon: <LocationSearchingIcon />,
-        label: 'In deiner Nähe',
+    list: {
+        icon: <ViewListIcon />,
+        label: 'Händler Liste',
     },
     filter: {
         icon: <FilterListIcon />,
         label: 'Auswahl einschränken',
     },
-    list: {
-        icon: <ViewListIcon />,
-        label: 'Händler Liste',
-    },
-    search: {
-        icon: <SearchIcon />,
-        label: 'Händler suchen',
+    location: {
+        icon: <LocationSearchingIcon />,
+        label: 'In deiner Nähe',
     },
 };
 

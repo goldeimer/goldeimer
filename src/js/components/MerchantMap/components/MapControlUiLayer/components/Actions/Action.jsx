@@ -12,6 +12,18 @@ const Action = () =>
 
     switch (actionId)
     {
+        case ACTION_IDS.location:
+            return (
+// TODO
+            );
+            break;
+
+        case ACTION_IDS.filter:
+            return (
+// TODO
+            );
+            break;
+
         case ACTION_IDS.list:
             return (
                 <LargeContentDialog title='Hier bekommst Du unsere Produkte'>
