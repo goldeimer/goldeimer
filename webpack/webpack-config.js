@@ -40,7 +40,7 @@ const merchantMapConfig = {
     name: 'merchant-map',
     entry: {
         merchant_map: path.resolve(
-            SRC_JS_PATH, 'apps', 'MerchantMap.js'
+            SRC_JS_PATH, 'apps', 'MerchantMapStandaloneAppShell.js'
         ),
     },
     output: {

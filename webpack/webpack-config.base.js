@@ -4,6 +4,7 @@ const path = require('path');
 const {
     SRC_COMPONENT_PATH,
     SRC_CONFIG_PATH,
+    SRC_CSS_PATH,
     SRC_JS_PATH,
 } = require('./path');
 
@@ -36,6 +37,7 @@ module.exports = {
         alias: {
             components: SRC_COMPONENT_PATH,
             config: SRC_CONFIG_PATH,
+            css: SRC_CSS_PATH,
             js: SRC_JS_PATH,
         },
         extensions: ['.js', '.jsx', '.json',],
