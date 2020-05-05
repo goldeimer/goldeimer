@@ -17,8 +17,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const FloatingActionButton = ({ actions, openIcon = null }) =>
-{
+const FloatingActionButton = ({
+    actions,
+    openIcon = null,
+    routePathnamePrefix = '/action'
+}) => {
     const classes = useStyles();
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
@@ -26,7 +29,7 @@ const FloatingActionButton = ({ actions, openIcon = null }) =>
     const handleClick = (actionId) =>
     {
         setOpen(false);
-        history.push(actionId);
+        history.push(`${routePathnamePrefix}/${actionId}`);
     };
 
     const handleClose = () =>
@@ -78,6 +81,7 @@ FloatingActionButton.propTypes = {
         })
     ).isRequired,
     openIcon: PropTypes.node,
+    routePathnamePrefix: PropTypes.string,
 };
 
 

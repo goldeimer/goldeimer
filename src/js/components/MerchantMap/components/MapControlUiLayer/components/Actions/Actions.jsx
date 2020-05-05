@@ -1,43 +1,65 @@
 import React from 'react';
+import {
+    Redirect,
+    Route,
+    Switch,
+    useRouteMatch,
+} from 'react-router-dom';
 
 import FilterListIcon from '@material-ui/icons/FilterList';
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
 import SearchIcon from '@material-ui/icons/Search';
 import ViewListIcon from '@material-ui/icons/ViewList';
 
+import Action from './Action';
+
 
 const ACTIONS = {
     location: {
-        component: <h1 style={{position: 'relative'}}>LOCATION</h1>,
         icon: <LocationSearchingIcon />,
-        id: 'location',
         label: 'In deiner Nähe',
     },
     filter: {
-        component: <h1 style={{position: 'relative'}}>FILTER</h1>,
         icon: <FilterListIcon />,
-        id: 'filter',
         label: 'Auswahl einschränken',
     },
     list: {
-        component: <h1 style={{position: 'relative'}}>LIST</h1>,
         icon: <ViewListIcon />,
-        id: 'list',
         label: 'Händler Liste',
     },
     search: {
-        component: <h1 style={{position: 'relative'}}>SEARCH</h1>,
         icon: <SearchIcon />,
-        id: 'search',
         label: 'Händler suchen',
     },
 };
 
 
-const ACTION_IDS = Object.keys(ACTIONS);
+const ACTION_IDS = Object.fromEntries(
+    Object.keys(ACTIONS).map(
+        (actionId) => ([actionId, actionId])
+    )
+);
+
+
+const Actions = () =>
+{
+    const routeMatch = useRouteMatch();
+
+    return (
+        <Switch>
+            <Route path={`${routeMatch.path}/:actionId`}>
+                <Action />
+            </Route>
+            <Route path={routeMatch.path}>
+                <Redirect to={{pathname: '/'}} />
+            </Route>
+        </Switch>
+    );
+}
 
 
 export {
-    ACTIONS as default,
+    Actions as default,
+    ACTIONS,
     ACTION_IDS,
 };

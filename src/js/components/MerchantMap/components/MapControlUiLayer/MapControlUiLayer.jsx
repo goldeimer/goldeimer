@@ -3,7 +3,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 import { ThemeProvider, } from '@material-ui/core/styles';
 import MapIcon from '@material-ui/icons/Map';
@@ -11,47 +11,24 @@ import MapIcon from '@material-ui/icons/Map';
 import muiTheme from 'config/muiTheme';
 
 import FloatingActionButton from
-    'components/FloatingActionButton/FloatingActionButton'
+    'components/FloatingActionButton/FloatingActionButton';
 
-import ACTIONS from './components/actions/actions';
-
-
-const reduceActionsForFab = (actions) =>
-(
-    Object.fromEntries(
-        Object.entries(actions).map(
-            ([actionId, {icon, label}]) => ([actionId, {icon, label}])
-        )
-    )
-);
+import Actions, { ACTIONS, } from './components/Actions/Actions';
 
 
 const MapControlUiLayer = () =>
 {
-    const [currentAction, setCurrentAction] = useState(null);
-
     return (
         <ThemeProvider theme={muiTheme}>
             <Router>
                 <Switch>
-                    {
-                        Object.entries(ACTIONS).map(
-                            ([actionId, action]) =>
-                            (
-                                <Route
-                                    key={actionId}
-                                    path={`/${actionId}`}
-                                >
-                                    {action.component}
-                                </Route>
-                            )
-                        )
-                    }
-                    <Route path="/">
+                    <Route path='/action'>
+                        <Actions />
+                    </Route>
+                    <Route path='/'>
                         <FloatingActionButton
-                            actions={reduceActionsForFab(ACTIONS)}
+                            actions={ACTIONS}
                             openIcon={<MapIcon />}
-                            setAction={setCurrentAction}
                         />
                     </Route>
                 </Switch>
