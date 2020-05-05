@@ -11,6 +11,7 @@ module.exports = {
     SRC_COMPONENT_PATH: path.resolve(SRC_PATH, 'js', 'components'),
     SRC_CONFIG_PATH: path.resolve(SRC_PATH, 'js', 'config'),
     SRC_CSS_PATH: path.resolve(SRC_PATH, 'css'),
+    SRC_HOOKS_PATH: path.resolve(SRC_PATH, 'js', 'hooks'),
     SRC_JS_PATH: path.resolve(SRC_PATH, 'js'),
     // destination
     DIST_BASE_PATH: PROJECT_PATH,

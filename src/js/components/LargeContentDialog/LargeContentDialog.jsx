@@ -1,6 +1,5 @@
-import React, { forwardRef, useState, } from 'react';
+import React, { forwardRef } from 'react';
 import { PropTypes } from 'prop-types';
-import { useHistory } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,6 +17,8 @@ import Slide from '@material-ui/core/Slide';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles, useTheme, } from '@material-ui/core/styles';
+
+import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay';
 
 
 const FULLSCREEN_BREAKPOINT = 'md';
@@ -50,24 +51,17 @@ const LargeContentDialog = ({
     title = null,
 }) =>
 {
-    const [isOpen, setIsOpen] = useState(isOpenInitially);
+    const [
+        isOpen,
+        setIsOpen,
+        handleClose,
+    ] = useCloseableRoutedOverlay(isOpenInitially);
 
     const classes = useStyles();
     const theme = useTheme();
     const isFullScreen = useMediaQuery(
         theme.breakpoints.down(FULLSCREEN_BREAKPOINT)
     );
-    const history = useHistory();
-
-    const handleClose = () =>
-    {
-        setIsOpen(false);
-
-        if (routeOnClose)
-        {
-            history.push(routeOnClose);
-        }
-    };
 
     const renderCloseButton = () =>
     (

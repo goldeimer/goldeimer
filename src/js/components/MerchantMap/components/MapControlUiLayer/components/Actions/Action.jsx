@@ -4,6 +4,7 @@ import { Redirect, useParams, } from 'react-router-dom';
 import { ACTION_IDS } from './Actions';
 import LargeContentDialog from 'components/LargeContentDialog/LargeContentDialog';
 import FeatureTable from './components/FeatureTable/FeatureTable';
+import Drawer from 'components/Drawer/Drawer';
 
 
 const Action = () =>
@@ -14,13 +15,15 @@ const Action = () =>
     {
         case ACTION_IDS.location:
             return (
-// TODO
+                <div>TODO</div>
             );
             break;
 
         case ACTION_IDS.filter:
             return (
-// TODO
+                <Drawer>
+                    <FeatureTable />
+                </Drawer>
             );
             break;
 
