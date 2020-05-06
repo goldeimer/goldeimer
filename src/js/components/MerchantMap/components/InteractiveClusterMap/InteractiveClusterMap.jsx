@@ -41,7 +41,7 @@ const InteractiveClusterMap = ({ geoJsonSource }) =>
                     return;
                 }
 
-                onViewportChange(
+                handleViewportChange(
                     {
                         ...viewport,
                         longitude: feature.geometry.coordinates[0],
