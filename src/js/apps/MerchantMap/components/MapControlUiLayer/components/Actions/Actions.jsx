@@ -22,7 +22,7 @@ const ACTIONS = {
         icon: <FilterListIcon />,
         label: 'Auswahl einschränken',
     },
-    location: {
+    locate: {
         icon: <LocationSearchingIcon />,
         label: 'In deiner Nähe',
     },

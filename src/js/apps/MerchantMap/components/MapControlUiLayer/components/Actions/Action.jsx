@@ -6,6 +6,8 @@ import StandardDialog from 'components/StandardDialog/StandardDialog'
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
 
 import FeatureTable from './components/FeatureTable/FeatureTable'
+import GeocodingAutocomplete from
+    './components/GeocodingAutocomplete/GeocodingAutocomplete'
 
 import { ACTION_IDS } from './Actions'
 
@@ -17,12 +19,12 @@ const Action = () =>
 
     switch (actionId)
     {
-        case ACTION_IDS.location:
+        case ACTION_IDS.locate:
             return (
                 <StandardDialog
                     title='Finde Händler in deiner Nähe'
                 >
-                    <h1>DUMMY</h1>
+                    <GeocodingAutocomplete />
                 </StandardDialog>
             );
             break;
