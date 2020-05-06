@@ -1,7 +1,10 @@
-import React, { useEffect, useState, } from 'react'
+import React, { useEffect, useRef, useState, } from 'react'
 import { PropTypes } from 'prop-types'
 
 import TextField from '@material-ui/core/TextField'
+import ExploreIcon from '@material-ui/icons/Explore'
+
+import ListBoxPopper from 'components/ListBoxPopper/ListBoxPopper'
 
 import useGeocoding from 'hooks/useGeocoding'
 import useInput from 'hooks/useInput'
@@ -70,22 +73,36 @@ const GeocodingAutoComplete = ({
         [result]
     );
 
+    const inputRef = useRef();
+
     return (
         <>
             <TextField
                 {...bind}
+                fullWidth
                 label={label}
+                ref={inputRef}
                 variant="outlined"
-                />
-            <p>
+            />
             {
-                preparedResult.map(
-                    (feature) => (
-                        <span key={feature.id}>{feature.place_name_de.replace(/,+/g, ',')}<br /></span>
-                    )
-                )
+                preparedResult.length > 0
+                &&
+                <ListBoxPopper
+                    anchorEl={() => (inputRef.current)}
+                    icon={<ExploreIcon />}
+                    items={
+                        preparedResult.map(
+                            (feature) => ({
+                                label: feature.place_name_de.replace(
+                                    /,+/g,
+                                    ','
+                                ),
+                                value: feature.id,
+                            })
+                        )
+                    }
+                />
             }
-            </p>
         </>
     );
 };

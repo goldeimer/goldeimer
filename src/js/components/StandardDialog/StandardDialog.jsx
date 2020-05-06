@@ -1,5 +1,4 @@
 import React, { forwardRef, useState, } from 'react'
-import { PropTypes } from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -8,9 +7,14 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 
 import CloseButton from 'components/CloseButton/CloseButton'
+import TitleIcon from 'components/TitleIcon/TitleIcon'
 
-import useCloseableRoutedOverlay, { closeableRoutedOverlayPropTypes } from
+import useCloseableRoutedOverlay from
     'hooks/useCloseableRoutedOverlay'
+
+import propTypesCloseableRoutedOverlay from
+    'propTypes/propTypesCloseableRoutedOverlay'
+import propTypesTitled from 'propTypes/propTypesTitled'
 
 
 const StandardDialog = ({
@@ -18,6 +22,7 @@ const StandardDialog = ({
     isOpenInitially = true,
     routeOnClose = '/',
     title = null,
+    titleIcon = null,
 }) =>
 {
     const [
@@ -33,6 +38,7 @@ const StandardDialog = ({
             aria-labelledby={title ? 'dialog-title' : null}
         >
             <DialogTitle id="dialog-title">
+                {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
                 {title}
                 {<CloseButton onClose={handleClose}/>}
             </DialogTitle>
@@ -50,10 +56,8 @@ const StandardDialog = ({
 
 
 StandardDialog.propTypes = Object.assign(
-    {
-        title: PropTypes.string,
-    },
-    closeableRoutedOverlayPropTypes
+    propTypesCloseableRoutedOverlay,
+    propTypesTitled
 );
 
 

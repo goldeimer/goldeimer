@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react'
-import { PropTypes } from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -17,9 +16,13 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { makeStyles, useTheme, } from '@material-ui/core/styles'
 
 import CloseButton from 'components/CloseButton/CloseButton'
+import TitleIcon from 'components/TitleIcon/TitleIcon'
 
-import useCloseableRoutedOverlay, { closeableRoutedOverlayPropTypes } from
-    'hooks/useCloseableRoutedOverlay'
+import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
+
+import propTypesCloseableRoutedOverlay from
+    'propTypes/propTypesCloseableRoutedOverlay'
+import propTypesTitled from 'propTypes/propTypesTitled'
 
 
 const FULLSCREEN_BREAKPOINT = 'md';
@@ -50,6 +53,7 @@ const LargeContentDialog = ({
     isOpenInitially = true,
     routeOnClose = '/',
     title = null,
+    titleIcon = null
 }) =>
 {
     const [
@@ -89,6 +93,7 @@ const LargeContentDialog = ({
                     </Toolbar>
                 </AppBar>
                 : <DialogTitle id="dialog-title">
+                    {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
                     {title}
                     {<CloseButton onClose={handleClose}/>}
                 </DialogTitle>
@@ -107,10 +112,8 @@ const LargeContentDialog = ({
 
 
 LargeContentDialog.propTypes = Object.assign(
-    {
-        title: PropTypes.string,
-    },
-    closeableRoutedOverlayPropTypes
+    propTypesCloseableRoutedOverlay,
+    propTypesTitled
 );
 
 

@@ -13,6 +13,7 @@ module.exports = {
     SRC_CONFIG_PATH: path.resolve(SRC_PATH, 'js', 'config'),
     SRC_CSS_PATH: path.resolve(SRC_PATH, 'css'),
     SRC_HOOKS_PATH: path.resolve(SRC_PATH, 'js', 'hooks'),
+    SRC_PROP_TYPES_PATH: path.resolve(SRC_PATH, 'js', 'propTypes'),
     SRC_UTIL_PATH: path.resolve(SRC_PATH, 'js', 'util'),
     SRC_JS_PATH: path.resolve(SRC_PATH, 'js'),
     // destination

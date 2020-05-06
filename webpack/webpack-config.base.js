@@ -8,6 +8,7 @@ const {
     SRC_CSS_PATH,
     SRC_HOOKS_PATH,
     SRC_JS_PATH,
+    SRC_PROP_TYPES_PATH,
     SRC_UTIL_PATH,
 } = require('./path');
 
@@ -43,8 +44,9 @@ module.exports = {
             config: SRC_CONFIG_PATH,
             css: SRC_CSS_PATH,
             hooks: SRC_HOOKS_PATH,
-            util: SRC_UTIL_PATH,
             js: SRC_JS_PATH,
+            propTypes: SRC_PROP_TYPES_PATH,
+            util: SRC_UTIL_PATH,
         },
         extensions: ['.js', '.jsx', '.json',],
     },
