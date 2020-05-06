@@ -3,8 +3,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const colorPrimary = '#ffe300';
 
-const headingBaseTypography = {
-    fontFamily: 'veneer !important',
+const typographyFontFamilyVeneer = {
+    fontFamily: 'veneer',
 };
 
 const muiTheme = createMuiTheme({
@@ -24,12 +24,18 @@ const muiTheme = createMuiTheme({
 //     },
     typography: {
         fontFamily: 'museo',
-        h1: headingBaseTypography,
-        h2: headingBaseTypography,
-        h3: headingBaseTypography,
-        h4: headingBaseTypography,
-        h5: headingBaseTypography,
-        h6: headingBaseTypography,
+        h1: typographyFontFamilyVeneer,
+        h2: typographyFontFamilyVeneer,
+        h3: typographyFontFamilyVeneer,
+        h4: typographyFontFamilyVeneer,
+        h5: typographyFontFamilyVeneer,
+        h6: typographyFontFamilyVeneer,
+        button: Object.assign(
+            {
+                fontSize: '1rem',
+            },
+            typographyFontFamilyVeneer
+        ),
     },
 });
 
