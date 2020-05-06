@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom'
 
-import MerchantMap from 'components/MerchantMap/MerchantMap';
+import MerchantMap from './MerchantMap/MerchantMap';
 
 
 const container = document.getElementById(

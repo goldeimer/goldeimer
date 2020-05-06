@@ -82,6 +82,9 @@ services:
             WORDPRESS_TABLE_PREFIX_FILE: /run/secrets/secret_wordpress_table_prefix
 
     php_apache_merchant_map:
+        # TODO:
+        # - switch to httpd w/ mod_wsgi to facilitate a Python backend
+        # - build from own config, w/ mod_rewrite, etc. enabled
         image: php:apache
         restart: always
         working_dir: /var/www/html

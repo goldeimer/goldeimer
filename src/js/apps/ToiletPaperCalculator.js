@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom'
 
 import ToiletPaperCalculator from
-       'components/ToiletPaperCalculator/ToiletPaperCalculator';
+       './ToiletPaperCalculator/ToiletPaperCalculator';
 
 
 const container = document.getElementById(

@@ -1,14 +1,16 @@
 import React from 'react'
 import { Redirect, useParams, } from 'react-router-dom'
 
-import { ACTION_IDS } from './Actions'
-import FeatureTable from './components/FeatureTable/FeatureTable'
 import LargeContentDialog from 'components/LargeContentDialog/LargeContentDialog'
 import StandardDialog from 'components/StandardDialog/StandardDialog'
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
 
+import FeatureTable from './components/FeatureTable/FeatureTable'
+
+import { ACTION_IDS } from './Actions'
 
 
+// TODO: Dynamic copy.
 const Action = () =>
 {
     const { actionId } = useParams();
@@ -20,6 +22,7 @@ const Action = () =>
                 <StandardDialog
                     title='Finde Händler in deiner Nähe'
                 >
+                    <h1>DUMMY</h1>
                 </StandardDialog>
             );
             break;

@@ -2,11 +2,13 @@ const webpack = require('webpack');
 
 const path = require('path');
 const {
+    SRC_APPS_PATH,
     SRC_COMPONENT_PATH,
     SRC_CONFIG_PATH,
     SRC_CSS_PATH,
     SRC_HOOKS_PATH,
     SRC_JS_PATH,
+    SRC_UTIL_PATH,
 } = require('./path');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -36,10 +38,12 @@ module.exports = {
     ],
     resolve: {
         alias: {
+            apps: SRC_APPS_PATH,
             components: SRC_COMPONENT_PATH,
             config: SRC_CONFIG_PATH,
             css: SRC_CSS_PATH,
             hooks: SRC_HOOKS_PATH,
+            util: SRC_UTIL_PATH,
             js: SRC_JS_PATH,
         },
         extensions: ['.js', '.jsx', '.json',],
