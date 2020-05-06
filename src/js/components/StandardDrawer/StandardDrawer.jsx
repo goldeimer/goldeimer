@@ -1,12 +1,13 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React from 'react'
+import { PropTypes } from 'prop-types'
 
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
-import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay';
+import useCloseableRoutedOverlay, { closeableRoutedOverlayPropTypes } from
+    'hooks/useCloseableRoutedOverlay'
 
 
-const Drawer = ({
+const StandardDrawer = ({
     children,
     isOpenInitially = true,
     routeOnClose = '/',
@@ -39,10 +40,7 @@ const Drawer = ({
 };
 
 
-Drawer.propTypes = {
-    children: PropTypes.node.isRequired,
-    routeOnClose: PropTypes.string,
-};
+StandardDrawer.propTypes = closeableRoutedOverlayPropTypes;
 
 
-export default Drawer;
+export default StandardDrawer;

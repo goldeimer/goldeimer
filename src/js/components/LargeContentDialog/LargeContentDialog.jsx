@@ -1,24 +1,25 @@
-import React, { forwardRef } from 'react';
-import { PropTypes } from 'prop-types';
+import React, { forwardRef } from 'react'
+import { PropTypes } from 'prop-types'
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
 // fullScreen variant
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import Fade from '@material-ui/core/Fade';
-import Slide from '@material-ui/core/Slide';
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Fade from '@material-ui/core/Fade'
+import Slide from '@material-ui/core/Slide'
 
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles, useTheme, } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { makeStyles, useTheme, } from '@material-ui/core/styles'
 
-import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay';
+import CloseButton from 'components/CloseButton/CloseButton'
+
+import useCloseableRoutedOverlay, { closeableRoutedOverlayPropTypes } from
+    'hooks/useCloseableRoutedOverlay'
 
 
 const FULLSCREEN_BREAKPOINT = 'md';
@@ -63,18 +64,6 @@ const LargeContentDialog = ({
         theme.breakpoints.down(FULLSCREEN_BREAKPOINT)
     );
 
-    const renderCloseButton = () =>
-    (
-        <IconButton
-            edge="end"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-        >
-            <CloseIcon />
-        </IconButton>
-    );
-
     return (
         <Dialog
             fullScreen={isFullScreen}
@@ -96,12 +85,12 @@ const LargeContentDialog = ({
                         >
                             {title}
                         </Typography>
-                        {renderCloseButton()}
+                        {<CloseButton onClose={handleClose}/>}
                     </Toolbar>
                 </AppBar>
                 : <DialogTitle id="dialog-title">
                     {title}
-                    {renderCloseButton()}
+                    {<CloseButton onClose={handleClose}/>}
                 </DialogTitle>
             }
             <DialogContent>
@@ -117,12 +106,12 @@ const LargeContentDialog = ({
 };
 
 
-LargeContentDialog.propTypes = {
-    children: PropTypes.node.isRequired,
-    isOpenInitially: PropTypes.bool,
-    routeOnClose: PropTypes.string,
-    title: PropTypes.string,
-};
+LargeContentDialog.propTypes = Object.assign(
+    {
+        title: PropTypes.string,
+    },
+    closeableRoutedOverlayPropTypes
+);
 
 
 export default LargeContentDialog;

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 
@@ -34,4 +35,14 @@ const useCloseableRoutedOverlay = (
 };
 
 
-export default useCloseableRoutedOverlay;
+const closeableRoutedOverlayPropTypes = {
+    children: PropTypes.node.isRequired,
+    isOpenInitially: PropTypes.bool,
+    routeOnClose: PropTypes.string,
+};
+
+
+export {
+    useCloseableRoutedOverlay as default,
+    closeableRoutedOverlayPropTypes
+};

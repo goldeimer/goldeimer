@@ -1,10 +1,12 @@
-import React from 'react';
-import { Redirect, useParams, } from 'react-router-dom';
+import React from 'react'
+import { Redirect, useParams, } from 'react-router-dom'
 
-import { ACTION_IDS } from './Actions';
-import LargeContentDialog from 'components/LargeContentDialog/LargeContentDialog';
-import FeatureTable from './components/FeatureTable/FeatureTable';
-import Drawer from 'components/Drawer/Drawer';
+import { ACTION_IDS } from './Actions'
+import FeatureTable from './components/FeatureTable/FeatureTable'
+import LargeContentDialog from 'components/LargeContentDialog/LargeContentDialog'
+import StandardDialog from 'components/StandardDialog/StandardDialog'
+import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
+
 
 
 const Action = () =>
@@ -15,15 +17,18 @@ const Action = () =>
     {
         case ACTION_IDS.location:
             return (
-                <div>TODO</div>
+                <StandardDialog
+                    title='Finde Händler in deiner Nähe'
+                >
+                </StandardDialog>
             );
             break;
 
         case ACTION_IDS.filter:
             return (
-                <Drawer>
+                <StandardDrawer>
                     <FeatureTable />
-                </Drawer>
+                </StandardDrawer>
             );
             break;
 
