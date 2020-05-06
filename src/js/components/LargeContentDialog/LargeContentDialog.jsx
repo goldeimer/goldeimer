@@ -64,23 +64,23 @@ const LargeContentDialog = ({
 
     const classes = useStyles();
     const theme = useTheme();
-    const isFullScreen = useMediaQuery(
+    const useFullScreenVariant = useMediaQuery(
         theme.breakpoints.down(FULLSCREEN_BREAKPOINT)
     );
 
     return (
         <Dialog
-            fullScreen={isFullScreen}
+            fullScreen={useFullScreenVariant}
             fullWidth={false}
             maxWidth={MAX_WIDTH}
             open={isOpen}
             onClose={handleClose}
             scroll="paper"
-            TransitionComponent={isFullScreen ? Transition : Fade}
+            TransitionComponent={useFullScreenVariant ? Transition : Fade}
             aria-labelledby={title ? 'dialog-title' : null}
         >
             {
-                isFullScreen
+                useFullScreenVariant
                 ? <AppBar className={classes.appBar}>
                     <Toolbar>
                         <Typography

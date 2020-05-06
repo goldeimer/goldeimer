@@ -21,12 +21,24 @@ const filterFeaturesByCountry = (features) =>
 {
     return features.filter(
         (feature) => {
-            const country = feature.context.find(
+            if (! 'context' in feature || ! feature.context)
+            {
+                return true;
+            }
+
+            const countryEntry = feature.context.find(
                 (entry) => (entry.id.startsWith('country.'))
-            ).text_en;
+            );
+
+            if (! 'text_en' in countryEntry || ! countryEntry.text_en)
+            {
+                return true;
+            }
+
+            const country = countryEntry.text_en;
 
             return (
-                !country
+                ! country
                 ||
                 DACH_REGION_COUNTRIES.includes(country)
             );
@@ -41,7 +53,8 @@ const GeocodingAutoComplete = ({
 {
     const {
         bind,
-        value,
+        setValue: setInputValue,
+        value: inputValue,
     } = useInput();
 
     const {
@@ -53,8 +66,8 @@ const GeocodingAutoComplete = ({
     const [preparedResult, setPreparedResult] = useState([]);
 
     useEffect(
-        () => { setQuery(value); },
-        [value]
+        () => { setQuery(inputValue); },
+        [inputValue]
     );
 
     useEffect(
@@ -65,15 +78,23 @@ const GeocodingAutoComplete = ({
             }
 
             setPreparedResult(
-                filterFeaturesByCountry(
-                    result.features
-                )
+                filterFeaturesByCountry(result.features)
             );
         },
         [result]
     );
 
     const inputRef = useRef();
+
+    const handleSelect = (selectedItem) =>
+    {
+        setInputValue(selectedItem.placeName);
+
+        // TODO:
+        // Dispatch map viewport state change.
+        // (Once redux has been integrated.)
+        console.log(selectedItem);
+    };
 
     return (
         <>
@@ -89,18 +110,27 @@ const GeocodingAutoComplete = ({
                 &&
                 <ListBoxPopper
                     anchorEl={() => (inputRef.current)}
-                    icon={<ExploreIcon />}
+                    itemIcon={<ExploreIcon />}
                     items={
                         preparedResult.map(
-                            (feature) => ({
-                                label: feature.place_name_de.replace(
+                            (feature) => {
+                                const placeName = feature.place_name_de.replace(
                                     /,+/g,
                                     ','
-                                ),
-                                value: feature.id,
-                            })
+                                );
+
+                                return {
+                                    label: placeName,
+                                    value: {
+                                        placeName,
+                                        longitude: feature.center[0],
+                                        latitude: feature.center[1],
+                                    },
+                                };
+                            }
                         )
                     }
+                    onSelect={handleSelect}
                 />
             }
         </>

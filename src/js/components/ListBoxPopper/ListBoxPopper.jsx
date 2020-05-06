@@ -10,91 +10,54 @@ import Paper from '@material-ui/core/Paper'
 import Popper from '@material-ui/core/Popper'
 import { makeStyles } from '@material-ui/core/styles'
 
+import SelectionList from 'components/SelectionList/SelectionList'
+
+import propTypesSelectionList from 'propTypes/propTypesSelectionList'
+
 
 const useStyles = makeStyles((theme) => ({
     popperModalChild: {
-        zIndex: theme.zIndex.modal,
+        zIndex: theme.zIndex.tooltip,
     },
 }));
 
 
 const ListBoxPopper = ({
     anchorEl,
-    items,
-    icon = null,
-    noOptionsText = 'Keine Ergebnisse.',
+    ...selectionListProps
 }) =>
 {
     const classes = useStyles();
 
     return (
         <Popper
+            anchorEl={anchorEl}
             className={classes.popperModalChild}
+            open
+            role="presentation"
             style={{
                 width: anchorEl ? anchorEl.clientWidth : null,
             }}
-            role="presentation"
-            anchorEl={anchorEl}
-            open
         >
-            <Paper
-                // className={classes.paper}
-            >
-                {
-                    items.length > 0
-                    ?
-                    <List dense>
-                        {
-                            items.map(
-                                ({label, value}, index) =>
-                                (
-                                    <ListItem key={`list-item-${index}`}>
-                                    {
-                                        icon
-                                        &&
-                                        <ListItemAvatar>
-                                            <Avatar>{icon}</Avatar>
-                                        </ListItemAvatar>
-                                    }
-                                        <ListItemText
-                                            primary={label}
-                                            // secondary={}
-                                        />
-                                    </ListItem>
-                                )
-                            )
-                        }
-                    </List>
-                    :
-                    <div
-                        // className={classes.noOptions}
-                    >
-                        {noOptionsText}
-                    </div>
-                }
+            <Paper>
+                <SelectionList
+                    {...selectionListProps}
+                />
             </Paper>
         </Popper>
     );
 };
 
 
-ListBoxPopper.propTypes = {
-    anchorEl: PropTypes.oneOfType([
-        PropTypes.element,
-        PropTypes.func,
-    ]).isRequired,
-    icon: PropTypes.node,
-    items: PropTypes.arrayOf(
-        PropTypes.exact({
-            label: PropTypes.string,
-            value: PropTypes.oneOfType([
-                PropTypes.string,
-                PropTypes.number,
-            ]),
-        })
-    ),
-    noOptionsText: PropTypes.string,
-};
+ListBoxPopper.propTypes = Object.assign(
+    {
+        anchorEl: PropTypes.oneOfType([
+            PropTypes.element,
+            PropTypes.func,
+        ]).isRequired,
+    },
+    propTypesSelectionList
+);
 
 
 export default ListBoxPopper;

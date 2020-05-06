@@ -5,6 +5,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import { makeStyles } from '@material-ui/core/styles'
 
 import CloseButton from 'components/CloseButton/CloseButton'
 import TitleIcon from 'components/TitleIcon/TitleIcon'
@@ -15,6 +16,19 @@ import useCloseableRoutedOverlay from
 import propTypesCloseableRoutedOverlay from
     'propTypes/propTypesCloseableRoutedOverlay'
 import propTypesTitled from 'propTypes/propTypesTitled'
+
+
+const useStyles = makeStyles((theme) => ({
+    dialogTitle: {
+        '& h2': {
+            display: 'flex',
+            alignItems: 'center',
+        },
+    },
+    dialogTitleText: {
+        flexGrow: 1,
+    },
+}));
 
 
 const StandardDialog = ({
@@ -31,15 +45,24 @@ const StandardDialog = ({
         handleClose,
     ] = useCloseableRoutedOverlay(isOpenInitially);
 
+    const classes = useStyles();
+
     return (
         <Dialog
+            fullWidth
+            maxWidth="sm"
             open={isOpen}
             onClose={handleClose}
             aria-labelledby={title ? 'dialog-title' : null}
         >
-            <DialogTitle id="dialog-title">
+            <DialogTitle
+                className={classes.dialogTitle}
+                id="dialog-title"
+            >
                 {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
-                {title}
+                <span className={classes.dialogTitleText}>
+                    {title}
+                </span>
                 {<CloseButton onClose={handleClose}/>}
             </DialogTitle>
             <DialogContent>

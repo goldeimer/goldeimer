@@ -10,8 +10,10 @@ import {
     unclusteredPointLayer,
 } from './layers';
 
+import { MAP_TILER_API_KEY } from 'config/apiKeys';
 
-const MAP_STYLE_URL = 'https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=ELs001Fn1Ojoa3POXZTf';
+
+const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`;
 
 
 const InteractiveClusterMap = ({ geoJsonSource }) =>

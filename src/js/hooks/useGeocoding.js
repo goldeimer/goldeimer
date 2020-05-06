@@ -3,7 +3,8 @@ import { useEffect, useState, } from 'react'
 import { freeFormGeocodingRequest } from 'util/geocoding'
 
 
-const useGeocoding = (initialQuery = '') => {
+const useGeocoding = (initialQuery = '') =>
+{
     const [query, setQuery] = useState(initialQuery);
     const [result, setResult] = useState(null);
     const [previousQuery, setPreviousQuery] = useState(initialQuery);

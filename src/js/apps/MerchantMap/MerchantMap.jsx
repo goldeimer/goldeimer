@@ -12,7 +12,6 @@ const MerchantMap = () =>
 {
     const [merchantGeoJson, setMerchantGeoJson] = useState(null);
 
-    // componentDidMount
     useEffect(
         () => {
             const fetchGeoJson = async () => {
