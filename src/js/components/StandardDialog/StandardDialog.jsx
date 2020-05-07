@@ -1,4 +1,5 @@
-import React, { forwardRef, useState, } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -17,35 +18,32 @@ import propTypesCloseableRoutedOverlay from
     'propTypes/propTypesCloseableRoutedOverlay'
 import propTypesTitled from 'propTypes/propTypesTitled'
 
-
 const useStyles = makeStyles((theme) => ({
     dialogTitle: {
         '& h2': {
             display: 'flex',
-            alignItems: 'center',
-        },
+            alignItems: 'center'
+        }
     },
     dialogTitleText: {
-        flexGrow: 1,
-    },
-}));
+        flexGrow: 1
+    }
+}))
 
-
+/* eslint-disable react/prop-types */
 const StandardDialog = ({
     children,
     isOpenInitially = true,
     routeOnClose = '/',
     title = null,
-    titleIcon = null,
-}) =>
-{
-    const [
+    titleIcon = null
+}) => {
+    const {
         isOpen,
-        setIsOpen,
-        handleClose,
-    ] = useCloseableRoutedOverlay(isOpenInitially);
+        handleClose
+    } = useCloseableRoutedOverlay(isOpenInitially)
 
-    const classes = useStyles();
+    const classes = useStyles()
 
     return (
         <Dialog
@@ -63,7 +61,7 @@ const StandardDialog = ({
                 <span className={classes.dialogTitleText}>
                     {title}
                 </span>
-                {<CloseButton onClose={handleClose}/>}
+                <CloseButton onClose={handleClose} />
             </DialogTitle>
             <DialogContent>
                 {children}
@@ -74,15 +72,16 @@ const StandardDialog = ({
                 </Button>
             </DialogActions>
         </Dialog>
-    );
-};
-
+    )
+}
 
 StandardDialog.propTypes = Object.assign(
+    {
+        /* eslint-disable-next-line no-undef */
+        children: PropTypes.node.isRequired
+    },
     propTypesCloseableRoutedOverlay,
     propTypesTitled
-);
+)
 
-
-export default StandardDialog;
-
+export default StandardDialog

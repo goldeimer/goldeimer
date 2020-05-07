@@ -1,46 +1,41 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import { makeStyles } from '@material-ui/core/styles';
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-
+import { makeStyles } from '@material-ui/core/styles'
+import SpeedDial from '@material-ui/lab/SpeedDial'
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
 
 const useStyles = makeStyles((theme) => ({
     speedDial: {
         position: 'absolute',
         bottom: theme.spacing(2),
-        right: theme.spacing(2),
-    },
-}));
-
+        right: theme.spacing(2)
+    }
+}))
 
 const FloatingActionButton = ({
     actions,
-    openIcon = null,
-    routePathnamePrefix = '/action'
+    openIcon,
+    routePathnamePrefix
 }) => {
-    const classes = useStyles();
-    const history = useHistory();
-    const [open, setOpen] = React.useState(false);
+    const classes = useStyles()
+    const history = useHistory()
+    const [open, setOpen] = React.useState(false)
 
-    const handleClick = (actionId) =>
-    {
-        setOpen(false);
-        history.push(`${routePathnamePrefix}/${actionId}`);
-    };
+    const handleClick = (actionId) => {
+        setOpen(false)
+        history.push(`${routePathnamePrefix}/${actionId}`)
+    }
 
-    const handleClose = () =>
-    {
-        setOpen(false);
-    };
+    const handleClose = () => {
+        setOpen(false)
+    }
 
-    const handleOpen = () =>
-    {
-        setOpen(true);
-    };
+    const handleOpen = () => {
+        setOpen(true)
+    }
 
     return (
         <SpeedDial
@@ -50,12 +45,11 @@ const FloatingActionButton = ({
             onClose={handleClose}
             onOpen={handleOpen}
             open={open}
-            direction='up'
+            direction="up"
         >
             {
                 Object.entries(actions).map(
-                    ([actionId, action]) =>
-                    (
+                    ([actionId, action]) => (
                         <SpeedDialAction
                             icon={action.icon}
                             key={actionId}
@@ -69,20 +63,23 @@ const FloatingActionButton = ({
                 )
             }
         </SpeedDial>
-    );
-};
-
+    )
+}
 
 FloatingActionButton.propTypes = {
     actions: PropTypes.objectOf(
         PropTypes.exact({
             icon: PropTypes.element,
-            label: PropTypes.string,
+            label: PropTypes.string
         })
     ).isRequired,
     openIcon: PropTypes.node,
-    routePathnamePrefix: PropTypes.string,
-};
+    routePathnamePrefix: PropTypes.string
+}
 
+FloatingActionButton.defaultProps = {
+    openIcon: null,
+    routePathnamePrefix: '/action'
+}
 
-export default FloatingActionButton;
+export default FloatingActionButton

@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-
-const InputTypeNumber = styled.input.attrs(props => ({
-    type: 'number',
+const InputTypeNumber = styled.input.attrs((props) => ({
+    type: 'number'
 }))`
     width: 4rem !important;
     margin-bottom: 0px !important;
@@ -33,7 +32,7 @@ const InputTypeNumber = styled.input.attrs(props => ({
         -webkit-appearance: none !important;
         margin: 0 !important;
     }
-`;
+`
 
 const ButtonDiv = styled.div`
     margin: 0 1rem !important;
@@ -56,69 +55,68 @@ const ButtonDiv = styled.div`
     &:focus {
         outline: 3px solid #444 !important;
     }
-`;
-
+`
 
 const InputIntegerPlusMinus = ({
-    minValue = 0,
-    maxValue = null,
+    minValue,
+    maxValue,
     setValue,
-    step = 1,
-    value = 0,
+    step,
+    value
 }) => {
-    const setValueWithinBounds = (newValue) =>
-    {
+    const setValueWithinBounds = (newValue) => {
         setValue(
             Math.max(
                 minValue,
                 maxValue === null
-                ? newValue
-                : Math.min(maxValue, newValue)
+                    ? newValue
+                    : Math.min(maxValue, newValue)
             )
-        );
-    };
+        )
+    }
 
-    const handleChange = (event) =>
-    {
-        const newValue = event.target.value;
+    const handleChange = (event) => {
+        const newValue = event.target.value
 
-        if (! isNaN(newValue))
-        {
-            setValueWithinBounds(newValue);
+        if (!Number.isNaN(newValue)) {
+            setValueWithinBounds(newValue)
         }
-    };
+    }
 
-    const handleMinus = () =>
-    {
-        setValueWithinBounds(value - step);
-    };
+    const handleMinus = () => {
+        setValueWithinBounds(value - step)
+    }
 
-    const handlePlus = () =>
-    {
-        setValueWithinBounds(value + step);
-    };
+    const handlePlus = () => {
+        setValueWithinBounds(value + step)
+    }
 
     return (
         <>
             <ButtonDiv onClick={handleMinus}>
-                    {'-'}
+                -
             </ButtonDiv>
-            <InputTypeNumber value={value} onChange={handleChange}/>
+            <InputTypeNumber value={value} onChange={handleChange} />
             <ButtonDiv onClick={handlePlus}>
-                {'+'}
+                +
             </ButtonDiv>
         </>
-    );
+    )
 }
-
 
 InputIntegerPlusMinus.propTypes = {
     minValue: PropTypes.number,
     maxValue: PropTypes.number,
     setValue: PropTypes.func.isRequired,
     step: PropTypes.number,
-    value: PropTypes.number,
-};
+    value: PropTypes.number
+}
 
+InputIntegerPlusMinus.defaultProps = {
+    minValue: 0,
+    maxValue: null,
+    step: 1,
+    value: 0
+}
 
-export default InputIntegerPlusMinus;
+export default InputIntegerPlusMinus

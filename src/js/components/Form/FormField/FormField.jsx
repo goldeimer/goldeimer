@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const WrapDiv = styled.div`
     display: flex !important;
@@ -18,10 +17,9 @@ const InputDiv = styled.div`
     display: flex;
 `
 
-
 const FormField = ({
     children,
-    label,
+    label
 }) => (
     <WrapDiv>
         <LabelDiv>
@@ -31,13 +29,11 @@ const FormField = ({
             {children}
         </InputDiv>
     </WrapDiv>
-);
-
+)
 
 FormField.propTypes = {
     children: PropTypes.element.isRequired,
-    label: PropTypes.string.isRequired,
-};
+    label: PropTypes.string.isRequired
+}
 
-
-export default FormField;
+export default FormField

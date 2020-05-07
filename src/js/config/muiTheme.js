@@ -1,27 +1,26 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles'
 
-
-const colorPrimary = '#ffe300';
+const colorPrimary = '#ffe300'
 
 const typographyFontFamilyVeneer = {
-    fontFamily: 'veneer',
-};
+    fontFamily: 'veneer'
+}
 
 const muiTheme = createMuiTheme({
     palette: {
         primary: {
-            main: colorPrimary,
+            main: colorPrimary
         },
         secondary: {
             // placeholder color, TBD w/ @Manou
-            main: '#795548',
-        },
+            main: '#795548'
+        }
     },
-// TBD w/ @Manou:
-//
-//     shape: {
-//         borderRadius: 0,
-//     },
+    // TBD w/ @Manou:
+    //
+    //     shape: {
+    //         borderRadius: 0,
+    //     },
     typography: {
         fontFamily: 'museo',
         h1: typographyFontFamilyVeneer,
@@ -32,15 +31,14 @@ const muiTheme = createMuiTheme({
         h6: typographyFontFamilyVeneer,
         button: Object.assign(
             {
-                fontSize: '1rem',
+                fontSize: '1rem'
             },
             typographyFontFamilyVeneer
-        ),
-    },
-});
-
+        )
+    }
+})
 
 export {
     muiTheme as default,
-    colorPrimary,
-};
+    colorPrimary
+}

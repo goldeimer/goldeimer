@@ -1,12 +1,7 @@
-import React, { useState, } from 'react';
+import React from 'react'
 
+const FeatureTable = () => (
+    <h1>FEATURE TABLE</h1>
+)
 
-const FeatureTable = () =>
-{
-    return (
-        <h1>FEATURE TABLE</h1>
-    );
-};
-
-
-export default FeatureTable;
+export default FeatureTable

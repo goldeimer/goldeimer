@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react'
+import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -13,7 +14,7 @@ import Fade from '@material-ui/core/Fade'
 import Slide from '@material-ui/core/Slide'
 
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { makeStyles, useTheme, } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 import CloseButton from 'components/CloseButton/CloseButton'
 import TitleIcon from 'components/TitleIcon/TitleIcon'
@@ -24,49 +25,41 @@ import propTypesCloseableRoutedOverlay from
     'propTypes/propTypesCloseableRoutedOverlay'
 import propTypesTitled from 'propTypes/propTypesTitled'
 
-
-const FULLSCREEN_BREAKPOINT = 'md';
-const MAX_WIDTH = 'lg';
-
+const FULLSCREEN_BREAKPOINT = 'md'
+const MAX_WIDTH = 'lg'
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-        position: 'relative',
+        position: 'relative'
     },
     appBarTitle: {
-        flex: 1,
-    },
-}));
-
+        flex: 1
+    }
+}))
 
 const Transition = forwardRef(
     // TODO: arrow function
-    function Transition(props, ref)
-    {
-        return <Slide direction='up' ref={ref} {...props} />;
-    }
-);
+    (props, ref) => <Slide direction="up" ref={ref} {...props} />
+)
 
-
+/* eslint-disable react/prop-types */
 const LargeContentDialog = ({
     children,
     isOpenInitially = true,
     routeOnClose = '/',
     title = null,
     titleIcon = null
-}) =>
-{
-    const [
+}) => {
+    const {
         isOpen,
-        setIsOpen,
-        handleClose,
-    ] = useCloseableRoutedOverlay(isOpenInitially);
+        handleClose
+    } = useCloseableRoutedOverlay(isOpenInitially)
 
-    const classes = useStyles();
-    const theme = useTheme();
+    const classes = useStyles()
+    const theme = useTheme()
     const useFullScreenVariant = useMediaQuery(
         theme.breakpoints.down(FULLSCREEN_BREAKPOINT)
-    );
+    )
 
     return (
         <Dialog
@@ -81,22 +74,26 @@ const LargeContentDialog = ({
         >
             {
                 useFullScreenVariant
-                ? <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <Typography
-                            variant="h6"
-                            className={classes.appBarTitle}
-                        >
+                    ? (
+                        <AppBar className={classes.appBar}>
+                            <Toolbar>
+                                <Typography
+                                    variant="h6"
+                                    className={classes.appBarTitle}
+                                >
+                                    {title}
+                                </Typography>
+                                <CloseButton onClose={handleClose} />
+                            </Toolbar>
+                        </AppBar>
+                    )
+                    : (
+                        <DialogTitle id="dialog-title">
+                            {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
                             {title}
-                        </Typography>
-                        {<CloseButton onClose={handleClose}/>}
-                    </Toolbar>
-                </AppBar>
-                : <DialogTitle id="dialog-title">
-                    {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
-                    {title}
-                    {<CloseButton onClose={handleClose}/>}
-                </DialogTitle>
+                            <CloseButton onClose={handleClose} />
+                        </DialogTitle>
+                    )
             }
             <DialogContent>
                 {children}
@@ -107,14 +104,16 @@ const LargeContentDialog = ({
                 </Button>
             </DialogActions>
         </Dialog>
-    );
-};
-
+    )
+}
 
 LargeContentDialog.propTypes = Object.assign(
+    {
+        /* eslint-disable-next-line no-undef */
+        children: PropTypes.node.isRequired
+    },
     propTypesCloseableRoutedOverlay,
     propTypesTitled
-);
+)
 
-
-export default LargeContentDialog;
+export default LargeContentDialog

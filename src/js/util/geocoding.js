@@ -6,14 +6,12 @@
 /// - [endpoint](https://nominatim.openstreetmap.org/search/<query>?<params>)
 /// - [documentation](https://nominatim.org/release-docs/develop/api/Search/)
 
+import axios from 'axios'
 
-import axios from 'axios';
-
-import { MAP_TILER_API_KEY } from 'config/apiKeys';
-
+import { MAP_TILER_API_KEY } from 'config/apiKeys'
 
 // Hamburg, Germany
-const DEFAULT_PROXIMITY = '10.00,53.56';
+const DEFAULT_PROXIMITY = '10.00,53.56'
 
 // "DACH" region
 //
@@ -23,35 +21,31 @@ const DEFAULT_PROXIMITY = '10.00,53.56';
 // - WEST: Isenbruch, near Millen, North Rhine-Westphalia, Germany (5.85)
 // - EAST: Corner of a field near Deutsch Jahrndorf, Burgenland, Austria (17.16)
 // - SOUTH: Border with Italy, Pedrinate, Ticino, Switzerland (45.83)
-const DEFAULT_BOUNDING_BOX = '5.85,45.83,17.16,55.05';
+const DEFAULT_BOUNDING_BOX = '5.85,45.83,17.16,55.05'
 
-const MAP_TILER_GEOCODING_ENDPOINT = 'https://api.maptiler.com/geocoding/';
-
+const MAP_TILER_GEOCODING_ENDPOINT = 'https://api.maptiler.com/geocoding/'
 
 const geocodingRequest = async (
     query,
     bbox = DEFAULT_BOUNDING_BOX,
     proximity = DEFAULT_PROXIMITY
 ) => {
-    const bboxQueryArg = bbox ? `&bbox=${bbox}` : '';
-    const proximityQueryArg = proximity ? `&proximity=${proximity}` : '';
+    const bboxQueryArg = bbox ? `&bbox=${bbox}` : ''
+    const proximityQueryArg = proximity ? `&proximity=${proximity}` : ''
 
-    const requestUrl = `${MAP_TILER_GEOCODING_ENDPOINT}${query}.json?key=${MAP_TILER_API_KEY}&language=de,en${bboxQueryArg}${proximityQueryArg}`;
+    const requestUrl = `${MAP_TILER_GEOCODING_ENDPOINT}${query}.json?key=${MAP_TILER_API_KEY}&language=de,en${bboxQueryArg}${proximityQueryArg}`
 
-    try
-    {
-        const response = await axios.get(requestUrl);
+    try {
+        const response = await axios.get(requestUrl)
 
-        return response.data;
+        return response.data
+    } catch (error) {
+        /* eslint-disable-next-line no-console */
+        console.log(error)
+
+        return null
     }
-    catch (error)
-    {
-        console.log(error);
-
-        return null;
-    }
-};
-
+}
 
 const freeFormGeocodingRequest = async (
     searchString,
@@ -62,11 +56,10 @@ const freeFormGeocodingRequest = async (
         `${searchString}`,
         bbox,
         proximity
-    );
+    )
 
-    return response;
-};
-
+    return response
+}
 
 const reverseGeocodingRequest = async (
     longitude,
@@ -78,14 +71,13 @@ const reverseGeocodingRequest = async (
         `${longitude},${latitude}`,
         bbox,
         proximity
-    );
+    )
 
-    return response;
-};
-
+    return response
+}
 
 export {
     geocodingRequest as default,
     freeFormGeocodingRequest,
-    reverseGeocodingRequest,
-};
+    reverseGeocodingRequest
+}

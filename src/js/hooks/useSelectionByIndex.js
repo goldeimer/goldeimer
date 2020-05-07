@@ -1,46 +1,43 @@
-import { useEffect, useState, } from 'react'
-
+import { useEffect, useState } from 'react'
 
 const useSelectionByIndex = (
     items,
     onSelect = null,
     initialIndex = 0
 ) => {
-    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState(null)
 
     useEffect(
         () => {
-            const length = items.length;
+            const { length } = items
 
-            if (length > 0)
-            {
+            if (length > 0) {
                 setSelectedIndex(
                     Math.min(initialIndex, length - 1)
-                );
-                return;
+                )
+
+                return
             }
 
-            setSelectedIndex(null);
+            setSelectedIndex(null)
         },
         [items]
-    );
+    )
 
-    const handleSelect = (index) =>
-    {
-        setSelectedIndex(index);
+    const handleSelect = (index) => {
+        setSelectedIndex(index)
 
-        if (onSelect)
-        {
-            const item = items[index];
-            const selectedValue = 'value' in item ? item.value : item;
-            onSelect(selectedValue);
+        if (onSelect) {
+            const item = items[index]
+            const selectedValue = 'value' in item ? item.value : item
+
+            onSelect(selectedValue)
         }
-    };
+    }
     return {
         handleSelect,
-        selectedIndex,
-    };
-};
+        selectedIndex
+    }
+}
 
-
-export default useSelectionByIndex;
+export default useSelectionByIndex

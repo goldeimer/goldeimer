@@ -1,36 +1,33 @@
-import React, { useEffect, useState, } from 'react';
+import React, { useEffect, useState } from 'react'
 
 import InteractiveClusterMap from
-    './components/InteractiveClusterMap/InteractiveClusterMap';
+    './components/InteractiveClusterMap/InteractiveClusterMap'
 import MapControlUiLayer from
     './components/MapControlUiLayer/MapControlUiLayer'
 
-import getMerchantGeoJson from './getMerchantGeoJson';
+import getMerchantGeoJson from './getMerchantGeoJson'
 
-
-const MerchantMap = () =>
-{
-    const [merchantGeoJson, setMerchantGeoJson] = useState(null);
+const MerchantMap = () => {
+    const [merchantGeoJson, setMerchantGeoJson] = useState(null)
 
     useEffect(
         () => {
             const fetchGeoJson = async () => {
-                const geoJson = await getMerchantGeoJson();
-                setMerchantGeoJson(geoJson);
-            };
+                const geoJson = await getMerchantGeoJson()
+                setMerchantGeoJson(geoJson)
+            }
 
-            fetchGeoJson();
+            fetchGeoJson()
         },
         []
-    );
+    )
 
     return (
-        <div style={{width: '100vw', height: '100vh'}}>
+        <div style={{ width: '100vw', height: '100vh' }}>
             <InteractiveClusterMap geoJsonSource={merchantGeoJson} />
             <MapControlUiLayer />
         </div>
-    );
-};
+    )
+}
 
-
-export default MerchantMap;
+export default MerchantMap

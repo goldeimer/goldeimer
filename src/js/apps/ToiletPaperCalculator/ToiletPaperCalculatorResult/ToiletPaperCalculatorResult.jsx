@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
 const WrapDiv = styled.div`
     margin-top: 40px;
     padding: 30px;
     background-color: #ffe300;
     text-align: center;
-`;
+`
 
 const MainDiv = styled.div`
     font-size: 2em;
@@ -16,12 +15,12 @@ const MainDiv = styled.div`
     color: #000000;
     font-family: veneer;
     text-align: center;
-`;
+`
 
 const MainSpan = styled.div`
     display: block;
     font-size: 2em;
-`;
+`
 
 const BaseP = styled.p`
     margin-top: 20px;
@@ -29,15 +28,15 @@ const BaseP = styled.p`
     font-weight: 700 !important;
     font-size: 12px !important;
     text-align: center;
-`;
+`
 
 const FootnoteP = styled(BaseP)`
     font-size: 12px !important;
-`;
+`
 
 const SubscriptionP = styled(BaseP)`
     font-size: 17px !important;
-`;
+`
 
 const SubscriptionA = styled.a`
     display: inline-block;
@@ -62,18 +61,19 @@ const SubscriptionA = styled.a`
         background-color: #000 !important;
         color: #FFF !important;
     }
-`;
-
+`
 
 const ToiletPaperCalculatorResult = ({
     bestFittingSubscription,
-    requiredRollsPerSelectedPeriod,
+    requiredRollsPerSelectedPeriod
 }) => (
     <WrapDiv>
         <MainDiv>
             Du brauchst
             <MainSpan>
-                {requiredRollsPerSelectedPeriod} Rollen
+                {requiredRollsPerSelectedPeriod}
+                {' '}
+                Rollen
             </MainSpan>
             Goldeimer Klopapier!*
             <br />
@@ -81,18 +81,24 @@ const ToiletPaperCalculatorResult = ({
         <SubscriptionP>
             Das für dich passendste
             <a href={bestFittingSubscription.url}>Klopapier-Abo</a>
-            sind {bestFittingSubscription.packages} Pakete
-            {` ${bestFittingSubscription.perPeriodCopy}`}.
+            sind
+            {' '}
+            {bestFittingSubscription.packages}
+            {' '}
+            Pakete
+            {` ${bestFittingSubscription.perPeriodCopy}`}
+            .
         </SubscriptionP>
         <SubscriptionA href={bestFittingSubscription.url}>
             Jetzt abonnieren
         </SubscriptionA>
         <FootnoteP>
-            *Nicht mit eingerechnet ist der zusätzliche Verbrauch von Klopapier, während der Periode. Je nach Intensität solltest Du etwas mehr Klopapier einkalkulieren!
+            *Nicht mit eingerechnet ist der zusätzliche Verbrauch von Klopapier,
+            während der Periode. Je nach Intensität solltest Du etwas mehr
+            Klopapier einkalkulieren!
         </FootnoteP>
     </WrapDiv>
-);
-
+)
 
 ToiletPaperCalculatorResult.propTypes = {
     bestFittingSubscription: PropTypes.exact({
@@ -100,10 +106,9 @@ ToiletPaperCalculatorResult.propTypes = {
         packages: PropTypes.number,
         perPeriodCopy: PropTypes.string,
         rollsPerMonth: PropTypes.number,
-        url: PropTypes.string,
+        url: PropTypes.string
     }).isRequired,
-    requiredRollsPerSelectedPeriod: PropTypes.number.isRequired,
+    requiredRollsPerSelectedPeriod: PropTypes.number.isRequired
 }
 
-
-export default ToiletPaperCalculatorResult;
+export default ToiletPaperCalculatorResult

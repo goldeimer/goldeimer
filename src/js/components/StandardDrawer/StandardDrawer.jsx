@@ -10,20 +10,18 @@ import propTypesCloseableRoutedOverlay from
 const StandardDrawer = ({
     children,
     isOpenInitially = true,
-    routeOnClose = '/',
-}) =>
-{
-    const [
+    routeOnClose = '/'
+}) => {
+    const {
         isOpen,
-        setIsOpen,
         handleClose,
-        handleOpen,
-    ] = useCloseableRoutedOverlay(isOpenInitially);
+        handleOpen
+    } = useCloseableRoutedOverlay(isOpenInitially)
 
     const iOS = (
-        process.browser
-        && /iPad|iPhone|iPod/.test(navigator.userAgent)
-    );
+        process.browser &&
+        /iPad|iPhone|iPod/.test(navigator.userAgent)
+    )
 
     return (
         <SwipeableDrawer
@@ -36,11 +34,9 @@ const StandardDrawer = ({
         >
             {children}
         </SwipeableDrawer>
-    );
-};
+    )
+}
 
+StandardDrawer.propTypes = propTypesCloseableRoutedOverlay
 
-StandardDrawer.propTypes = propTypesCloseableRoutedOverlay;
-
-
-export default StandardDrawer;
+export default StandardDrawer

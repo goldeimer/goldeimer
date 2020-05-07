@@ -1,24 +1,20 @@
-import React, { useRef, useState, } from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 
-import { ThemeProvider, } from '@material-ui/core/styles';
-import MapGL, { Source, Layer, } from 'react-map-gl';
+import MapGL, { Source, Layer } from 'react-map-gl'
+
+import { MAP_TILER_API_KEY } from 'config/apiKeys'
 
 import {
     clusterLayer,
     clusterCountLayer,
-    unclusteredPointLayer,
-} from './layers';
+    unclusteredPointLayer
+} from './layers'
 
-import { MAP_TILER_API_KEY } from 'config/apiKeys';
+const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
-
-const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`;
-
-
-const InteractiveClusterMap = ({ geoJsonSource }) =>
-{
-    const sourceRef = useRef();
+const InteractiveClusterMap = ({ geoJsonSource }) => {
+    const sourceRef = useRef()
 
     const [viewport, setViewport] = useState({
         latitude: 50.75,
@@ -26,21 +22,19 @@ const InteractiveClusterMap = ({ geoJsonSource }) =>
         zoom: 5,
         bearing: 0,
         pitch: 0
-    });
+    })
 
-    const handleViewportChange = (nextViewport) => setViewport(nextViewport);
+    const handleViewportChange = (nextViewport) => setViewport(nextViewport)
 
-    const handleClusterClick = (feature) =>
-    {
-        const clusterId = feature.properties.cluster_id;
-        const mapboxSource = sourceRef.current.getSource();
+    const handleClusterClick = (feature) => {
+        const clusterId = feature.properties.cluster_id
+        const mapboxSource = sourceRef.current.getSource()
 
         mapboxSource.getClusterExpansionZoom(
             clusterId,
-            (err, zoom) =>
-            {
+            (err, zoom) => {
                 if (err) {
-                    return;
+                    return
                 }
 
                 handleViewportChange(
@@ -51,34 +45,34 @@ const InteractiveClusterMap = ({ geoJsonSource }) =>
                         zoom,
                         transitionDuration: 500
                     }
-                );
+                )
             }
-        );
-    };
-
-    const handleMarkerClick = (feature) =>
-    {
-        console.log(feature);
+        )
     }
 
-    const handleClick = (event) =>
-    {
-        if ('features' in event && event.features.length)
-        {
-            const feature = event.features[0];
+    const handleMarkerClick = (feature) => {
+        // TODO:
+        // Implement detail info UI.
+        /* eslint-disable-next-line no-console */
+        console.log(feature)
+    }
 
-            if ('layer' in feature)
-            {
-                switch (feature.layer.id)
-                {
-                    case clusterLayer.id:
-                    case clusterCountLayer.id:
-                        handleClusterClick(feature);
-                        break;
+    const handleClick = (event) => {
+        if ('features' in event && event.features.length) {
+            const feature = event.features[0]
 
-                    case unclusteredPointLayer.id:
-                        handleMarkerClick(feature);
-                        break;
+            if ('layer' in feature) {
+                switch (feature.layer.id) {
+                case clusterLayer.id:
+                case clusterCountLayer.id:
+                    handleClusterClick(feature)
+                    return
+
+                case unclusteredPointLayer.id:
+                    handleMarkerClick(feature)
+                    break
+
+                default:
                 }
             }
         }
@@ -87,47 +81,48 @@ const InteractiveClusterMap = ({ geoJsonSource }) =>
     return (
         <MapGL
             {...viewport}
-            width='100%'
-            height='100%'
+            width="100%"
+            height="100%"
             attributionControl={false}
             interactiveLayerIds={
                 [
                     clusterLayer.id,
                     clusterCountLayer.id,
-                    unclusteredPointLayer.id,
+                    unclusteredPointLayer.id
                 ]
             }
-            mapboxApiAccessToken=''
+            mapboxApiAccessToken=""
             mapStyle={MAP_STYLE_URL}
             onClick={handleClick}
             onViewportChange={handleViewportChange}
             transitionDuration={500}
         >
-            {
-                geoJsonSource &&
+            {geoJsonSource && (
                 <Source
-                    type='geojson'
+                    type="geojson"
                     data={geoJsonSource}
-                    cluster={true}
+                    cluster
                     clusterMaxZoom={14}
                     clusterRadius={50}
-                    generateId={true}
+                    generateId
                     ref={sourceRef}
                 >
                     <Layer {...clusterLayer} />
                     <Layer {...clusterCountLayer} />
                     <Layer {...unclusteredPointLayer} />
                 </Source>
-            }
+            )}
         </MapGL>
-    );
+    )
 }
 
-
 InteractiveClusterMap.propTypes = {
-    geoJsonSource: PropTypes.object,
-};
+    /* eslint-disable-next-line react/forbid-prop-types */
+    geoJsonSource: PropTypes.object
+}
 
+InteractiveClusterMap.defaultProps = {
+    geoJsonSource: null
+}
 
-export default InteractiveClusterMap;
-
+export default InteractiveClusterMap

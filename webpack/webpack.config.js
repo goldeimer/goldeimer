@@ -19,10 +19,10 @@ const wordPressConfig = {
     name: 'wordpress-assets',
     entry: {
         merchant_map: path.resolve(
-            SRC_JS_PATH, 'apps', 'MerchantMapWordPress.js'
+            SRC_JS_PATH, 'apps', 'MerchantMapWordPress.jsx'
         ),
         toilet_paper_calculator: path.resolve(
-            SRC_JS_PATH, 'apps', 'ToiletPaperCalculator.js'
+            SRC_JS_PATH, 'apps', 'ToiletPaperCalculator.jsx'
         ),
         wordpress_theme_main: path.resolve(
             SRC_PATH, 'css', 'wordpress-theme-main.css'
@@ -40,7 +40,7 @@ const merchantMapConfig = {
     name: 'merchant-map',
     entry: {
         merchant_map: path.resolve(
-            SRC_JS_PATH, 'apps', 'MerchantMapStandaloneAppShell.js'
+            SRC_JS_PATH, 'apps', 'MerchantMapStandaloneAppShell.jsx'
         ),
     },
     output: {
