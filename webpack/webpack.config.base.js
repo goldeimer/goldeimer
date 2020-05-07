@@ -16,24 +16,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestWebpackPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
 const makeNamePreserveRelativeAssetDirectory = (file) => {
     const srcDirName = path.relative(
         path.join(__dirname, '..', 'src'),
         path.dirname(file)
     );
 
-    return `${srcDirName}/[name].[ext]`;
+    return `static/${srcDirName}/[name].[ext]`;
 };
-
 
 module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: 'css/[name].css',
-            chunkFilename: 'css/[id].css',
+            filename: 'static/css/[name].css',
+            chunkFilename: 'static/css/[id].css',
         }),
         new webpack.DefinePlugin({}),
     ],
@@ -59,9 +57,9 @@ module.exports = {
                 loader: 'eslint-loader',
                 options: {
                     eslintPath: 'eslint-config-airbnb-standard/node_modules/eslint',
-                    // fix: true,
+                    fix: true,
                     failOnError: true,
-                    failOnWarning: true,
+                    // failOnWarning: true,
                 },
             },
             {

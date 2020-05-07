@@ -19,6 +19,6 @@ module.exports = {
     // destination
     DIST_BASE_PATH: PROJECT_PATH,
     // destination specific
-    PUBLIC_PATH_WORDPRESS: '/wp-content/themes/enfold-child/static/',
-    PUBLIC_PATH_DEFAULT: '/static/',
+    PUBLIC_PATH_WORDPRESS: '/wp-content/themes/enfold-child/',
+    PUBLIC_PATH_DEFAULT: '/',
 }

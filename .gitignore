@@ -1,1 +1,4 @@
 node_modules
+
+# populated by webpack build
+merchant-map

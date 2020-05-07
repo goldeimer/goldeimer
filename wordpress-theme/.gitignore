@@ -1,2 +1,3 @@
 # populated by webpack build
 static/*
+manifest.json
