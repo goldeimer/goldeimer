@@ -1,0 +1,17 @@
+{
+    'extends': ['airbnb-standard'],
+    'rules': {
+        'indent': ['error', 4],
+        'react/jsx-indent': ['error', 4],
+        'react/jsx-indent-props': ['error', 4],
+        'semi': ['error', 'never'],
+        'spaced-comment': ['off']
+    },
+    'settings': {
+        'import/resolver': {
+            'webpack': {
+                 'config': 'webpack/webpack.config.base.js'
+            }
+        }
+    }
+}

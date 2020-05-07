@@ -11,8 +11,8 @@ const merge = require('webpack-merge');
 
 
 const modeBaseConfig = process.env.BUILD_CONFIG === 'development'
-    ? require('./webpack-config.development.js')
-    : require('./webpack-config.production.js');
+    ? require('./webpack.config.development.js')
+    : require('./webpack.config.production.js');
 
 
 const wordPressConfig = {
