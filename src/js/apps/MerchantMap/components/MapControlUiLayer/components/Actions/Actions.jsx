@@ -13,7 +13,7 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 import Action from './Action';
 
 
-const ACTIONS = {
+const ACTION = {
     list: {
         icon: <ViewListIcon />,
         label: 'Händler Liste',
@@ -29,8 +29,8 @@ const ACTIONS = {
 };
 
 
-const ACTION_IDS = Object.fromEntries(
-    Object.keys(ACTIONS).map(
+const ACTION_ID = Object.fromEntries(
+    Object.keys(ACTION).map(
         (actionId) => ([actionId, actionId])
     )
 );
@@ -55,6 +55,6 @@ const Actions = () =>
 
 export {
     Actions as default,
-    ACTIONS,
-    ACTION_IDS,
+    ACTION,
+    ACTION_ID,
 };

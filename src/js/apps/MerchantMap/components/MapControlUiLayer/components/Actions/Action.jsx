@@ -13,7 +13,7 @@ import FeatureTable from './components/FeatureTable/FeatureTable'
 import GeocodingAutocomplete from
     './components/GeocodingAutocomplete/GeocodingAutocomplete'
 
-import { ACTION_IDS } from './Actions'
+import { ACTION_ID } from './Actions'
 
 
 // TODO: Dynamic copy.
@@ -23,7 +23,7 @@ const Action = () =>
 
     switch (actionId)
     {
-        case ACTION_IDS.locate:
+        case ACTION_ID.locate:
             return (
                 <StandardDialog
                     title="Finde Händler in deiner Nähe"
@@ -34,7 +34,7 @@ const Action = () =>
             );
             break;
 
-        case ACTION_IDS.filter:
+        case ACTION_ID.filter:
             return (
                 <StandardDrawer
                     title="Auswahl einschränken"
@@ -45,7 +45,7 @@ const Action = () =>
             );
             break;
 
-        case ACTION_IDS.list:
+        case ACTION_ID.list:
             return (
                 <LargeContentDialog
                     title="Hier bekommst Du unsere Produkte"
