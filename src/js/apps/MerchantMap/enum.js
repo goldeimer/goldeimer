@@ -5,12 +5,6 @@
 /// TODO(Johannes):
 /// Make dynamic, define on the backend side (once we have one).
 
-import React from 'react'
-
-import FilterListIcon from '@material-ui/icons/FilterList'
-import LocationSearchingIcon from '@material-ui/icons/LocationSearching'
-import ViewListIcon from '@material-ui/icons/ViewList'
-
 /// ---------------------------------- util -----------------------------------
 
 const makeEnumObject = (id, label) => ({
@@ -42,32 +36,7 @@ const MERCHANT_TYPE = {
 
 const MERCHANT_TYPE_ID = makeIdEnum(MERCHANT_TYPE)
 
-/// ------------------------- user interaction enums --------------------------
-
-const ACTION = {
-    list: {
-        icon: <ViewListIcon />,
-        label: 'Händler Liste'
-    },
-    filter: {
-        icon: <FilterListIcon />,
-        label: 'Auswahl einschränken'
-    },
-    locate: {
-        icon: <LocationSearchingIcon />,
-        label: 'In deiner Nähe'
-    }
-}
-
-const ACTION_ID = Object.fromEntries(
-    Object.keys(ACTION).map(
-        (actionId) => ([actionId, actionId])
-    )
-)
-
 export {
-    ACTION,
-    ACTION_ID,
     BRAND,
     BRAND_ID,
     MERCHANT_TYPE,

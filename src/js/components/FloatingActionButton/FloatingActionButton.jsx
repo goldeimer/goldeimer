@@ -51,7 +51,7 @@ const FloatingActionButton = ({
                 Object.entries(actions).map(
                     ([actionId, action]) => (
                         <SpeedDialAction
-                            icon={action.icon}
+                            icon={<action.Icon />}
                             key={actionId}
                             onClick={() => (handleClick(actionId))}
                             // TODO:
@@ -68,9 +68,9 @@ const FloatingActionButton = ({
 
 FloatingActionButton.propTypes = {
     actions: PropTypes.objectOf(
-        PropTypes.exact({
-            icon: PropTypes.element,
-            label: PropTypes.string
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            Icon: PropTypes.elementType.isRequired
         })
     ).isRequired,
     openIcon: PropTypes.node,
@@ -79,7 +79,7 @@ FloatingActionButton.propTypes = {
 
 FloatingActionButton.defaultProps = {
     openIcon: null,
-    routePathnamePrefix: '/action'
+    routePathnamePrefix: ''
 }
 
 export default FloatingActionButton

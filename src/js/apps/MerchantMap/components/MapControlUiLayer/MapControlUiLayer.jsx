@@ -13,20 +13,27 @@ import muiTheme from 'config/muiTheme'
 import FloatingActionButton from
     'components/FloatingActionButton/FloatingActionButton'
 
-import { ACTION } from 'apps/MerchantMap/enum'
-
-import ActionSwitch from './components/ActionSwitch/ActionSwitch'
+import VIEWS from './views'
 
 const MapControlUiLayer = () => (
     <ThemeProvider theme={muiTheme}>
         <Router>
             <Switch>
-                <Route path="/action">
-                    <ActionSwitch />
-                </Route>
+                {
+                    Object.entries(VIEWS).map(
+                        ([key, view]) => (
+                            <Route key={key} path={`/${key}`}>
+                                <view.Container
+                                    title={view.title}
+                                    titleIcon={<view.Icon />}
+                                />
+                            </Route>
+                        )
+                    )
+                }
                 <Route path="/">
                     <FloatingActionButton
-                        actions={ACTION}
+                        actions={VIEWS}
                         openIcon={<MapIcon />}
                     />
                 </Route>
