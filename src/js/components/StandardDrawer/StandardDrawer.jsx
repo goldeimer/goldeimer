@@ -9,14 +9,14 @@ import propTypesCloseableRoutedOverlay from
 
 const StandardDrawer = ({
     children,
-    isOpenInitially = true,
-    routeOnClose = '/'
+    routeOnClose = '/',
+    shouldBeOpen = true
 }) => {
     const {
         isOpen,
         handleClose,
         handleOpen
-    } = useCloseableRoutedOverlay(isOpenInitially)
+    } = useCloseableRoutedOverlay(shouldBeOpen)
 
     const iOS = (
         process.browser &&

@@ -33,15 +33,15 @@ const useStyles = makeStyles((theme) => ({
 /* eslint-disable react/prop-types */
 const StandardDialog = ({
     children,
-    isOpenInitially = true,
     routeOnClose = '/',
+    shouldBeOpen = true,
     title = null,
     titleIcon = null
 }) => {
     const {
         isOpen,
         handleClose
-    } = useCloseableRoutedOverlay(isOpenInitially)
+    } = useCloseableRoutedOverlay(shouldBeOpen)
 
     const classes = useStyles()
 

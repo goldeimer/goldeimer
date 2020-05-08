@@ -45,15 +45,15 @@ const Transition = forwardRef(
 /* eslint-disable react/prop-types */
 const LargeContentDialog = ({
     children,
-    isOpenInitially = true,
     routeOnClose = '/',
+    shouldBeOpen = true,
     title = null,
     titleIcon = null
 }) => {
     const {
         isOpen,
         handleClose
-    } = useCloseableRoutedOverlay(isOpenInitially)
+    } = useCloseableRoutedOverlay(shouldBeOpen)
 
     const classes = useStyles()
     const theme = useTheme()

@@ -8,7 +8,7 @@ import {
 
 import Action from './Action'
 
-const Actions = () => {
+const ActionSwitch = () => {
     const routeMatch = useRouteMatch()
 
     return (
@@ -23,4 +23,4 @@ const Actions = () => {
     )
 }
 
-export default Actions
+export default ActionSwitch

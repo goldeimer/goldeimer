@@ -4,13 +4,13 @@ const path = require('path');
 const {
     SRC_CSS_PATH,
     SRC_JS_PATH,
-    // SRC_JS_ACTIONS_PATH,
+    SRC_JS_ACTIONS_PATH,
     SRC_JS_APPS_PATH,
     SRC_JS_COMPONENTS_PATH,
     SRC_JS_CONFIG_PATH,
     SRC_JS_HOOKS_PATH,
     SRC_JS_PROP_TYPES_PATH,
-    // SRC_JS_REDUCERS_PATH,
+    SRC_JS_REDUCERS_PATH,
     SRC_JS_UTIL_PATH,
 } = require('./path');
 
@@ -43,14 +43,14 @@ module.exports = {
             apps: SRC_JS_APPS_PATH,
             'merchant-map': path.resolve(SRC_JS_APPS_PATH, 'MerchantMap'),
             // --- common js src ---
-            // actions: SRC_JS_ACTIONS_PATH,
+            actions: SRC_JS_ACTIONS_PATH,
             components: SRC_JS_COMPONENTS_PATH,
             config: SRC_JS_CONFIG_PATH,
             css: SRC_CSS_PATH,
             hooks: SRC_JS_HOOKS_PATH,
             js: SRC_JS_PATH,
             propTypes: SRC_JS_PROP_TYPES_PATH,
-            // reducers: SRC_JS_REDUCERS_PATH,
+            reducers: SRC_JS_REDUCERS_PATH,
             util: SRC_JS_UTIL_PATH,
         },
         extensions: ['.js', '.jsx', '.json', '.ts',],

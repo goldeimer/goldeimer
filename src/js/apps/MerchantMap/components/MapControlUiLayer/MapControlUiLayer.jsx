@@ -15,14 +15,14 @@ import FloatingActionButton from
 
 import { ACTION } from 'apps/MerchantMap/enum'
 
-import Actions from './components/Actions/Actions'
+import ActionSwitch from './components/ActionSwitch/ActionSwitch'
 
 const MapControlUiLayer = () => (
     <ThemeProvider theme={muiTheme}>
         <Router>
             <Switch>
                 <Route path="/action">
-                    <Actions />
+                    <ActionSwitch />
                 </Route>
                 <Route path="/">
                     <FloatingActionButton

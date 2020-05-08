@@ -2,19 +2,16 @@ import React from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 
 import FilterListIcon from '@material-ui/icons/FilterList'
-import LocationSearchingIcon from '@material-ui/icons/LocationSearching'
 import ViewListIcon from '@material-ui/icons/ViewList'
 
 import LargeContentDialog from
     'components/LargeContentDialog/LargeContentDialog'
-import StandardDialog from 'components/StandardDialog/StandardDialog'
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
 
 import { ACTION_ID } from 'apps/MerchantMap/enum'
 
-import FeatureTable from './components/FeatureTable/FeatureTable'
-import GeocodingAutocomplete from
-    './components/GeocodingAutocomplete/GeocodingAutocomplete'
+import ProximityMarkerSelectDialog from
+    './containers/ProximityMarkerSelectDialog'
 
 // TODO: Dynamic copy.
 const Action = () => {
@@ -23,12 +20,7 @@ const Action = () => {
     switch (actionId) {
     case ACTION_ID.locate:
         return (
-            <StandardDialog
-                title="Finde Händler in deiner Nähe"
-                titleIcon={<LocationSearchingIcon />}
-            >
-                <GeocodingAutocomplete />
-            </StandardDialog>
+            <ProximityMarkerSelectDialog />
         )
 
     case ACTION_ID.filter:
@@ -37,7 +29,7 @@ const Action = () => {
                 title="Auswahl einschränken"
                 titleIcon={<FilterListIcon />}
             >
-                <FeatureTable />
+                <h1>FILTER</h1>
             </StandardDrawer>
         )
 
@@ -47,7 +39,7 @@ const Action = () => {
                 title="Hier bekommst Du unsere Produkte"
                 titleIcon={<ViewListIcon />}
             >
-                <FeatureTable />
+                <h1>TABLE</h1>
             </LargeContentDialog>
         )
 

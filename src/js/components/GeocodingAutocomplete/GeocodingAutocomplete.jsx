@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { PropTypes } from 'prop-types'
 
 import TextField from '@material-ui/core/TextField'
-import ExploreIcon from '@material-ui/icons/Explore'
+import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle'
 
 import ListBoxPopper from 'components/ListBoxPopper/ListBoxPopper'
 
@@ -38,7 +38,7 @@ const filterFeaturesByCountry = (features) => features.filter(
     }
 )
 
-const GeocodingAutoComplete = ({ label }) => {
+const GeocodingAutoComplete = ({ label, onSelect }) => {
     const {
         bind,
         setValue: setInputValue,
@@ -76,11 +76,9 @@ const GeocodingAutoComplete = ({ label }) => {
     const handleSelect = (selectedItem) => {
         setInputValue(selectedItem.placeName)
 
-        // TODO:
-        // Dispatch map viewport state change.
-        // (Once redux has been integrated.)
-        /* eslint-disable-next-line no-console */
-        console.log(selectedItem)
+        if (onSelect) {
+            onSelect(selectedItem)
+        }
     }
 
     return (
@@ -96,7 +94,7 @@ const GeocodingAutoComplete = ({ label }) => {
                 preparedResult.length > 0 && (
                     <ListBoxPopper
                         anchorEl={() => (inputRef.current)}
-                        itemIcon={<ExploreIcon />}
+                        itemIcon={<PersonPinCircleIcon />}
                         items={
                             preparedResult.map(
                                 (feature) => {
@@ -125,11 +123,13 @@ const GeocodingAutoComplete = ({ label }) => {
 }
 
 GeocodingAutoComplete.propTypes = {
-    label: PropTypes.string
+    label: PropTypes.string,
+    onSelect: PropTypes.func
 }
 
 GeocodingAutoComplete.defaultProps = {
-    label: 'Wo möchtest Du suchen?'
+    label: 'Wo möchtest Du suchen?',
+    onSelect: null
 }
 
 export default GeocodingAutoComplete

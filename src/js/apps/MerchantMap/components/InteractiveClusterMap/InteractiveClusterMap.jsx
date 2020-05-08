@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import MapGL, { Source, Layer } from 'react-map-gl'
@@ -13,18 +13,59 @@ import {
 
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
-const InteractiveClusterMap = ({ geoJsonSource }) => {
+const DEFAULT_VIEWPORT_CENTER = {
+    latitude: 50.75,
+    longitude: 10
+}
+
+const DEFAULT_ZOOM_LEVEL = 5
+
+const NEW_PROXIMITY_MARKER_ZOOM_LEVEL = 15
+
+const InteractiveClusterMap = ({
+    geoJsonSource,
+    proximityMarker
+}) => {
     const sourceRef = useRef()
 
     const [viewport, setViewport] = useState({
-        latitude: 50.75,
-        longitude: 10,
-        zoom: 5,
+        latitude: (
+            proximityMarker
+                ? proximityMarker.latitude
+                : DEFAULT_VIEWPORT_CENTER.latitude
+        ),
+        longitude: (
+            proximityMarker
+                ? proximityMarker.longitude
+                : DEFAULT_VIEWPORT_CENTER.longitude
+        ),
+        zoom: (
+            proximityMarker
+                ? NEW_PROXIMITY_MARKER_ZOOM_LEVEL
+                : DEFAULT_ZOOM_LEVEL
+        ),
         bearing: 0,
         pitch: 0
     })
 
-    const handleViewportChange = (nextViewport) => setViewport(nextViewport)
+    useEffect(
+        () => {
+            if (proximityMarker) {
+                handleViewportChange(
+                    {
+                        ...viewport,
+                        latitude: proximityMarker.latitude,
+                        longitude: proximityMarker.longitude,
+                        zoom: NEW_PROXIMITY_MARKER_ZOOM_LEVEL,
+                        transitionDuration: 600
+                    }
+                )
+            }
+        },
+        [proximityMarker]
+    )
+
+    const handleViewportChange = (nextViewport) => { setViewport(nextViewport) }
 
     const handleClusterClick = (feature) => {
         const clusterId = feature.properties.cluster_id
@@ -37,15 +78,13 @@ const InteractiveClusterMap = ({ geoJsonSource }) => {
                     return
                 }
 
-                handleViewportChange(
-                    {
-                        ...viewport,
-                        longitude: feature.geometry.coordinates[0],
-                        latitude: feature.geometry.coordinates[1],
-                        zoom,
-                        transitionDuration: 500
-                    }
-                )
+                handleViewportChange({
+                    ...viewport,
+                    latitude: feature.geometry.coordinates[1],
+                    longitude: feature.geometry.coordinates[0],
+                    zoom,
+                    transitionDuration: 300
+                })
             }
         )
     }
@@ -118,11 +157,17 @@ const InteractiveClusterMap = ({ geoJsonSource }) => {
 
 InteractiveClusterMap.propTypes = {
     /* eslint-disable-next-line react/forbid-prop-types */
-    geoJsonSource: PropTypes.object
+    geoJsonSource: PropTypes.object,
+    proximityMarker: PropTypes.exact({
+        latitude: PropTypes.number.isRequired,
+        longitude: PropTypes.number.isRequired,
+        placeName: PropTypes.string
+    })
 }
 
 InteractiveClusterMap.defaultProps = {
-    geoJsonSource: null
+    geoJsonSource: null,
+    proximityMarker: null
 }
 
 export default InteractiveClusterMap

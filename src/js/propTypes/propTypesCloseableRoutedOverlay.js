@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 
 const propTypesCloseableRoutedOverlay = {
     children: PropTypes.node.isRequired,
-    isOpenInitially: PropTypes.bool,
-    routeOnClose: PropTypes.string
+    routeOnClose: PropTypes.string,
+    shouldBeOpen: PropTypes.bool
 }
 
 export default propTypesCloseableRoutedOverlay

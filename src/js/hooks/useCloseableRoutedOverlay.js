@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 const useCloseableRoutedOverlay = (
-    isOpenInitially = true,
+    shouldBeOpen = true,
     routeOnClose = '/'
 ) => {
-    const [isOpen, setIsOpen] = useState(isOpenInitially)
+    const [isOpen, setIsOpen] = useState(shouldBeOpen)
 
     const history = useHistory()
+
+    useEffect(
+        () => {
+            shouldBeOpen ? handleOpen() : handleClose()
+        },
+        [shouldBeOpen]
+    )
 
     const handleClose = () => {
         setIsOpen(false)

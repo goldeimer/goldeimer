@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
-import InteractiveClusterMap from
-    './components/InteractiveClusterMap/InteractiveClusterMap'
+import { Provider as ReduxProvider } from 'react-redux'
+import { createStore } from 'redux'
+
+import merchantMapReducer from 'reducers/MerchantMap/rootReducerMerchantMap'
+
+import ControlledInteractiveClusterMap from
+    './containers/ControlledInteractiveClusterMap'
 import MapControlUiLayer from
     './components/MapControlUiLayer/MapControlUiLayer'
 
 import getMerchantGeoJson from './getMerchantGeoJson'
+
+const merchantMapStore = createStore(merchantMapReducer)
 
 const MerchantMap = () => {
     const [merchantGeoJson, setMerchantGeoJson] = useState(null)
@@ -23,10 +30,10 @@ const MerchantMap = () => {
     )
 
     return (
-        <>
-            <InteractiveClusterMap geoJsonSource={merchantGeoJson} />
+        <ReduxProvider store={merchantMapStore}>
+            <ControlledInteractiveClusterMap geoJsonSource={merchantGeoJson} />
             <MapControlUiLayer />
-        </>
+        </ReduxProvider>
     )
 }
 
