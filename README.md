@@ -3,10 +3,9 @@ Goldeimer\'s Web Environment
 
 -   [WordPress Theme](#wordpress-theme)
 -   [JTL Shop Template](#jtl-shop-template)
--   [Building client-side assets (css,
-    js)](#building-client-side-assets-css-js)
--   [(Local) Staging Environment
-    (docker)](#local-staging-environment-docker)
+-   [Merchant Map](#merchant-map)
+-   [Building client-side assets (css, js)](#building-client-side-assets-css-js)
+-   [Development Environment (docker)](#development-environment-docker)
     -   [Database Dumps](#database-dumps)
     -   [Static Production Content](#static-production-content)
     -   [Secrets](#secrets)
@@ -21,9 +20,27 @@ Child theme of commercially available parent theme
 JTL Shop Template
 -----------------
 
-Child template of \"EVO\", one of two standard templates JTL Shop ships
-with.
+Child template of \"EVO\", one of two standard templates JTL Shop ships with.
 <br/>See [`jtl-template/`](jtl-template/).
+
+Merchant Map
+------------
+
+[`React.js`](https://reactjs.org/) application displaying set of merchants
+Goldeimer's (and Viva con Agua's) products can be purchased at.
+
+### Dependencies
+
+The merchant map is built on top of:
+
+- [`react`](https://reactjs.org/)
+- [`react-redux`](https://react-redux.js.org/introduction/quick-start) & [`redux`](https://redux.js.org/)
+- [`react-router`](https://reacttraining.com/react-router/web/guides/quick-start)
+- [`material-ui`](https://material-ui.com/)
+- [`react-map-gl`](http://visgl.github.io/react-map-gl/) & [`mapbox-gl-js`](https://docs.mapbox.com/mapbox-gl-js/overview/)
+- [`axios`](https://github.com/axios/axios)
+
+See [src/js/apps/MerchantMap/](src/js/apps/MerchantMap/).
 
 Building client-side assets (css, js)
 -------------------------------------
@@ -42,17 +59,17 @@ For a production build that results in optimized, deployable output run:
 npm run build-prod
 ```
 
-Build configuration resides in [`webpack/`](webpack/), `js(x)` & `(s)css` sources in
-[`src/`](src/).
+Build configuration resides in [`webpack/`](webpack/), `js(x)` & `(c|j|sc)ss`
+sources in [`src/`](src/).
 
-(Local) Staging Environment (docker)
-------------------------------------
+Development Environment (docker)
+--------------------------------
 
 See [`docker/`](docker/).
 
 ### Database Dumps
 
-The [`docker/sql/`](docker/sql/) directory is expected to contain the
+The [`docker/sql/`](docker/sql/) directory is expected to contain theDevelopment Environment (docker)
 following two database dumps, prior to running [`docker/up.sh`](docker/up.sh):
 
 -   `jtl.sql`
@@ -85,3 +102,10 @@ following EOL-terminated one-line text files:
 
 These files are to be prefixed by `secret_` and to be omitted from
 version control (see [`docker/.gitignore`](docker/.gitignore)).
+
+TODO
+----
+
+### Client
+
+- Deprecate `styled-components` in favor of `jss` & `material-ui`.

@@ -4,7 +4,11 @@ const {
     PUBLIC_PATH_DEFAULT,
     PUBLIC_PATH_WORDPRESS,
     SRC_PATH,
-    SRC_JS_PATH,
+    SRC_ETC_PATH,
+    SRC_HTML_PATH,
+    SRC_IMG_PATH,
+    SRC_CSS_PATH,
+    SRC_JS_ENTRY_PATH,
 } = require('./path');
 
 const merge = require('webpack-merge');
@@ -20,13 +24,13 @@ const wordPressConfig = {
     name: 'wordpress-assets',
     entry: {
         merchant_map: path.resolve(
-            SRC_JS_PATH, 'apps', 'MerchantMapWordPress.jsx'
+            SRC_JS_ENTRY_PATH, 'WordPress_MerchantMap.jsx'
         ),
         toilet_paper_calculator: path.resolve(
-            SRC_JS_PATH, 'apps', 'ToiletPaperCalculator.jsx'
+            SRC_JS_ENTRY_PATH, 'WordPress_ToiletPaperCalculator.jsx'
         ),
         wordpress_theme_main: path.resolve(
-            SRC_PATH, 'css', 'wordpress-theme-main.css'
+            SRC_CSS_PATH, 'wordpress-theme-main.css'
         ),
     },
     output: {
@@ -42,7 +46,7 @@ const merchantMapConfig = {
     name: 'merchant-map',
     entry: {
         merchant_map: path.resolve(
-            SRC_JS_PATH, 'apps', 'MerchantMapStandaloneAppShell.jsx'
+            SRC_JS_ENTRY_PATH, 'StandaloneAppShell_MerchantMap.jsx'
         ),
     },
     output: {
@@ -52,27 +56,27 @@ const merchantMapConfig = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(SRC_PATH, 'html', 'merchant-map.html'),
-            favicon: path.resolve(SRC_PATH, 'img', 'favicon.png'),
+            template: path.resolve(SRC_HTML_PATH, 'merchant-map.html'),
+            favicon: path.resolve(SRC_IMG_PATH, 'favicon.png'),
             title: "Händlerkarte",
             // hash: true,  // TODO: decide
             meta: {
                 viewport:
-                'width=device-width, initial-scale=1, shrink-to-fit=no',
-                'theme-color': '#ffe300',
+                    'width=device-width, initial-scale=1, shrink-to-fit=no',
+                'theme-color': '#ffe300',  // TODO: Make dynamic? (Build time?)
                 generator: 'webpack',
                 googlebot: 'index,follow',
                 rating: 'General',
                 referrer: 'origin',
                 robots: 'index,follow',
-                subject: "Hier bekommst Du unsere Produkte"
+                subject: "Hier bekommst Du unsere Produkte",
             },
             scriptLoading: 'defer',
         }),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(SRC_PATH, 'etc', '.htaccess'),
-                to: merchantMapDistPath
+                from: path.resolve(SRC_ETC_PATH, '.htaccess'),
+                to: merchantMapDistPath,
             },
         ]),
     ]

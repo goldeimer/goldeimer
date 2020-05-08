@@ -2,14 +2,14 @@ const webpack = require('webpack');
 
 const path = require('path');
 const {
-    SRC_APPS_PATH,
-    SRC_COMPONENT_PATH,
-    SRC_CONFIG_PATH,
     SRC_CSS_PATH,
-    SRC_HOOKS_PATH,
     SRC_JS_PATH,
-    SRC_PROP_TYPES_PATH,
-    SRC_UTIL_PATH,
+    SRC_JS_APPS_PATH,
+    SRC_JS_COMPONENT_PATH,
+    SRC_JS_CONFIG_PATH,
+    SRC_JS_HOOKS_PATH,
+    SRC_JS_PROP_TYPES_PATH,
+    SRC_JS_UTIL_PATH,
 } = require('./path');
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -37,16 +37,16 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            apps: SRC_APPS_PATH,
-            components: SRC_COMPONENT_PATH,
-            config: SRC_CONFIG_PATH,
+            apps: SRC_JS_APPS_PATH,
+            components: SRC_JS_COMPONENT_PATH,
+            config: SRC_JS_CONFIG_PATH,
             css: SRC_CSS_PATH,
-            hooks: SRC_HOOKS_PATH,
+            hooks: SRC_JS_HOOKS_PATH,
             js: SRC_JS_PATH,
-            propTypes: SRC_PROP_TYPES_PATH,
-            util: SRC_UTIL_PATH,
+            propTypes: SRC_JS_PROP_TYPES_PATH,
+            util: SRC_JS_UTIL_PATH,
         },
-        extensions: ['.js', '.jsx', '.json',],
+        extensions: ['.js', '.jsx', '.json', '.ts',],
     },
     module: {
         rules: [
@@ -56,7 +56,8 @@ module.exports = {
                 enforce: 'pre',
                 loader: 'eslint-loader',
                 options: {
-                    eslintPath: 'eslint-config-airbnb-standard/node_modules/eslint',
+                    eslintPath:
+                        'eslint-config-airbnb-standard/node_modules/eslint',
                     fix: true,
                     failOnError: true,
                     // failOnWarning: true,

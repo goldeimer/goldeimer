@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { ThemeProvider } from '@material-ui/core/styles'
-
-import muiTheme from 'config/muiTheme'
-
 import FormField from
     'components/Form/FormField/FormField'
 
@@ -18,7 +14,7 @@ import InputSelect from
     'components/Form/InputSelect/InputSelect'
 
 import ToiletPaperCalculatorResult from
-    './ToiletPaperCalculatorResult/ToiletPaperCalculatorResult'
+    './components/ToiletPaperCalculatorResult/ToiletPaperCalculatorResult'
 
 import {
     DAYS_PER_MONTH,
@@ -87,6 +83,7 @@ const findBestFittingSubscription = (
 ) => {
     let bestFit = null
 
+    // TODO: Replace the `for ... of` loop by an array iteration.
     /* eslint-disable-next-line no-restricted-syntax */
     for (const subscription of subscriptions) {
         if (subscription.rollsPerMonth > requiredRollsPerMonth) {
@@ -191,7 +188,7 @@ const ToiletPaperCalculator = () => {
     )
 
     return (
-        <ThemeProvider theme={muiTheme}>
+        <>
             <Form formName="shitcalcForm">
                 <FormSection
                     title="Haushalt"
@@ -284,7 +281,7 @@ const ToiletPaperCalculator = () => {
                 bestFittingSubscription={bestFittingSubscription}
                 requiredRollsPerSelectedPeriod={requiredRollsPerSelectedPeriod}
             />
-        </ThemeProvider>
+        </>
     )
 }
 

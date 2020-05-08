@@ -18,7 +18,7 @@ const InputSelect = ({
             value={value}
         >
             {
-                options.map(({ label, optionValue }) => (
+                options.map(({ label, value: optionValue }) => (
                     <MenuItem key={uuid()} value={optionValue}>
                         {label}
                     </MenuItem>
