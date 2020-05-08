@@ -4,11 +4,13 @@ const path = require('path');
 const {
     SRC_CSS_PATH,
     SRC_JS_PATH,
+    // SRC_JS_ACTIONS_PATH,
     SRC_JS_APPS_PATH,
-    SRC_JS_COMPONENT_PATH,
+    SRC_JS_COMPONENTS_PATH,
     SRC_JS_CONFIG_PATH,
     SRC_JS_HOOKS_PATH,
     SRC_JS_PROP_TYPES_PATH,
+    // SRC_JS_REDUCERS_PATH,
     SRC_JS_UTIL_PATH,
 } = require('./path');
 
@@ -37,13 +39,18 @@ module.exports = {
     ],
     resolve: {
         alias: {
+            // --- closed semantic logic units ---
             apps: SRC_JS_APPS_PATH,
-            components: SRC_JS_COMPONENT_PATH,
+            'merchant-map': path.resolve(SRC_JS_APPS_PATH, 'MerchantMap'),
+            // --- common js src ---
+            // actions: SRC_JS_ACTIONS_PATH,
+            components: SRC_JS_COMPONENTS_PATH,
             config: SRC_JS_CONFIG_PATH,
             css: SRC_CSS_PATH,
             hooks: SRC_JS_HOOKS_PATH,
             js: SRC_JS_PATH,
             propTypes: SRC_JS_PROP_TYPES_PATH,
+            // reducers: SRC_JS_REDUCERS_PATH,
             util: SRC_JS_UTIL_PATH,
         },
         extensions: ['.js', '.jsx', '.json', '.ts',],
@@ -76,17 +83,18 @@ module.exports = {
                 use: [
                     {
                         loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // hmr: process.env.NODE_ENV === 'development',
-                        },
+                        // options: {
+                        //     hmr: process.env.NODE_ENV === 'development',
+                        // },
                     },
                     'css-loader',
                     // 'postcss-loader',
-                    'sass-loader',
+                    // 'sass-loader',
                 ],
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                // TODO: Image optimization.
+                test: /\.(gif|jp(e?)g|png|svg)$/,
                 use: {
                     loader: 'file-loader',
                     options: {
@@ -95,7 +103,7 @@ module.exports = {
                 },
             },
             {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                test: /\.(eot|otf|pbf||ttf|woff|woff2)$/,
                 use: {
                     loader: 'file-loader',
                     options: {

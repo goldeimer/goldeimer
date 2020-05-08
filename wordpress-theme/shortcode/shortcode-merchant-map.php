@@ -14,7 +14,7 @@ function registerMerchantMap()
     wp_register_script(
         SCRIPT_HANDLE_MERCHANT_MAP,
         get_stylesheet_directory_uri() .
-            '/static/js/merchant_map.bundle.js',
+            '/static/js/merchant-map.bundle.js',
         array(),
         '1',
         true

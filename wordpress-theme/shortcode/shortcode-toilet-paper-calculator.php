@@ -14,7 +14,7 @@ function registerToiletPaperCalculator()
     wp_register_script(
         SCRIPT_HANDLE_TOILET_PAPER_CALCULATOR,
         get_stylesheet_directory_uri() .
-            '/static/js/toilet_paper_calculator.bundle.js',
+            '/static/js/toilet-paper-calculator.bundle.js',
         array(),
         '1',
         true

@@ -5,7 +5,6 @@ const {
     PUBLIC_PATH_WORDPRESS,
     SRC_PATH,
     SRC_ETC_PATH,
-    SRC_HTML_PATH,
     SRC_IMG_PATH,
     SRC_CSS_PATH,
     SRC_JS_ENTRY_PATH,
@@ -23,13 +22,13 @@ const modeBaseConfig = process.env.BUILD_CONFIG === 'development'
 const wordPressConfig = {
     name: 'wordpress-assets',
     entry: {
-        merchant_map: path.resolve(
+        'merchant-map': path.resolve(
             SRC_JS_ENTRY_PATH, 'WordPress_MerchantMap.jsx'
         ),
-        toilet_paper_calculator: path.resolve(
+        'toilet-paper-calculator': path.resolve(
             SRC_JS_ENTRY_PATH, 'WordPress_ToiletPaperCalculator.jsx'
         ),
-        wordpress_theme_main: path.resolve(
+        'wordpress-theme-main': path.resolve(
             SRC_CSS_PATH, 'wordpress-theme-main.css'
         ),
     },
@@ -45,7 +44,7 @@ const merchantMapDistPath = path.resolve(DIST_BASE_PATH, 'merchant-map');
 const merchantMapConfig = {
     name: 'merchant-map',
     entry: {
-        merchant_map: path.resolve(
+        'merchant-map': path.resolve(
             SRC_JS_ENTRY_PATH, 'StandaloneAppShell_MerchantMap.jsx'
         ),
     },
@@ -56,7 +55,6 @@ const merchantMapConfig = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(SRC_HTML_PATH, 'merchant-map.html'),
             favicon: path.resolve(SRC_IMG_PATH, 'favicon.png'),
             title: "Händlerkarte",
             // hash: true,  // TODO: decide
@@ -79,7 +77,7 @@ const merchantMapConfig = {
                 to: merchantMapDistPath,
             },
         ]),
-    ]
+    ],
 };
 
 module.exports = [
