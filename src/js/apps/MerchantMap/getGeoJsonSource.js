@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { BRAND, MERCHANT_TYPE } from 'reducers/MerchantMap/selectedFilterItems'
+import { BRAND, MERCHANT_TYPE } from 'reducers/MerchantMap/filterReducer'
 import parseGoogleSheet from './util/parseGoogleSheet'
 
 const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
@@ -62,7 +62,8 @@ const getMerchantGeoJsonVca = async () => {
     }
 }
 
-const getMerchantGeoJson = async () => {
+const getGeoJsonSource = async () => {
+    // legacy sources
     const geoJson = await getMerchantGeoJsonGoldeimer()
     const geoJsonVca = await getMerchantGeoJsonVca()
 
@@ -71,4 +72,4 @@ const getMerchantGeoJson = async () => {
     return geoJson
 }
 
-export default getMerchantGeoJson
+export default getGeoJsonSource

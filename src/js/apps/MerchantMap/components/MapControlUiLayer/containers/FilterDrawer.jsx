@@ -10,8 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Switch from '@material-ui/core/Switch'
 
-import { toggleFilterItem } from 'actions/actionsMerchantMap'
-import { makeKey, TAXONOMIES } from 'reducers/MerchantMap/selectedFilterItems'
+import { filter_selectedTerms_toggleTerm } from 'actions/merchantMapActions'
+import { makeKey, TAXONOMIES } from 'reducers/MerchantMap/filterReducer'
 
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
 
@@ -24,22 +24,22 @@ const useStyles = makeStyles((theme) => ({
 const FilterDrawer = (props) => {
     const classes = useStyles()
 
-    const selectedFilterItems = useSelector(
-        (state) => (state.selectedFilterItems)
+    const selectedTerms = useSelector(
+        (state) => (state.filter.selectedTerms)
     )
 
     const dispatch = useDispatch()
 
     const handleChange = (key) => {
         dispatch(
-            toggleFilterItem(key)
+            filter_selectedTerms_toggleTerm(key)
         )
     }
 
     return (
         <StandardDrawer {...props}>
             {TAXONOMIES.map(
-                ({ id: taxonomyId, title, items }, index) => (
+                ({ id: taxonomyId, title, terms }, index) => (
                     <Fragment key={taxonomyId}>
                         {index === 0 ? <Divider /> : null}
                         <List
@@ -48,11 +48,11 @@ const FilterDrawer = (props) => {
                                 <ListSubheader>{title}</ListSubheader>
                             )}
                         >
-                            {items.map(
-                                ({ id: itemId, label }) => {
-                                    const key = makeKey(taxonomyId, itemId)
+                            {terms.map(
+                                ({ id: termId, label }) => {
+                                    const key = makeKey(taxonomyId, termId)
                                     const isSelected = (
-                                        selectedFilterItems.includes(key)
+                                        selectedTerms.includes(key)
                                     )
                                     const nodeId = `taxonomy-item.${key}`
                                     const switchProps = {

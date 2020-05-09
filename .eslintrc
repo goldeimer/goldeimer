@@ -2,6 +2,9 @@
     'extends': ['airbnb-standard'],
     'rules': {
         'arrow-parens': ['error', 'always'],
+        'camelcase': ['error', {
+            'allow': ['^.*_((re)?set|toggle).*$'],
+        }],
         'indent': ['error', 4],
         'max-len': ['error', {
             'code': 80,
@@ -13,12 +16,12 @@
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'semi': ['error', 'never'],
-        'spaced-comment': ['off']
+        'spaced-comment': ['off'],
     },
     'settings': {
         'import/resolver': {
             'webpack': {
-                 'config': 'webpack/webpack.config.base.js'
+                 'config': 'webpack/webpack.config.base.js',
             }
         }
     }

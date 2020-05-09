@@ -1,24 +1,35 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { geoJson_source_set } from 'actions/merchantMapActions'
+import getGeoJsonSource from '../getGeoJsonSource'
 
 import InteractiveClusterMap from
     '../components/InteractiveClusterMap/InteractiveClusterMap'
 
-const ControlledInteractiveClusterMap = ({ geoJsonSource }) => (
-    <InteractiveClusterMap
-        geoJsonSource={geoJsonSource}
-        proximityMarker={useSelector((state) => (state.proximityMarker))}
-    />
-)
+const ControlledInteractiveClusterMap = () => {
+    const dispatch = useDispatch()
 
-ControlledInteractiveClusterMap.propTypes = {
-    /* eslint-disable-next-line react/forbid-prop-types */
-    geoJsonSource: PropTypes.object
-}
+    // TODO: Move to action creator.
+    useEffect(
+        () => {
+            const fetchGeoJson = async () => {
+                const geoJson = await getGeoJsonSource()
 
-ControlledInteractiveClusterMap.defaultProps = {
-    geoJsonSource: null
+                dispatch(geoJson_source_set(geoJson))
+            }
+
+            fetchGeoJson()
+        },
+        []
+    )
+
+    return (
+        <InteractiveClusterMap
+            geoJsonSource={useSelector((state) => (state.geoJson.source))}
+            proximityMarker={useSelector((state) => (state.proximityMarker))}
+        />
+    )
 }
 
 export default ControlledInteractiveClusterMap
