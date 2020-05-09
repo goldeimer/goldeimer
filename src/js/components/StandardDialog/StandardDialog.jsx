@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -14,9 +13,8 @@ import TitleIcon from 'components/TitleIcon/TitleIcon'
 import useCloseableRoutedOverlay from
     'hooks/useCloseableRoutedOverlay'
 
-import propTypesCloseableRoutedOverlay from
-    'propTypes/propTypesCloseableRoutedOverlay'
-import propTypesTitled from 'propTypes/propTypesTitled'
+import propTypesTitledCloseableRoutedOverlay from
+    'propTypes/propTypesTitledCloseableRoutedOverlay'
 
 const useStyles = makeStyles((theme) => ({
     dialogTitle: {
@@ -75,13 +73,6 @@ const StandardDialog = ({
     )
 }
 
-StandardDialog.propTypes = Object.assign(
-    {
-        /* eslint-disable-next-line no-undef */
-        children: PropTypes.node.isRequired
-    },
-    propTypesCloseableRoutedOverlay,
-    propTypesTitled
-)
+StandardDialog.propTypes = propTypesTitledCloseableRoutedOverlay
 
 export default StandardDialog

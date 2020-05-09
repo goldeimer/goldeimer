@@ -71,7 +71,7 @@ const GeocodingAutoComplete = ({ label, onSelect }) => {
         [result]
     )
 
-    const inputRef = useRef()
+    const textFieldRef = useRef()
 
     const handleSelect = (selectedItem) => {
         setInputValue(selectedItem.placeName)
@@ -86,14 +86,15 @@ const GeocodingAutoComplete = ({ label, onSelect }) => {
             <TextField
                 {...bind}
                 fullWidth
+                inputRef={(input) => (input && input.focus())}
                 label={label}
-                ref={inputRef}
+                ref={textFieldRef}
                 variant="outlined"
             />
             {
                 preparedResult.length > 0 && (
                     <ListBoxPopper
-                        anchorEl={() => (inputRef.current)}
+                        anchorEl={() => (textFieldRef.current)}
                         itemIcon={<PersonPinCircleIcon />}
                         items={
                             preparedResult.map(

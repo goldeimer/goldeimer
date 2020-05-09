@@ -1,10 +1,3 @@
-/// @brief Top-level enumerations.
-///
-/// Employed for filtering map markers / results.
-///
-/// TODO(Johannes):
-/// Make dynamic, define on the backend side (once we have one).
-
 import FilterListIcon from '@material-ui/icons/FilterList'
 import LocationSearchingIcon from '@material-ui/icons/LocationSearching'
 import ViewListIcon from '@material-ui/icons/ViewList'

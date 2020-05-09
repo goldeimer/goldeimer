@@ -93,7 +93,7 @@ const ToiletPaperCalculatorResult = ({
             Jetzt abonnieren
         </SubscriptionA>
         <FootnoteP>
-            *Nicht mit eingerechnet ist der zusätzliche Verbrauch von Klopapier,
+            *Nicht mit eingerechnet ist der zusätzliche Verbrauch von Klopapier
             während der Periode. Je nach Intensität solltest Du etwas mehr
             Klopapier einkalkulieren!
         </FootnoteP>

@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react'
-import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -21,9 +20,8 @@ import TitleIcon from 'components/TitleIcon/TitleIcon'
 
 import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
 
-import propTypesCloseableRoutedOverlay from
-    'propTypes/propTypesCloseableRoutedOverlay'
-import propTypesTitled from 'propTypes/propTypesTitled'
+import propTypesTitledCloseableRoutedOverlay from
+    'propTypes/propTypesTitledCloseableRoutedOverlay'
 
 const FULLSCREEN_BREAKPOINT = 'md'
 const MAX_WIDTH = 'lg'
@@ -107,13 +105,6 @@ const LargeContentDialog = ({
     )
 }
 
-LargeContentDialog.propTypes = Object.assign(
-    {
-        /* eslint-disable-next-line no-undef */
-        children: PropTypes.node.isRequired
-    },
-    propTypesCloseableRoutedOverlay,
-    propTypesTitled
-)
+LargeContentDialog.propTypes = propTypesTitledCloseableRoutedOverlay
 
 export default LargeContentDialog

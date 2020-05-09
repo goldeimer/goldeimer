@@ -3,7 +3,12 @@ const setProximityMarker = (proximityMarker) => ({
     ...proximityMarker
 })
 
-/* eslint-disable import/prefer-default-export */
+const toggleFilterItem = (key) => ({
+    type: 'TOGGLE_FILTER_ITEM',
+    key
+})
+
 export {
-    setProximityMarker
+    setProximityMarker,
+    toggleFilterItem
 }
