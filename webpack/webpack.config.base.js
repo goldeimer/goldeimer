@@ -14,7 +14,6 @@ const {
     SRC_JS_UTIL_PATH,
 } = require('./path');
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ManifestWebpackPlugin = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -29,7 +28,6 @@ const makeNamePreserveRelativeAssetDirectory = (file) => {
 
 module.exports = {
     plugins: [
-        new CleanWebpackPlugin(),
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].css',
