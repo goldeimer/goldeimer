@@ -3,7 +3,9 @@
     'rules': {
         'arrow-parens': ['error', 'always'],
         'camelcase': ['error', {
-            'allow': ['^.*_((re)?set|toggle).*$'],
+            'allow': [
+                '^.*_(apply|error|fetch|filter|request|receive|(re)?set|sort|toggle).*$'
+            ],
         }],
         'indent': ['error', 4],
         'max-len': ['error', {

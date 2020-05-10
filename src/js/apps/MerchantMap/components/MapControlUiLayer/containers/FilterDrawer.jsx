@@ -10,8 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import Switch from '@material-ui/core/Switch'
 
-import { filter_selectedTerms_toggleTerm } from 'actions/merchantMapActions'
-import { makeKey, TAXONOMIES } from 'reducers/MerchantMap/filterReducer'
+import { toggleTerm } from 'actions/merchantMapActions'
+import TAXONOMIES, { makeKey } from 'reducers/MerchantMap/taxonomies'
 
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
 
@@ -25,15 +25,13 @@ const FilterDrawer = (props) => {
     const classes = useStyles()
 
     const selectedTerms = useSelector(
-        (state) => (state.filter.selectedTerms)
+        (state) => (state.settings.selectedTerms)
     )
 
     const dispatch = useDispatch()
 
     const handleChange = (key) => {
-        dispatch(
-            filter_selectedTerms_toggleTerm(key)
-        )
+        dispatch(toggleTerm(key))
     }
 
     return (

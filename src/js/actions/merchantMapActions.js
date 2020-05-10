@@ -1,48 +1,65 @@
+import errorWrapper from './util/errorWrapper'
+import getGeoJsonSource from './effects/getGeoJsonSource'
+
 /// --------------------------------- filter ----------------------------------
 
-const FILTER_SELECTED_TERMS_RESET = 'FILTER_SELECTED_TERMS_RESET'
-const filter_selectedTerms_reset = () => ({ type: FILTER_SELECTED_TERMS_RESET })
+const RESET_SELECTED_TERMS = 'RESET_SELECTED_TERMS'
+const resetSelectedTerms = () => ({
+    type: RESET_SELECTED_TERMS
+})
 
-const FILTER_SELECTED_TERMS_TOGGLE_TERM = 'FILTER_SELECTED_TERMS_TOGGLE_TERM'
-const filter_selectedTerms_toggleTerm = (key) => ({
-    type: FILTER_SELECTED_TERMS_TOGGLE_TERM,
+const TOGGLE_TERM = 'TOGGLE_TERM'
+const toggleTerm = (key) => ({
+    type: TOGGLE_TERM,
     key
 })
 
-/// ----------------------------- GeoJson source ------------------------------
+/// --------------------------------- GeoJson ---------------------------------
 
-// TODO:
-// - integrate redux thunk middleware
-// - transform into async action creator `FETCH_GEOJSON_SOURCE`
-const GEOJSON_SOURCE_SET = 'GEOJSON_SOURCE_SET'
-const geoJson_source_set = (source) => ({
-    type: GEOJSON_SOURCE_SET,
-    source
+const fetchGeoJsonSource = () => errorWrapper(
+    async (dispatch) => {
+        dispatch(requestGeoJsonSource())
+        const geoJson = await getGeoJsonSource()
+        dispatch(receiveGeoJsonSource(geoJson))
+    },
+    { successType: RECEIVE_GEOJSON_SOURCE }
+)
+
+const REQUEST_GEOJSON_SOURCE = 'REQUEST_GEOJSON_SOURCE'
+const requestGeoJsonSource = () => ({
+    type: REQUEST_GEOJSON_SOURCE
+})
+
+const RECEIVE_GEOJSON_SOURCE = 'RECEIVE_GEOJSON_SOURCE'
+const receiveGeoJsonSource = (geoJson) => ({
+    type: RECEIVE_GEOJSON_SOURCE,
+    geoJson
 })
 
 /// ---------------------------- proximity marker -----------------------------
 
-const PROXIMITY_MARKER_RESET = 'PROXIMITY_MARKER_RESET'
-const proximityMarker_reset = () => ({ type: PROXIMITY_MARKER_RESET })
+const RESET_PROXIMITY_MARKER = 'RESET_PROXIMITY_MARKER'
+const resetProximityMarker = () => ({ type: RESET_PROXIMITY_MARKER })
 
-const PROXIMITY_MARKER_SET = 'PROXIMITY_MARKER_SET'
-const proximityMarker_set = (proximityMarker) => ({
-    type: PROXIMITY_MARKER_SET,
+const SET_PROXIMITY_MARKER = 'SET_PROXIMITY_MARKER'
+const setProximityMarker = (proximityMarker) => ({
+    type: SET_PROXIMITY_MARKER,
     ...proximityMarker
 })
 
 export {
     // --- filter ---
-    FILTER_SELECTED_TERMS_RESET,
-    filter_selectedTerms_reset,
-    FILTER_SELECTED_TERMS_TOGGLE_TERM,
-    filter_selectedTerms_toggleTerm,
+    resetSelectedTerms,
+    RESET_SELECTED_TERMS,
+    toggleTerm,
+    TOGGLE_TERM,
     // --- GeoJson source ---
-    GEOJSON_SOURCE_SET,
-    geoJson_source_set,
+    fetchGeoJsonSource,
+    REQUEST_GEOJSON_SOURCE,
+    RECEIVE_GEOJSON_SOURCE,
     // --- proximity marker ---
-    PROXIMITY_MARKER_RESET,
-    proximityMarker_reset,
-    PROXIMITY_MARKER_SET,
-    proximityMarker_set
+    resetProximityMarker,
+    RESET_PROXIMITY_MARKER,
+    setProximityMarker,
+    SET_PROXIMITY_MARKER
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { proximityMarker_set } from 'actions/merchantMapActions'
+import { setProximityMarker } from 'actions/merchantMapActions'
 import usePrevious from 'hooks/usePrevious'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
 
@@ -25,7 +25,7 @@ const ProximityMarkerSelectDialog = (props) => {
                 onSelect={
                     (selectedItem) => {
                         dispatch(
-                            proximityMarker_set(selectedItem)
+                            setProximityMarker(selectedItem)
                         )
                     }
                 }

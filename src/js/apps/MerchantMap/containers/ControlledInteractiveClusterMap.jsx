@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { geoJson_source_set } from 'actions/merchantMapActions'
-import getGeoJsonSource from '../getGeoJsonSource'
+import { fetchGeoJsonSource } from 'actions/merchantMapActions'
 
 import InteractiveClusterMap from
     '../components/InteractiveClusterMap/InteractiveClusterMap'
@@ -10,23 +9,16 @@ import InteractiveClusterMap from
 const ControlledInteractiveClusterMap = () => {
     const dispatch = useDispatch()
 
-    // TODO: Move to action creator.
     useEffect(
         () => {
-            const fetchGeoJson = async () => {
-                const geoJson = await getGeoJsonSource()
-
-                dispatch(geoJson_source_set(geoJson))
-            }
-
-            fetchGeoJson()
+            dispatch(fetchGeoJsonSource())
         },
         []
     )
 
     return (
         <InteractiveClusterMap
-            geoJsonSource={useSelector((state) => (state.geoJson.source))}
+            geoJsonSource={useSelector((state) => (state.geoJsonSource))}
             proximityMarker={useSelector((state) => (state.proximityMarker))}
         />
     )

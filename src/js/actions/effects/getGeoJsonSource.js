@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { BRAND, MERCHANT_TYPE } from 'reducers/MerchantMap/filterReducer'
-import parseGoogleSheet from './util/parseGoogleSheet'
+import { BRAND, MERCHANT_TYPE } from 'reducers/MerchantMap/taxonomies'
+import parseGoogleSheet from 'util/parseGoogleSheet'
 
 const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
 

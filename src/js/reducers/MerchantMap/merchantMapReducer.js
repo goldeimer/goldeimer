@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
 
-import filter from './filterReducer'
-import geoJson from './geoJsonReducer'
+import error from './errorReducer'
+import geoJsonSource from './geoJsonSourceReducer'
 import proximityMarker from './proximityMarkerReducer'
+import settings from './settingsReducer'
 
 export default combineReducers({
-    filter,
-    geoJson,
-    proximityMarker
+    error,
+    geoJsonSource,
+    proximityMarker,
+    settings
 })
