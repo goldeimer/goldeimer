@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 const ToggleSwitchListItem = ({
     handleChange,
     isSelected,
-    itemId,
+    itemKey,
     label
 }) => {
     const classes = useStyles()
 
-    const nodeId = `label.${itemId}`
+    const nodeId = `label.${itemKey}`
     const switchProps = {
         'aria-labelledby': nodeId
     }
@@ -29,7 +29,7 @@ const ToggleSwitchListItem = ({
     return (
         <ListItem
             button
-            onClick={() => { handleChange(itemId) }}
+            onClick={() => { handleChange(itemKey) }}
         >
             <ListItemText
                 className={classes.listItemText}
@@ -42,7 +42,7 @@ const ToggleSwitchListItem = ({
                     color="primary"
                     edge="end"
                     inputProps={switchProps}
-                    onChange={() => { handleChange(itemId) }}
+                    onChange={() => { handleChange(itemKey) }}
                 />
             </ListItemSecondaryAction>
         </ListItem>
@@ -52,7 +52,7 @@ const ToggleSwitchListItem = ({
 ToggleSwitchListItem.propTypes = {
     handleChange: PropTypes.func.isRequired,
     isSelected: PropTypes.bool.isRequired,
-    itemId: PropTypes.string.isRequired,
+    itemKey: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired
 }
 

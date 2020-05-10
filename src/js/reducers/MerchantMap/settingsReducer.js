@@ -5,58 +5,109 @@
 import { combineReducers } from 'redux'
 
 import {
+    RESET_FILTER_ENABLED_FOR_COMPONENTS,
     RESET_SELECTED_TERMS,
+    RESET_SORT_KEY,
+    RESET_SORT_ORDER,
+    SET_SORT_KEY,
+    SET_SORT_ORDER,
+    TOGGLE_FILTERABLE_COMPONENT,
     TOGGLE_TERM
 } from 'actions/merchantMapActions'
 
-import TAXONOMIES, { makeCombinedTaxonomyTermId } from './taxonomies'
+import makeKeyedListItemToggleReducer from
+    'reducers/makeKeyedListItemToggleReducer'
 
-/// ---------------------------------- util -----------------------------------
+import TAXONOMIES from './taxonomies'
 
-const makeInitialState = (taxonomies) => ({
-    selectedTerms: taxonomies.map(
-        ({ id: taxonomyId, terms }) => (
-            terms.map(
-                ({ id: termId }) => (
-                    makeCombinedTaxonomyTermId(taxonomyId, termId)
-                )
-            )
-        )
-    ).flat()
+const FILTERABLE_COMPONENT = {
+    list: 'list',
+    map: 'map'
+}
+
+const SORT_ORDER = {
+    asc: 'asc',
+    desc: 'desc'
+}
+
+const flattenEnum = (enumeration) => (
+    Object.entries(enumeration).map(([key, value]) => value)
+)
+
+const makeInitialState = () => ({
+    filter: {
+        enabledForComponents: [
+            flattenEnum(FILTERABLE_COMPONENT)
+        ],
+        selectedTerms: TAXONOMIES.map(
+            ({ terms }) => (terms.map(({ taxonomyTermId }) => (taxonomyTermId)))
+        ).flat()
+    },
+    sort: {
+        key: 'TODO: DEFAULT SORT KEY import',
+        order: SORT_ORDER.asc
+    }
 })
 
-/// ---------------------------- filter dimensions ----------------------------
+const INITIAL_STATE = makeInitialState()
 
-const INITIAL_STATE = makeInitialState(TAXONOMIES)
+const filterEnabledForComponentsReducer = makeKeyedListItemToggleReducer(
+    INITIAL_STATE.filter.enabledForComponents,
+    RESET_FILTER_ENABLED_FOR_COMPONENTS,
+    TOGGLE_FILTERABLE_COMPONENT
+)
 
-const selectedTermsReducer = (
-    state = INITIAL_STATE.selectedTerms,
+const selectedFilterTermsReducer = makeKeyedListItemToggleReducer(
+    INITIAL_STATE.filter.selectedTerms,
+    RESET_SELECTED_TERMS,
+    TOGGLE_TERM
+)
+
+const sortKeyReducer = (
+    state = INITIAL_STATE.sort.key,
     action
 ) => {
     switch (action.type) {
-    case TOGGLE_TERM: {
-        const thisTermIndex = state.indexOf(action.key)
-        const newSelectedTerms = [...state]
+    case SET_SORT_KEY:
+        return action.key
 
-        if (thisTermIndex === -1) {
-            newSelectedTerms.push(action.key)
-        } else {
-            newSelectedTerms.splice(thisTermIndex, 1)
-        }
-
-        return newSelectedTerms
-    }
-
-    case RESET_SELECTED_TERMS:
-        return INITIAL_STATE.selectedTerms
+    case RESET_SORT_KEY:
+        return INITIAL_STATE.sort.key
 
     default:
         return state
     }
 }
 
+const sortOrderReducer = (
+    state = INITIAL_STATE.sort.order,
+    action
+) => {
+    switch (action.type) {
+    case SET_SORT_ORDER:
+        return action.order
+
+    case RESET_SORT_ORDER:
+        return INITIAL_STATE.sort.order
+
+    default:
+        return state
+    }
+}
+
+const filterReducer = combineReducers({
+    enabledForComponents: filterEnabledForComponentsReducer,
+    selectedTerms: selectedFilterTermsReducer
+})
+
+const sortReducer = combineReducers({
+    key: sortKeyReducer,
+    order: sortOrderReducer
+})
+
 const settingsReducer = combineReducers({
-    selectedTerms: selectedTermsReducer
+    filter: filterReducer,
+    sort: sortReducer
 })
 
 export default settingsReducer

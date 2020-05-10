@@ -2,64 +2,39 @@ import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Divider from '@material-ui/core/Divider'
-import List from '@material-ui/core/List'
-import ListSubheader from '@material-ui/core/ListSubheader'
 
 import { toggleTerm } from 'actions/merchantMapActions'
-import TAXONOMIES, {
-    makeCombinedTaxonomyTermId
-} from 'reducers/MerchantMap/taxonomies'
+import TAXONOMIES from 'reducers/MerchantMap/taxonomies'
 
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
-import ToggleSwitchListItem from
-    'components/ToggleSwitchListItem/ToggleSwitchListItem'
+import ToggleSwitchList from 'components/ToggleSwitchList/ToggleSwitchList'
 
 const FilterDrawer = (props) => {
     const selectedTerms = useSelector(
-        (state) => (state.settings.selectedTerms)
+        (state) => (state.settings.filter.selectedTerms)
     )
 
     const dispatch = useDispatch()
 
-    const handleChange = (key) => {
-        dispatch(toggleTerm(key))
+    const handleTermChange = (termId) => {
+        dispatch(toggleTerm(termId))
     }
 
     return (
         <StandardDrawer {...props}>
             {TAXONOMIES.map(
-                ({ id: taxonomyId, title, terms }, index) => (
+                ({ taxonomyId, title, terms }, index) => (
                     <Fragment key={taxonomyId}>
                         {index === 0 ? <Divider /> : null}
-                        <List
-                            dense
-                            subheader={(
-                                <ListSubheader>{title}</ListSubheader>
-                            )}
-                        >
-                            {terms.map(
-                                ({ id: termId, label }) => {
-                                    const key = makeCombinedTaxonomyTermId(
-                                        taxonomyId,
-                                        termId
-                                    )
-
-                                    return (
-                                        <ToggleSwitchListItem
-                                            handleChange={
-                                                () => { handleChange(key) }
-                                            }
-                                            isSelected={
-                                                selectedTerms.includes(key)
-                                            }
-                                            itemId={key}
-                                            key={key}
-                                            label={label}
-                                        />
-                                    )
-                                }
-                            )}
-                        </List>
+                        <ToggleSwitchList
+                            handleItemChange={handleTermChange}
+                            items={terms.map(({ taxonomyTermId, label }) => ({
+                                itemKey: taxonomyTermId,
+                                label
+                            }))}
+                            selectedItemIds={selectedTerms}
+                            title={title}
+                        />
                         <Divider />
                     </Fragment>
                 )

@@ -1,11 +1,45 @@
 import errorWrapper from './util/errorWrapper'
 import getGeoJsonSource from './effects/getGeoJsonSource'
 
-/// --------------------------------- filter ----------------------------------
+/// -------------------------------- settings ---------------------------------
+
+const RESET_FILTER_ENABLED_FOR_COMPONENTS =
+    'RESET_FILTER_ENABLED_FOR_COMPONENTS'
+const resetFilterEnabledForComponents = () => ({
+    type: RESET_FILTER_ENABLED_FOR_COMPONENTS
+})
 
 const RESET_SELECTED_TERMS = 'RESET_SELECTED_TERMS'
 const resetSelectedTerms = () => ({
     type: RESET_SELECTED_TERMS
+})
+
+const RESET_SORT_KEY = 'RESET_SORT_KEY'
+const resetSortKey = () => ({
+    type: RESET_SORT_KEY
+})
+
+const RESET_SORT_ORDER = 'RESET_SORT_ORDER'
+const resetSortOrder = () => ({
+    type: RESET_SORT_ORDER
+})
+
+const SET_SORT_KEY = 'SET_SORT_KEY'
+const setSortKey = (key) => ({
+    type: SET_SORT_KEY,
+    key
+})
+
+const SET_SORT_ORDER = 'SET_SORT_ORDER'
+const setSortOrder = (order) => ({
+    type: SET_SORT_ORDER,
+    order
+})
+
+const TOGGLE_FILTERABLE_COMPONENT = 'TOGGLE_FILTERABLE_COMPONENT'
+const toggleFilterableComponent = (key) => ({
+    type: TOGGLE_FILTERABLE_COMPONENT,
+    key
 })
 
 const TOGGLE_TERM = 'TOGGLE_TERM'
@@ -14,7 +48,7 @@ const toggleTerm = (key) => ({
     key
 })
 
-/// --------------------------------- GeoJson ---------------------------------
+/// ----------------------------- GeoJson source ------------------------------
 
 const fetchGeoJsonSource = () => errorWrapper(
     async (dispatch) => {
@@ -48,18 +82,30 @@ const setProximityMarker = (proximityMarker) => ({
 })
 
 export {
-    // --- filter ---
-    resetSelectedTerms,
+    // --- settings ---
+    RESET_FILTER_ENABLED_FOR_COMPONENTS,
+    resetFilterEnabledForComponents,
     RESET_SELECTED_TERMS,
-    toggleTerm,
+    resetSelectedTerms,
+    RESET_SORT_KEY,
+    resetSortKey,
+    RESET_SORT_ORDER,
+    resetSortOrder,
+    SET_SORT_KEY,
+    setSortKey,
+    SET_SORT_ORDER,
+    setSortOrder,
+    TOGGLE_FILTERABLE_COMPONENT,
+    toggleFilterableComponent,
     TOGGLE_TERM,
+    toggleTerm,
     // --- GeoJson source ---
     fetchGeoJsonSource,
     REQUEST_GEOJSON_SOURCE,
     RECEIVE_GEOJSON_SOURCE,
     // --- proximity marker ---
-    resetProximityMarker,
     RESET_PROXIMITY_MARKER,
-    setProximityMarker,
-    SET_PROXIMITY_MARKER
+    resetProximityMarker,
+    SET_PROXIMITY_MARKER,
+    setProximityMarker
 }
