@@ -10,7 +10,9 @@ const makeTerm = (id, label) => ({
     selected: true
 })
 
-const makeKey = (taxonomyId, termId) => (`${taxonomyId}.${termId}`)
+const makeCombinedTaxonomyTermId = (taxonomyId, termId) => (
+    `${taxonomyId}.${termId}`
+)
 
 const makeIdEnum = (terms) => Object.fromEntries(
     terms.map(
@@ -44,7 +46,7 @@ const TAXONOMIES = [brands, merchantTypes]
 
 export {
     TAXONOMIES as default,
-    makeKey,
+    makeCombinedTaxonomyTermId,
     BRAND,
     MERCHANT_TYPE
 }

@@ -9,7 +9,7 @@ import {
     TOGGLE_TERM
 } from 'actions/merchantMapActions'
 
-import TAXONOMIES, { makeKey } from './taxonomies'
+import TAXONOMIES, { makeCombinedTaxonomyTermId } from './taxonomies'
 
 /// ---------------------------------- util -----------------------------------
 
@@ -17,7 +17,9 @@ const makeInitialState = (taxonomies) => ({
     selectedTerms: taxonomies.map(
         ({ id: taxonomyId, terms }) => (
             terms.map(
-                ({ id: termId }) => (makeKey(taxonomyId, termId))
+                ({ id: termId }) => (
+                    makeCombinedTaxonomyTermId(taxonomyId, termId)
+                )
             )
         )
     ).flat()

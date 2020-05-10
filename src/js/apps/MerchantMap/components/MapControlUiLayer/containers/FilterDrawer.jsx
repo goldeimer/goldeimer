@@ -1,29 +1,20 @@
 import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText'
 import ListSubheader from '@material-ui/core/ListSubheader'
-import Switch from '@material-ui/core/Switch'
 
 import { toggleTerm } from 'actions/merchantMapActions'
-import TAXONOMIES, { makeKey } from 'reducers/MerchantMap/taxonomies'
+import TAXONOMIES, {
+    makeCombinedTaxonomyTermId
+} from 'reducers/MerchantMap/taxonomies'
 
 import StandardDrawer from 'components/StandardDrawer/StandardDrawer'
-
-const useStyles = makeStyles((theme) => ({
-    listItemText: {
-        marginRight: theme.spacing(4)
-    }
-}))
+import ToggleSwitchListItem from
+    'components/ToggleSwitchListItem/ToggleSwitchListItem'
 
 const FilterDrawer = (props) => {
-    const classes = useStyles()
-
     const selectedTerms = useSelector(
         (state) => (state.settings.selectedTerms)
     )
@@ -48,46 +39,23 @@ const FilterDrawer = (props) => {
                         >
                             {terms.map(
                                 ({ id: termId, label }) => {
-                                    const key = makeKey(taxonomyId, termId)
-                                    const isSelected = (
-                                        selectedTerms.includes(key)
+                                    const key = makeCombinedTaxonomyTermId(
+                                        taxonomyId,
+                                        termId
                                     )
-                                    const nodeId = `taxonomy-item.${key}`
-                                    const switchProps = {
-                                        'aria-labelledby': nodeId
-                                    }
 
                                     return (
-                                        <ListItem
-                                            button
-                                            key={key}
-                                            onClick={
-                                                () => {
-                                                    handleChange(key)
-                                                }
+                                        <ToggleSwitchListItem
+                                            handleChange={
+                                                () => { handleChange(key) }
                                             }
-                                        >
-                                            <ListItemText
-                                                className={
-                                                    classes.listItemText
-                                                }
-                                                id={nodeId}
-                                                primary={label}
-                                            />
-                                            <ListItemSecondaryAction>
-                                                <Switch
-                                                    checked={isSelected}
-                                                    color="primary"
-                                                    edge="end"
-                                                    inputProps={switchProps}
-                                                    onChange={
-                                                        () => {
-                                                            handleChange(key)
-                                                        }
-                                                    }
-                                                />
-                                            </ListItemSecondaryAction>
-                                        </ListItem>
+                                            isSelected={
+                                                selectedTerms.includes(key)
+                                            }
+                                            itemId={key}
+                                            key={key}
+                                            label={label}
+                                        />
                                     )
                                 }
                             )}
