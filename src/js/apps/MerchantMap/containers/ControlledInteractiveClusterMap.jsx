@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchGeoJsonSource } from 'actions/merchantMapActions'
+import { fetchFeatureCollection } from 'actions/merchantMapActions'
+import selectFilteredFeatureCollection
+    from 'selectors/selectFilteredFeatureCollection'
 
 import InteractiveClusterMap from
     '../components/InteractiveClusterMap/InteractiveClusterMap'
@@ -11,15 +13,19 @@ const ControlledInteractiveClusterMap = () => {
 
     useEffect(
         () => {
-            dispatch(fetchGeoJsonSource())
+            dispatch(fetchFeatureCollection())
         },
         []
     )
 
     return (
         <InteractiveClusterMap
-            geoJsonSource={useSelector((state) => (state.geoJsonSource))}
-            proximityMarker={useSelector((state) => (state.proximityMarker))}
+            featureCollection={
+                useSelector(selectFilteredFeatureCollection)
+            }
+            proximityMarker={
+                useSelector((state) => (state.proximityMarker))
+            }
         />
     )
 }

@@ -1,5 +1,5 @@
 import errorWrapper from './util/errorWrapper'
-import getGeoJsonSource from './effects/getGeoJsonSource'
+import getGeoJsonFeatureCollection from './effects/getGeoJsonFeatureCollection'
 
 /// -------------------------------- settings ---------------------------------
 
@@ -43,31 +43,32 @@ const toggleFilterableComponent = (key) => ({
 })
 
 const TOGGLE_TERM = 'TOGGLE_TERM'
-const toggleTerm = (key) => ({
+const toggleTerm = (taxonomyId, termId) => ({
     type: TOGGLE_TERM,
-    key
+    key: termId,
+    groupKey: taxonomyId
 })
 
 /// ----------------------------- GeoJson source ------------------------------
 
-const fetchGeoJsonSource = () => errorWrapper(
+const fetchFeatureCollection = () => errorWrapper(
     async (dispatch) => {
-        dispatch(requestGeoJsonSource())
-        const geoJson = await getGeoJsonSource()
-        dispatch(receiveGeoJsonSource(geoJson))
+        dispatch(requestFeatureCollection())
+        const featureCollection = await getGeoJsonFeatureCollection()
+        dispatch(receiveFeatureCollection(featureCollection))
     },
-    { successType: RECEIVE_GEOJSON_SOURCE }
+    { successType: RECEIVE_FEATURE_COLLECTION }
 )
 
-const REQUEST_GEOJSON_SOURCE = 'REQUEST_GEOJSON_SOURCE'
-const requestGeoJsonSource = () => ({
-    type: REQUEST_GEOJSON_SOURCE
+const REQUEST_FEATURE_COLLECTION = 'REQUEST_FEATURE_COLLECTION'
+const requestFeatureCollection = () => ({
+    type: REQUEST_FEATURE_COLLECTION
 })
 
-const RECEIVE_GEOJSON_SOURCE = 'RECEIVE_GEOJSON_SOURCE'
-const receiveGeoJsonSource = (geoJson) => ({
-    type: RECEIVE_GEOJSON_SOURCE,
-    geoJson
+const RECEIVE_FEATURE_COLLECTION = 'RECEIVE_FEATURE_COLLECTION'
+const receiveFeatureCollection = (featureCollection) => ({
+    type: RECEIVE_FEATURE_COLLECTION,
+    featureCollection
 })
 
 /// ---------------------------- proximity marker -----------------------------
@@ -100,9 +101,9 @@ export {
     TOGGLE_TERM,
     toggleTerm,
     // --- GeoJson source ---
-    fetchGeoJsonSource,
-    REQUEST_GEOJSON_SOURCE,
-    RECEIVE_GEOJSON_SOURCE,
+    fetchFeatureCollection,
+    REQUEST_FEATURE_COLLECTION,
+    RECEIVE_FEATURE_COLLECTION,
     // --- proximity marker ---
     RESET_PROXIMITY_MARKER,
     resetProximityMarker,

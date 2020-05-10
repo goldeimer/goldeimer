@@ -1,16 +1,11 @@
-const makeCombinedTaxonomyTermId = (taxonomyId, termId) => (
-    `${taxonomyId}.${termId}`
-)
-
 const makeIdEnum = (terms) => Object.fromEntries(
     terms.map(
-        (term) => ([term[0], term[0]])
+        ({ termId }) => ([termId, termId])
     )
 )
 
 const makeTerm = ([termId, label], taxonomyId) => ({
     termId,
-    taxonomyTermId: makeCombinedTaxonomyTermId(taxonomyId, termId),
     label
 })
 

@@ -8,6 +8,25 @@ const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
 const GOOGLE_SPREADSHEET_URL =
 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuJMztp6DfBGPv5X1ZvRhNUL95-GTXoxADEhh3XiWzmZYyaWrytx3E4-_8eb7AkW_nFuuj9Nn5fJoh/pub?gid=164271551&single=true&output=csv'
 
+const convertMerchantType = (legacyValue) => {
+    switch (legacyValue) {
+    case 'Getränkefachgroßhandel':
+    case 'Großmengen':
+        return MERCHANT_TYPE.wholesale
+
+    case 'Online-Shops':
+        return MERCHANT_TYPE.online
+
+    case 'Lieferservice':
+        return MERCHANT_TYPE.delivery
+
+        // Einzelhandel
+        // Einzelhandel (Kiste)
+    default:
+        return MERCHANT_TYPE.retail
+    }
+}
+
 const legacyGoldeimerDataToGeoJson = (data) => ({
     type: 'FeatureCollection',
     features: Array.prototype.map.call(
@@ -28,13 +47,8 @@ const legacyGoldeimerDataToGeoJson = (data) => ({
                         country: 'Deutschland',
                         street: entry.Location
                     },
-                    brand: BRAND.Goldeimer,
-                    merchantType:
-                        entry.l === 'Großmengen'
-                            ? MERCHANT_TYPE.Wholesale
-                            : entry.l === 'Online-Shops'
-                                ? MERCHANT_TYPE.OnlineShop
-                                : MERCHANT_TYPE.Retail,
+                    brands: [BRAND.goldeimer],
+                    merchantTypes: [convertMerchantType(entry.l)],
                     name: entry.Title,
                     url: entry.Description
                 }
@@ -43,13 +57,13 @@ const legacyGoldeimerDataToGeoJson = (data) => ({
     )
 })
 
-const getMerchantGeoJsonGoldeimer = async () => {
+const getGeoJsonFeatureCollectionGoldeimer = async () => {
     const result = await parseGoogleSheet(GOOGLE_SPREADSHEET_URL)
 
     return legacyGoldeimerDataToGeoJson(result)
 }
 
-const getMerchantGeoJsonVca = async () => {
+const getGeoJsonFeatureCollectionVca = async () => {
     try {
         const response = await axios.get(ENDPOINT_URL_VCA)
 
@@ -62,14 +76,16 @@ const getMerchantGeoJsonVca = async () => {
     }
 }
 
-const getGeoJsonSource = async () => {
+const getGeoJsonFeatureCollection = async () => {
     // legacy sources
-    const geoJson = await getMerchantGeoJsonGoldeimer()
-    const geoJsonVca = await getMerchantGeoJsonVca()
+    const featureCollection = await getGeoJsonFeatureCollectionGoldeimer()
+    const featureCollectionVca = await getGeoJsonFeatureCollectionVca()
 
-    geoJson.features = geoJson.features.concat(geoJsonVca.features)
+    featureCollection.features = featureCollection.features.concat(
+        featureCollectionVca.features
+    )
 
-    return geoJson
+    return featureCollection
 }
 
-export default getGeoJsonSource
+export default getGeoJsonFeatureCollection

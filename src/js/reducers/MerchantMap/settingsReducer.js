@@ -18,16 +18,12 @@ import {
 import makeKeyedListItemToggleReducer from
     'reducers/makeKeyedListItemToggleReducer'
 
+import SORT_ORDER from 'enum/sortOrder'
 import TAXONOMIES from './taxonomies'
 
 const FILTERABLE_COMPONENT = {
     list: 'list',
     map: 'map'
-}
-
-const SORT_ORDER = {
-    asc: 'asc',
-    desc: 'desc'
 }
 
 const flattenEnum = (enumeration) => (
@@ -39,9 +35,14 @@ const makeInitialState = () => ({
         enabledForComponents: [
             flattenEnum(FILTERABLE_COMPONENT)
         ],
-        selectedTerms: TAXONOMIES.map(
-            ({ terms }) => (terms.map(({ taxonomyTermId }) => (taxonomyTermId)))
-        ).flat()
+        selectedTerms: Object.fromEntries(
+            TAXONOMIES.map(
+                ({ taxonomyId, terms }) => ([
+                    taxonomyId,
+                    terms.map(({ termId }) => (termId))
+                ])
+            )
+        )
     },
     sort: {
         key: 'TODO: DEFAULT SORT KEY import',
@@ -57,10 +58,20 @@ const filterEnabledForComponentsReducer = makeKeyedListItemToggleReducer(
     TOGGLE_FILTERABLE_COMPONENT
 )
 
-const selectedFilterTermsReducer = makeKeyedListItemToggleReducer(
-    INITIAL_STATE.filter.selectedTerms,
-    RESET_SELECTED_TERMS,
-    TOGGLE_TERM
+const selectedTermsReducer = combineReducers(
+    Object.fromEntries(
+        TAXONOMIES.map(
+            ({ taxonomyId }) => ([
+                taxonomyId,
+                makeKeyedListItemToggleReducer(
+                    INITIAL_STATE.filter.selectedTerms[taxonomyId],
+                    RESET_SELECTED_TERMS,
+                    TOGGLE_TERM,
+                    taxonomyId
+                )
+            ])
+        )
+    )
 )
 
 const sortKeyReducer = (
@@ -97,7 +108,7 @@ const sortOrderReducer = (
 
 const filterReducer = combineReducers({
     enabledForComponents: filterEnabledForComponentsReducer,
-    selectedTerms: selectedFilterTermsReducer
+    selectedTerms: selectedTermsReducer
 })
 
 const sortReducer = combineReducers({

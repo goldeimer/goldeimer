@@ -23,7 +23,7 @@ const DEFAULT_ZOOM_LEVEL = 5
 const NEW_PROXIMITY_MARKER_ZOOM_LEVEL = 15
 
 const InteractiveClusterMap = ({
-    geoJsonSource,
+    featureCollection,
     proximityMarker
 }) => {
     const sourceRef = useRef()
@@ -136,10 +136,10 @@ const InteractiveClusterMap = ({
             onViewportChange={handleViewportChange}
             transitionDuration={500}
         >
-            {geoJsonSource && (
+            {featureCollection && (
                 <Source
                     type="geojson"
-                    data={geoJsonSource}
+                    data={featureCollection}
                     cluster
                     clusterMaxZoom={14}
                     clusterRadius={50}
@@ -157,7 +157,7 @@ const InteractiveClusterMap = ({
 
 InteractiveClusterMap.propTypes = {
     /* eslint-disable-next-line react/forbid-prop-types */
-    geoJsonSource: PropTypes.object,
+    featureCollection: PropTypes.object,
     proximityMarker: PropTypes.exact({
         latitude: PropTypes.number.isRequired,
         longitude: PropTypes.number.isRequired,
@@ -166,7 +166,7 @@ InteractiveClusterMap.propTypes = {
 }
 
 InteractiveClusterMap.defaultProps = {
-    geoJsonSource: null,
+    featureCollection: null,
     proximityMarker: null
 }
 

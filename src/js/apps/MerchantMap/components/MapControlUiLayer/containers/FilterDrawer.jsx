@@ -16,8 +16,8 @@ const FilterDrawer = (props) => {
 
     const dispatch = useDispatch()
 
-    const handleTermChange = (termId) => {
-        dispatch(toggleTerm(termId))
+    const handleTermChange = (taxonomyId, termId) => {
+        dispatch(toggleTerm(taxonomyId, termId))
     }
 
     return (
@@ -27,12 +27,16 @@ const FilterDrawer = (props) => {
                     <Fragment key={taxonomyId}>
                         {index === 0 ? <Divider /> : null}
                         <ToggleSwitchList
-                            handleItemChange={handleTermChange}
-                            items={terms.map(({ taxonomyTermId, label }) => ({
-                                itemKey: taxonomyTermId,
+                            handleItemChange={
+                                (termId) => (
+                                    handleTermChange(taxonomyId, termId)
+                                )
+                            }
+                            items={terms.map(({ termId, label }) => ({
+                                itemKey: termId,
                                 label
                             }))}
-                            selectedItemIds={selectedTerms}
+                            selectedItemIds={selectedTerms[taxonomyId]}
                             title={title}
                         />
                         <Divider />
