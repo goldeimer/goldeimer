@@ -14,9 +14,9 @@ const resetSelectedTerms = () => ({
     type: RESET_SELECTED_TERMS
 })
 
-const RESET_SORT_KEY = 'RESET_SORT_KEY'
-const resetSortKey = () => ({
-    type: RESET_SORT_KEY
+const RESET_SORT_ORDER_BY = 'RESET_SORT_ORDER_BY'
+const resetSortOrderBy = () => ({
+    type: RESET_SORT_ORDER_BY
 })
 
 const RESET_SORT_ORDER = 'RESET_SORT_ORDER'
@@ -24,9 +24,9 @@ const resetSortOrder = () => ({
     type: RESET_SORT_ORDER
 })
 
-const SET_SORT_KEY = 'SET_SORT_KEY'
-const setSortKey = (key) => ({
-    type: SET_SORT_KEY,
+const SET_SORT_ORDER_BY = 'SET_SORT_ORDER_BY'
+const setSortOrderBy = (key) => ({
+    type: SET_SORT_ORDER_BY,
     key
 })
 
@@ -88,12 +88,12 @@ export {
     resetFilterEnabledForComponents,
     RESET_SELECTED_TERMS,
     resetSelectedTerms,
-    RESET_SORT_KEY,
-    resetSortKey,
+    RESET_SORT_ORDER_BY,
+    resetSortOrderBy,
     RESET_SORT_ORDER,
     resetSortOrder,
-    SET_SORT_KEY,
-    setSortKey,
+    SET_SORT_ORDER_BY,
+    setSortOrderBy,
     SET_SORT_ORDER,
     setSortOrder,
     TOGGLE_FILTERABLE_COMPONENT,

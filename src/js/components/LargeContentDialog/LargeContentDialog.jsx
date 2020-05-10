@@ -79,6 +79,9 @@ const LargeContentDialog = ({
                                     variant="h6"
                                     className={classes.appBarTitle}
                                 >
+                                    {titleIcon &&
+                                        <TitleIcon>{titleIcon}</TitleIcon>
+                                    }
                                     {title}
                                 </Typography>
                                 <CloseButton onClose={handleClose} />

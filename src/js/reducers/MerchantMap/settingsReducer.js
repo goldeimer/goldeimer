@@ -7,9 +7,9 @@ import { combineReducers } from 'redux'
 import {
     RESET_FILTER_ENABLED_FOR_COMPONENTS,
     RESET_SELECTED_TERMS,
-    RESET_SORT_KEY,
+    RESET_SORT_ORDER_BY,
     RESET_SORT_ORDER,
-    SET_SORT_KEY,
+    SET_SORT_ORDER_BY,
     SET_SORT_ORDER,
     TOGGLE_FILTERABLE_COMPONENT,
     TOGGLE_TERM
@@ -45,7 +45,7 @@ const makeInitialState = () => ({
         )
     },
     sort: {
-        key: 'TODO: DEFAULT SORT KEY import',
+        orderBy: 'name', // TODO: import
         order: SORT_ORDER.asc
     }
 })
@@ -74,22 +74,6 @@ const selectedTermsReducer = combineReducers(
     )
 )
 
-const sortKeyReducer = (
-    state = INITIAL_STATE.sort.key,
-    action
-) => {
-    switch (action.type) {
-    case SET_SORT_KEY:
-        return action.key
-
-    case RESET_SORT_KEY:
-        return INITIAL_STATE.sort.key
-
-    default:
-        return state
-    }
-}
-
 const sortOrderReducer = (
     state = INITIAL_STATE.sort.order,
     action
@@ -106,14 +90,30 @@ const sortOrderReducer = (
     }
 }
 
+const sortOrderByReducer = (
+    state = INITIAL_STATE.sort.orderBy,
+    action
+) => {
+    switch (action.type) {
+    case SET_SORT_ORDER_BY:
+        return action.orderBy
+
+    case RESET_SORT_ORDER_BY:
+        return INITIAL_STATE.sort.orderBy
+
+    default:
+        return state
+    }
+}
+
 const filterReducer = combineReducers({
     enabledForComponents: filterEnabledForComponentsReducer,
     selectedTerms: selectedTermsReducer
 })
 
 const sortReducer = combineReducers({
-    key: sortKeyReducer,
-    order: sortOrderReducer
+    order: sortOrderReducer,
+    orderBy: sortOrderByReducer
 })
 
 const settingsReducer = combineReducers({
