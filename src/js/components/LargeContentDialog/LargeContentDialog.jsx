@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react'
+import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -24,7 +25,7 @@ import propTypesTitledCloseableRoutedOverlay from
     'propTypes/propTypesTitledCloseableRoutedOverlay'
 
 const FULLSCREEN_BREAKPOINT = 'md'
-const MAX_WIDTH = 'lg'
+const MAX_WIDTH = 'xl'
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -32,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarTitle: {
         flex: 1
+    },
+    dialogContentZeroPadding: {
+        padding: 0
     }
 }))
 
@@ -43,6 +47,7 @@ const Transition = forwardRef(
 /* eslint-disable react/prop-types */
 const LargeContentDialog = ({
     children,
+    isPadded = false,
     routeOnClose = '/',
     shouldBeOpen = true,
     title = null,
@@ -96,7 +101,9 @@ const LargeContentDialog = ({
                         </DialogTitle>
                     )
             }
-            <DialogContent>
+            <DialogContent
+                className={isPadded ? '' : classes.dialogContentZeroPadding}
+            >
                 {children}
             </DialogContent>
             <DialogActions>
@@ -108,6 +115,11 @@ const LargeContentDialog = ({
     )
 }
 
-LargeContentDialog.propTypes = propTypesTitledCloseableRoutedOverlay
+LargeContentDialog.propTypes = Object.assign(
+    {
+        isPadded: PropTypes.bool
+    },
+    propTypesTitledCloseableRoutedOverlay
+)
 
 export default LargeContentDialog

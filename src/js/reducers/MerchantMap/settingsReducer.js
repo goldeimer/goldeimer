@@ -19,7 +19,7 @@ import makeKeyedListItemToggleReducer from
     'reducers/makeKeyedListItemToggleReducer'
 
 import SORT_ORDER from 'enum/sortOrder'
-import TAXONOMIES from './taxonomies'
+import TAXONOMIES from 'enum/taxonomies'
 
 const FILTERABLE_COMPONENT = {
     list: 'list',

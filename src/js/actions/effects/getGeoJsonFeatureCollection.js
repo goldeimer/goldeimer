@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { BRAND, MERCHANT_TYPE } from 'reducers/MerchantMap/taxonomies'
+import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
 import parseGoogleSheet from 'util/parseGoogleSheet'
 
 const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
@@ -20,9 +20,9 @@ const convertMerchantType = (legacyValue) => {
     case 'Lieferservice':
         return MERCHANT_TYPE.delivery
 
-        // Einzelhandel
-        // Einzelhandel (Kiste)
     default:
+        // 'Einzelhandel'
+        // 'Einzelhandel (Kiste)'
         return MERCHANT_TYPE.retail
     }
 }
@@ -42,14 +42,12 @@ const legacyGoldeimerDataToGeoJson = (data) => ({
                     ]
                 },
                 properties: {
-                    address: {
-                        city: entry.Stadt,
-                        country: 'Deutschland',
-                        street: entry.Location
-                    },
                     brands: [BRAND.goldeimer],
+                    city: entry.Stadt,
+                    country: 'Deutschland',
                     merchantTypes: [convertMerchantType(entry.l)],
                     name: entry.Title,
+                    street: entry.Location,
                     url: entry.Description
                 }
             }

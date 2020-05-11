@@ -16,14 +16,12 @@ function dbRowToGeoJsonFeature($row)
             ],
         ],
         'properties' => [
-            'address' => [
-                'city' => $row['city'],
-                'country' => $row['country'],
-                'street' => $row['street'],
-            ],
             'brands' => ['vca'],
+            'city' => $row['city'],
+            'country' => $row['country'],
             'merchantTypes' => ['retail'],
             'name' => $row['name'],
+            'street' => $row['street'],
             'url' => $row['url'],
         ],
     ];
