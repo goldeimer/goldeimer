@@ -1,12 +1,24 @@
-import axios from 'axios'
+// import axios from 'axios'
+import validUrl from 'valid-url'
 
 import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
 import parseGoogleSheet from 'util/parseGoogleSheet'
 
-const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
+// const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
 
-const GOOGLE_SPREADSHEET_URL =
-'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuJMztp6DfBGPv5X1ZvRhNUL95-GTXoxADEhh3XiWzmZYyaWrytx3E4-_8eb7AkW_nFuuj9Nn5fJoh/pub?gid=164271551&single=true&output=csv'
+/* eslint-disable max-len */
+const GOOGLE_SPREADSHEET_PUBID_GOLDEIMER =
+'2PACX-1vRuJMztp6DfBGPv5X1ZvRhNUL95-GTXoxADEhh3XiWzmZYyaWrytx3E4-_8eb7AkW_nFuuj9Nn5fJoh'
+const GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER = '164271551'
+
+const GOOGLE_SPREADSHEET_PUBID_VCA =
+'2PACX-1vSmOzTOK5Tlx0AA-gR4h1efPCWD9q2VNq2gzN8kQFVdCw_vHEv65t6uppj7iwJBc7_XyGvDoBk8jb-Q'
+const GOOGLE_SPREADSHEET_SHEET_GID_VCA = '164271551'
+
+const makeGoogleSpreadsheetUrl = (pubId, gid) => (
+    `https://docs.google.com/spreadsheets/d/e/${pubId}/pub?gid=${gid}&single=true&output=csv`
+)
+/* eslint-enable max-len */
 
 const convertMerchantType = (legacyValue) => {
     switch (legacyValue) {
@@ -27,7 +39,7 @@ const convertMerchantType = (legacyValue) => {
     }
 }
 
-const legacyGoldeimerDataToGeoJson = (data) => ({
+const spreadsheetDataToGeoJsonGoldeimer = (data) => ({
     type: 'FeatureCollection',
     features: Array.prototype.map.call(
         data,
@@ -55,24 +67,69 @@ const legacyGoldeimerDataToGeoJson = (data) => ({
     )
 })
 
-const getGeoJsonFeatureCollectionGoldeimer = async () => {
-    const result = await parseGoogleSheet(GOOGLE_SPREADSHEET_URL)
+const spreadsheetDataToGeoJsonVca = (data) => ({
+    type: 'FeatureCollection',
+    features: Array.prototype.map.call(
+        data,
+        (entry) => (
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [
+                        entry.Longitude,
+                        entry.Latitude
+                    ]
+                },
+                properties: {
+                    brands: [BRAND.vca],
+                    city: entry.City,
+                    country: entry.Country,
+                    merchantTypes: [convertMerchantType(entry.Group)],
+                    name: entry.Title,
+                    street: entry.Street,
+                    url: entry.Description
+                }
+            }
+        )
+    )
+})
 
-    return legacyGoldeimerDataToGeoJson(result)
+const getGeoJsonFeatureCollectionGoldeimer = async () => {
+    const result = await parseGoogleSheet(
+        makeGoogleSpreadsheetUrl(
+            GOOGLE_SPREADSHEET_PUBID_GOLDEIMER,
+            GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER
+        )
+    )
+
+    return spreadsheetDataToGeoJsonGoldeimer(result)
 }
 
 const getGeoJsonFeatureCollectionVca = async () => {
-    try {
-        const response = await axios.get(ENDPOINT_URL_VCA)
+    const result = await parseGoogleSheet(
+        makeGoogleSpreadsheetUrl(
+            GOOGLE_SPREADSHEET_PUBID_VCA,
+            GOOGLE_SPREADSHEET_SHEET_GID_VCA
+        )
+    )
 
-        return response.data
-    } catch (error) {
-        /* eslint-disable-next-line no-console */
-        console.log(error)
-
-        return null
-    }
+    return spreadsheetDataToGeoJsonVca(result)
 }
+
+// TODO: Deprecate.
+// const getGeoJsonFeatureCollectionVcaFromLegacyDb = async () => {
+//     try {
+//         const response = await axios.get(ENDPOINT_URL_VCA)
+//
+//         return response.data
+//     } catch (error) {
+//         /* eslint-disable-next-line no-console */
+//         console.log(error)
+//
+//         return null
+//     }
+// }
 
 const getGeoJsonFeatureCollection = async () => {
     // legacy sources
@@ -81,6 +138,38 @@ const getGeoJsonFeatureCollection = async () => {
 
     featureCollection.features = featureCollection.features.concat(
         featureCollectionVca.features
+    )
+
+    featureCollection.features.forEach(
+        (feature, index) => {
+            featureCollection.features[index].properties = Object.fromEntries(
+                Object.entries(feature.properties).map(
+                    ([propertyName, propertyValue]) => {
+                        let newPropertyValue = propertyValue
+                        if (typeof propertyValue === 'string') {
+                            newPropertyValue = propertyValue.replace(
+                                /(^\s*)|(\s$)/g,
+                                ''
+                            ).replace(
+                                /\s{2,}/g,
+                                ' '
+                            )
+                        }
+
+                        if (propertyName === 'url') {
+                            if (!validUrl.isUri(newPropertyValue)) {
+                                newPropertyValue = ''
+                            }
+                        }
+
+                        return [
+                            propertyName,
+                            newPropertyValue
+                        ]
+                    }
+                )
+            )
+        }
     )
 
     return featureCollection

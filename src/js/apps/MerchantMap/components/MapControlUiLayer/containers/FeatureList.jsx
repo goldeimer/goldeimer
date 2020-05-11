@@ -66,7 +66,7 @@ const FeatureList = (props) => {
     const flattenedFeatures = features.map(({ geometry, properties }) => ({
         ...properties,
         geometry,
-        city: properties.city.replace(/\w*\d{3,}(\w*)/g, '$1')
+        city: properties.city.replace(/\s*\d{3,}\s*/g, '')
     }))
 
     const columns = COLUMNS.map((column) => {
