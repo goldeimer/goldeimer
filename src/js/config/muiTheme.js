@@ -13,7 +13,7 @@ const muiTheme = createMuiTheme({
         },
         secondary: {
             // placeholder color, TBD w/ @Manou
-            main: '#795548'
+            main: '#000'
         }
     },
     // TBD w/ @Manou:

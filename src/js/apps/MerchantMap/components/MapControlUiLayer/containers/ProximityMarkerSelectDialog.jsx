@@ -22,7 +22,7 @@ const ProximityMarkerSelectDialog = (props) => {
             {...props}
         >
             <GeocodingAutocomplete
-                onSelect={
+                onSubmit={
                     (selectedItem) => {
                         dispatch(
                             setProximityMarker(selectedItem)

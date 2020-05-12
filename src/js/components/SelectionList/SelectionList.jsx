@@ -7,21 +7,25 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import useSelectionByIndex from 'hooks/useSelectionByIndex'
+import useSelectionByIndexKeyboardControlled
+    from 'hooks/useSelectionByIndexKeyboardControlled'
 
-import propTypesSelectionList from 'propTypes/propTypesSelectionList'
+import propTypesSelectionList, {
+    defaultPropsSelectionList
+} from 'propTypes/propTypesSelectionList'
 
 const SelectionList = ({
-    dense = true,
-    itemIcon = null,
+    dense,
+    itemIcon,
     items,
-    noOptionsText = 'Keine Ergebnisse.',
-    onSelect = null
+    noOptionsText,
+    onSelect,
+    onSubmit
 }) => {
     const {
         selectedIndex,
-        handleSelect
-    } = useSelectionByIndex(items, onSelect)
+        handleSubmit
+    } = useSelectionByIndexKeyboardControlled(items, onSubmit)
 
     if (items.length > 0) {
         return (
@@ -35,7 +39,7 @@ const SelectionList = ({
                             <ListItem
                                 button
                                 key={uuid()}
-                                onClick={() => (handleSelect(index))}
+                                onClick={() => (handleSubmit(index))}
                                 selected={selectedIndex === index}
                             >
                                 {
@@ -64,5 +68,7 @@ const SelectionList = ({
 }
 
 SelectionList.propTypes = propTypesSelectionList
+
+SelectionList.defaultProps = defaultPropsSelectionList
 
 export default SelectionList

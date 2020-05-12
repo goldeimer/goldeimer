@@ -9,12 +9,9 @@ const useCloseableRoutedOverlay = (
 
     const history = useHistory()
 
-    useEffect(
-        () => {
-            shouldBeOpen ? handleOpen() : handleClose()
-        },
-        [shouldBeOpen]
-    )
+    useEffect(() => {
+        shouldBeOpen ? handleOpen() : handleClose()
+    }, [shouldBeOpen])
 
     const handleClose = () => {
         setIsOpen(false)

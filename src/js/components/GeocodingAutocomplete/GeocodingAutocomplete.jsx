@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { PropTypes } from 'prop-types'
 
+import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import PersonPinCircleIcon from '@material-ui/icons/PersonPinCircle'
 
-import ListBoxPopper from 'components/ListBoxPopper/ListBoxPopper'
-
 import useGeocoding from 'hooks/useGeocoding'
 import useInput from 'hooks/useInput'
+import isFunction from 'util/isFunction'
+
+import ListBoxPopper from 'components/ListBoxPopper/ListBoxPopper'
 
 // TODO:
 // Make dynamic.
@@ -38,7 +40,15 @@ const filterFeaturesByCountry = (features) => features.filter(
     }
 )
 
-const GeocodingAutoComplete = ({ label, onSelect }) => {
+const useStyles = makeStyles((theme) => ({
+    textField: {
+        '& label.Mui-focused': {
+            color: theme.palette.secondary.main
+        }
+    }
+}))
+
+const GeocodingAutoComplete = ({ label, onSubmit }) => {
     const {
         bind,
         setValue: setInputValue,
@@ -73,18 +83,21 @@ const GeocodingAutoComplete = ({ label, onSelect }) => {
 
     const textFieldRef = useRef()
 
-    const handleSelect = (selectedItem) => {
+    const handleSubmit = (selectedItem) => {
         setInputValue(selectedItem.placeName)
 
-        if (onSelect) {
-            onSelect(selectedItem)
+        if (isFunction(onSubmit)) {
+            onSubmit(selectedItem)
         }
     }
+
+    const classes = useStyles()
 
     return (
         <>
             <TextField
                 {...bind}
+                className={classes.textField}
                 fullWidth
                 inputRef={(input) => (input && input.focus())}
                 label={label}
@@ -116,7 +129,7 @@ const GeocodingAutoComplete = ({ label, onSelect }) => {
                                 }
                             )
                         }
-                        onSelect={handleSelect}
+                        onSubmit={handleSubmit}
                     />
                 )}
         </>
@@ -125,12 +138,12 @@ const GeocodingAutoComplete = ({ label, onSelect }) => {
 
 GeocodingAutoComplete.propTypes = {
     label: PropTypes.string,
-    onSelect: PropTypes.func
+    onSubmit: PropTypes.func
 }
 
 GeocodingAutoComplete.defaultProps = {
     label: 'Wo möchtest Du suchen?',
-    onSelect: null
+    onSubmit: null
 }
 
 export default GeocodingAutoComplete

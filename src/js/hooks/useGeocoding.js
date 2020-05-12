@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { freeFormGeocodingRequest } from 'util/geocoding'
 
+const MIN_QUERY_LENGTH = 6
+
 const useGeocoding = (initialQuery = '') => {
     const [query, setQuery] = useState(initialQuery)
     const [result, setResult] = useState(null)
@@ -20,7 +22,8 @@ const useGeocoding = (initialQuery = '') => {
             }
 
             const { length } = query
-            if (length < 6) {
+            if (length < MIN_QUERY_LENGTH) {
+                setResult(null)
                 return
             }
 
@@ -31,7 +34,7 @@ const useGeocoding = (initialQuery = '') => {
 
             // Throttle further.
             if (
-                length >= 12 ||
+                length >= (MIN_QUERY_LENGTH / 2) ||
                 (
                     length % 2 === 0 ||
                     (
