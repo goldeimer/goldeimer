@@ -2,11 +2,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
+import LinkIcon from '@material-ui/icons/Link'
 
 import { BRAND_NAME, MERCHANT_TYPE_NAME } from 'enum/taxonomies'
 import selectFilteredAndSortedFeatureCollection
     from 'selectors/selectFilteredAndSortedFeatureCollection'
 
+import ExternalLink from 'components/ExternalLink/ExternalLink'
 import LargeContentDialog
     from 'components/LargeContentDialog/LargeContentDialog'
 import Table from 'components/Table/Table'
@@ -29,6 +31,31 @@ const COLUMNS = [
     { field: 'name', title: 'Name' },
     { field: 'city', title: 'Stadt' },
     {
+        field: 'marker',
+        title: null,
+        filtering: false
+    },
+    {
+        field: 'url',
+        title: null,
+        filtering: false,
+        render: (rowData) => {
+            if (rowData.url.length > 0) {
+                return (
+                    <ExternalLink
+                        href={rowData.url}
+                        isFlex
+                        variant="inherit"
+                    >
+                        <LinkIcon />
+                    </ExternalLink>
+                )
+            }
+
+            return null
+        }
+    },
+    {
         field: 'merchantTypes',
         title: 'Kategorie',
         lookup: MERCHANT_TYPE_NAME,
@@ -43,8 +70,7 @@ const COLUMNS = [
         customFilterAndSearch: makeArrayFilterAndSearch('brands')
     },
     { field: 'street', title: 'Straße' },
-    { field: 'country', title: 'Land' },
-    { field: 'url', title: '', filtering: false }
+    { field: 'country', title: 'Land' }
 ].map(
     (column) => ({
         ...column,
