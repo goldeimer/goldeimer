@@ -1,12 +1,30 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
-const colorPrimary = '#ffe300'
+const COLOR_PRIMARY_GOLDEIMER = '#ffe300'
+const COLOR_PRIMARY_VIVA_CON_AGUA = '#0a6b91'
 
-const typographyFontFamilyVeneer = {
+const TYPOGRAPHY_VENEER = {
     fontFamily: 'veneer'
 }
 
-const muiTheme = createMuiTheme({
+const makeMuiTheme = (
+    colorPrimary = COLOR_PRIMARY_GOLDEIMER,
+    colorLayerHighlight = '#000',
+    headingFontStyle = TYPOGRAPHY_VENEER
+) => createMuiTheme({
+    breakpoints: {
+        values: {
+            // mui defaults
+            xs: 0,
+            sm: 600,
+            md: 960,
+            lg: 1280,
+            xl: 1920,
+            // custom
+            featureListFold1: 1400,
+            featureListFold2: 600
+        }
+    },
     palette: {
         primary: {
             main: colorPrimary
@@ -14,6 +32,9 @@ const muiTheme = createMuiTheme({
         secondary: {
             // placeholder color, TBD w/ @Manou
             main: '#000'
+        },
+        layerHighlight: {
+            main: colorLayerHighlight
         }
     },
     // TBD w/ @Manou:
@@ -23,22 +44,36 @@ const muiTheme = createMuiTheme({
     //     },
     typography: {
         fontFamily: 'museo',
-        h1: typographyFontFamilyVeneer,
-        h2: typographyFontFamilyVeneer,
-        h3: typographyFontFamilyVeneer,
-        h4: typographyFontFamilyVeneer,
-        h5: typographyFontFamilyVeneer,
-        h6: typographyFontFamilyVeneer,
+        h1: headingFontStyle,
+        h2: headingFontStyle,
+        h3: headingFontStyle,
+        h4: headingFontStyle,
+        h5: headingFontStyle,
+        h6: headingFontStyle,
         button: Object.assign(
             {
                 fontSize: '1rem'
             },
-            typographyFontFamilyVeneer
+            headingFontStyle
         )
     }
 })
 
+const GoldeimerMuiTheme = makeMuiTheme(COLOR_PRIMARY_GOLDEIMER, '#000')
+const VivaConAguaMuiTheme = makeMuiTheme(COLOR_PRIMARY_VIVA_CON_AGUA, '#fff')
+
+const getMuiTheme = () => {
+    const urlParams = new URLSearchParams(window.location.search)
+
+    if (urlParams.has('theme') && urlParams.get('theme') === 'vivaconagua') {
+        return VivaConAguaMuiTheme
+    }
+
+    return GoldeimerMuiTheme
+}
+
 export {
-    muiTheme as default,
-    colorPrimary
+    GoldeimerMuiTheme as default,
+    VivaConAguaMuiTheme,
+    getMuiTheme
 }

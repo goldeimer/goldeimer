@@ -3,13 +3,11 @@ import PropTypes from 'prop-types'
 
 import MapGL, { Source, Layer } from 'react-map-gl'
 
+import { useTheme } from '@material-ui/core/styles'
+
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
 
-import {
-    clusterLayer,
-    clusterCountLayer,
-    unclusteredPointLayer
-} from './layers'
+import makeLayers from './layers'
 
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
@@ -27,6 +25,12 @@ const InteractiveClusterMap = ({
     proximityMarker
 }) => {
     const sourceRef = useRef()
+
+    const {
+        clusterLayer,
+        clusterCountLayer,
+        unclusteredPointLayer
+    } = makeLayers(useTheme())
 
     const [viewport, setViewport] = useState({
         latitude: (
