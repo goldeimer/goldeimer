@@ -16,7 +16,7 @@ import useCloseableRoutedOverlay from
 import propTypesTitledCloseableRoutedOverlay from
     'propTypes/propTypesTitledCloseableRoutedOverlay'
 
-const useStyles = makeStyles((theme) => ({
+const STANDARD_DIALOG_STYLES = {
     dialogTitle: {
         '& h2': {
             display: 'flex',
@@ -26,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
     dialogTitleText: {
         flexGrow: 1
     }
-}))
+}
+
+const useStyles = makeStyles((theme) => (STANDARD_DIALOG_STYLES))
 
 /* eslint-disable react/prop-types */
 const StandardDialog = ({
@@ -75,4 +77,7 @@ const StandardDialog = ({
 
 StandardDialog.propTypes = propTypesTitledCloseableRoutedOverlay
 
-export default StandardDialog
+export {
+    StandardDialog as default,
+    STANDARD_DIALOG_STYLES
+}

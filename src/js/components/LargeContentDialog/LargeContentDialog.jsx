@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -21,23 +22,32 @@ import TitleIcon from 'components/TitleIcon/TitleIcon'
 
 import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
 
-import propTypesTitledCloseableRoutedOverlay from
-    'propTypes/propTypesTitledCloseableRoutedOverlay'
+import propTypesTitledCloseableRoutedOverlay
+    from 'propTypes/propTypesTitledCloseableRoutedOverlay'
+
+import { STANDARD_DIALOG_STYLES }
+    from 'components/StandardDialog/StandardDialog'
 
 const FULLSCREEN_BREAKPOINT = 'md'
 const MAX_WIDTH = 'xl'
 
-const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative'
-    },
-    appBarTitle: {
-        flex: 1
-    },
-    dialogContentZeroPadding: {
-        padding: 0
+const useStyles = makeStyles((theme) => Object.assign(
+    STANDARD_DIALOG_STYLES,
+    {
+        appBar: {
+            position: 'relative'
+        },
+        appBarTitle: {
+            flex: 1
+        },
+        dialogContentZeroPadding: {
+            padding: 0
+        },
+        paddingBottomZero: {
+            paddingBottom: 0
+        }
     }
-}))
+))
 
 const Transition = forwardRef(
     // TODO: arrow function
@@ -94,9 +104,17 @@ const LargeContentDialog = ({
                         </AppBar>
                     )
                     : (
-                        <DialogTitle id="dialog-title">
+                        <DialogTitle
+                            className={clsx(
+                                classes.dialogTitle,
+                                classes.paddingBottomZero
+                            )}
+                            id="dialog-title"
+                        >
                             {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
-                            {title}
+                            <span className={classes.dialogTitleText}>
+                                {title}
+                            </span>
                             <CloseButton onClose={handleClose} />
                         </DialogTitle>
                     )
