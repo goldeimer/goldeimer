@@ -1,10 +1,7 @@
-// import axios from 'axios'
 import validUrl from 'valid-url'
 
 import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
 import parseGoogleSheet from 'util/parseGoogleSheet'
-
-// const ENDPOINT_URL_VCA = 'https://www.goldeimer.de/api/merchants'
 
 /* eslint-disable max-len */
 const GOOGLE_SPREADSHEET_PUBID_GOLDEIMER =
@@ -116,20 +113,6 @@ const getGeoJsonFeatureCollectionVca = async () => {
 
     return spreadsheetDataToGeoJsonVca(result)
 }
-
-// TODO: Deprecate.
-// const getGeoJsonFeatureCollectionVcaFromLegacyDb = async () => {
-//     try {
-//         const response = await axios.get(ENDPOINT_URL_VCA)
-//
-//         return response.data
-//     } catch (error) {
-//         /* eslint-disable-next-line no-console */
-//         console.log(error)
-//
-//         return null
-//     }
-// }
 
 const getGeoJsonFeatureCollection = async () => {
     // legacy sources

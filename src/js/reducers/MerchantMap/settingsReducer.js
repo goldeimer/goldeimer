@@ -1,6 +1,6 @@
-/// TODO(Johannes):
-/// Make taxonomies & terms dynamic, let (admin) users define terms on the
-/// backend side (once we have one).
+/// TODO:
+/// Make taxonomies & terms dynamic.
+/// Let (admin) users define terms on the backend side (once we have one).
 
 import { combineReducers } from 'redux'
 

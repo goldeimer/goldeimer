@@ -173,7 +173,6 @@ const FeatureList = (props) => {
                 )}
             >
                 <Table
-                    className={classes.tableWithExtraFirstCellPadding}
                     columns={columns}
                     data={flattenedFeatures}
                     options={{
