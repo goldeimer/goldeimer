@@ -3,12 +3,6 @@ import getGeoJsonFeatureCollection from './effects/getGeoJsonFeatureCollection'
 
 /// -------------------------------- settings ---------------------------------
 
-const RESET_FILTER_ENABLED_FOR_COMPONENTS =
-    'RESET_FILTER_ENABLED_FOR_COMPONENTS'
-const resetFilterEnabledForComponents = () => ({
-    type: RESET_FILTER_ENABLED_FOR_COMPONENTS
-})
-
 const RESET_SELECTED_TERMS = 'RESET_SELECTED_TERMS'
 const resetSelectedTerms = () => ({
     type: RESET_SELECTED_TERMS
@@ -34,12 +28,6 @@ const SET_SORT_ORDER = 'SET_SORT_ORDER'
 const setSortOrder = (order) => ({
     type: SET_SORT_ORDER,
     order
-})
-
-const TOGGLE_FILTERABLE_COMPONENT = 'TOGGLE_FILTERABLE_COMPONENT'
-const toggleFilterableComponent = (key) => ({
-    type: TOGGLE_FILTERABLE_COMPONENT,
-    key
 })
 
 const TOGGLE_TERM = 'TOGGLE_TERM'
@@ -84,8 +72,6 @@ const setProximityMarker = (proximityMarker) => ({
 
 export {
     // --- settings ---
-    RESET_FILTER_ENABLED_FOR_COMPONENTS,
-    resetFilterEnabledForComponents,
     RESET_SELECTED_TERMS,
     resetSelectedTerms,
     RESET_SORT_ORDER_BY,
@@ -96,8 +82,6 @@ export {
     setSortOrderBy,
     SET_SORT_ORDER,
     setSortOrder,
-    TOGGLE_FILTERABLE_COMPONENT,
-    toggleFilterableComponent,
     TOGGLE_TERM,
     toggleTerm,
     // --- GeoJson source ---
