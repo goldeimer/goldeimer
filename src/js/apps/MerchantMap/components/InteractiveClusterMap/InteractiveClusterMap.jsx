@@ -7,8 +7,9 @@ import { useTheme } from '@material-ui/core/styles'
 
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
 import log from 'util/log'
-
 import makeLayers from './layers'
+
+import ProximityMarker from './components/ProximityMarker/ProximityMarker'
 
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
@@ -154,6 +155,11 @@ const InteractiveClusterMap = ({
                     <Layer {...clusterCountLayer} />
                     <Layer {...unclusteredPointLayer} />
                 </Source>
+            )}
+            {proximityMarker && (
+                <ProximityMarker
+                    {...proximityMarker}
+                />
             )}
         </MapGL>
     )
