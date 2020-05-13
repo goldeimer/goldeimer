@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const path = require('path');
 const {
     SRC_CSS_PATH,
+    SRC_IMG_PATH,
     SRC_JS_PATH,
     SRC_JS_ACTIONS_PATH,
     SRC_JS_APPS_PATH,
@@ -49,6 +50,7 @@ module.exports = {
             css: SRC_CSS_PATH,
             enum: SRC_JS_ENUM_PATH,
             hooks: SRC_JS_HOOKS_PATH,
+            img: SRC_IMG_PATH,
             js: SRC_JS_PATH,
             propTypes: SRC_JS_PROP_TYPES_PATH,
             reducers: SRC_JS_REDUCERS_PATH,

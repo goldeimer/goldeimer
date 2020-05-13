@@ -1,7 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
+import 'img/favicon/goldeimer.favicon.png'
+import 'img/favicon/vca.favicon.png'
+
 const COLOR_PRIMARY_GOLDEIMER = '#ffe300'
-const COLOR_PRIMARY_VIVA_CON_AGUA = '#0a6b91'
+const COLOR_PRIMARY_VIVA_CON_AGUA = '#008fc3' // pool2: '#0a6b91'
 
 const TYPOGRAPHY_VENEER = {
     fontFamily: 'veneer'
@@ -12,19 +15,6 @@ const makeMuiTheme = (
     colorLayerHighlight = '#000',
     headingFontStyle = TYPOGRAPHY_VENEER
 ) => createMuiTheme({
-    breakpoints: {
-        values: {
-            // mui defaults
-            xs: 0,
-            sm: 600,
-            md: 960,
-            lg: 1280,
-            xl: 1920,
-            // custom
-            featureListFold1: 1400,
-            featureListFold2: 600
-        }
-    },
     palette: {
         primary: {
             main: colorPrimary
@@ -59,21 +49,25 @@ const makeMuiTheme = (
     }
 })
 
-const GoldeimerMuiTheme = makeMuiTheme(COLOR_PRIMARY_GOLDEIMER, '#000')
-const VivaConAguaMuiTheme = makeMuiTheme(COLOR_PRIMARY_VIVA_CON_AGUA, '#fff')
+const THEMES = {
+    Goldeimer: {
+        favicon: 'goldeimer.favicon.png',
+        mui: makeMuiTheme(COLOR_PRIMARY_GOLDEIMER, '#000')
+    },
+    VivaConAgua: {
+        favicon: 'vca.favicon.png',
+        mui: makeMuiTheme(COLOR_PRIMARY_VIVA_CON_AGUA, '#fff')
+    }
+}
 
-const getMuiTheme = () => {
+const getTheme = () => {
     const urlParams = new URLSearchParams(window.location.search)
 
     if (urlParams.has('theme') && urlParams.get('theme') === 'vivaconagua') {
-        return VivaConAguaMuiTheme
+        return THEMES.VivaConAgua
     }
 
-    return GoldeimerMuiTheme
+    return THEMES.Goldeimer
 }
 
-export {
-    GoldeimerMuiTheme as default,
-    VivaConAguaMuiTheme,
-    getMuiTheme
-}
+export default getTheme

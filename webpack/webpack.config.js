@@ -55,9 +55,12 @@ const merchantMapConfig = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            favicon: path.resolve(SRC_IMG_PATH, 'favicon.png'),
+            favicon: path.resolve(
+                SRC_IMG_PATH,
+                'favicon',
+                'goldeimer.favicon.png'
+            ),
             title: "Händlerkarte",
-            // hash: true,  // TODO: decide
             meta: {
                 viewport:
                     'width=device-width, initial-scale=1, shrink-to-fit=no',
