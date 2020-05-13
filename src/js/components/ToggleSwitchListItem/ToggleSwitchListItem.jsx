@@ -7,6 +7,10 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Switch from '@material-ui/core/Switch'
 
+import isIos from 'util/isIos'
+
+import IosSwitch from 'components/IosSwitch/IosSwitch'
+
 const useStyles = makeStyles((theme) => ({
     listItemText: {
         marginRight: theme.spacing(4)
@@ -26,6 +30,8 @@ const ToggleSwitchListItem = ({
         'aria-labelledby': nodeId
     }
 
+    const SwitchComponent = isIos() ? IosSwitch : Switch
+
     return (
         <ListItem
             button
@@ -37,7 +43,7 @@ const ToggleSwitchListItem = ({
                 primary={label}
             />
             <ListItemSecondaryAction>
-                <Switch
+                <SwitchComponent
                     checked={isSelected}
                     color="primary"
                     edge="end"

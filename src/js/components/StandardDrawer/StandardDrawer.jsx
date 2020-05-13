@@ -4,6 +4,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
 import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
+import isIos from 'util/isIos'
 
 import CloseButton from 'components/CloseButton/CloseButton'
 import TitleIcon from 'components/TitleIcon/TitleIcon'
@@ -25,10 +26,7 @@ const StandardDrawer = ({
         handleOpen
     } = useCloseableRoutedOverlay(shouldBeOpen)
 
-    const iOS = (
-        process.browser &&
-        /iPad|iPhone|iPod/.test(navigator.userAgent)
-    )
+    const iOS = isIos()
 
     return (
         <SwipeableDrawer
