@@ -12,8 +12,11 @@ const ControlledInteractiveClusterMap = () => (
         featureCollection={
             useSelector(selectFilteredFeatureCollection)
         }
+        featureMarker={
+            useSelector((state) => (state.marker.feature))
+        }
         proximityMarker={
-            useSelector((state) => (state.proximityMarker))
+            useSelector((state) => (state.marker.proximity))
         }
     />
 )

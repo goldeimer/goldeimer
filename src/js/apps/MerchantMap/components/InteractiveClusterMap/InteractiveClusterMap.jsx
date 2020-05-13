@@ -9,6 +9,7 @@ import { MAP_TILER_API_KEY } from 'config/apiKeys'
 import log from 'util/log'
 import makeLayers from './layers'
 
+import FeatureMarker from './components/FeatureMarker/FeatureMarker'
 import ProximityMarker from './components/ProximityMarker/ProximityMarker'
 
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
@@ -20,10 +21,11 @@ const DEFAULT_VIEWPORT_CENTER = {
 
 const DEFAULT_ZOOM_LEVEL = 5
 
-const NEW_PROXIMITY_MARKER_ZOOM_LEVEL = 15
+const NEW_MARKER_ZOOM_LEVEL = 15
 
 const InteractiveClusterMap = ({
     featureCollection,
+    featureMarker,
     proximityMarker
 }) => {
     const sourceRef = useRef()
@@ -47,7 +49,7 @@ const InteractiveClusterMap = ({
         ),
         zoom: (
             proximityMarker
-                ? NEW_PROXIMITY_MARKER_ZOOM_LEVEL
+                ? NEW_MARKER_ZOOM_LEVEL
                 : DEFAULT_ZOOM_LEVEL
         ),
         bearing: 0,
@@ -62,13 +64,30 @@ const InteractiveClusterMap = ({
                         ...viewport,
                         latitude: proximityMarker.latitude,
                         longitude: proximityMarker.longitude,
-                        zoom: NEW_PROXIMITY_MARKER_ZOOM_LEVEL,
+                        zoom: NEW_MARKER_ZOOM_LEVEL,
                         transitionDuration: 600
                     }
                 )
             }
         },
         [proximityMarker]
+    )
+
+    useEffect(
+        () => {
+            if (featureMarker) {
+                handleViewportChange(
+                    {
+                        ...viewport,
+                        latitude: featureMarker.latitude,
+                        longitude: featureMarker.longitude,
+                        zoom: NEW_MARKER_ZOOM_LEVEL,
+                        transitionDuration: 600
+                    }
+                )
+            }
+        },
+        [featureMarker]
     )
 
     const handleViewportChange = (nextViewport) => { setViewport(nextViewport) }
@@ -156,6 +175,11 @@ const InteractiveClusterMap = ({
                     <Layer {...unclusteredPointLayer} />
                 </Source>
             )}
+            {featureMarker && (
+                <FeatureMarker
+                    {...featureMarker}
+                />
+            )}
             {proximityMarker && (
                 <ProximityMarker
                     {...proximityMarker}
@@ -165,18 +189,22 @@ const InteractiveClusterMap = ({
     )
 }
 
+const MarkerPropTypes = PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    placeName: PropTypes.string
+})
+
 InteractiveClusterMap.propTypes = {
     /* eslint-disable-next-line react/forbid-prop-types */
     featureCollection: PropTypes.object,
-    proximityMarker: PropTypes.exact({
-        latitude: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        placeName: PropTypes.string
-    })
+    featureMarker: MarkerPropTypes,
+    proximityMarker: MarkerPropTypes
 }
 
 InteractiveClusterMap.defaultProps = {
     featureCollection: null,
+    featureMarker: null,
     proximityMarker: null
 }
 

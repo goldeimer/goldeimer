@@ -12,7 +12,7 @@ import StandardDialog from 'components/StandardDialog/StandardDialog'
 const ProximityMarkerSelectDialog = (props) => {
     const dispatch = useDispatch()
     const proximityMarker = useShallowEqualSelector(
-        (state) => (state.proximityMarker)
+        (state) => (state.marker.proximity)
     )
     const previousProximityMarker = usePrevious(proximityMarker)
 

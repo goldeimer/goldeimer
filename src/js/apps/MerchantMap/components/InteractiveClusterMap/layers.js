@@ -1,4 +1,4 @@
-const makeLayers = (muiTheme) => ({
+const makeLayers = (muiTheme, omitFeatures = []) => ({
     clusterLayer: {
         id: 'clusters',
         type: 'circle',

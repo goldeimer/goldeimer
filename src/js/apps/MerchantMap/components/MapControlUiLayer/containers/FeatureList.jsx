@@ -1,13 +1,16 @@
 import React from 'react'
 import clsx from 'clsx'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import LinkIcon from '@material-ui/icons/Link'
 import MarkerIcon from '@material-ui/icons/Room'
 
+import { setFeatureMarker } from 'actions/merchantMapActions'
 import { BRAND_NAME, MERCHANT_TYPE_NAME } from 'enum/taxonomies'
+import usePrevious from 'hooks/usePrevious'
+import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
 import selectFilteredAndSortedFeatureCollection
     from 'selectors/selectFilteredAndSortedFeatureCollection'
 
@@ -30,7 +33,7 @@ const makeArrayFilterAndSearch = (field) => (terms, rowData) => (
     terms.filter((term) => (rowData[field].includes(term))).length > 0
 )
 
-const makeColumns = (classes) => ([
+const makeColumns = (classes, dispatch) => ([
     { field: 'name', title: 'Name' },
     { field: 'city', title: 'Stadt' },
     {
@@ -38,11 +41,20 @@ const makeColumns = (classes) => ([
         title: null,
         filtering: false,
         render: (rowData) => {
-            const marker = rowData.geometry.coordinates.length === 2
+            const { coordinates } = rowData.geometry
+
+            const marker = coordinates.length === 2
                 ? (
                     <IconButton
                         aria-label="Auf Karte zeigen"
                         className={classes.iconButton}
+                        onClick={() => dispatch(
+                            setFeatureMarker({
+                                latitude: parseFloat(coordinates[1]),
+                                longitude: parseFloat(coordinates[0]),
+                                placeName: rowData.name
+                            })
+                        )}
                         size="small"
                     >
                         <MarkerIcon size="small" />
@@ -131,10 +143,16 @@ const FeatureList = (props) => {
     const featureCollection =
         useSelector(selectFilteredAndSortedFeatureCollection)
 
+    const dispatch = useDispatch()
+    const featureMarker = useShallowEqualSelector(
+        (state) => (state.marker.feature)
+    )
+    const previousFeatureMarker = usePrevious(featureMarker)
+
     const classes = useStyles()
 
     let flattenedFeatures = []
-    let columns = makeColumns(classes)
+    let columns = makeColumns(classes, dispatch)
 
     if (featureCollection) {
         flattenedFeatures = featureCollection.features.map(
@@ -165,7 +183,10 @@ const FeatureList = (props) => {
     }
 
     return (
-        <LargeContentDialog {...props}>
+        <LargeContentDialog
+            {...props}
+            shouldBeOpen={previousFeatureMarker === undefined}
+        >
             <div
                 className={clsx(
                     classes.customPaddedTableCells,

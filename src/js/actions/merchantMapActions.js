@@ -59,15 +59,24 @@ const receiveFeatureCollection = (featureCollection) => ({
     featureCollection
 })
 
-/// ---------------------------- proximity marker -----------------------------
+/// --------------------------------- markers ---------------------------------
+
+const RESET_FEATURE_MARKER = 'RESET_FEATURE_MARKER'
+const resetFeatureMarker = () => ({ type: RESET_FEATURE_MARKER })
 
 const RESET_PROXIMITY_MARKER = 'RESET_PROXIMITY_MARKER'
 const resetProximityMarker = () => ({ type: RESET_PROXIMITY_MARKER })
 
+const SET_FEATURE_MARKER = 'SET_FEATURE_MARKER'
+const setFeatureMarker = (marker) => ({
+    type: SET_FEATURE_MARKER,
+    ...marker
+})
+
 const SET_PROXIMITY_MARKER = 'SET_PROXIMITY_MARKER'
-const setProximityMarker = (proximityMarker) => ({
+const setProximityMarker = (marker) => ({
     type: SET_PROXIMITY_MARKER,
-    ...proximityMarker
+    ...marker
 })
 
 export {
@@ -88,7 +97,11 @@ export {
     fetchFeatureCollection,
     REQUEST_FEATURE_COLLECTION,
     RECEIVE_FEATURE_COLLECTION,
-    // --- proximity marker ---
+    // --- markers ---
+    RESET_FEATURE_MARKER,
+    resetFeatureMarker,
+    SET_FEATURE_MARKER,
+    setFeatureMarker,
     RESET_PROXIMITY_MARKER,
     resetProximityMarker,
     SET_PROXIMITY_MARKER,
