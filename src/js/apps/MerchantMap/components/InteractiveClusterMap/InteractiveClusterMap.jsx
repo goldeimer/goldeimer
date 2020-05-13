@@ -6,6 +6,7 @@ import MapGL, { Source, Layer } from 'react-map-gl'
 import { useTheme } from '@material-ui/core/styles'
 
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
+import log from 'util/log'
 
 import makeLayers from './layers'
 
@@ -96,8 +97,7 @@ const InteractiveClusterMap = ({
     const handleMarkerClick = (feature) => {
         // TODO:
         // Implement detail info UI.
-        /* eslint-disable-next-line no-console */
-        console.log(feature)
+        log(feature)
     }
 
     const handleClick = (event) => {

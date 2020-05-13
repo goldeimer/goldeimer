@@ -9,6 +9,7 @@
 import axios from 'axios'
 
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
+import log from 'util/log'
 
 // Hamburg, Germany
 const DEFAULT_PROXIMITY = '10.00,53.56'
@@ -40,8 +41,7 @@ const geocodingRequest = async (
 
         return response.data
     } catch (error) {
-        /* eslint-disable-next-line no-console */
-        console.log(error)
+        log(error)
 
         return null
     }

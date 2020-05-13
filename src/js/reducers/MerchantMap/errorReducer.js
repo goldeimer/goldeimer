@@ -1,4 +1,5 @@
 import { ERROR_TYPE } from 'actions/util/errorWrapper'
+import log from 'util/log'
 
 const INITIAL_STATE = []
 
@@ -14,12 +15,8 @@ const errorReducer = (
     case ERROR_TYPE.default:
         state.push(action)
 
-        if (process.env.NODE_ENV !== 'production') {
-            /* eslint-disable no-console */
-            console.log('ERROR')
-            console.log(action)
-            /* eslint-enable no-console */
-        }
+        log('ERROR')
+        log(action)
 
         // limit max size of error queue
         if (state.length > 5) {
