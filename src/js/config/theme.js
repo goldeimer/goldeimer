@@ -70,4 +70,9 @@ const getTheme = () => {
     return THEMES.Goldeimer
 }
 
-export default getTheme
+const defaultMuiTheme = THEMES.Goldeimer.mui
+
+export {
+    getTheme as default,
+    defaultMuiTheme as muiTheme
+}

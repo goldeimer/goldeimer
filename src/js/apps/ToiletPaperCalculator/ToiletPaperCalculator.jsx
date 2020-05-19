@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
+// TODO: Deprecate styled-components
 import styled from 'styled-components'
+
+import { ThemeProvider } from '@material-ui/core/styles'
+
+import { muiTheme } from 'config/theme'
 
 import FormField from
     'components/Form/FormField/FormField'
@@ -188,7 +193,7 @@ const ToiletPaperCalculator = () => {
     )
 
     return (
-        <>
+        <ThemeProvider theme={muiTheme}>
             <Form formName="shitcalcForm">
                 <FormSection
                     title="Haushalt"
@@ -281,7 +286,7 @@ const ToiletPaperCalculator = () => {
                 bestFittingSubscription={bestFittingSubscription}
                 requiredRollsPerSelectedPeriod={requiredRollsPerSelectedPeriod}
             />
-        </>
+        </ThemeProvider>
     )
 }
 

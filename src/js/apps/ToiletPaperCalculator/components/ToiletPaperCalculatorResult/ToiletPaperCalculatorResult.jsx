@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled from 'styled-components' // TODO: Deprecate.
+
+import { RESOURCES_SAVED_PER_ROLL } from '../../constants'
 
 const WrapDiv = styled.div`
     margin-top: 40px;
@@ -66,39 +68,69 @@ const SubscriptionA = styled.a`
 const ToiletPaperCalculatorResult = ({
     bestFittingSubscription,
     requiredRollsPerSelectedPeriod
-}) => (
-    <WrapDiv>
-        <MainDiv>
-            Du brauchst
-            <MainSpan>
-                {requiredRollsPerSelectedPeriod}
+}) => {
+    const resourcesSaved = Object.fromEntries(
+        Object.entries(RESOURCES_SAVED_PER_ROLL).map(
+            ([key, perRollValue]) => (
+                [
+                    key,
+                    (perRollValue * requiredRollsPerSelectedPeriod).toFixed(1)
+                ]
+            )
+        )
+    )
+
+    return (
+        <WrapDiv>
+            <MainDiv>
+                Du brauchst
+                <MainSpan>
+                    {requiredRollsPerSelectedPeriod}
+                    {' '}
+                    Rollen
+                </MainSpan>
+                Goldeimer Klopapier!*
+                <br />
+            </MainDiv>
+            <SubscriptionP>
+                Das für dich passendste
+                <a href={bestFittingSubscription.url}>Klopapier-Abo</a>
+                sind
                 {' '}
-                Rollen
-            </MainSpan>
-            Goldeimer Klopapier!*
-            <br />
-        </MainDiv>
-        <SubscriptionP>
-            Das für dich passendste
-            <a href={bestFittingSubscription.url}>Klopapier-Abo</a>
-            sind
-            {' '}
-            {bestFittingSubscription.packages}
-            {' '}
-            Pakete
-            {` ${bestFittingSubscription.perPeriodCopy}`}
-            .
-        </SubscriptionP>
-        <SubscriptionA href={bestFittingSubscription.url}>
-            Jetzt abonnieren
-        </SubscriptionA>
-        <FootnoteP>
-            *Nicht mit eingerechnet ist der zusätzliche Verbrauch von Klopapier
-            während der Periode. Je nach Intensität solltest Du etwas mehr
-            Klopapier einkalkulieren!
-        </FootnoteP>
-    </WrapDiv>
-)
+                {bestFittingSubscription.packages}
+                {' '}
+                Pakete
+                {` ${bestFittingSubscription.perPeriodCopy}`}
+                .
+            </SubscriptionP>
+            <SubscriptionA href={bestFittingSubscription.url}>
+                Jetzt abonnieren
+            </SubscriptionA>
+            <SubscriptionP>
+                {'Gegenüber herrkömmlichen Klopapier auf Frischholzbasis '}
+                sparst du im gewählten Zeitraum**:
+                <br />
+                {`${resourcesSaved.electricalEnergyInKwh} kWh elektrische Energie`}
+                <br />
+                {`${resourcesSaved.freshWoodInKg} kg Frischholz`}
+                <br />
+                {`${resourcesSaved.waterInLiter} Liter Wasser`}
+            </SubscriptionP>
+            <FootnoteP>
+                *Nicht mit eingerechnet ist der zusätzliche Verbrauch von
+                Klopapier während der Periode. Je nach Intensität solltest Du
+                etwas mehr Klopapier einkalkulieren!
+            </FootnoteP>
+            <FootnoteP>
+                **Das mag für den einzelnen Haushalt eventuell nach gar nicht
+                so viel klingen, aber wenn mensch bedenkt, dass etwa 50
+                Millionen Menschen nur in Deutschland täglich Klopapier aus
+                Frischholz verwenden, nehmen die Ergebnisse erstaunliche
+                Dimensionen an.
+            </FootnoteP>
+        </WrapDiv>
+    )
+}
 
 ToiletPaperCalculatorResult.propTypes = {
     bestFittingSubscription: PropTypes.exact({
