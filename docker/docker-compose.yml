@@ -1,6 +1,13 @@
 version: '3.7'
 
 secrets:
+    secret_api_db_name:
+        file: ./secrets/secret_api_db_name.txt
+    secret_api_db_password:
+        file: ./secrets/secret_api_db_password.txt
+    secret_api_db_user:
+        file: ./secrets/secret_api_db_user.txt
+
     secret_jtl_db_name:
         file: ./secrets/secret_jtl_db_name.txt
     secret_jtl_db_password:
@@ -19,13 +26,32 @@ secrets:
         file: ./secrets/secret_wordpress_table_prefix.txt
 
 services:
-    # TODO: Combined RDS host for both schemas?
+    # TODO: Combined RDS host for all schemas?
+    db_api:
+        image: mysql:5.7
+        container_name: db_api
+        restart: always
+        volumes:
+            - ./run/data/db/api:/var/lib/mysql
+        secrets:
+            - secret_api_db_name
+            - secret_api_db_password
+            - secret_api_db_user
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE_FILE: /run/secrets/secret_api_db_name
+            MYSQL_PASSWORD_FILE: /run/secrets/secret_api_db_password
+            MYSQL_USER_FILE: /run/secrets/secret_api_db_user
+
     db_jtl:
         image: mysql:5.7
+        container_name: db_jtl
         restart: always
         volumes:
             - ./sql/jtl.init.sql:/docker-entrypoint-initdb.d/init.sql
             - ./run/data/db/jtl:/var/lib/mysql
+        ports:
+            - 3307:3306
         secrets:
             - secret_jtl_db_name
             - secret_jtl_db_password
@@ -38,12 +64,13 @@ services:
 
     db_wp:
         image: mysql:5.7
+        container_name: db_wp
         restart: always
         volumes:
             - ./sql/wordpress.init.sql:/docker-entrypoint-initdb.d/init.sql
             - ./run/data/db/wp:/var/lib/mysql
         ports:
-            - 3307:3306
+            - 3308:3306
         secrets:
             - secret_wordpress_db_name
             - secret_wordpress_db_password
@@ -57,6 +84,7 @@ services:
     php_fpm_wp:
         # `php-fpm` services requests over port 9000
         image: wordpress:4.9-fpm
+        container_name: php_fpm_wp
         depends_on:
             - db_jtl
             - db_wp
@@ -86,6 +114,7 @@ services:
         # - switch to httpd w/ mod_wsgi to facilitate a Python backend
         # - build from own config, w/ mod_rewrite, etc. enabled
         image: php:apache
+        container_name: php_apache_merchant_map
         restart: always
         working_dir: /var/www/html
         volumes:
@@ -94,11 +123,42 @@ services:
             - "map.goldeimer.de:127.0.0.1"
         hostname: map.goldeimer.de
 
+    apache_mod_wsgi_django:
+        # TODO:
+        # Art artfiles, the current production host, we have to deploy to
+        # apache2 with `mod_wsgi` to get a Python wsgi application running.
+        # If we ever switch to a more professional cloud hosting solution,
+        # we'd like to `uwsgi_pass` from nginx w/o apache instead.
+        build: ./build/apache-mod-wsgi
+        container_name: apache_mod_wsgi_django
+        depends_on:
+            - db_api
+        restart: always
+        working_dir: /var/www/html
+        volumes:
+            - ./../api:/var/www/html
+            - ./run/log/apache2:/var/log/apache2
+        extra_hosts:
+            - "api.goldeimer.de:127.0.0.1"
+        hostname: api.goldeimer.de
+        secrets:
+            - secret_api_db_name
+            - secret_api_db_password
+            - secret_api_db_user
+        environment:
+            DJANGO_MANAGEPY_MIGRATE: "on"
+            DJANGO_MYSQL_DATABASE_FILE: /run/secrets/secret_api_db_name
+            DJANGO_MYSQL_PASSWORD_FILE: /run/secrets/secret_api_db_password
+            DJANGO_MYSQL_USER_FILE: /run/secrets/secret_api_db_user
+            PYTHONUNBUFFERED: 1
+
     nginx:
         image: nginx
+        container_name: nginx
         depends_on:
-            - php_fpm_wp
+            - apache_mod_wsgi_django
             - php_apache_merchant_map
+            - php_fpm_wp
         restart: always
         volumes:
             - ./etc/nginx.conf:/etc/nginx/conf.d/default.conf
@@ -107,6 +167,7 @@ services:
 
     https-portal:
         image: steveltn/https-portal:1
+        container_name: https-portal
         depends_on:
             - nginx
         ports:
@@ -116,7 +177,7 @@ services:
         volumes:
             - ./run/ssl-certs:/var/lib/https-portal
         environment:
-            DOMAINS: 'www.goldeimer.lc -> http://nginx:80, map.goldeimer.lc -> http://nginx:80'
+            DOMAINS: 'www.goldeimer.lc -> http://nginx:80, api.goldeimer.lc -> http://nginx:80, map.goldeimer.lc -> http://nginx:80'
             STAGE: local
             FORCE_RENEW: 'true'
             CLIENT_MAX_BODY_SIZE: 64M

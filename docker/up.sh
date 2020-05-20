@@ -28,7 +28,7 @@ cp -r "$_sqlDir/wordpress.sql" "$_sqlDir/wordpress.init.sql"
 sed -i -e 's/goldeimer\.de/goldeimer.lc/g' "$_sqlDir/wordpress.init.sql"
 
 printf ">> %s\n" "Running 'docker-compose up [...]"
-docker-compose up --remove-orphans -d https-portal
+docker-compose up --build --remove-orphans -d https-portal
 
 printf ">> %s\n" "Waiting for content destination directory to be created"
 while [ ! -d "$_destDir" ]; do
