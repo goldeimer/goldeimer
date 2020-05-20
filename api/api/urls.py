@@ -1,10 +1,14 @@
 from django.contrib import admin
 from django.urls import (
-    path,
     include,
+    path,
+    re_path,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('map.urls')),
+    re_path(
+        '(?P<version>(v1|v2))/',
+        include('map.urls')
+    ),
 ]
