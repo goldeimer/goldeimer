@@ -11,6 +11,7 @@ MAX_LENGTH = 60
 class ModelBase(Model):
     class Meta:
         abstract = True
+        ordering = ['name']
 
     name = CharField(
         # TODO: Less rigid / move to children?!
