@@ -3,20 +3,13 @@ from rest_framework.test import (
     APITestCase,
 )
 
-from map.models import Feature
+from .util import createFeature
 
 
 class BaseViewTest(APITestCase):
     client = APIClient()
 
-    @staticmethod
-    def createFeature(title=''):
-        if title != '':
-            Feature.objects.create(
-                title=title
-            )
-
     def setUp(self):
-        self.createFeature('Tante Emma')
-        self.createFeature('Alnatura')
-        self.createFeature('Kiosk')
+        createFeature('Tante Emma')
+        createFeature('Alnatura')
+        createFeature('Kiosk')

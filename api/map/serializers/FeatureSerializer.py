@@ -1,8 +1,11 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from map.models.Feature import Feature
 
 
-class FeatureSerializer(serializers.ModelSerializer):
+class FeatureSerializer(ModelSerializer):
     class Meta:
         model = Feature
-        fields = ("title",)
+        fields = (
+            'name',
+            'terms',
+        )

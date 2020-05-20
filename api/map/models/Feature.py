@@ -1,11 +1,18 @@
-from django.db import models
+from django.db.models import ManyToManyField
 
-class Feature(models.Model):
+from .base.ModelBase import ModelBase
+from .util import makeUuidField
+from .Term import Term
+
+
+class Feature(ModelBase):
     class Meta:
         verbose_name = 'Eintrag'
         verbose_name_plural = 'Einträge'
 
-    title = models.CharField(max_length=255, null=False)
+    uuid = makeUuidField()
 
-    def __str__(self):
-        return str(f'{self.title}')
+    terms = ManyToManyField(
+        Term,
+        related_name='terms'
+    )
