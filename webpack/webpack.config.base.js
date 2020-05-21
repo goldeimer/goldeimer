@@ -14,6 +14,7 @@ const {
     SRC_JS_PROP_TYPES_PATH,
     SRC_JS_REDUCERS_PATH,
     SRC_JS_SELECTORS_PATH,
+    SRC_JS_STYLES_PATH,
     SRC_JS_UTIL_PATH,
 } = require('./path');
 
@@ -55,6 +56,7 @@ module.exports = {
             propTypes: SRC_JS_PROP_TYPES_PATH,
             reducers: SRC_JS_REDUCERS_PATH,
             selectors: SRC_JS_SELECTORS_PATH,
+            styles: SRC_JS_STYLES_PATH,
             util: SRC_JS_UTIL_PATH,
         },
         extensions: ['.js', '.jsx', '.json', '.ts',],

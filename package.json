@@ -67,6 +67,7 @@
         "redux-thunk": "^2.3.0",
         "reselect": "^4.0.0",
         "styled-components": "^5.1.0",
+        "throttle-debounce": "^2.1.0",
         "valid-url": "^1.0.9"
     }
 }

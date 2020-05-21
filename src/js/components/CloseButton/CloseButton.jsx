@@ -1,9 +1,9 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
+import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
-import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
     iconButtonEdgeEnd: {
@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CloseButton = ({
-    onClose,
-    edge
+    edge,
+    isDense,
+    onClose
 }) => {
     const classes = useStyles()
 
@@ -32,6 +33,7 @@ const CloseButton = ({
             color="inherit"
             edge={edge}
             onClick={onClose}
+            size={isDense ? 'small' : 'medium'}
             aria-label="close"
         >
             <CloseIcon />
@@ -40,12 +42,14 @@ const CloseButton = ({
 }
 
 CloseButton.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    edge: PropTypes.string
+    edge: PropTypes.string,
+    isDense: PropTypes.bool,
+    onClose: PropTypes.func.isRequired
 }
 
 CloseButton.defaultProps = {
-    edge: 'end'
+    edge: 'end',
+    isDense: false
 }
 
 export default CloseButton

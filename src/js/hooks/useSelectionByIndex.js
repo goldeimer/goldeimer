@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react'
 
 import isFunction from 'util/isFunction'
 
-const LOWER_BOUND = 0
-
 const useSelectionByIndex = (
     items,
-    onSubmit = null,
     onSelect = null,
-    initialIndex = 0
+    initialIndex = -1 // set non-negative for pre-selection
 ) => {
     const [selectedIndex, setSelectedIndex] = useState(null)
 
@@ -18,16 +15,24 @@ const useSelectionByIndex = (
         return 'value' in item ? item.value : item
     }
 
-    const setSelectedIndexWithSideEffects = (index) => {
-        setSelectedIndex(index)
-
-        if (isFunction(onSelect)) {
-            onSelect(getSelectedValueFromIndex(index))
-        }
-    }
-
     const { length } = items
-    const lastIndex = Math.max(LOWER_BOUND, length - 1)
+    const lastIndex = Math.max(0, length - 1)
+
+    const setSelectedIndexWithSideEffects = (index) => {
+        if (index >= 0 && index <= lastIndex) {
+            setSelectedIndex(index)
+
+            const selectedValue = getSelectedValueFromIndex(index)
+
+            if (isFunction(onSelect)) {
+                onSelect(selectedValue)
+            }
+
+            return selectedValue
+        }
+
+        return null
+    }
 
     useEffect(() => {
         if (length > 0) {
@@ -41,35 +46,20 @@ const useSelectionByIndex = (
         setSelectedIndex(null)
     }, [items])
 
-    const handleDecrement = () => {
-        setSelectedIndexWithSideEffects(
-            Math.max(LOWER_BOUND, selectedIndex - 1)
-        )
-    }
+    const handleDecrement = () => setSelectedIndexWithSideEffects(
+        Math.max(0, selectedIndex - 1)
+    )
 
-    const handleIncrement = () => {
-        setSelectedIndexWithSideEffects(
-            Math.min(lastIndex, selectedIndex + 1)
-        )
-    }
+    const handleIncrement = () => setSelectedIndexWithSideEffects(
+        Math.min(lastIndex, selectedIndex + 1)
+    )
 
-    const handleSelect = (index) => {
-        setSelectedIndexWithSideEffects(index)
-    }
-
-    const handleSubmit = (index = selectedIndex) => {
-        setSelectedIndex(index)
-
-        if (isFunction(onSubmit)) {
-            onSubmit(getSelectedValueFromIndex(index))
-        }
-    }
+    const handleSelect = (index) => setSelectedIndexWithSideEffects(index)
 
     return {
         handleDecrement,
         handleIncrement,
         handleSelect,
-        handleSubmit,
         selectedIndex
     }
 }

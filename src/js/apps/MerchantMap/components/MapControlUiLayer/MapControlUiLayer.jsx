@@ -5,33 +5,25 @@ import {
     Route
 } from 'react-router-dom'
 
-import MapIcon from '@material-ui/icons/Map'
-
-import FloatingActionButton from
-    'components/FloatingActionButton/FloatingActionButton'
-
-import VIEWS from './views'
+import FeatureList from './containers/FeatureList'
+import MenuDrawer from './containers/MenuDrawer'
+import SearchContainer from './containers/SearchContainer'
 
 const MapControlUiLayer = () => (
     <Router>
         <Switch>
-            {
-                Object.entries(VIEWS).map(
-                    ([key, view]) => (
-                        <Route key={key} path={`/${key}`}>
-                            <view.Container
-                                title={view.title}
-                                titleIcon={<view.Icon />}
-                            />
-                        </Route>
-                    )
-                )
-            }
-            <Route path="/">
-                <FloatingActionButton
-                    actions={VIEWS}
-                    openIcon={<MapIcon />}
+            <Route path="/menu">
+                <MenuDrawer
+                    title="Händler"
                 />
+            </Route>
+            <Route path="/browse">
+                <FeatureList
+                    title="Hier bekommst Du unsere Produkte"
+                />
+            </Route>
+            <Route path="/">
+                <SearchContainer />
             </Route>
         </Switch>
     </Router>

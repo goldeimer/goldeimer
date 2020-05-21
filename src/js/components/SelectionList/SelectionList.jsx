@@ -1,5 +1,4 @@
 import React from 'react'
-
 import uuid from 'react-uuid'
 
 import List from '@material-ui/core/List'
@@ -7,8 +6,11 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import useSelectionByIndexKeyboardControlled
+import NoResultsIcon from '@material-ui/icons/NotInterested'
+
+import useSelectionByIndexKeyboardControlled, { AXES }
     from 'hooks/useSelectionByIndexKeyboardControlled'
+import isFunction from 'util/isFunction'
 
 import propTypesSelectionList, {
     defaultPropsSelectionList
@@ -19,51 +21,66 @@ const SelectionList = ({
     itemIcon,
     items,
     noOptionsText,
+    onItemClick,
     onSelect,
-    onSubmit
+    showNoteOnEmpty
 }) => {
     const {
         selectedIndex,
-        handleSubmit
-    } = useSelectionByIndexKeyboardControlled(items, onSubmit)
+        handleSelect
+    } = useSelectionByIndexKeyboardControlled(
+        [AXES.vertical],
+        items,
+        onSelect
+    )
 
-    if (items.length > 0) {
-        return (
-            <List
-                component="nav"
-                dense
-            >
-                {
-                    items.map(
-                        ({ label }, index) => (
-                            <ListItem
-                                button
-                                key={uuid()}
-                                onClick={() => (handleSubmit(index))}
-                                selected={selectedIndex === index}
-                            >
-                                {
-                                    itemIcon && (
-                                        <ListItemIcon>
-                                            {itemIcon}
-                                        </ListItemIcon>
-                                    )}
-                                <ListItemText
-                                    primary={label}
-                                    // secondary={}
-                                />
-                            </ListItem>
-                        )
-                    )
-                }
-            </List>
-        )
+    if (!items.length && !showNoteOnEmpty) {
+        return <></>
     }
 
     return (
-        <div>
-            {noOptionsText}
-        </div>
+        <List
+            component="nav"
+            dense
+        >
+            {items.length
+                ? items.map(
+                    ({ label }, index) => (
+                        <ListItem
+                            button
+                            key={uuid()}
+                            onClick={() => {
+                                const selectedValue = handleSelect(index)
+
+                                if (isFunction(onItemClick)) {
+                                    onItemClick(selectedValue)
+                                }
+                            }}
+                            selected={selectedIndex === index}
+                        >
+                            {
+                                itemIcon && (
+                                    <ListItemIcon>
+                                        {itemIcon}
+                                    </ListItemIcon>
+                                )}
+                            <ListItemText
+                                primary={label}
+                            />
+                        </ListItem>
+                    )
+                ) : (
+                    <ListItem disabled>
+                        <ListItemIcon>
+                            <NoResultsIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Keine Ergebnisse."
+                        />
+                    </ListItem>
+                )
+            }
+        </List>
     )
 }
 

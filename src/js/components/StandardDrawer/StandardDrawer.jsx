@@ -1,13 +1,12 @@
 import React from 'react'
 
-import DialogTitle from '@material-ui/core/DialogTitle'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
 import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
 import isIos from 'util/isIos'
 
-import CloseButton from 'components/CloseButton/CloseButton'
-import TitleIcon from 'components/TitleIcon/TitleIcon'
+import StandardDialogTitle
+    from 'components/StandardDialogTitle/StandardDialogTitle'
 
 import propTypesTitledCloseableRoutedOverlay from
     'propTypes/propTypesTitledCloseableRoutedOverlay'
@@ -15,6 +14,7 @@ import propTypesTitledCloseableRoutedOverlay from
 /* eslint-disable react/prop-types */
 const StandardDrawer = ({
     children,
+    isDense = false,
     routeOnClose = '/',
     shouldBeOpen = true,
     title = null,
@@ -37,15 +37,12 @@ const StandardDrawer = ({
             onClose={handleClose}
             onOpen={handleOpen}
         >
-            <DialogTitle
-                id="dialog-title"
-            >
-                {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
-                <span>
-                    {title}
-                </span>
-                <CloseButton onClose={handleClose} />
-            </DialogTitle>
+            <StandardDialogTitle
+                icon={titleIcon}
+                isDense={isDense}
+                onClose={handleClose}
+                text={title}
+            />
             {children}
         </SwipeableDrawer>
     )
@@ -54,5 +51,3 @@ const StandardDrawer = ({
 StandardDrawer.propTypes = propTypesTitledCloseableRoutedOverlay
 
 export default StandardDrawer
-
-//{titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}

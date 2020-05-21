@@ -10,16 +10,14 @@ const propTypesSelectionList = {
         })
     ),
     noOptionsText: PropTypes.string,
-    onSelect: PropTypes.func,
-    onSubmit: PropTypes.func
+    onSelect: PropTypes.func
 }
 
 const defaultPropsSelectionList = {
     dense: true,
     itemIcon: null,
     noOptionsText: 'Keine Ergebnisse.',
-    onSelect: null,
-    onSubmit: null
+    onSelect: null
 }
 
 export {

@@ -8,6 +8,7 @@ import { createLogger } from 'redux-logger'
 import { fetchFeatureCollection } from 'actions/merchantMapActions'
 
 import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 import getTheme from 'config/theme'
 import merchantMapReducer from 'reducers/MerchantMap/merchantMapReducer'
@@ -57,6 +58,7 @@ const MerchantMap = () => (
                 <meta name="description" content="Händlerkarte" />
                 <link rel="icon" href={`/static/img/favicon/${theme.favicon}`} />
             </Helmet>
+            <CssBaseline />
             <ComponentRoot />
         </ThemeProvider>
     </ReduxProvider>
