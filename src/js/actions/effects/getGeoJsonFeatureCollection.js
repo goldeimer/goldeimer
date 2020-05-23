@@ -1,3 +1,4 @@
+import uuid from 'react-uuid'
 import validUrl from 'valid-url'
 
 import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
@@ -57,7 +58,8 @@ const spreadsheetDataToGeoJsonGoldeimer = (data) => ({
                     merchantTypes: [convertMerchantType(entry.l)],
                     name: entry.Title,
                     street: entry.Location,
-                    url: entry.Description
+                    url: entry.Description,
+                    uuid: uuid()
                 }
             }
         )
@@ -85,7 +87,8 @@ const spreadsheetDataToGeoJsonVca = (data) => ({
                     merchantTypes: [convertMerchantType(entry.Group)],
                     name: entry.Title,
                     street: entry.Street,
-                    url: entry.Description
+                    url: entry.Description,
+                    uuid: uuid()
                 }
             }
         )

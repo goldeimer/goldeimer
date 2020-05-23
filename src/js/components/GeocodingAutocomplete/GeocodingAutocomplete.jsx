@@ -60,9 +60,10 @@ const makeSuggestion = (feature) => {
     return {
         label: placeName,
         value: {
-            placeName,
+            id: feature.id,
             longitude: feature.center[0],
-            latitude: feature.center[1]
+            latitude: feature.center[1],
+            placeName
         }
     }
 }
@@ -258,7 +259,7 @@ GeocodingAutoComplete.propTypes = {
 }
 
 GeocodingAutoComplete.defaultProps = {
-    label: 'In meiner Nähe suchen',
+    label: 'In meiner Umgebung suchen',
     onMenuClick: null,
     onSelect: null,
     onSubmit: null

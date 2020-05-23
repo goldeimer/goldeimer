@@ -50,6 +50,7 @@ const makeColumns = (classes, dispatch) => ([
                         className={classes.iconButton}
                         onClick={() => dispatch(
                             setFeatureMarker({
+                                id: rowData.id,
                                 latitude: parseFloat(coordinates[1]),
                                 longitude: parseFloat(coordinates[0]),
                                 placeName: rowData.name
@@ -156,9 +157,10 @@ const FeatureList = (props) => {
 
     if (featureCollection) {
         flattenedFeatures = featureCollection.features.map(
-            ({ geometry, properties }) => ({
+            ({ geometry, id, properties }) => ({
                 ...properties,
                 geometry,
+                id,
                 city: properties.city.replace(/\s*\d{3,}\s*/g, '')
             })
         )

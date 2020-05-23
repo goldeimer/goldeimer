@@ -22,6 +22,7 @@ const makeMarkerReducer = (
 
     case setActionType:
         return {
+            id: action.id,
             latitude: action.latitude,
             longitude: action.longitude,
             placeName: action.placeName

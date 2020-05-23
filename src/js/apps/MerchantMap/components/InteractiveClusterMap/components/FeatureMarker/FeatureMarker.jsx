@@ -1,15 +1,36 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-// TODO: Make the icon dynamic.
 import StorefrontIcon from '@material-ui/icons/Storefront'
 
-import IconMarker from '../IconMarker/IconMarker'
+import MapMarker, { ANCHOR_TO } from 'components/MapMarker/MapMarker'
 
-const FeatureMarker = (props) => (
-    <IconMarker
+const DEFAULT_FEATURE_ICON_COMPONENT = StorefrontIcon // TODO
+
+const getFeatureIconComponent = (taxonomyTerm = '') => {
+    switch (taxonomyTerm) {
+    default:
+        return DEFAULT_FEATURE_ICON_COMPONENT
+    }
+}
+
+const FeatureMarker = ({ component, ...props }) => (
+    <MapMarker
         {...props}
-        iconComponent={<StorefrontIcon />}
+        anchorTo={ANCHOR_TO.center}
+        component={component || getFeatureIconComponent()}
+        withAvatar
     />
 )
+
+FeatureMarker.propTypes = {
+    ...MapMarker.propTypes,
+    component: PropTypes.elementType
+}
+
+FeatureMarker.defaultProps = {
+    ...MapMarker.defaultProps,
+    component: null
+}
 
 export default FeatureMarker

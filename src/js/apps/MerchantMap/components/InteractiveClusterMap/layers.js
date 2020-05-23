@@ -2,7 +2,7 @@ const makeLayers = (muiTheme, omitFeatures = []) => ({
     clusterLayer: {
         id: 'clusters',
         type: 'circle',
-        source: 'merchants',
+        source: 'features',
         filter: ['has', 'point_count'],
         paint: {
             'circle-color': muiTheme.palette.primary.main,
@@ -24,7 +24,7 @@ const makeLayers = (muiTheme, omitFeatures = []) => ({
     clusterCountLayer: {
         id: 'cluster-count',
         type: 'symbol',
-        source: 'merchants',
+        source: 'features',
         filter: ['has', 'point_count'],
         layout: {
             'text-field': '{point_count_abbreviated}',
@@ -41,7 +41,7 @@ const makeLayers = (muiTheme, omitFeatures = []) => ({
     unclusteredPointLayer: {
         id: 'unclustered-point',
         type: 'circle',
-        source: 'merchants',
+        source: 'features',
         filter: ['!', ['has', 'point_count']],
         paint: {
             'circle-color': muiTheme.palette.primary.main,

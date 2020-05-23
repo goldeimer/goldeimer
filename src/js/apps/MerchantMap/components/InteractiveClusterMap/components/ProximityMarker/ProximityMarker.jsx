@@ -2,13 +2,13 @@ import React from 'react'
 
 import MarkerIcon from '@material-ui/icons/Room'
 
-import IconMarker, { ANCHOR_TO } from '../IconMarker/IconMarker'
+import MapMarker, { ANCHOR_TO } from 'components/MapMarker/MapMarker'
 
 const ProximityMarker = (props) => (
-    <IconMarker
+    <MapMarker
         {...props}
         anchorTo={ANCHOR_TO.top}
-        iconComponent={<MarkerIcon />}
+        component={MarkerIcon}
         withAvatar={false}
     />
 )
