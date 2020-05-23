@@ -13,10 +13,9 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import getTheme from 'config/theme'
 import merchantMapReducer from 'reducers/MerchantMap/merchantMapReducer'
 
-import ControlledInteractiveClusterMap from
-    './containers/ControlledInteractiveClusterMap'
-import MapControlUiLayer from
-    './components/MapControlUiLayer/MapControlUiLayer'
+import InteractiveClusterMapStateContainer from
+    './MapGl/InteractiveClusterMapStateContainer'
+import UiLayer from './UiLayer/UiLayer'
 
 const loggerMiddleware = createLogger()
 
@@ -42,8 +41,8 @@ const ComponentRoot = () => {
 
     return (
         <>
-            <ControlledInteractiveClusterMap />
-            <MapControlUiLayer />
+            <InteractiveClusterMapStateContainer />
+            <UiLayer />
         </>
     )
 }

@@ -7,10 +7,10 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { muiTheme } from 'config/theme'
 
 import FormField from
-    'components/Form/FormField/FormField'
+    'components/FormField/FormField'
 
 import FormSection from
-    'components/Form/FormSection/FormSection'
+    'components/FormSection/FormSection'
 
 import InputIntegerPlusMinus from
     'components/Form/InputIntegerPlusMinus/InputIntegerPlusMinus'
@@ -19,7 +19,7 @@ import InputSelect from
     'components/Form/InputSelect/InputSelect'
 
 import ToiletPaperCalculatorResult from
-    './components/ToiletPaperCalculatorResult/ToiletPaperCalculatorResult'
+    './components/ToiletPaperCalculatorResult'
 
 import {
     DAYS_PER_MONTH,
