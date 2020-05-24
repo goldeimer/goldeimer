@@ -29,20 +29,19 @@ const InputSelect = ({
 )
 
 const valueTypes = PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-]).isRequired
+    PropTypes.number.isRequired,
+    PropTypes.string.isRequired
+])
 
 InputSelect.propTypes = {
     options: PropTypes.arrayOf(
         PropTypes.exact({
-            label: PropTypes.string,
-            value: valueTypes
+            label: PropTypes.string.isRequired,
+            value: valueTypes.isRequired
         })
     ).isRequired,
     setValue: PropTypes.func.isRequired,
-    /* eslint-disable-next-line react/require-default-props */
-    value: valueTypes
+    value: valueTypes.isRequired
 }
 
 export default InputSelect

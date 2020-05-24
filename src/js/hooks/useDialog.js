@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-const useCloseableRoutedOverlay = (
+const useDialog = (
     shouldBeOpen = true,
     routeOnClose = '/'
 ) => {
@@ -33,4 +33,4 @@ const useCloseableRoutedOverlay = (
     }
 }
 
-export default useCloseableRoutedOverlay
+export default useDialog

@@ -20,13 +20,11 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 import CloseButton from 'components/CloseButton'
 import TitleIcon from 'components/TitleIcon'
 
-import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
+import useDialog from 'hooks/useDialog'
 
-import propTypesTitledCloseableRoutedOverlay
-    from 'propTypes/propTypesTitledCloseableRoutedOverlay'
-
-import { STANDARD_DIALOG_STYLES }
-    from 'components/StandardDialog'
+import StandardDialog, {
+    STANDARD_DIALOG_STYLES
+} from 'components/StandardDialog'
 
 const FULLSCREEN_BREAKPOINT = 'md'
 const MAX_WIDTH = 'xl'
@@ -50,23 +48,21 @@ const useStyles = makeStyles((theme) => Object.assign(
 ))
 
 const Transition = forwardRef(
-    // TODO: arrow function
     (props, ref) => <Slide direction="up" ref={ref} {...props} />
 )
 
-/* eslint-disable react/prop-types */
 const LargeContentDialog = ({
     children,
-    isPadded = false,
-    routeOnClose = '/',
-    shouldBeOpen = true,
-    title = null,
-    titleIcon = null
+    isPadded,
+    routeOnClose,
+    shouldBeOpen,
+    title,
+    titleIcon
 }) => {
     const {
         isOpen,
         handleClose
-    } = useCloseableRoutedOverlay(shouldBeOpen)
+    } = useDialog(shouldBeOpen)
 
     const classes = useStyles()
     const theme = useTheme()
@@ -133,11 +129,14 @@ const LargeContentDialog = ({
     )
 }
 
-LargeContentDialog.propTypes = Object.assign(
-    {
-        isPadded: PropTypes.bool
-    },
-    propTypesTitledCloseableRoutedOverlay
-)
+LargeContentDialog.propTypes = {
+    ...StandardDialog.propTypes,
+    isPadded: PropTypes.bool
+}
+
+LargeContentDialog.defaultProps = {
+    ...StandardDialog.defaultProps,
+    isPadded: false
+}
 
 export default LargeContentDialog

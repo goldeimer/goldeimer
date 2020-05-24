@@ -1,41 +1,38 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
-import useCloseableRoutedOverlay from 'hooks/useCloseableRoutedOverlay'
+import useDialog from 'hooks/useDialog'
 import isIos from 'util/isIos'
 
-import StandardDialogTitle
-    from 'components/StandardDialogTitle'
+import StandardDialog from 'components/StandardDialog'
+import StandardDialogTitle from 'components/StandardDialogTitle'
 
-import propTypesTitledCloseableRoutedOverlay from
-    'propTypes/propTypesTitledCloseableRoutedOverlay'
-
-/* eslint-disable react/prop-types */
 const StandardDrawer = ({
     children,
-    isDense = false,
-    routeOnClose = '/',
-    shouldBeOpen = true,
-    title = null,
-    titleIcon = null
+    isDense,
+    routeOnClose,
+    shouldBeOpen,
+    title,
+    titleIcon
 }) => {
     const {
         isOpen,
         handleClose,
         handleOpen
-    } = useCloseableRoutedOverlay(shouldBeOpen)
+    } = useDialog(shouldBeOpen)
 
     const iOS = isIos()
 
     return (
         <SwipeableDrawer
             anchor="left"
-            disableBackdropTransition={!iOS}
             disableDiscovery={iOS}
             open={isOpen}
             onClose={handleClose}
             onOpen={handleOpen}
+            transitionDuration={500}
         >
             <StandardDialogTitle
                 icon={titleIcon}
@@ -48,6 +45,14 @@ const StandardDrawer = ({
     )
 }
 
-StandardDrawer.propTypes = propTypesTitledCloseableRoutedOverlay
+StandardDrawer.propTypes = {
+    ...StandardDialog.propTypes,
+    isDense: PropTypes.bool
+}
+
+StandardDrawer.defaultProps = {
+    ...StandardDialog.defaultProps,
+    isDense: true
+}
 
 export default StandardDrawer

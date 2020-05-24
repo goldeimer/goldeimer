@@ -11,7 +11,6 @@ const {
     SRC_JS_CONFIG_PATH,
     SRC_JS_ENUM_PATH,
     SRC_JS_HOOKS_PATH,
-    SRC_JS_PROP_TYPES_PATH,
     SRC_JS_REDUCERS_PATH,
     SRC_JS_SELECTORS_PATH,
     SRC_JS_STYLES_PATH,
@@ -43,7 +42,6 @@ module.exports = {
         alias: {
             // --- closed semantic logic units ---
             apps: SRC_JS_APPS_PATH,
-            'merchant-map': path.resolve(SRC_JS_APPS_PATH, 'MerchantMap'),
             // --- common js src ---
             actions: SRC_JS_ACTIONS_PATH,
             components: SRC_JS_COMPONENTS_PATH,
@@ -53,7 +51,6 @@ module.exports = {
             hooks: SRC_JS_HOOKS_PATH,
             img: SRC_IMG_PATH,
             js: SRC_JS_PATH,
-            propTypes: SRC_JS_PROP_TYPES_PATH,
             reducers: SRC_JS_REDUCERS_PATH,
             selectors: SRC_JS_SELECTORS_PATH,
             styles: SRC_JS_STYLES_PATH,

@@ -18,7 +18,6 @@ module.exports = {
     SRC_JS_ENUM_PATH: path.resolve(SRC_JS_PATH, 'enum'),
     SRC_JS_ENTRY_PATH: path.resolve(SRC_JS_PATH, 'entry'),
     SRC_JS_HOOKS_PATH: path.resolve(SRC_JS_PATH, 'hooks'),
-    SRC_JS_PROP_TYPES_PATH: path.resolve(SRC_JS_PATH, 'propTypes'),
     SRC_JS_REDUCERS_PATH: path.resolve(SRC_JS_PATH, 'reducers'),
     SRC_JS_SELECTORS_PATH: path.resolve(SRC_JS_PATH, 'selectors'),
     SRC_JS_STYLES_PATH: path.resolve(SRC_JS_PATH, 'styles'),

@@ -6,17 +6,13 @@ import { ThemeProvider } from '@material-ui/core/styles'
 
 import { muiTheme } from 'config/theme'
 
-import FormField from
-    'components/FormField/FormField'
+import FormField from 'components/LegacyForm/FormField'
 
-import FormSection from
-    'components/FormSection/FormSection'
+import FormSection from 'components/LegacyForm/FormSection'
 
-import InputIntegerPlusMinus from
-    'components/Form/InputIntegerPlusMinus/InputIntegerPlusMinus'
+import InputIntegerPlusMinus from 'components/LegacyForm/InputIntegerPlusMinus'
 
-import InputSelect from
-    'components/Form/InputSelect/InputSelect'
+import InputSelect from 'components/LegacyForm/InputSelect'
 
 import ToiletPaperCalculatorResult from
     './components/ToiletPaperCalculatorResult'
@@ -88,7 +84,6 @@ const findBestFittingSubscription = (
 ) => {
     let bestFit = null
 
-    // TODO: Replace the `for ... of` loop by an array iteration.
     /* eslint-disable-next-line no-restricted-syntax */
     for (const subscription of subscriptions) {
         if (subscription.rollsPerMonth > requiredRollsPerMonth) {

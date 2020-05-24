@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components' // TODO: Deprecate.
 
-import { RESOURCES_SAVED_PER_ROLL } from '../../constants'
+import { RESOURCES_SAVED_PER_ROLL } from '../constants'
 
 const WrapDiv = styled.div`
     margin-top: 40px;

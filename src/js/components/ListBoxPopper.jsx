@@ -7,18 +7,15 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import SelectionList from 'components/SelectionList'
 
-import propTypesSelectionList from 'propTypes/propTypesSelectionList'
-
 const useStyles = makeStyles((theme) => ({
     popperModalChild: {
         zIndex: theme.zIndex.tooltip
     }
 }))
 
-/* eslint-disable react/prop-types */
 const ListBoxPopper = ({
     anchorEl,
-    ...selectionListProps
+    ...props
 }) => {
     const classes = useStyles()
 
@@ -34,21 +31,19 @@ const ListBoxPopper = ({
         >
             <Paper>
                 <SelectionList
-                    {...selectionListProps}
+                    {...props}
                 />
             </Paper>
         </Popper>
     )
 }
 
-ListBoxPopper.propTypes = Object.assign(
-    {
-        anchorEl: PropTypes.oneOfType([
-            PropTypes.element,
-            PropTypes.func
-        ]).isRequired
-    },
-    propTypesSelectionList
-)
+ListBoxPopper.propTypes = {
+    ...SelectionList.propTypes,
+    anchorEl: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.func
+    ]).isRequired
+}
 
 export default ListBoxPopper

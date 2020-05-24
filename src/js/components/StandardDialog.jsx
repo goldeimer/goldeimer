@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -10,11 +11,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import CloseButton from 'components/CloseButton'
 import TitleIcon from 'components/TitleIcon'
 
-import useCloseableRoutedOverlay from
-    'hooks/useCloseableRoutedOverlay'
-
-import propTypesTitledCloseableRoutedOverlay from
-    'propTypes/propTypesTitledCloseableRoutedOverlay'
+import useDialog from 'hooks/useDialog'
 
 const STANDARD_DIALOG_STYLES = {
     dialogTitle: {
@@ -30,18 +27,17 @@ const STANDARD_DIALOG_STYLES = {
 
 const useStyles = makeStyles((theme) => (STANDARD_DIALOG_STYLES))
 
-/* eslint-disable react/prop-types */
 const StandardDialog = ({
     children,
-    routeOnClose = '/',
-    shouldBeOpen = true,
-    title = null,
-    titleIcon = null
+    routeOnClose,
+    shouldBeOpen,
+    title,
+    titleIcon
 }) => {
     const {
         isOpen,
         handleClose
-    } = useCloseableRoutedOverlay(shouldBeOpen)
+    } = useDialog(shouldBeOpen)
 
     const classes = useStyles()
 
@@ -75,7 +71,19 @@ const StandardDialog = ({
     )
 }
 
-StandardDialog.propTypes = propTypesTitledCloseableRoutedOverlay
+StandardDialog.propTypes = {
+    children: PropTypes.node.isRequired,
+    routeOnClose: PropTypes.string,
+    shouldBeOpen: PropTypes.bool,
+    title: PropTypes.string.isRequired,
+    titleIcon: PropTypes.node
+}
+
+StandardDialog.defaultProps = {
+    routeOnClose: '/',
+    shouldBeOpen: true,
+    titleIcon: null
+}
 
 export {
     StandardDialog as default,

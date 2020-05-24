@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import uuid from 'react-uuid'
 
 import List from '@material-ui/core/List'
@@ -11,10 +12,6 @@ import NoResultsIcon from '@material-ui/icons/NotInterested'
 import useSelectionByIndexKeyboardControlled, { AXES }
     from 'hooks/useSelectionByIndexKeyboardControlled'
 import isFunction from 'util/isFunction'
-
-import propTypesSelectionList, {
-    defaultPropsSelectionList
-} from 'propTypes/propTypesSelectionList'
 
 const SelectionList = ({
     dense,
@@ -84,8 +81,29 @@ const SelectionList = ({
     )
 }
 
-SelectionList.propTypes = propTypesSelectionList
+SelectionList.propTypes = {
+    dense: PropTypes.bool,
+    itemIcon: PropTypes.node,
+    items: PropTypes.arrayOf(
+        PropTypes.exact({
+            label: PropTypes.string,
+            value: PropTypes.any
+        })
+    ),
+    noOptionsText: PropTypes.string,
+    onItemClick: PropTypes.func,
+    onSelect: PropTypes.func,
+    showNoteOnEmpty: PropTypes.bool
+}
 
-SelectionList.defaultProps = defaultPropsSelectionList
+SelectionList.defaultProps = {
+    dense: true,
+    itemIcon: null,
+    items: [],
+    noOptionsText: 'Keine Ergebnisse.',
+    onItemClick: null,
+    onSelect: null,
+    showNoteOnEmpty: true
+}
 
 export default SelectionList
