@@ -2,11 +2,6 @@
     'extends': ['airbnb-standard'],
     'rules': {
         'arrow-parens': ['error', 'always'],
-        'camelcase': ['error', {
-            'allow': [
-                '^.*_(apply|error|fetch|filter|request|receive|(re)?set|sort|toggle).*$'
-            ],
-        }],
         'indent': ['error', 4],
         'max-len': ['error', {
             'code': 80,
@@ -26,5 +21,10 @@
                  'config': 'webpack/webpack.config.base.js',
             }
         }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true,
     }
 }

@@ -6,18 +6,46 @@ import { useTheme } from '@material-ui/core/styles'
 
 import MapMarkerContent from 'components/MapMarkerContent'
 
+import isArray from 'util/isArray'
+import parseStringifiedCollection from 'util/parseJson'
+
+const COLOR_TAXONOMY = 'brands'
+const ICON_TAXONOMY = 'merchantTypes'
+
 const ANCHOR_TO = {
     center: 'center',
     top: 'top'
 }
 
-const calculateOffsets = (anchorTo, unitSpacing, withAvatar) => {
-    const height = unitSpacing * (withAvatar ? 5 : 3)
-    const width = unitSpacing * (withAvatar ? 5 : 3)
+const calculateOffsets = (
+    anchorTo,
+    height,
+    width
+) => ({
+    // TODO: Grab bounding client rect from DOM node.
+    left: -(width / 2),
+    top: -(anchorTo === ANCHOR_TO.top ? height : height / 2)
+})
+
+const getTaxonomyTerm = (terms) => {
+    const parsed = parseStringifiedCollection(terms)
+
+    return isArray(parsed) && parsed.length > 0 ? parsed[0] : null
+}
+
+const transformGeoJsonFeatureToEssentialMarkerProps = ({
+    geometry,
+    properties
+}) => {
+    const { coordinates } = geometry
 
     return {
-        left: -(width / 2),
-        top: -(anchorTo === ANCHOR_TO.top ? height : height / 2)
+        colorTaxonomyTerm: getTaxonomyTerm(properties[COLOR_TAXONOMY]),
+        iconTaxonomyTerm: getTaxonomyTerm(properties[ICON_TAXONOMY]),
+        latitude: coordinates[1],
+        longitude: coordinates[0],
+        placeName: properties.name,
+        uuid: properties.uuid
     }
 }
 
@@ -28,14 +56,14 @@ const MapMarker = ({
     longitude,
     placeName,
     uuid,
-    withAvatar
+    ...other
 }) => {
     const theme = useTheme()
     const unitSpacing = theme.spacing(1)
 
     const offsets = useMemo(() => calculateOffsets(
-        anchorTo, unitSpacing, withAvatar
-    ), [anchorTo, unitSpacing, withAvatar])
+        anchorTo, unitSpacing * 5, unitSpacing * 5
+    ), [anchorTo, unitSpacing])
 
     return (
         <Marker
@@ -47,13 +75,19 @@ const MapMarker = ({
             <MapMarkerContent
                 component={component}
                 placeName={placeName}
-                withAvatar={withAvatar}
+                uuid={uuid}
+                {...other}
             />
         </Marker>
     )
 }
 
+// TODO:
+// Clean up this ill-conceived mess!
+
 const MapMarkerEssentialPropTypes = {
+    colorTaxonomyTerm: PropTypes.string,
+    iconTaxonomyTerm: PropTypes.string,
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     placeName: PropTypes.string.isRequired,
@@ -76,21 +110,9 @@ MapMarker.propTypes = {
 
 MapMarker.defaultProps = {
     ...MapMarkerContent.defaultProps,
-    anchorTo: ANCHOR_TO.top
-}
-
-const transformGeoJsonFeatureToEssentialMarkerProps = ({
-    geometry,
-    properties
-}) => {
-    const { coordinates } = geometry
-
-    return {
-        latitude: coordinates[1],
-        longitude: coordinates[0],
-        placeName: properties.name,
-        uuid: properties.uuid
-    }
+    anchorTo: ANCHOR_TO.top,
+    colorTaxonomyTerm: null,
+    iconTaxonomyTerm: null
 }
 
 export {

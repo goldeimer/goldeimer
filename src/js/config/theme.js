@@ -74,5 +74,7 @@ const defaultMuiTheme = THEMES.Goldeimer.mui
 
 export {
     getTheme as default,
-    defaultMuiTheme as muiTheme
+    defaultMuiTheme as muiTheme,
+    COLOR_PRIMARY_GOLDEIMER,
+    COLOR_PRIMARY_VIVA_CON_AGUA
 }

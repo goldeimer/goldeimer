@@ -1,25 +1,98 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
-import StorefrontIcon from '@material-ui/icons/Storefront'
+import Avatar from '@material-ui/core/Avatar'
+// import SvgIcon from '@material-ui/core/SvgIcon'
+
+import DeliveryServiceIcon from '@material-ui/icons/LocalShipping'
+import EcommerceIcon from '@material-ui/icons/Shop'
+import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
+import RetailIcon from '@material-ui/icons/Store'
 
 import MapMarker, { ANCHOR_TO } from 'components/MapMarker'
+// import wholesaleSvg from 'img/icons/wholesaleIcon.svg'
 
-const DEFAULT_FEATURE_ICON_COMPONENT = StorefrontIcon // TODO
+import {
+    COLOR_PRIMARY_GOLDEIMER,
+    COLOR_PRIMARY_VIVA_CON_AGUA
+} from 'config/theme'
+import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
 
-const getFeatureIconComponent = (taxonomyTerm = '') => {
-    switch (taxonomyTerm) {
+// TODO: Stub.
+// Allow admins to set in the not yet existent backend.
+const getColorByTaxonomyTerm = (term, theme = null) => {
+    switch (term) {
+    case BRAND.vca:
+        return COLOR_PRIMARY_VIVA_CON_AGUA
+
+    case BRAND.goldeimer:
+        return COLOR_PRIMARY_GOLDEIMER
+
     default:
-        return DEFAULT_FEATURE_ICON_COMPONENT
+        return (
+            theme
+                ? theme.palette.primary.main
+                : COLOR_PRIMARY_GOLDEIMER
+        )
     }
 }
 
-const FeatureMarker = ({ component, ...props }) => (
+const WholesaleIcon = (props) => (
+    <NotListedLocationIcon />
+//    <SvgIcon {...props}>
+//        {wholesaleSvg}
+//    </SvgIcon>
+)
+
+// TODO: Stub.
+// Allow admins to set in the not yet existent backend.
+const getIconByTaxonomyTerm = (term) => {
+    switch (term) {
+    case MERCHANT_TYPE.delivery:
+        return <DeliveryServiceIcon />
+
+    case MERCHANT_TYPE.ecommerce:
+        return <EcommerceIcon />
+
+    case MERCHANT_TYPE.retail:
+        return <RetailIcon />
+
+    case MERCHANT_TYPE.wholesale:
+        return <WholesaleIcon />
+
+    default:
+        return <NotListedLocationIcon />
+    }
+}
+
+const FeatureMarkerComponent = ({
+    colorTaxonomyTerm,
+    iconTaxonomyTerm
+}) => (
+    <Avatar
+        style={{ backgroundColor: getColorByTaxonomyTerm(colorTaxonomyTerm) }}
+    >
+        {getIconByTaxonomyTerm(iconTaxonomyTerm)}
+    </Avatar>
+)
+
+FeatureMarkerComponent.propTypes = {
+    colorTaxonomyTerm: PropTypes.string,
+    iconTaxonomyTerm: PropTypes.string
+}
+
+FeatureMarkerComponent.defaultProps = {
+    colorTaxonomyTerm: null,
+    iconTaxonomyTerm: null
+}
+
+const FeatureMarkerComponentMemoized = memo(FeatureMarkerComponent)
+
+const FeatureMarker = ({ component, ...other }) => (
     <MapMarker
-        {...props}
+        {...other}
         anchorTo={ANCHOR_TO.center}
-        component={component || getFeatureIconComponent()}
-        withAvatar
+        component={component || FeatureMarkerComponentMemoized}
     />
 )
 

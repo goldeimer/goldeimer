@@ -43,12 +43,7 @@ const makeLayers = (muiTheme, omitFeatures = []) => ({
         type: 'circle',
         source: 'features',
         filter: ['!', ['has', 'point_count']],
-        paint: {
-            'circle-color': muiTheme.palette.primary.main,
-            'circle-radius': 5,
-            'circle-stroke-width': 1,
-            'circle-stroke-color': muiTheme.palette.layerHighlight.main
-        }
+        visibility: 'none'
     }
 })
 

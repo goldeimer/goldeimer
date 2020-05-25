@@ -53,6 +53,7 @@ const SelectionList = ({
                                     onItemClick(selectedValue)
                                 }
                             }}
+                            role="menuitem"
                             selected={selectedIndex === index}
                         >
                             {

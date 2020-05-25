@@ -234,7 +234,7 @@ const GeocodingAutoComplete = ({
                 </IconButton>
             </Box>
             <Collapse
-                in={showSuggestions}
+                in={showSuggestions && (suggestions.length || hasHadResults)}
                 timeout="auto"
                 unmountOnExit
             >

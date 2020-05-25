@@ -81,6 +81,18 @@ module.exports = {
                 },
             },
             {
+                test: /\.svg$/,
+                exclude: /node_modules/,
+                loader: 'svg-inline-loader',
+                options: {
+                    removeTags: true,
+                    removingTags: ['title', 'desc', 'defs', 'style'],
+                    removeSVGTagAttrs: true,
+                    classPrefix: true,
+                    idPrefix: true
+                }
+            },
+            {
                 // TODO: media-query-splitting-plugin
                 test: /\.(sa|sc|c)ss$/,
                 use: [
@@ -97,7 +109,7 @@ module.exports = {
             },
             {
                 // TODO: Image optimization.
-                test: /\.(gif|jp(e?)g|png|svg)$/,
+                test: /\.(gif|jp(e?)g|png)$/,
                 use: {
                     loader: 'file-loader',
                     options: {

@@ -10,7 +10,7 @@ const makeNameEnum = (terms) => Object.fromEntries(
     )
 )
 
-const makeTerm = ([termId, termName], taxonomyId) => ({
+const makeTerm = ([termId, termName]) => ({
     termId,
     termName
 })
@@ -18,7 +18,7 @@ const makeTerm = ([termId, termName], taxonomyId) => ({
 const makeTaxonomy = (taxonomyId, taxonomyName, terms) => ({
     taxonomyId,
     taxonomyName,
-    terms: terms.map((term) => makeTerm(term, taxonomyId))
+    terms: terms.map((term) => makeTerm(term))
 })
 
 const brands = makeTaxonomy(
@@ -39,7 +39,7 @@ const merchantTypes = makeTaxonomy(
         ['retail', 'Einzelhandel'],
         ['wholesale', 'Großhandel'],
         ['delivery', 'Lieferservice'],
-        ['online', 'Online Shop']
+        ['ecommerce', 'Online Shop']
     ]
 )
 const MERCHANT_TYPE = makeIdEnum(merchantTypes.terms)

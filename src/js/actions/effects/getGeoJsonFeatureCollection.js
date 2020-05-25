@@ -25,7 +25,7 @@ const convertMerchantType = (legacyValue) => {
         return MERCHANT_TYPE.wholesale
 
     case 'Online-Shops':
-        return MERCHANT_TYPE.online
+        return MERCHANT_TYPE.ecommerce
 
     case 'Lieferservice':
         return MERCHANT_TYPE.delivery

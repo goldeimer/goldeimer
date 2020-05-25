@@ -9,8 +9,8 @@ const MapMarkers = ({ component, propsArray }) => {
     const MarkerComponent = component
 
     return propsArray.map(
-        ({ uuid, ...props }) => (
-            <MarkerComponent key={uuid} uuid={uuid} {...props} />
+        ({ uuid, ...other }) => (
+            <MarkerComponent key={uuid} uuid={uuid} {...other} />
         )
     )
 }

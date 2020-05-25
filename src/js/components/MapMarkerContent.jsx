@@ -1,36 +1,55 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Avatar from '@material-ui/core/Avatar'
-import Tooltip from '@material-ui/core/Tooltip'
 import MarkerIcon from '@material-ui/icons/Room'
+
+import useHover from 'hooks/useHover'
+
+import ArrowPopper from 'components/ArrowPopper'
+import MapMarkerDetailCard from 'components/MapMarkerDetailCard'
 
 const MapMarkerContent = ({
     component: Component,
     placeName,
-    withAvatar
-}) => (
-    <Tooltip
-        disableFocusListener
-        disableTouchListener
-        title={placeName}
-    >
-        {withAvatar
-            ? <Avatar><Component /></Avatar>
-            : <Component />
-        }
-    </Tooltip>
-)
+    uuid,
+    ...componentProps
+}) => {
+    // TODO:
+    // Employ uuid to fetch detail data.
+
+    const {
+        bind,
+        currentTriggerEl,
+        isHovered
+    } = useHover()
+
+    return (
+        <>
+            <ArrowPopper
+                anchorEl={currentTriggerEl}
+                isOpen={isHovered}
+            >
+                <MapMarkerDetailCard
+                    placeName={placeName}
+                />
+            </ArrowPopper>
+            <Component
+                {...bind}
+                {...componentProps}
+                uuid={uuid}
+            />
+        </>
+    )
+}
 
 MapMarkerContent.propTypes = {
     component: PropTypes.elementType,
     placeName: PropTypes.string.isRequired,
-    withAvatar: PropTypes.bool
+    uuid: PropTypes.string.isRequired
 }
 
 MapMarkerContent.defaultProps = {
-    component: MarkerIcon,
-    withAvatar: false
+    component: MarkerIcon
 }
 
 export default MapMarkerContent

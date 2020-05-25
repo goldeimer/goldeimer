@@ -1,25 +1,25 @@
 import { useState } from 'react'
 
-const useInput = (
-    initialValue = '',
+const setValueByEvent = (
+    event,
+    setValue,
     evenTargetKey = 'value'
 ) => {
-    const [value, setValue] = useState(initialValue)
+    setValue(
+        event.target[evenTargetKey]
+    )
+}
 
-    const setValueByEvent = (event) => {
-        setValue(
-            event.target[evenTargetKey]
-        )
-    }
+const useInput = (initialValue = '') => {
+    const [value, setValue] = useState(initialValue)
 
     return {
         bind: {
             value,
-            onChange: setValueByEvent
+            onChange: (event) => setValueByEvent(event, setValue)
         },
         reset: () => setValue(initialValue),
         setValue,
-        setValueByEvent,
         value
     }
 }
