@@ -1,7 +1,9 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const { isStyleFile } = require('./condition')
+
 const styleLoader = {
-    test: /\.(sa|sc|c)ss$/,
+    test: isStyleFile,
     use: [
         {
             // TODO: media-query-splitting-plugin

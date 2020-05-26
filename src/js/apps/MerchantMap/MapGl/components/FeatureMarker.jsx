@@ -1,16 +1,17 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
+import { useTheme } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
-// import SvgIcon from '@material-ui/core/SvgIcon'
 
 import DeliveryServiceIcon from '@material-ui/icons/LocalShipping'
 import EcommerceIcon from '@material-ui/icons/Shop'
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
 import RetailIcon from '@material-ui/icons/Store'
 
+import InlineSvgIcon from 'components/InlineSvgIcon'
 import MapMarker, { ANCHOR_TO } from 'components/MapMarker'
-// import wholesaleSvg from 'img/icons/wholesaleIcon.svg'
+import wholesaleSvg from 'img/icons/wholesaleIcon.svg'
 
 import {
     COLOR_PRIMARY_GOLDEIMER,
@@ -20,29 +21,29 @@ import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
 
 // TODO: Stub.
 // Allow admins to set in the not yet existent backend.
-const getColorByTaxonomyTerm = (term, theme = null) => {
+const getColorSchemeByTaxonomyTerm = (term, theme) => {
+    const makeScheme = (color, backgroundColor) => ({ color, backgroundColor })
+
     switch (term) {
     case BRAND.vca:
-        return COLOR_PRIMARY_VIVA_CON_AGUA
+        return makeScheme(
+            theme.palette.getContrastText(COLOR_PRIMARY_VIVA_CON_AGUA),
+            COLOR_PRIMARY_VIVA_CON_AGUA
+        )
 
     case BRAND.goldeimer:
-        return COLOR_PRIMARY_GOLDEIMER
+        return makeScheme(
+            theme.palette.getContrastText(COLOR_PRIMARY_GOLDEIMER),
+            COLOR_PRIMARY_GOLDEIMER
+        )
 
     default:
-        return (
-            theme
-                ? theme.palette.primary.main
-                : COLOR_PRIMARY_GOLDEIMER
+        return makeScheme(
+            theme.palette.primary.contrastText,
+            theme.palette.primary.main
         )
     }
 }
-
-const WholesaleIcon = (props) => (
-    <NotListedLocationIcon />
-//    <SvgIcon {...props}>
-//        {wholesaleSvg}
-//    </SvgIcon>
-)
 
 // TODO: Stub.
 // Allow admins to set in the not yet existent backend.
@@ -58,7 +59,7 @@ const getIconByTaxonomyTerm = (term) => {
         return <RetailIcon />
 
     case MERCHANT_TYPE.wholesale:
-        return <WholesaleIcon />
+        return <InlineSvgIcon svg={wholesaleSvg} />
 
     default:
         return <NotListedLocationIcon />
@@ -70,7 +71,7 @@ const FeatureMarkerComponent = ({
     iconTaxonomyTerm
 }) => (
     <Avatar
-        style={{ backgroundColor: getColorByTaxonomyTerm(colorTaxonomyTerm) }}
+        style={getColorSchemeByTaxonomyTerm(colorTaxonomyTerm, useTheme())}
     >
         {getIconByTaxonomyTerm(iconTaxonomyTerm)}
     </Avatar>

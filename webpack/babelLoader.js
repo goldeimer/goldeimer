@@ -1,5 +1,7 @@
+const { isJavaScriptFile } = require('./condition')
+
 const babelLoader = {
-    test: /\.(js|jsx)$/,
+    test: isJavaScriptFile,
     exclude: /node_modules/,
     use: {
         loader: 'babel-loader'

@@ -1,5 +1,7 @@
+const { isJavaScriptFile } = require('./condition')
+
 const esLintLoader = {
-    test: /\.(js|jsx)$/,
+    test: isJavaScriptFile,
     exclude: /node_modules/,
     enforce: 'pre',
     loader: 'eslint-loader',

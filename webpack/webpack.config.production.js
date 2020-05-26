@@ -19,6 +19,7 @@ const webpackModeConfig = merge(
         plugins: [
             new CleanWebpackPlugin(),
         ],
+        devtool: 'source-map',
     }
 )
 
