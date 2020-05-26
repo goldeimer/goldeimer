@@ -1,3 +1,4 @@
 # populated by webpack build
 static/*
+bundle-stats.html
 manifest.json

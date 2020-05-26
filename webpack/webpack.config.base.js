@@ -1,6 +1,10 @@
 const path = require('path')
 
 const webpack = require('webpack')
+const BundleAnalyzerPlugin = require(
+    'webpack-bundle-analyzer'
+).BundleAnalyzerPlugin
+const { BundleStatsWebpackPlugin } = require('bundle-stats-webpack-plugin')
 const ManifestWebpackPlugin = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -17,6 +21,29 @@ module.exports = {
     target: 'web',
     plugins: [
         new webpack.DefinePlugin({}),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            reportFilename: 'bundle-analyzer.html',
+        }),
+        new BundleStatsWebpackPlugin({
+            baseline: true,
+            stats: {
+                assets: true,
+                assetsSort: '!size',
+                builtAt: true,
+                chunks: true,
+                depth: true,
+                entrypoints: true,
+                env: true,
+                hash: true,
+                modules: true,
+                modulesSort: '!size',
+                orphanModules: true,
+                providedExports: true,
+                usedExports: true
+            }
+        }),
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].css',
@@ -44,5 +71,6 @@ module.exports = {
                 },
             },
         },
+        usedExports: true,
     },
 }
