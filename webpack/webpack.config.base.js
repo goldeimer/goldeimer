@@ -1,131 +1,48 @@
-const webpack = require('webpack');
+const path = require('path')
 
-const path = require('path');
-const {
-    SRC_CSS_PATH,
-    SRC_IMG_PATH,
-    SRC_JS_PATH,
-    SRC_JS_ACTIONS_PATH,
-    SRC_JS_APPS_PATH,
-    SRC_JS_COMPONENTS_PATH,
-    SRC_JS_CONFIG_PATH,
-    SRC_JS_ENUM_PATH,
-    SRC_JS_HOOKS_PATH,
-    SRC_JS_REDUCERS_PATH,
-    SRC_JS_SELECTORS_PATH,
-    SRC_JS_STYLES_PATH,
-    SRC_JS_UTIL_PATH,
-} = require('./path');
+const webpack = require('webpack')
+const ManifestWebpackPlugin = require('webpack-manifest-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const ManifestWebpackPlugin = require('webpack-manifest-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-const makeNamePreserveRelativeAssetDirectory = (file) => {
-    const srcDirName = path.relative(
-        path.join(__dirname, '..', 'src'),
-        path.dirname(file)
-    );
-
-    return `static/${srcDirName}/[name].[ext]`;
-};
+const babelLoader = require('./babelLoader')
+const eslintLoader = require('./eslintLoader')
+const fileLoader = require('./fileLoader')
+const styleLoader = require('./styleLoader')
+const isDevBuild = require('./isDevBuild')
+const { SRC_PATH } = require('./path')
+const resolve = require('./resolve')
 
 module.exports = {
+    context: SRC_PATH,
+    target: 'web',
     plugins: [
+        new webpack.DefinePlugin({}),
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].css',
             chunkFilename: 'static/css/[id].css',
         }),
-        new webpack.DefinePlugin({}),
     ],
-    resolve: {
-        alias: {
-            // --- closed semantic logic units ---
-            apps: SRC_JS_APPS_PATH,
-            // --- common js src ---
-            actions: SRC_JS_ACTIONS_PATH,
-            components: SRC_JS_COMPONENTS_PATH,
-            config: SRC_JS_CONFIG_PATH,
-            css: SRC_CSS_PATH,
-            enum: SRC_JS_ENUM_PATH,
-            hooks: SRC_JS_HOOKS_PATH,
-            img: SRC_IMG_PATH,
-            js: SRC_JS_PATH,
-            reducers: SRC_JS_REDUCERS_PATH,
-            selectors: SRC_JS_SELECTORS_PATH,
-            styles: SRC_JS_STYLES_PATH,
-            util: SRC_JS_UTIL_PATH,
-        },
-        extensions: ['.js', '.jsx', '.json', '.ts',],
-    },
+    resolve,
     module: {
         rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                enforce: 'pre',
-                loader: 'eslint-loader',
-                options: {
-                    eslintPath:
-                        'eslint-config-airbnb-standard/node_modules/eslint',
-                    fix: true,
-                    failOnError: true,
-                    // failOnWarning: true,
-                },
-            },
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                },
-            },
-            {
-                test: /\.svg$/,
-                exclude: /node_modules/,
-                loader: 'svg-inline-loader',
-                options: {
-                    removeTags: true,
-                    removingTags: ['title', 'desc', 'defs', 'style'],
-                    removeSVGTagAttrs: true,
-                    classPrefix: true,
-                    idPrefix: true
-                }
-            },
-            {
-                // TODO: media-query-splitting-plugin
-                test: /\.(sa|sc|c)ss$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        // options: {
-                        //     hmr: process.env.NODE_ENV === 'development',
-                        // },
-                    },
-                    'css-loader',
-                    // 'postcss-loader',
-                    // 'sass-loader',
-                ],
-            },
-            {
-                // TODO: Image optimization.
-                test: /\.(gif|jp(e?)g|png)$/,
-                use: {
-                    loader: 'file-loader',
-                    options: {
-                        name: makeNamePreserveRelativeAssetDirectory,
-                    },
-                },
-            },
-            {
-                test: /\.(eot|otf|pbf||ttf|woff|woff2)$/,
-                use: {
-                    loader: 'file-loader',
-                    options: {
-                        name: makeNamePreserveRelativeAssetDirectory,
-                    },
-                },
-            },
+            babelLoader,
+            eslintLoader,
+            styleLoader,
+            ...fileLoader
         ],
+    },
+    optimization: {
+        moduleIds: 'hashed',
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
     },
 }

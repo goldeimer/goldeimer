@@ -1,6 +1,13 @@
-const path = require('path');
+const path = require('path')
+
+const merge = require('webpack-merge')
+
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const isDevBuild = require('./isDevBuild')
 const {
-    DIST_BASE_PATH,
+    PROJECT_PATH,
     PUBLIC_PATH_DEFAULT,
     PUBLIC_PATH_WORDPRESS,
     SRC_PATH,
@@ -8,38 +15,15 @@ const {
     SRC_IMG_PATH,
     SRC_CSS_PATH,
     SRC_JS_ENTRY_PATH,
-} = require('./path');
+} = require('./path')
 
-const merge = require('webpack-merge');
-
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const modeBaseConfig = process.env.BUILD_CONFIG === 'development'
+const webpackModeConfig = isDevBuild()
     ? require('./webpack.config.development.js')
-    : require('./webpack.config.production.js');
+    : require('./webpack.config.production.js')
 
-const wordPressConfig = {
-    name: 'wordpress-assets',
-    entry: {
-        'merchant-map': path.resolve(
-            SRC_JS_ENTRY_PATH, 'WordPress_MerchantMap.jsx'
-        ),
-        'toilet-paper-calculator': path.resolve(
-            SRC_JS_ENTRY_PATH, 'WordPress_ToiletPaperCalculator.jsx'
-        ),
-        'wordpress-theme-main': path.resolve(
-            SRC_CSS_PATH, 'wordpress-theme-main.css'
-        ),
-    },
-    output: {
-        filename: 'static/js/[name].bundle.js',
-        path: path.resolve(DIST_BASE_PATH, 'wordpress-theme'),
-        publicPath: PUBLIC_PATH_WORDPRESS,
-    },
-};
+/// ------------------------------ Merchant Map -------------------------------
 
-const merchantMapDistPath = path.resolve(DIST_BASE_PATH, 'merchant-map');
+const merchantMapDistPath = path.resolve(PROJECT_PATH, 'merchant-map')
 
 const merchantMapConfig = {
     name: 'merchant-map',
@@ -49,7 +33,7 @@ const merchantMapConfig = {
         ),
     },
     output: {
-        filename: '[name].bundle.js',
+        filename: `static/js/[name].${isDevBuild() ? 'dev-bundle' : '[contenthash]'}.js`,
         path: merchantMapDistPath,
         publicPath: PUBLIC_PATH_DEFAULT,
     },
@@ -81,9 +65,31 @@ const merchantMapConfig = {
             },
         ]),
     ],
-};
+}
+
+/// -------------------------------- WordPress --------------------------------
+
+const wordPressConfig = {
+    name: 'wordpress-assets',
+    entry: {
+        'merchant-map': path.resolve(
+            SRC_JS_ENTRY_PATH, 'WordPress_MerchantMap.jsx'
+        ),
+        'toilet-paper-calculator': path.resolve(
+            SRC_JS_ENTRY_PATH, 'WordPress_ToiletPaperCalculator.jsx'
+        ),
+        'wordpress-theme-main': path.resolve(
+            SRC_CSS_PATH, 'wordpress-theme-main.css'
+        ),
+    },
+    output: {
+        filename: 'static/js/[name].bundle.js',
+        path: path.resolve(PROJECT_PATH, 'wordpress-theme'),
+        publicPath: PUBLIC_PATH_WORDPRESS,
+    },
+}
 
 module.exports = [
-    merge(modeBaseConfig, wordPressConfig),
-    merge(modeBaseConfig, merchantMapConfig),
+    merge(webpackModeConfig, wordPressConfig),
+    merge(webpackModeConfig, merchantMapConfig),
 ]

@@ -5,12 +5,13 @@ const SRC_PATH = path.resolve(PROJECT_PATH, 'src');
 const SRC_JS_PATH = path.resolve(SRC_PATH, 'js');
 
 module.exports = {
+    PROJECT_PATH,
     // --- sources ---
-    SRC_PATH: SRC_PATH,
+    SRC_PATH,
     SRC_CSS_PATH: path.resolve(SRC_PATH, 'css'),
     SRC_ETC_PATH: path.resolve(SRC_PATH, 'etc'),
     SRC_IMG_PATH: path.resolve(SRC_PATH, 'img'),
-    SRC_JS_PATH: SRC_JS_PATH,
+    SRC_JS_PATH,
     SRC_JS_ACTIONS_PATH: path.resolve(SRC_JS_PATH, 'actions'),
     SRC_JS_APPS_PATH: path.resolve(SRC_JS_PATH, 'apps'),
     SRC_JS_COMPONENTS_PATH: path.resolve(SRC_JS_PATH, 'components'),
@@ -22,9 +23,7 @@ module.exports = {
     SRC_JS_SELECTORS_PATH: path.resolve(SRC_JS_PATH, 'selectors'),
     SRC_JS_STYLES_PATH: path.resolve(SRC_JS_PATH, 'styles'),
     SRC_JS_UTIL_PATH: path.resolve(SRC_JS_PATH, 'util'),
-    // --- destination ---
-    DIST_BASE_PATH: PROJECT_PATH,
     // --- public ---
-    PUBLIC_PATH_WORDPRESS: '/wp-content/themes/enfold-child/',
     PUBLIC_PATH_DEFAULT: '/',
+    PUBLIC_PATH_WORDPRESS: '/wp-content/themes/enfold-child/',
 }
