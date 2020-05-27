@@ -29,23 +29,22 @@ import StandardDialog, {
 const FULLSCREEN_BREAKPOINT = 'md'
 const MAX_WIDTH = 'xl'
 
-const useStyles = makeStyles((theme) => Object.assign(
-    STANDARD_DIALOG_STYLES,
-    {
-        appBar: {
-            position: 'relative'
-        },
-        appBarTitle: {
-            flex: 1
-        },
-        dialogContentZeroPadding: {
-            padding: 0
-        },
-        paddingBottomZero: {
-            paddingBottom: 0
-        }
+const useStyles = makeStyles((theme) => ({
+    ...STANDARD_DIALOG_STYLES,
+    appBar: {
+        position: 'relative'
+    },
+    appBarTitle: {
+        display: 'flex',
+        flex: 1
+    },
+    dialogContentZeroPadding: {
+        padding: 0
+    },
+    paddingBottomZero: {
+        paddingBottom: 0
     }
-))
+}))
 
 const Transition = forwardRef(
     (props, ref) => <Slide direction="up" ref={ref} {...props} />
@@ -55,14 +54,14 @@ const LargeContentDialog = ({
     children,
     isPadded,
     routeOnClose,
-    shouldBeOpen,
+    isInitiallyOpen,
     title,
     titleIcon
 }) => {
     const {
         isOpen,
         handleClose
-    } = useDialog(shouldBeOpen)
+    } = useDialog(isInitiallyOpen)
 
     const classes = useStyles()
     const theme = useTheme()
@@ -88,6 +87,7 @@ const LargeContentDialog = ({
                             <Toolbar>
                                 <Typography
                                     variant="h6"
+                                    component="h2"
                                     className={classes.appBarTitle}
                                 >
                                     {titleIcon &&

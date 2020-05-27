@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 const useDialog = (
-    shouldBeOpen = true,
+    isInitiallyOpen = true,
     routeOnClose = '/'
 ) => {
-    const [isOpen, setIsOpen] = useState(shouldBeOpen)
+    const [isOpen, setIsOpen] = useState(isInitiallyOpen)
 
     const history = useHistory()
 
     useEffect(() => {
-        shouldBeOpen ? handleOpen() : handleClose()
-    }, [shouldBeOpen])
+        setIsOpen(isInitiallyOpen)
+    }, [isInitiallyOpen])
 
     const handleClose = () => {
         setIsOpen(false)

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
-import { Helmet } from 'react-helmet'
 import { Provider as ReduxProvider, useDispatch } from 'react-redux'
 import { applyMiddleware, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import { fetchFeatures } from 'actions/merchantMapActions'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import getTheme from 'config/theme'
+import { getTheme } from 'config/theme'
 import merchantMapReducer from 'reducers/map/mapReducer'
 
 import InteractiveClusterMapStateContainer from
@@ -50,15 +51,17 @@ const ComponentRoot = () => {
 const MerchantMap = () => (
     <ReduxProvider store={merchantMapStore}>
         <ThemeProvider theme={theme.mui}>
-            <Helmet
-                defaultTitle="Händlerkarte"
-                titleTemplate="Händlerkarte - %s"
-            >
-                <meta name="description" content="Händlerkarte" />
-                <link rel="icon" href={`/static/img/favicon/${theme.favicon}`} />
-            </Helmet>
-            <CssBaseline />
-            <ComponentRoot />
+            <Router>
+                <Helmet
+                    defaultTitle="Händlerkarte"
+                    titleTemplate="Händlerkarte - %s"
+                >
+                    <meta name="description" content="Händlerkarte" />
+                    <link rel="icon" href={`/static/${theme.favicon}`} />
+                </Helmet>
+                <CssBaseline />
+                <ComponentRoot />
+            </Router>
         </ThemeProvider>
     </ReduxProvider>
 )

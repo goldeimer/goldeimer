@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import ReactHtmlParser from 'react-html-parser'
 
 import SvgIcon from '@material-ui/core/SvgIcon'
 
@@ -9,24 +10,10 @@ import SvgIcon from '@material-ui/core/SvgIcon'
 /// --> None (!) of them play nice with material-ui's `SvgIcon` component.
 /// --> TODO: Do this in a webpack loader.
 const InlineSvgIcon = ({ svg, ...other }) => {
-    const svgRef = useRef()
-
-    const paths = svg.replace(
-        /^<svg.*?>/,
-        ''
-    ).replace(
-        /<\/svg>$/,
-        ''
-    )
-
-    useEffect(() => {
-        if (svgRef.current) {
-            svgRef.current.innerHTML = paths
-        }
-    }, [svgRef])
+    const paths = svg.replace(/^<svg.*?>/, '').replace(/<\/svg>$/, '')
 
     return (
-        <SvgIcon {...other} ref={svgRef} />
+        <SvgIcon {...other}>{ReactHtmlParser(paths)}</SvgIcon>
     )
 }
 

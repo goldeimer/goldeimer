@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 
-import { muiTheme } from 'config/theme'
+import muiTheme from 'config/theme'
 
 import FormField from 'components/LegacyForm/FormField'
 

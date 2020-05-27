@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => (STANDARD_DIALOG_STYLES))
 const StandardDialog = ({
     children,
     routeOnClose,
-    shouldBeOpen,
+    isInitiallyOpen,
     title,
     titleIcon
 }) => {
     const {
         isOpen,
         handleClose
-    } = useDialog(shouldBeOpen)
+    } = useDialog(isInitiallyOpen)
 
     const classes = useStyles()
 
@@ -74,14 +74,14 @@ const StandardDialog = ({
 StandardDialog.propTypes = {
     children: PropTypes.node.isRequired,
     routeOnClose: PropTypes.string,
-    shouldBeOpen: PropTypes.bool,
+    isInitiallyOpen: PropTypes.bool,
     title: PropTypes.string.isRequired,
     titleIcon: PropTypes.node
 }
 
 StandardDialog.defaultProps = {
     routeOnClose: '/',
-    shouldBeOpen: true,
+    isInitiallyOpen: true,
     titleIcon: null
 }
 

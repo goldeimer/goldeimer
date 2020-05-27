@@ -11,6 +11,8 @@ import useViewportEdgeStyles from 'styles/useViewportEdgeStyles'
 
 import GeocodingAutocomplete from 'components/map/GeocodingAutocomplete'
 
+import VIEW_ID from 'enum/views'
+
 const SearchContainer = () => {
     const dispatch = useDispatch()
     const proximityMarker = useShallowEqualSelector(
@@ -37,7 +39,7 @@ const SearchContainer = () => {
                 recentProximityMarkers={
                     proximityMarker ? [proximityMarker] : null
                 }
-                onMenuClick={() => { history.push('/menu') }}
+                onMenuClick={() => { history.push(`/${VIEW_ID.menu}`) }}
                 onSelect={debouncedDispatchSetProximityMarker}
                 onSubmit={dispatchSetProximityMarker}
             />

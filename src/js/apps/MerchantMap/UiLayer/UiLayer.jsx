@@ -1,32 +1,42 @@
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route
-} from 'react-router-dom'
+import { Route, useParams } from 'react-router-dom'
 
+import { getTheme } from 'config/theme'
+
+import ListIcon from 'components/icons/ui/ListIcon'
+import VIEW_ID from 'enum/views'
 import FeatureList from './components/FeatureList'
 import MenuDrawer from './components/MenuDrawer'
 import SearchContainer from './components/SearchContainer'
 
+const { logoIconComponent: LogoIconComponent } = getTheme()
+
+const Views = () => {
+    const { viewId } = useParams()
+
+    return (
+        <>
+            <MenuDrawer
+                title="Händlerkarte"
+                isInitiallyOpen={viewId === VIEW_ID.menu}
+                titleIcon={<LogoIconComponent />}
+            />
+            <FeatureList
+                title="Liste aller Einträge"
+                isInitiallyOpen={viewId === VIEW_ID.browse}
+                titleIcon={<ListIcon />}
+            />
+        </>
+    )
+}
+
 const UiLayer = () => (
-    <Router>
-        <Switch>
-            <Route path="/menu">
-                <MenuDrawer
-                    title="Händler"
-                />
-            </Route>
-            <Route path="/browse">
-                <FeatureList
-                    title="Hier bekommst Du unsere Produkte"
-                />
-            </Route>
-            <Route path="/">
-                <SearchContainer />
-            </Route>
-        </Switch>
-    </Router>
+    <>
+        <Route path="/:viewId">
+            <Views />
+        </Route>
+        <SearchContainer />
+    </>
 )
 
 export default UiLayer

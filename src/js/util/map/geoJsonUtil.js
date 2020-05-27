@@ -1,12 +1,10 @@
 import {
-    getColorByTaxonomyTerm,
-    getIconComponentByTaxonomyTerm
+    getColorByTaxonomyTermId,
+    getIconComponentByTaxonomyTermId,
+    VISUALIZED_TAXONOMY
 } from 'enum/taxonomies'
 import isArray from 'util/isArray'
 import parseStringifiedCollection from 'util/parseJson'
-
-const COLOR_TAXONOMY = 'brands'
-const ICON_TAXONOMY = 'merchantTypes'
 
 const makeFeatureCollection = (features) => ({
     type: 'FeatureCollection',
@@ -22,28 +20,29 @@ const getFirstTerm = (properties, taxonomyId, shouldParse = false) => {
         ? parseStringifiedCollection(properties[taxonomyId])
         : properties[taxonomyId]
 
-    return !isArray(terms) || terms.length < 0 ? null : terms[0]
+    return isArray(terms) && terms.length > 0 ? terms[0] : null
 }
 
 const transformFeatureToEssentialMarkerProps = (
     { geometry: { coordinates }, properties },
-    shouldParse = false
+    shouldParse = false,
+    lala = false
 ) => {
     const colorTaxonomyTerm = getFirstTerm(
         properties,
-        COLOR_TAXONOMY,
+        VISUALIZED_TAXONOMY.color,
         shouldParse
     )
 
     const iconTaxonomyTerm = getFirstTerm(
         properties,
-        ICON_TAXONOMY,
+        VISUALIZED_TAXONOMY.icon,
         shouldParse
     )
 
     return {
-        color: getColorByTaxonomyTerm(colorTaxonomyTerm),
-        iconComponent: getIconComponentByTaxonomyTerm(iconTaxonomyTerm),
+        color: getColorByTaxonomyTermId(colorTaxonomyTerm, lala),
+        iconComponent: getIconComponentByTaxonomyTermId(iconTaxonomyTerm),
         latitude: coordinates[1],
         longitude: coordinates[0],
         placeName: properties.name,

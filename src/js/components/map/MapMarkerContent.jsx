@@ -10,8 +10,14 @@ import ArrowPopper from 'components/ArrowPopper'
 import MapMarkerDetailCard from 'components/map/MapMarkerDetailCard'
 
 const useStyles = makeStyles((theme) => ({
-    hover: {
-        cursor: 'pointer'
+    popperTrigger: {
+        cursor: 'pointer',
+        // One below the lowest elevated element of material-ui.
+        // Effectively `999`.
+        zIndex: theme.zIndex.mobileStepper - 1
+    },
+    popper: {
+        zIndex: theme.zIndex.tooltip
     }
 }))
 
@@ -36,6 +42,7 @@ const MapMarkerContent = ({
         <>
             <ArrowPopper
                 anchorEl={currentTriggerEl}
+                className={classes.popper}
                 isOpen={isHovered}
             >
                 <MapMarkerDetailCard
@@ -45,7 +52,7 @@ const MapMarkerContent = ({
             <Component
                 {...bind}
                 {...componentProps}
-                className={classes.hover}
+                className={classes.popperTrigger}
                 uuid={uuid}
             />
         </>

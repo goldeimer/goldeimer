@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const FeatureList = (props) => {
-    const featureCollection = useSelector(selectFilteredAndSortedFeatures)
+    const features = useSelector(selectFilteredAndSortedFeatures)
 
     const dispatch = useDispatch()
     const featureMarker = useShallowEqualSelector(
@@ -154,8 +154,8 @@ const FeatureList = (props) => {
     let flattenedFeatures = []
     let columns = makeColumns(classes, dispatch)
 
-    if (featureCollection) {
-        flattenedFeatures = featureCollection.features.map(
+    if (features) {
+        flattenedFeatures = features.map(
             ({ geometry, id, properties }) => ({
                 ...properties,
                 geometry,
@@ -176,17 +176,17 @@ const FeatureList = (props) => {
                 )
             }
 
-            return Object.assign(
-                column,
-                dynamicParams
-            )
+            return {
+                ...column,
+                ...dynamicParams
+            }
         })
     }
 
     return (
         <LargeContentDialog
+            isInitiallyOpen={previousFeatureMarker === undefined}
             {...props}
-            shouldBeOpen={previousFeatureMarker === undefined}
         >
             <div
                 className={clsx(

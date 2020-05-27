@@ -6,12 +6,19 @@ import EcommerceIcon from '@material-ui/icons/Shop'
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
 import RetailIcon from '@material-ui/icons/Store'
 
-import WholeSaleIcon from 'components/icons/WholeSaleIcon'
+import GoldeimerIcon from 'components/icons/brands/GoldeimerIcon'
+import VivaConAguaIcon from 'components/icons/brands/VivaConAguaIcon'
+import WholesaleIcon from 'components/icons/merchant-types/WholesaleIcon'
 
 import {
     COLOR_PRIMARY_GOLDEIMER,
     COLOR_PRIMARY_VIVA_CON_AGUA
 } from 'config/theme'
+
+const VISUALIZED_TAXONOMY = {
+    color: 'brands',
+    icon: 'merchantTypes'
+}
 
 const makeIdEnum = (terms) => Object.fromEntries(
     terms.map(
@@ -25,9 +32,11 @@ const makeNameEnum = (terms) => Object.fromEntries(
     )
 )
 
-const makeTerm = ([termId, termName]) => ({
+const makeTerm = ([termId, termName, iconComponent = null, props = {}]) => ({
     termId,
-    termName
+    termName,
+    iconComponent,
+    ...props
 })
 
 const makeTaxonomy = (taxonomyId, taxonomyName, terms) => ({
@@ -40,8 +49,18 @@ const brands = makeTaxonomy(
     'brands',
     'Marken',
     [
-        ['goldeimer', 'Goldeimer'],
-        ['vca', 'Viva con Agua']
+        [
+            'goldeimer',
+            'Goldeimer',
+            GoldeimerIcon,
+            { color: COLOR_PRIMARY_GOLDEIMER }
+        ],
+        [
+            'vca',
+            'Viva con Agua',
+            VivaConAguaIcon,
+            { color: COLOR_PRIMARY_VIVA_CON_AGUA }
+        ]
     ]
 )
 const BRAND = makeIdEnum(brands.terms)
@@ -51,48 +70,50 @@ const merchantTypes = makeTaxonomy(
     'merchantTypes',
     'Kategorie',
     [
-        ['retail', 'Einzelhandel'],
-        ['wholesale', 'Großhandel'],
-        ['delivery', 'Lieferservice'],
-        ['ecommerce', 'Online Shop']
+        ['retail', 'Einzelhandel', RetailIcon],
+        ['wholesale', 'Großhandel', WholesaleIcon],
+        ['delivery', 'Lieferservice', DeliveryServiceIcon],
+        ['ecommerce', 'Online Shop', EcommerceIcon]
     ]
 )
 const MERCHANT_TYPE = makeIdEnum(merchantTypes.terms)
 const MERCHANT_TYPE_NAME = makeNameEnum(merchantTypes.terms)
 
-const TAXONOMIES = [brands, merchantTypes]
-
-const getIconComponentByTaxonomyTerm = (term) => {
-    switch (term) {
-    case MERCHANT_TYPE.delivery:
-        return DeliveryServiceIcon
-
-    case MERCHANT_TYPE.ecommerce:
-        return EcommerceIcon
-
-    case MERCHANT_TYPE.retail:
-        return RetailIcon
-
-    case MERCHANT_TYPE.wholesale:
-        return WholeSaleIcon
-
-    default:
-        return NotListedLocationIcon
-    }
+const TAXONOMY_LOOKUP = {
+    brands,
+    merchantTypes
 }
 
-const getColorByTaxonomyTerm = (term) => {
-    switch (term) {
-    case BRAND.vca:
-        return COLOR_PRIMARY_VIVA_CON_AGUA
+const TAXONOMIES = Object.entries(TAXONOMY_LOOKUP).map(([, t]) => t)
 
-    case BRAND.goldeimer:
-        return COLOR_PRIMARY_GOLDEIMER
-
-    default:
-        return null
+const getPropByTaxonomyTermId = (
+    prop,
+    taxonomyId,
+    termId,
+    defaultValue = null
+) => {
+    if (!(taxonomyId in TAXONOMY_LOOKUP)) {
+        return defaultValue
     }
+
+    const { terms } = TAXONOMY_LOOKUP[taxonomyId]
+    const term = terms.find((t) => t.termId === termId)
+
+    return term ? term[prop] : defaultValue
 }
+
+const getIconComponentByTaxonomyTermId = (termId) => getPropByTaxonomyTermId(
+    'iconComponent',
+    VISUALIZED_TAXONOMY.icon,
+    termId,
+    NotListedLocationIcon
+)
+
+const getColorByTaxonomyTermId = (termId) => getPropByTaxonomyTermId(
+    'color',
+    VISUALIZED_TAXONOMY.color,
+    termId
+)
 
 export {
     TAXONOMIES as default,
@@ -100,6 +121,7 @@ export {
     BRAND_NAME,
     MERCHANT_TYPE,
     MERCHANT_TYPE_NAME,
-    getColorByTaxonomyTerm,
-    getIconComponentByTaxonomyTerm
+    VISUALIZED_TAXONOMY,
+    getColorByTaxonomyTermId,
+    getIconComponentByTaxonomyTermId
 }

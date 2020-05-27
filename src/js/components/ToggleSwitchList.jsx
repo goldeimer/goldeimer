@@ -20,7 +20,7 @@ const ToggleSwitchList = ({
     items,
     selectedItemIds,
     title,
-    ...props
+    ...other
 }) => {
     const classes = useStyles()
 
@@ -34,16 +34,17 @@ const ToggleSwitchList = ({
                     {title}
                 </ListSubheader>
             )}
-            {...props}
+            {...other}
         >
             {items.map(
-                ({ itemKey, itemLabel }) => (
+                ({ itemKey, label, iconComponent = null }) => (
                     <ToggleSwitchListItem
                         handleChange={() => { handleItemChange(itemKey) }}
+                        iconComponent={iconComponent}
                         isSelected={selectedItemIds.includes(itemKey)}
                         itemKey={itemKey}
                         key={itemKey}
-                        label={itemLabel}
+                        label={label}
                     />
                 )
             )}
@@ -56,7 +57,8 @@ ToggleSwitchList.propTypes = {
     items: PropTypes.arrayOf(
         PropTypes.exact({
             itemKey: PropTypes.string.isRequired,
-            itemLabel: PropTypes.string.isRequired
+            label: PropTypes.string.isRequired,
+            iconComponent: PropTypes.elementType
         })
     ).isRequired,
     selectedItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,

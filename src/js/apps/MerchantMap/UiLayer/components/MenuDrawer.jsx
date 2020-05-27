@@ -12,15 +12,18 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
-import FilterListIcon from '@material-ui/icons/FilterList'
-import MapIcon from '@material-ui/icons/Map'
-import ViewListIcon from '@material-ui/icons/ViewList'
 
 import { toggleTerm } from 'actions/merchantMapActions'
 import TAXONOMIES from 'enum/taxonomies'
 
 import StandardDrawer from 'components/StandardDrawer'
 import ToggleSwitchList from 'components/ToggleSwitchList'
+
+import FilterIcon from 'components/icons/ui/FilterIcon'
+import ListIcon from 'components/icons/ui/ListIcon'
+import MapIcon from 'components/icons/ui/MapIcon'
+
+import VIEW_ID from 'enum/views'
 
 const MenuDrawer = (props) => {
     const [openSubMenus, setOpenSubMenus] = useState({})
@@ -62,11 +65,16 @@ const MenuDrawer = (props) => {
                     </ListItemIcon>
                     <ListItemText primary="Karte" />
                 </ListItem>
-                <ListItem button onClick={() => { history.push('/browse') }}>
+                <ListItem
+                    button
+                    onClick={() => {
+                        history.push(`/${VIEW_ID.browse}`)
+                    }}
+                >
                     <ListItemIcon>
-                        <ViewListIcon />
+                        <ListIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Einträge durchsuchen" />
+                    <ListItemText primary="Liste aller Einträge" />
                 </ListItem>
             </List>
             <Divider />
@@ -80,7 +88,7 @@ const MenuDrawer = (props) => {
                     }
                 >
                     <ListItemIcon>
-                        <FilterListIcon />
+                        <FilterIcon />
                     </ListItemIcon>
                     <ListItemText primary="Auswahl einschränken" />
                     <Box pl={2} display="flex" alignItems="center">
@@ -112,11 +120,13 @@ const MenuDrawer = (props) => {
                                         )
                                     }
                                     items={terms.map(({
-                                        termId,
-                                        termName
+                                        termId: itemKey,
+                                        termName: label,
+                                        iconComponent
                                     }) => ({
-                                        itemKey: termId,
-                                        itemLabel: termName
+                                        itemKey,
+                                        label,
+                                        iconComponent: iconComponent || null
                                     }))}
                                     selectedItemIds={selectedTerms[taxonomyId]}
                                     title={taxonomyName}

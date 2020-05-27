@@ -13,7 +13,7 @@ const StandardDrawer = ({
     children,
     isDense,
     routeOnClose,
-    shouldBeOpen,
+    isInitiallyOpen,
     title,
     titleIcon
 }) => {
@@ -21,7 +21,7 @@ const StandardDrawer = ({
         isOpen,
         handleClose,
         handleOpen
-    } = useDialog(shouldBeOpen)
+    } = useDialog(isInitiallyOpen)
 
     const iOS = isIos()
 

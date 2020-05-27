@@ -13,14 +13,14 @@ import uniqueByKey from 'util/uniqueByKey'
 const DEFAULT_VIEWPORT_TRANSITION_DURATION = 300
 const NEW_MARKER_ZOOM_LEVEL = 15
 
-const makeLayers = (muiTheme) => ({
+const makeLayers = (theme) => ({
     clusterLayer: {
         id: 'clusters',
         type: 'circle',
         source: 'features',
         filter: ['has', 'point_count'],
         paint: {
-            'circle-color': muiTheme.palette.primary.main,
+            'circle-color': theme.palette.primary.main,
             'circle-radius': [
                 'step',
                 ['get', 'point_count'],
@@ -33,7 +33,9 @@ const makeLayers = (muiTheme) => ({
                 500, 33
             ],
             'circle-stroke-width': 1,
-            'circle-stroke-color': muiTheme.palette.layerHighlight.main
+            'circle-stroke-color': theme.palette.getContrastText(
+                theme.palette.primary.main
+            )
         }
     },
     clusterCountLayer: {
@@ -50,7 +52,7 @@ const makeLayers = (muiTheme) => ({
             'text-size': 12
         },
         paint: {
-            'text-color': muiTheme.palette.layerHighlight.main
+            'text-color': theme.palette.layerHighlight.main
         }
     },
     unclusteredPointLayer: {
@@ -58,7 +60,7 @@ const makeLayers = (muiTheme) => ({
         type: 'circle',
         source: 'features',
         filter: ['!', ['has', 'point_count']],
-        visibility: 'none'
+        layout: { visibility: 'none' }
     }
 })
 
@@ -120,7 +122,9 @@ const useMapGl = (
             ),
             'id'
         ).map(
-            (feature) => transformFeatureToEssentialMarkerProps(feature, true)
+            (feature) => transformFeatureToEssentialMarkerProps(
+                feature, true, true
+            )
         )
 
         setUnclusteredFeatures(features)
