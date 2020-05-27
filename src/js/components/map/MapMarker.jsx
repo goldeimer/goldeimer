@@ -4,7 +4,7 @@ import { Marker } from 'react-map-gl'
 
 import { useTheme } from '@material-ui/core/styles'
 
-import MapMarkerContent from 'components/MapMarkerContent'
+import MapMarkerContent from 'components/map/MapMarkerContent'
 
 import isArray from 'util/isArray'
 import parseStringifiedCollection from 'util/parseJson'

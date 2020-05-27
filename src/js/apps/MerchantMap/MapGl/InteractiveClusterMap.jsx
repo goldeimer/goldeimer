@@ -1,93 +1,54 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import MapGL, { Source, Layer } from 'react-map-gl'
-import { throttle } from 'throttle-debounce'
-
-import { useTheme } from '@material-ui/core/styles'
 
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
-import log from 'util/log'
-import uniqueByKey from 'util/uniqueByKey'
 
-import {
-    MapMarkerEssentialPropTypesExact,
-    transformGeoJsonFeatureToEssentialMarkerProps
-} from 'components/MapMarker'
-import MapMarkersMemoized from 'components/MapMarkers'
+import useMapGl from 'hooks/map/useMapGl'
 
-import makeLayers from './layers'
-
-import FeatureMarker from './components/FeatureMarker'
-import ProximityMarker from './components/ProximityMarker'
+import FeatureMarker from 'components/map/FeatureMarker'
+import MapMarkersMemoized from 'components/map/MapMarkers'
+import ProximityMarker from 'components/map/ProximityMarker'
+import { MapMarkerEssentialPropTypesExact } from 'components/map/MapMarker'
 
 const DEFAULT_VIEWPORT_CENTER = {
     latitude: 50.75,
     longitude: 10
 }
 
-const DEFAULT_ZOOM_LEVEL = 5
-
-const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
-
-const NEW_MARKER_ZOOM_LEVEL = 15
-
 const GEOJSON_SOURCE_ID = 'features'
 
-const noop = () => {}
+const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
 const InteractiveClusterMap = ({
     featureCollection,
     featureMarker,
     proximityMarker
 }) => {
-    const mapRef = useRef()
-    const sourceRef = useRef()
+    const center = proximityMarker || DEFAULT_VIEWPORT_CENTER
+    const zoom = proximityMarker ? 15 : 5
 
     const {
-        clusterLayer,
+        flyTo,
         clusterCountLayer,
-        unclusteredPointLayer
-    } = makeLayers(useTheme())
-
-    const [map, setMap] = useState(null)
-    const [sourceFeatures, setSourceFeatures] = useState(null)
-
-    const [viewport, setViewport] = useState({
-        bearing: 0,
-        latitude: (
-            proximityMarker
-                ? proximityMarker.latitude
-                : DEFAULT_VIEWPORT_CENTER.latitude
-        ),
-        longitude: (
-            proximityMarker
-                ? proximityMarker.longitude
-                : DEFAULT_VIEWPORT_CENTER.longitude
-        ),
-        pitch: 0,
-        transitionDuration: 300,
-        zoom: (
-            proximityMarker
-                ? NEW_MARKER_ZOOM_LEVEL
-                : DEFAULT_ZOOM_LEVEL
-        )
-    })
-
-    const handleViewportChange = (nextViewport) => {
-        setViewport(nextViewport)
-    }
+        clusterLayer,
+        handleClick,
+        handleViewportChange,
+        mapRef,
+        sourceFeatures,
+        sourceRef,
+        unclusteredPointLayer,
+        viewport
+    } = useMapGl(
+        center,
+        GEOJSON_SOURCE_ID,
+        zoom
+    )
 
     useEffect(
         () => {
             if (proximityMarker) {
-                handleViewportChange(
-                    {
-                        ...viewport,
-                        latitude: proximityMarker.latitude,
-                        longitude: proximityMarker.longitude,
-                        zoom: NEW_MARKER_ZOOM_LEVEL
-                    }
-                )
+                flyTo(proximityMarker.latitude, proximityMarker.longitude)
             }
         },
         [proximityMarker]
@@ -96,130 +57,11 @@ const InteractiveClusterMap = ({
     useEffect(
         () => {
             if (featureMarker) {
-                handleViewportChange(
-                    {
-                        ...viewport,
-                        latitude: featureMarker.latitude,
-                        longitude: featureMarker.longitude,
-                        zoom: NEW_MARKER_ZOOM_LEVEL
-                    }
-                )
+                flyTo(featureMarker.latitude, featureMarker.longitude)
             }
         },
         [featureMarker]
     )
-
-    const querySourceFeatures = () => {
-        if (!map) {
-            return null
-        }
-
-        const features = uniqueByKey(
-            map.querySourceFeatures(
-                GEOJSON_SOURCE_ID,
-                {
-                    filter: ['!', ['has', 'point_count']]
-                }
-            ),
-            'id'
-        ).map(
-            (feature) => transformGeoJsonFeatureToEssentialMarkerProps(feature)
-        )
-
-        setSourceFeatures(features)
-
-        return features
-    }
-
-    const querySourceFeaturesThrottled = throttle(
-        500,
-        () => { querySourceFeatures() }
-    )
-
-    const handleIdle = () => { querySourceFeatures() }
-
-    const handleMoveEnd = () => { querySourceFeaturesThrottled() }
-
-    const handleSourceDataUpdate = (event) => {
-        if (
-            event.sourceId !== 'features' ||
-            !event.isSourceLoaded
-        ) {
-            return
-        }
-
-        querySourceFeatures()
-    }
-
-    useEffect(() => {
-        if (map) {
-            map.on('idle', handleIdle)
-            map.on('moveend', handleMoveEnd)
-            map.on('sourcedata', handleSourceDataUpdate)
-
-            return () => {
-                map.off('idle', handleIdle)
-                map.off('moveend', handleMoveEnd)
-                map.off('sourcedata', handleSourceDataUpdate)
-            }
-        }
-
-        return noop
-    }, [map])
-
-    useEffect(() => {
-        if (mapRef.current) {
-            setMap(mapRef.current.getMap())
-        }
-    }, [mapRef])
-
-    const handleClusterClick = (feature) => {
-        const clusterId = feature.properties.cluster_id
-        const source = sourceRef.current.getSource()
-
-        source.getClusterExpansionZoom(
-            clusterId,
-            (err, zoom) => {
-                if (err) {
-                    return
-                }
-
-                handleViewportChange({
-                    ...viewport,
-                    latitude: feature.geometry.coordinates[1],
-                    longitude: feature.geometry.coordinates[0],
-                    zoom
-                })
-            }
-        )
-    }
-
-    const handleMarkerClick = (feature) => {
-        // TODO:
-        // Implement detail info UI.
-        log(feature)
-    }
-
-    const handleClick = (event) => {
-        if (GEOJSON_SOURCE_ID in event && event.features.length) {
-            const feature = event.features[0]
-
-            if ('layer' in feature) {
-                switch (feature.layer.id) {
-                case clusterLayer.id:
-                case clusterCountLayer.id:
-                    handleClusterClick(feature)
-                    return
-
-                case unclusteredPointLayer.id:
-                    handleMarkerClick(feature)
-                    break
-
-                default:
-                }
-            }
-        }
-    }
 
     return (
         <MapGL
@@ -227,13 +69,10 @@ const InteractiveClusterMap = ({
             width="100%"
             height="100%"
             attributionControl
-            interactiveLayerIds={
-                [
-                    clusterLayer.id,
-                    clusterCountLayer.id,
-                    unclusteredPointLayer.id
-                ]
-            }
+            interactiveLayerIds={[
+                clusterLayer.id,
+                clusterCountLayer.id
+            ]}
             mapboxApiAccessToken=""
             mapStyle={MAP_STYLE_URL}
             onClick={handleClick}

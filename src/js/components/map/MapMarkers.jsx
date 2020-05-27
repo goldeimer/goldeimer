@@ -3,17 +3,13 @@ import PropTypes from 'prop-types'
 
 import {
     MapMarkerEssentialPropTypesArrayOf
-} from 'components/MapMarker'
+} from 'components/map/MapMarker'
 
-const MapMarkers = ({ component, propsArray }) => {
-    const MarkerComponent = component
-
-    return propsArray.map(
-        ({ uuid, ...other }) => (
-            <MarkerComponent key={uuid} uuid={uuid} {...other} />
-        )
+const MapMarkers = ({ component: Component, propsArray }) => propsArray.map(
+    ({ uuid, ...other }) => (
+        <Component key={uuid} uuid={uuid} {...other} />
     )
-}
+)
 
 MapMarkers.propTypes = {
     component: PropTypes.elementType.isRequired,

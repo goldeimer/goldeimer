@@ -10,7 +10,7 @@ import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
 import RetailIcon from '@material-ui/icons/Store'
 
 import InlineSvgIcon from 'components/InlineSvgIcon'
-import MapMarker, { ANCHOR_TO } from 'components/MapMarker'
+import MapMarker, { ANCHOR_TO } from 'components/map/MapMarker'
 import wholesaleSvg from 'img/icons/wholesaleIcon.svg'
 
 import {
@@ -68,9 +68,11 @@ const getIconByTaxonomyTerm = (term) => {
 
 const FeatureMarkerComponent = ({
     colorTaxonomyTerm,
-    iconTaxonomyTerm
+    iconTaxonomyTerm,
+    ...other
 }) => (
     <Avatar
+        {...other}
         style={getColorSchemeByTaxonomyTerm(colorTaxonomyTerm, useTheme())}
     >
         {getIconByTaxonomyTerm(iconTaxonomyTerm)}
@@ -89,7 +91,10 @@ FeatureMarkerComponent.defaultProps = {
 
 const FeatureMarkerComponentMemoized = memo(FeatureMarkerComponent)
 
-const FeatureMarker = ({ component, ...other }) => (
+const FeatureMarker = ({
+    component,
+    ...other
+}) => (
     <MapMarker
         {...other}
         anchorTo={ANCHOR_TO.center}

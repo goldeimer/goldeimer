@@ -14,9 +14,9 @@ import MarkerIcon from '@material-ui/icons/Room'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 
-import useGeocoding from 'hooks/useGeocoding'
-import useInput from 'hooks/useInput'
 import isFunction from 'util/isFunction'
+import useGeocoding from 'hooks/map/useGeocoding'
+import useInput from 'hooks/useInput'
 
 import SelectionList from 'components/SelectionList'
 
@@ -234,7 +234,9 @@ const GeocodingAutoComplete = ({
                 </IconButton>
             </Box>
             <Collapse
-                in={showSuggestions && (suggestions.length || hasHadResults)}
+                in={showSuggestions && (
+                    suggestions.length === 0 || hasHadResults
+                )}
                 timeout="auto"
                 unmountOnExit
             >

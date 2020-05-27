@@ -1,12 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { makeStyles } from '@material-ui/core/styles'
 import MarkerIcon from '@material-ui/icons/Room'
 
 import useHover from 'hooks/useHover'
 
 import ArrowPopper from 'components/ArrowPopper'
-import MapMarkerDetailCard from 'components/MapMarkerDetailCard'
+import MapMarkerDetailCard from 'components/map/MapMarkerDetailCard'
+
+const useStyles = makeStyles((theme) => ({
+    hover: {
+        cursor: 'pointer'
+    }
+}))
 
 const MapMarkerContent = ({
     component: Component,
@@ -23,6 +30,8 @@ const MapMarkerContent = ({
         isHovered
     } = useHover()
 
+    const classes = useStyles()
+
     return (
         <>
             <ArrowPopper
@@ -36,6 +45,7 @@ const MapMarkerContent = ({
             <Component
                 {...bind}
                 {...componentProps}
+                className={classes.hover}
                 uuid={uuid}
             />
         </>

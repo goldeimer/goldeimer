@@ -9,8 +9,7 @@ import { setProximityMarker } from 'actions/merchantMapActions'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
 import useViewportEdgeStyles from 'styles/useViewportEdgeStyles'
 
-import GeocodingAutocomplete from
-    'components/GeocodingAutocomplete'
+import GeocodingAutocomplete from 'components/map/GeocodingAutocomplete'
 
 const SearchContainer = () => {
     const dispatch = useDispatch()
