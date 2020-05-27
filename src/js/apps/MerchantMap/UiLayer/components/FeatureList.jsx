@@ -11,8 +11,8 @@ import { setFeatureMarker } from 'actions/merchantMapActions'
 import { BRAND_NAME, MERCHANT_TYPE_NAME } from 'enum/taxonomies'
 import usePrevious from 'hooks/usePrevious'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
-import selectFilteredAndSortedFeatureCollection
-    from 'selectors/selectFilteredAndSortedFeatureCollection'
+import selectFilteredAndSortedFeatures
+    from 'selectors/selectFilteredAndSortedFeatures'
 
 import ExternalLink from 'components/ExternalLink'
 import LargeContentDialog
@@ -141,8 +141,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const FeatureList = (props) => {
-    const featureCollection =
-        useSelector(selectFilteredAndSortedFeatureCollection)
+    const featureCollection = useSelector(selectFilteredAndSortedFeatures)
 
     const dispatch = useDispatch()
     const featureMarker = useShallowEqualSelector(

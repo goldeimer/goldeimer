@@ -1,92 +1,48 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
-import { useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 
-import DeliveryServiceIcon from '@material-ui/icons/LocalShipping'
-import EcommerceIcon from '@material-ui/icons/Shop'
-import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
-import RetailIcon from '@material-ui/icons/Store'
-
-import InlineSvgIcon from 'components/InlineSvgIcon'
 import MapMarker, { ANCHOR_TO } from 'components/map/MapMarker'
-import wholesaleSvg from 'img/icons/wholesaleIcon.svg'
 
-import {
-    COLOR_PRIMARY_GOLDEIMER,
-    COLOR_PRIMARY_VIVA_CON_AGUA
-} from 'config/theme'
-import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
+const useStyles = makeStyles((theme) => ({
+    avatar: ({ color }) => {
+        const backgroundColor = color !== null
+            ? color
+            : theme.palette.primary.main
 
-// TODO: Stub.
-// Allow admins to set in the not yet existent backend.
-const getColorSchemeByTaxonomyTerm = (term, theme) => {
-    const makeScheme = (color, backgroundColor) => ({ color, backgroundColor })
-
-    switch (term) {
-    case BRAND.vca:
-        return makeScheme(
-            theme.palette.getContrastText(COLOR_PRIMARY_VIVA_CON_AGUA),
-            COLOR_PRIMARY_VIVA_CON_AGUA
-        )
-
-    case BRAND.goldeimer:
-        return makeScheme(
-            theme.palette.getContrastText(COLOR_PRIMARY_GOLDEIMER),
-            COLOR_PRIMARY_GOLDEIMER
-        )
-
-    default:
-        return makeScheme(
-            theme.palette.primary.contrastText,
-            theme.palette.primary.main
-        )
+        return {
+            color: theme.palette.getContrastText(backgroundColor),
+            backgroundColor
+        }
     }
-}
-
-// TODO: Stub.
-// Allow admins to set in the not yet existent backend.
-const getIconByTaxonomyTerm = (term) => {
-    switch (term) {
-    case MERCHANT_TYPE.delivery:
-        return <DeliveryServiceIcon />
-
-    case MERCHANT_TYPE.ecommerce:
-        return <EcommerceIcon />
-
-    case MERCHANT_TYPE.retail:
-        return <RetailIcon />
-
-    case MERCHANT_TYPE.wholesale:
-        return <InlineSvgIcon svg={wholesaleSvg} />
-
-    default:
-        return <NotListedLocationIcon />
-    }
-}
+}))
 
 const FeatureMarkerComponent = ({
-    colorTaxonomyTerm,
-    iconTaxonomyTerm,
+    color,
+    iconComponent: IconComponent,
     ...other
-}) => (
-    <Avatar
-        {...other}
-        style={getColorSchemeByTaxonomyTerm(colorTaxonomyTerm, useTheme())}
-    >
-        {getIconByTaxonomyTerm(iconTaxonomyTerm)}
-    </Avatar>
-)
+}) => {
+    const classes = useStyles({ color })
+
+    return (
+        <Avatar
+            {...other}
+            className={classes.avatar}
+        >
+            <IconComponent />
+        </Avatar>
+    )
+}
 
 FeatureMarkerComponent.propTypes = {
-    colorTaxonomyTerm: PropTypes.string,
-    iconTaxonomyTerm: PropTypes.string
+    color: PropTypes.string,
+    iconComponent: PropTypes.elementType.isRequired
 }
 
 FeatureMarkerComponent.defaultProps = {
-    colorTaxonomyTerm: null,
-    iconTaxonomyTerm: null
+    color: null
 }
 
 const FeatureMarkerComponentMemoized = memo(FeatureMarkerComponent)

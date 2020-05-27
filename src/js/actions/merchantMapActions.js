@@ -1,5 +1,5 @@
 import errorWrapper from './util/errorWrapper'
-import getGeoJsonFeatureCollection from './effects/getGeoJsonFeatureCollection'
+import getFeatures from './effects/getFeatures'
 
 /// -------------------------------- settings ---------------------------------
 
@@ -39,24 +39,24 @@ const toggleTerm = (taxonomyId, termId) => ({
 
 /// ----------------------------- GeoJson source ------------------------------
 
-const fetchFeatureCollection = () => errorWrapper(
+const fetchFeatures = () => errorWrapper(
     async (dispatch) => {
-        dispatch(requestFeatureCollection())
-        const featureCollection = await getGeoJsonFeatureCollection()
-        dispatch(receiveFeatureCollection(featureCollection))
+        dispatch(requestFeatures())
+        const features = await getFeatures()
+        dispatch(receiveFeatures(features))
     },
-    { successType: RECEIVE_FEATURE_COLLECTION }
+    { successType: RECEIVE_FEATURES }
 )
 
-const REQUEST_FEATURE_COLLECTION = 'REQUEST_FEATURE_COLLECTION'
-const requestFeatureCollection = () => ({
-    type: REQUEST_FEATURE_COLLECTION
+const REQUEST_FEATURES = 'REQUEST_FEATURES'
+const requestFeatures = () => ({
+    type: REQUEST_FEATURES
 })
 
-const RECEIVE_FEATURE_COLLECTION = 'RECEIVE_FEATURE_COLLECTION'
-const receiveFeatureCollection = (featureCollection) => ({
-    type: RECEIVE_FEATURE_COLLECTION,
-    featureCollection
+const RECEIVE_FEATURES = 'RECEIVE_FEATURES'
+const receiveFeatures = (features) => ({
+    type: RECEIVE_FEATURES,
+    features
 })
 
 /// --------------------------------- markers ---------------------------------
@@ -94,9 +94,9 @@ export {
     TOGGLE_TERM,
     toggleTerm,
     // --- GeoJson source ---
-    fetchFeatureCollection,
-    REQUEST_FEATURE_COLLECTION,
-    RECEIVE_FEATURE_COLLECTION,
+    fetchFeatures,
+    REQUEST_FEATURES,
+    RECEIVE_FEATURES,
     // --- markers ---
     RESET_FEATURE_MARKER,
     resetFeatureMarker,

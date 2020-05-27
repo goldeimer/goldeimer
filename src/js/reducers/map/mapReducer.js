@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux'
 
 import error from './errorReducer'
-import featureCollection from './featureCollectionReducer'
+import features from './featuresReducer'
 import marker from './markerReducer'
+// import search from './searchReducer'
 import settings from './settingsReducer'
 
 export default combineReducers({
     error,
-    featureCollection,
+    features,
     marker,
+    //    search,
     settings
 })

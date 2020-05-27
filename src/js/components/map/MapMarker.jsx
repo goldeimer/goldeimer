@@ -6,12 +6,6 @@ import { useTheme } from '@material-ui/core/styles'
 
 import MapMarkerContent from 'components/map/MapMarkerContent'
 
-import isArray from 'util/isArray'
-import parseStringifiedCollection from 'util/parseJson'
-
-const COLOR_TAXONOMY = 'brands'
-const ICON_TAXONOMY = 'merchantTypes'
-
 const ANCHOR_TO = {
     center: 'center',
     top: 'top'
@@ -26,28 +20,6 @@ const calculateOffsets = (
     left: -(width / 2),
     top: -(anchorTo === ANCHOR_TO.top ? height : height / 2)
 })
-
-const getTaxonomyTerm = (terms) => {
-    const parsed = parseStringifiedCollection(terms)
-
-    return isArray(parsed) && parsed.length > 0 ? parsed[0] : null
-}
-
-const transformGeoJsonFeatureToEssentialMarkerProps = ({
-    geometry,
-    properties
-}) => {
-    const { coordinates } = geometry
-
-    return {
-        colorTaxonomyTerm: getTaxonomyTerm(properties[COLOR_TAXONOMY]),
-        iconTaxonomyTerm: getTaxonomyTerm(properties[ICON_TAXONOMY]),
-        latitude: coordinates[1],
-        longitude: coordinates[0],
-        placeName: properties.name,
-        uuid: properties.uuid
-    }
-}
 
 const MapMarker = ({
     anchorTo,
@@ -86,8 +58,8 @@ const MapMarker = ({
 // Clean up this ill-conceived mess!
 
 const MapMarkerEssentialPropTypes = {
-    colorTaxonomyTerm: PropTypes.string,
-    iconTaxonomyTerm: PropTypes.string,
+    color: PropTypes.string,
+    iconComponent: PropTypes.elementType.isRequired,
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     placeName: PropTypes.string.isRequired,
@@ -111,8 +83,7 @@ MapMarker.propTypes = {
 MapMarker.defaultProps = {
     ...MapMarkerContent.defaultProps,
     anchorTo: ANCHOR_TO.top,
-    colorTaxonomyTerm: null,
-    iconTaxonomyTerm: null
+    color: null
 }
 
 export {
@@ -120,6 +91,5 @@ export {
     ANCHOR_TO,
     MapMarkerEssentialPropTypes,
     MapMarkerEssentialPropTypesExact,
-    MapMarkerEssentialPropTypesArrayOf,
-    transformGeoJsonFeatureToEssentialMarkerProps
+    MapMarkerEssentialPropTypesArrayOf
 }

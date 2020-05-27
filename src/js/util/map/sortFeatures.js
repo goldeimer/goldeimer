@@ -35,25 +35,16 @@ const stableSort = (array, comparator, itemKey = null) => {
     return stabilizedArray.map((item) => item[0])
 }
 
-const sortFeatures = (features, comparator) => (
-    stableSort(features, comparator, 'properties')
-)
-
-const sortGeoJsonFeatureCollection = (
-    featureCollection,
+const sortFeatures = (
+    features,
     order = SORT_ORDER.asc,
     orderBy = 'name'
 ) => {
-    if (featureCollection === null) {
-        return featureCollection
+    if (features === null) {
+        return features
     }
 
-    const { features } = featureCollection
-
-    return {
-        type: 'FeatureCollection',
-        features: sortFeatures(features, makeComparator(order, orderBy))
-    }
+    return stableSort(features, makeComparator(order, orderBy), 'properties')
 }
 
-export default sortGeoJsonFeatureCollection
+export default sortFeatures

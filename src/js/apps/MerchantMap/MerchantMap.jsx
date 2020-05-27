@@ -5,13 +5,13 @@ import { applyMiddleware, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-import { fetchFeatureCollection } from 'actions/merchantMapActions'
+import { fetchFeatures } from 'actions/merchantMapActions'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import getTheme from 'config/theme'
-import merchantMapReducer from 'reducers/MerchantMap/merchantMapReducer'
+import merchantMapReducer from 'reducers/map/mapReducer'
 
 import InteractiveClusterMapStateContainer from
     './MapGl/InteractiveClusterMapStateContainer'
@@ -34,7 +34,7 @@ const ComponentRoot = () => {
 
     useEffect(
         () => {
-            dispatch(fetchFeatureCollection())
+            dispatch(fetchFeatures())
         },
         []
     )

@@ -6,9 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 
 import noop from 'util/noop'
 
-import {
-    transformGeoJsonFeatureToEssentialMarkerProps
-} from 'components/map/MapMarker'
+import { transformFeatureToEssentialMarkerProps } from 'util/map/geoJsonUtil'
 
 import uniqueByKey from 'util/uniqueByKey'
 
@@ -79,7 +77,7 @@ const useMapGl = (
     } = makeLayers(useTheme())
 
     const [map, setMap] = useState(null)
-    const [sourceFeatures, setSourceFeatures] = useState(null)
+    const [unclusteredFeatures, setUnclusteredFeatures] = useState(null)
     const [viewport, setViewport] = useState({
         bearing: 0,
         latitude: center.latitude,
@@ -122,10 +120,10 @@ const useMapGl = (
             ),
             'id'
         ).map(
-            (feature) => transformGeoJsonFeatureToEssentialMarkerProps(feature)
+            (feature) => transformFeatureToEssentialMarkerProps(feature, true)
         )
 
-        setSourceFeatures(features)
+        setUnclusteredFeatures(features)
 
         return features
     }
@@ -216,7 +214,7 @@ const useMapGl = (
         handleClick,
         handleViewportChange,
         mapRef,
-        sourceFeatures,
+        unclusteredFeatures,
         sourceRef,
         unclusteredPointLayer,
         viewport

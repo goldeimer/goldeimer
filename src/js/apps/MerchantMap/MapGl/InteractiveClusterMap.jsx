@@ -5,6 +5,7 @@ import MapGL, { Source, Layer } from 'react-map-gl'
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
 
 import useMapGl from 'hooks/map/useMapGl'
+import { makeFeatureCollection } from 'util/map/geoJsonUtil'
 
 import FeatureMarker from 'components/map/FeatureMarker'
 import MapMarkersMemoized from 'components/map/MapMarkers'
@@ -21,7 +22,7 @@ const GEOJSON_SOURCE_ID = 'features'
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
 const InteractiveClusterMap = ({
-    featureCollection,
+    features,
     featureMarker,
     proximityMarker
 }) => {
@@ -35,8 +36,8 @@ const InteractiveClusterMap = ({
         handleClick,
         handleViewportChange,
         mapRef,
-        sourceFeatures,
         sourceRef,
+        unclusteredFeatures,
         unclusteredPointLayer,
         viewport
     } = useMapGl(
@@ -80,7 +81,7 @@ const InteractiveClusterMap = ({
             ref={mapRef}
             transitionDuration={500}
         >
-            {featureCollection && (
+            {features && (
                 <Source
                     attribution=""
                     // mapbox-gl-js default: 128
@@ -89,7 +90,7 @@ const InteractiveClusterMap = ({
                     clusterMaxZoom={14}
                     clusterProperties={null}
                     clusterRadius={50}
-                    data={featureCollection}
+                    data={makeFeatureCollection(features)}
                     generateId
                     id={GEOJSON_SOURCE_ID}
                     maxzoom={17}
@@ -104,10 +105,10 @@ const InteractiveClusterMap = ({
                     <Layer {...unclusteredPointLayer} />
                 </Source>
             )}
-            {sourceFeatures && (
+            {unclusteredFeatures && (
                 <MapMarkersMemoized
                     component={FeatureMarker}
-                    propsArray={sourceFeatures}
+                    propsArray={unclusteredFeatures}
                 />
             )}
             {featureMarker && (
@@ -125,14 +126,17 @@ const InteractiveClusterMap = ({
 }
 
 InteractiveClusterMap.propTypes = {
-    /* eslint-disable-next-line react/forbid-prop-types */
-    featureCollection: PropTypes.object,
+    features: PropTypes.arrayOf(PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        geometry: PropTypes.object.isRequired,
+        properties: PropTypes.object.isRequired
+    })),
     featureMarker: MapMarkerEssentialPropTypesExact,
     proximityMarker: MapMarkerEssentialPropTypesExact
 }
 
 InteractiveClusterMap.defaultProps = {
-    featureCollection: null,
+    features: null,
     featureMarker: null,
     proximityMarker: null
 }
