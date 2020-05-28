@@ -3,7 +3,7 @@ import validUrl from 'valid-url'
 
 import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
 import isString from 'util/isString'
-import objectPropertiesEach from 'util/objectPropertiesEach'
+import transformObjectProperties from 'util/transformObjectProperties'
 import parseGoogleSheet from 'util/parseGoogleSheet'
 
 /* eslint-disable max-len */
@@ -55,7 +55,7 @@ const spreadsheetDataToGeoJsonGoldeimer = (data) => Array.prototype.map.call(
             city: entry.Stadt,
             country: 'Deutschland',
             merchantTypes: [convertMerchantType(entry.l)],
-            name: entry.Title,
+            placeName: entry.Title,
             street: entry.Location,
             url: entry.Description,
             uuid: uuid()
@@ -79,7 +79,7 @@ const spreadsheetDataToGeoJsonVca = (data) => Array.prototype.map.call(
             city: entry.City,
             country: entry.Country,
             merchantTypes: [convertMerchantType(entry.Group)],
-            name: entry.Title,
+            placeName: entry.Title,
             street: entry.Street,
             url: entry.Description,
             uuid: uuid()
@@ -109,12 +109,12 @@ const getFeaturesVca = async () => {
     return spreadsheetDataToGeoJsonVca(result)
 }
 
-const getFeatures = async () => {
+const getSourceFeatures = async () => {
     // legacy sources
     const featuresGoldeimer = await getFeaturesGoldeimer()
     const featuresVca = await getFeaturesVca()
 
-    const sanitizeProperty = (value, name) => {
+    const sanitizeProperty = (value, key) => {
         let sanitized = value
 
         if (isString(sanitized)) {
@@ -124,7 +124,7 @@ const getFeatures = async () => {
             )
         }
 
-        if (name === 'url') {
+        if (key === 'url') {
             if (!validUrl.isUri(sanitized)) {
                 sanitized = ''
             }
@@ -135,11 +135,11 @@ const getFeatures = async () => {
 
     return featuresGoldeimer.concat(featuresVca).map((feature) => ({
         ...feature,
-        properties: objectPropertiesEach(
+        properties: transformObjectProperties(
             feature.properties,
             sanitizeProperty
         )
     }))
 }
 
-export default getFeatures
+export default getSourceFeatures

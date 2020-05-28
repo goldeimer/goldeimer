@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import MerchantMap from 'apps/MerchantMap/MerchantMap'
+import Map from 'apps/Map/Map'
 
 const renderToDom = (
     domElementId = 'react-app-container-merchant-map'
@@ -11,7 +11,7 @@ const renderToDom = (
     if (container) {
         render(
             <div id="merchant-map-container">
-                <MerchantMap />
+                <Map />
             </div>,
             container
         )

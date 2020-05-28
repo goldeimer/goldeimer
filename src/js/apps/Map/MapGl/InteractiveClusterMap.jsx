@@ -5,7 +5,6 @@ import MapGL, { Source, Layer } from 'react-map-gl'
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
 
 import useMapGl from 'hooks/map/useMapGl'
-import { makeFeatureCollection } from 'util/map/geoJsonUtil'
 
 import FeatureMarker from 'components/map/FeatureMarker'
 import MapMarkersMemoized from 'components/map/MapMarkers'
@@ -22,7 +21,7 @@ const GEOJSON_SOURCE_ID = 'features'
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
 const InteractiveClusterMap = ({
-    features,
+    featureCollection,
     featureMarker,
     proximityMarker
 }) => {
@@ -81,7 +80,7 @@ const InteractiveClusterMap = ({
             ref={mapRef}
             transitionDuration={500}
         >
-            {features && (
+            {featureCollection && (
                 <Source
                     attribution=""
                     // mapbox-gl-js default: 128
@@ -90,7 +89,7 @@ const InteractiveClusterMap = ({
                     clusterMaxZoom={14}
                     clusterProperties={null}
                     clusterRadius={50}
-                    data={makeFeatureCollection(features)}
+                    data={featureCollection}
                     generateId
                     id={GEOJSON_SOURCE_ID}
                     maxzoom={17}
@@ -126,17 +125,20 @@ const InteractiveClusterMap = ({
 }
 
 InteractiveClusterMap.propTypes = {
-    features: PropTypes.arrayOf(PropTypes.shape({
+    featureCollection: PropTypes.exact({
         type: PropTypes.string.isRequired,
-        geometry: PropTypes.object.isRequired,
-        properties: PropTypes.object.isRequired
-    })),
+        features: PropTypes.arrayOf(PropTypes.shape({
+            type: PropTypes.string.isRequired,
+            geometry: PropTypes.object.isRequired,
+            properties: PropTypes.object.isRequired
+        })).isRequired
+    }),
     featureMarker: MapMarkerEssentialPropTypesExact,
     proximityMarker: MapMarkerEssentialPropTypesExact
 }
 
 InteractiveClusterMap.defaultProps = {
-    features: null,
+    featureCollection: null,
     featureMarker: null,
     proximityMarker: null
 }

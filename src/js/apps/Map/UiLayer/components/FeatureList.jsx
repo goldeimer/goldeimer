@@ -7,12 +7,11 @@ import IconButton from '@material-ui/core/IconButton'
 import LinkIcon from '@material-ui/icons/Link'
 import MarkerIcon from '@material-ui/icons/Room'
 
-import { setFeatureMarker } from 'actions/merchantMapActions'
+import { setFeatureMarker } from 'actions/mapActions'
 import { BRAND_NAME, MERCHANT_TYPE_NAME } from 'enum/taxonomies'
 import usePrevious from 'hooks/usePrevious'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
-import selectFilteredAndSortedFeatures
-    from 'selectors/selectFilteredAndSortedFeatures'
+import { selectSortedSource } from 'selectors/map/selectFeatures'
 
 import ExternalLink from 'components/ExternalLink'
 import LargeContentDialog
@@ -34,7 +33,7 @@ const makeArrayFilterAndSearch = (field) => (terms, rowData) => (
 )
 
 const makeColumns = (classes, dispatch) => ([
-    { field: 'name', title: 'Name' },
+    { field: 'placeName', title: 'Name' },
     { field: 'city', title: 'Stadt' },
     {
         field: 'icons',
@@ -53,7 +52,7 @@ const makeColumns = (classes, dispatch) => ([
                                 id: rowData.id,
                                 latitude: parseFloat(coordinates[1]),
                                 longitude: parseFloat(coordinates[0]),
-                                placeName: rowData.name
+                                placeName: rowData.placeName
                             })
                         )}
                         size="small"
@@ -141,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const FeatureList = (props) => {
-    const features = useSelector(selectFilteredAndSortedFeatures)
+    const features = useSelector(selectSortedSource)
 
     const dispatch = useDispatch()
     const featureMarker = useShallowEqualSelector(

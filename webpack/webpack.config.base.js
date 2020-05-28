@@ -21,11 +21,11 @@ module.exports = {
     target: 'web',
     plugins: [
         new webpack.DefinePlugin({}),
-        new BundleAnalyzerPlugin({
-            analyzerMode: 'static',
-            openAnalyzer: false,
-            reportFilename: 'bundle-analyzer.html',
-        }),
+//         new BundleAnalyzerPlugin({
+//             analyzerMode: 'static',
+//             openAnalyzer: false,
+//             reportFilename: 'bundle-analyzer.html',
+//         }),
         new BundleStatsWebpackPlugin({
             baseline: true,
             stats: {

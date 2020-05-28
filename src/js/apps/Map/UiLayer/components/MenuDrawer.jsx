@@ -13,7 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 
-import { toggleTerm } from 'actions/merchantMapActions'
+import { toggleFilterTerm } from 'actions/mapActions'
 import TAXONOMIES from 'enum/taxonomies'
 
 import StandardDrawer from 'components/StandardDrawer'
@@ -41,15 +41,15 @@ const MenuDrawer = (props) => {
         })
     }
 
-    const selectedTerms = useSelector(
-        (state) => (state.settings.filter.selectedTerms)
+    const selectedFilterTerms = useSelector(
+        (state) => (state.settings.map.filter)
     )
 
     const dispatch = useDispatch()
     const history = useHistory()
 
     const handleTermChange = (taxonomyId, termId) => {
-        dispatch(toggleTerm(taxonomyId, termId))
+        dispatch(toggleFilterTerm(taxonomyId, termId))
     }
 
     return (
@@ -128,7 +128,9 @@ const MenuDrawer = (props) => {
                                         label,
                                         iconComponent: iconComponent || null
                                     }))}
-                                    selectedItemIds={selectedTerms[taxonomyId]}
+                                    selectedItemIds={
+                                        selectedFilterTerms[taxonomyId]
+                                    }
                                     title={taxonomyName}
                                 />
                             </Fragment>

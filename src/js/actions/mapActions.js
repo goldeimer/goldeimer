@@ -1,11 +1,11 @@
 import errorWrapper from './util/errorWrapper'
-import getFeatures from './effects/getFeatures'
+import getSourceFeatures from './effects/getSourceFeatures'
 
 /// -------------------------------- settings ---------------------------------
 
-const RESET_SELECTED_TERMS = 'RESET_SELECTED_TERMS'
+const RESET_FILTER = 'RESET_FILTER'
 const resetSelectedTerms = () => ({
-    type: RESET_SELECTED_TERMS
+    type: RESET_FILTER
 })
 
 const RESET_SORT_ORDER_BY = 'RESET_SORT_ORDER_BY'
@@ -16,6 +16,11 @@ const resetSortOrderBy = () => ({
 const RESET_SORT_ORDER = 'RESET_SORT_ORDER'
 const resetSortOrder = () => ({
     type: RESET_SORT_ORDER
+})
+
+const RESET_THEME = 'RESET_THEME'
+const resetTheme = () => ({
+    type: RESET_THEME
 })
 
 const SET_SORT_ORDER_BY = 'SET_SORT_ORDER_BY'
@@ -30,32 +35,38 @@ const setSortOrder = (order) => ({
     order
 })
 
-const TOGGLE_TERM = 'TOGGLE_TERM'
-const toggleTerm = (taxonomyId, termId) => ({
-    type: TOGGLE_TERM,
+const SET_THEME = 'SET_THEME'
+const setTheme = (themeId) => ({
+    type: SET_THEME,
+    themeId
+})
+
+const TOGGLE_FILTER_TERM = 'TOGGLE_FILTER_TERM'
+const toggleFilterTerm = (taxonomyId, termId) => ({
+    type: TOGGLE_FILTER_TERM,
     key: termId,
     groupKey: taxonomyId
 })
 
 /// ----------------------------- GeoJson source ------------------------------
 
-const fetchFeatures = () => errorWrapper(
+const fetchSourceFeatures = () => errorWrapper(
     async (dispatch) => {
-        dispatch(requestFeatures())
-        const features = await getFeatures()
-        dispatch(receiveFeatures(features))
+        dispatch(requestSourceFeatures())
+        const features = await getSourceFeatures()
+        dispatch(receiveSourceFeatures(features))
     },
-    { successType: RECEIVE_FEATURES }
+    { successType: RECEIVE_SOURCE_FEATURES }
 )
 
-const REQUEST_FEATURES = 'REQUEST_FEATURES'
-const requestFeatures = () => ({
-    type: REQUEST_FEATURES
+const REQUEST_SOURCE_FEATURES = 'REQUEST_SOURCE_FEATURES'
+const requestSourceFeatures = () => ({
+    type: REQUEST_SOURCE_FEATURES
 })
 
-const RECEIVE_FEATURES = 'RECEIVE_FEATURES'
-const receiveFeatures = (features) => ({
-    type: RECEIVE_FEATURES,
+const RECEIVE_SOURCE_FEATURES = 'RECEIVE_SOURCE_FEATURES'
+const receiveSourceFeatures = (features) => ({
+    type: RECEIVE_SOURCE_FEATURES,
     features
 })
 
@@ -81,22 +92,26 @@ const setProximityMarker = (marker) => ({
 
 export {
     // --- settings ---
-    RESET_SELECTED_TERMS,
+    RESET_FILTER,
     resetSelectedTerms,
     RESET_SORT_ORDER_BY,
     resetSortOrderBy,
     RESET_SORT_ORDER,
     resetSortOrder,
+    RESET_THEME,
+    resetTheme,
     SET_SORT_ORDER_BY,
     setSortOrderBy,
     SET_SORT_ORDER,
     setSortOrder,
-    TOGGLE_TERM,
-    toggleTerm,
+    SET_THEME,
+    setTheme,
+    TOGGLE_FILTER_TERM,
+    toggleFilterTerm,
     // --- GeoJson source ---
-    fetchFeatures,
-    REQUEST_FEATURES,
-    RECEIVE_FEATURES,
+    fetchSourceFeatures,
+    REQUEST_SOURCE_FEATURES,
+    RECEIVE_SOURCE_FEATURES,
     // --- markers ---
     RESET_FEATURE_MARKER,
     resetFeatureMarker,

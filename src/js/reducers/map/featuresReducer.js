@@ -1,44 +1,48 @@
-import { transformFeatureToEssentialMarkerProps } from 'util/map/geoJsonUtil'
+import { combineReducers } from 'redux'
 
 import {
-    RECEIVE_FEATURES,
-    REQUEST_FEATURES
-} from 'actions/merchantMapActions'
+    RECEIVE_SOURCE_FEATURES,
+    REQUEST_SOURCE_FEATURES
+} from 'actions/mapActions'
 
-const INITIAL_STATE = {
-    all: null,
-    markers: null,
+const INITIAL_SOURCE_FEATURES = {
+    features: [],
     received: null
 }
-
-const extractMarkersFromFeatures = (features) => {
-    if (!features) {
-        return null
-    }
-
-    return features.map((feature) => (
-        transformFeatureToEssentialMarkerProps(feature)
-    ))
-}
-
-const features = (state = INITIAL_STATE, action) => {
+const sourceFeaturesReducer = (
+    state = INITIAL_SOURCE_FEATURES,
+    action
+) => {
     switch (action.type) {
-    case RECEIVE_FEATURES: {
-        const { features: all } = action
+    case RECEIVE_SOURCE_FEATURES: {
+        const { features } = action
 
         return {
-            all,
-            markers: extractMarkersFromFeatures(all),
+            features,
             received: Date.now()
         }
     }
 
-    case REQUEST_FEATURES:
-        return INITIAL_STATE
+    case REQUEST_SOURCE_FEATURES:
+        return INITIAL_SOURCE_FEATURES
 
     default:
         return state
     }
 }
 
-export default features
+const INITIAL_VIEWPORT_FEATURES = []
+const viewportFeaturesReducer = (
+    state = INITIAL_VIEWPORT_FEATURES,
+    action
+) => (
+    // TODO!
+    INITIAL_VIEWPORT_FEATURES
+)
+
+const featuresReducer = combineReducers({
+    source: sourceFeaturesReducer,
+    viewport: viewportFeaturesReducer
+})
+
+export default featuresReducer

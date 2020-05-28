@@ -1,13 +1,13 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import MerchantMap from 'apps/MerchantMap/MerchantMap'
+import Map from 'apps/Map/Map'
 
 import 'css/fonts.css'
 
 const StandaloneAppShell = () => (
     <div style={{ width: '100vw', height: '100vh' }}>
-        <MerchantMap />
+        <Map />
     </div>
 )
 

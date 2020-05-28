@@ -5,7 +5,7 @@ import { debounce } from 'throttle-debounce'
 
 import Box from '@material-ui/core/Box'
 
-import { setProximityMarker } from 'actions/merchantMapActions'
+import { setProximityMarker } from 'actions/mapActions'
 import useShallowEqualSelector from 'hooks/useShallowEqualSelector'
 import useViewportEdgeStyles from 'styles/useViewportEdgeStyles'
 

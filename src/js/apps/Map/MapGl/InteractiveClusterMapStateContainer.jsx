@@ -1,14 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import selectFilteredFeatures from 'selectors/selectFilteredFeatures'
+import { selectFilteredMapEssential } from 'selectors/map/selectFeatures'
 
 import InteractiveClusterMap from './InteractiveClusterMap'
 
 const InteractiveClusterMapStateContainer = () => (
     <InteractiveClusterMap
-        features={
-            useSelector(selectFilteredFeatures)
+        featureCollection={
+            useSelector(selectFilteredMapEssential)
         }
         featureMarker={
             useSelector((state) => (state.marker.feature))

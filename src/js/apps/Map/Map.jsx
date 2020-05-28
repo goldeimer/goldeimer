@@ -6,13 +6,13 @@ import { createLogger } from 'redux-logger'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { fetchFeatures } from 'actions/merchantMapActions'
+import { fetchSourceFeatures } from 'actions/mapActions'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { getTheme } from 'config/theme'
-import merchantMapReducer from 'reducers/map/mapReducer'
+import mapReducer from 'reducers/mapReducer'
 
 import InteractiveClusterMapStateContainer from
     './MapGl/InteractiveClusterMapStateContainer'
@@ -20,8 +20,8 @@ import UiLayer from './UiLayer/UiLayer'
 
 const loggerMiddleware = createLogger()
 
-const merchantMapStore = createStore(
-    merchantMapReducer,
+const mapStore = createStore(
+    mapReducer,
     applyMiddleware(
         loggerMiddleware,
         thunkMiddleware
@@ -35,7 +35,7 @@ const ComponentRoot = () => {
 
     useEffect(
         () => {
-            dispatch(fetchFeatures())
+            dispatch(fetchSourceFeatures())
         },
         []
     )
@@ -48,8 +48,8 @@ const ComponentRoot = () => {
     )
 }
 
-const MerchantMap = () => (
-    <ReduxProvider store={merchantMapStore}>
+const Map = () => (
+    <ReduxProvider store={mapStore}>
         <ThemeProvider theme={theme.mui}>
             <Router>
                 <Helmet
@@ -66,4 +66,4 @@ const MerchantMap = () => (
     </ReduxProvider>
 )
 
-export default MerchantMap
+export default Map

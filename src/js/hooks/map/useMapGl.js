@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 
 import noop from 'util/noop'
 
-import { transformFeatureToEssentialMarkerProps } from 'util/map/geoJsonUtil'
+import { transformGeoJsonFeaturesToMarkerProps } from 'util/map/transformations'
 
 import uniqueByKey from 'util/uniqueByKey'
 
@@ -113,17 +113,15 @@ const useMapGl = (
             return null
         }
 
-        const features = uniqueByKey(
-            map.querySourceFeatures(
-                geoJsonSourceId,
-                {
-                    filter: ['!', ['has', 'point_count']]
-                }
-            ),
-            'id'
-        ).map(
-            (feature) => transformFeatureToEssentialMarkerProps(
-                feature, true, true
+        const features = transformGeoJsonFeaturesToMarkerProps(
+            uniqueByKey(
+                map.querySourceFeatures(
+                    geoJsonSourceId,
+                    {
+                        filter: ['!', ['has', 'point_count']]
+                    }
+                ),
+                'id'
             )
         )
 

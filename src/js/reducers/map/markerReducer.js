@@ -5,7 +5,7 @@ import {
     RESET_PROXIMITY_MARKER,
     SET_FEATURE_MARKER,
     SET_PROXIMITY_MARKER
-} from 'actions/merchantMapActions'
+} from 'actions/mapActions'
 
 const INITIAL_STATE = null
 

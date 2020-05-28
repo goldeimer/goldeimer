@@ -5,48 +5,38 @@
 import { combineReducers } from 'redux'
 
 import {
-    RESET_SELECTED_TERMS,
+    RESET_FILTER,
     RESET_SORT_ORDER_BY,
     RESET_SORT_ORDER,
+    RESET_THEME,
     SET_SORT_ORDER_BY,
     SET_SORT_ORDER,
-    TOGGLE_TERM
-} from 'actions/merchantMapActions'
+    SET_THEME,
+    TOGGLE_FILTER_TERM
+} from 'actions/mapActions'
 
 import makeKeyedListItemToggleReducer from
     'reducers/makeKeyedListItemToggleReducer'
 
+import { THEME } from 'config/theme'
 import SORT_ORDER from 'enum/sortOrder'
 import TAXONOMIES from 'enum/taxonomies'
 
-const makeInitialState = () => ({
-    filter: {
-        selectedTerms: Object.fromEntries(
-            TAXONOMIES.map(
-                ({ taxonomyId, terms }) => ([
-                    taxonomyId,
-                    terms.map(({ termId }) => (termId))
-                ])
-            )
-        )
-    },
-    sort: {
-        orderBy: 'name', // TODO: import
-        order: SORT_ORDER.asc
-    }
-})
-
-const INITIAL_STATE = makeInitialState()
-
-const selectedTermsReducer = combineReducers(
+const INITIAL_FILTERS = Object.fromEntries(TAXONOMIES.map(
+    ({ taxonomyId, terms }) => ([
+        taxonomyId,
+        terms.map(({ termId }) => (termId))
+    ])
+))
+const filterReducer = combineReducers(
     Object.fromEntries(
         TAXONOMIES.map(
             ({ taxonomyId }) => ([
                 taxonomyId,
                 makeKeyedListItemToggleReducer(
-                    INITIAL_STATE.filter.selectedTerms[taxonomyId],
-                    RESET_SELECTED_TERMS,
-                    TOGGLE_TERM,
+                    INITIAL_FILTERS[taxonomyId],
+                    RESET_FILTER,
+                    TOGGLE_FILTER_TERM,
                     taxonomyId
                 )
             ])
@@ -54,8 +44,9 @@ const selectedTermsReducer = combineReducers(
     )
 )
 
+const INITIAL_SORT_ORDER = SORT_ORDER.asc
 const sortOrderReducer = (
-    state = INITIAL_STATE.sort.order,
+    state = INITIAL_SORT_ORDER,
     action
 ) => {
     switch (action.type) {
@@ -63,15 +54,16 @@ const sortOrderReducer = (
         return action.order
 
     case RESET_SORT_ORDER:
-        return INITIAL_STATE.sort.order
+        return INITIAL_SORT_ORDER
 
     default:
         return state
     }
 }
 
+const INITIAL_SORT_ORDER_BY = 'name'
 const sortOrderByReducer = (
-    state = INITIAL_STATE.sort.orderBy,
+    state = INITIAL_SORT_ORDER_BY,
     action
 ) => {
     switch (action.type) {
@@ -79,25 +71,41 @@ const sortOrderByReducer = (
         return action.orderBy
 
     case RESET_SORT_ORDER_BY:
-        return INITIAL_STATE.sort.orderBy
+        return INITIAL_SORT_ORDER_BY
 
     default:
         return state
     }
 }
 
-const filterReducer = combineReducers({
-    selectedTerms: selectedTermsReducer
-})
+const INITIAL_THEME = THEME.Goldeimer
+const themeReducer = (
+    state = INITIAL_THEME,
+    action
+) => {
+    switch (action.type) {
+    case SET_THEME:
+        return action.theme in THEME.keys() ? action.theme : state
 
-const sortReducer = combineReducers({
-    order: sortOrderReducer,
-    orderBy: sortOrderByReducer
-})
+    case RESET_THEME:
+        return INITIAL_THEME
+
+    default:
+        return state
+    }
+}
 
 const settingsReducer = combineReducers({
-    filter: filterReducer,
-    sort: sortReducer
+    map: combineReducers({
+        filter: filterReducer,
+        sort: combineReducers({
+            order: sortOrderReducer,
+            orderBy: sortOrderByReducer
+        })
+    }),
+    app: combineReducers({
+        theme: themeReducer
+    })
 })
 
 export default settingsReducer

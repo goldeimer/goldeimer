@@ -13,12 +13,12 @@ const distanceByHaversine = (
     const Δλ = degToRad(longitudeB - longitudeA)
 
     const tmp = (
-        Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
         Math.cos(φ1) * Math.cos(φ2) *
-        Math.sin(Δλ/2) * Math.sin(Δλ/2)
+        Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
     )
 
-    return earthRadius * (2 * Math.atan2(Math.sqrt(tmp), Math.sqrt(1-tmp)))
+    return earthRadius * (2 * Math.atan2(Math.sqrt(tmp), Math.sqrt(1 - tmp)))
 }
 
 export default distanceByHaversine

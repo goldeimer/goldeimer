@@ -50,7 +50,7 @@ const makeTheme = (
     }
 })
 
-const THEMES = {
+const THEME = {
     Goldeimer: {
         favicon: 'img/favicon/goldeimer.favicon.png',
         logoIconComponent: GoldeimerIcon,
@@ -67,17 +67,18 @@ const getTheme = () => {
     const urlParams = new URLSearchParams(window.location.search)
 
     if (urlParams.has('theme') && urlParams.get('theme') === 'vivaconagua') {
-        return THEMES.VivaConAgua
+        return THEME.VivaConAgua
     }
 
-    return THEMES.Goldeimer
+    return THEME.Goldeimer
 }
 
-const defaultMuiTheme = THEMES.Goldeimer.mui
+const defaultMuiTheme = THEME.Goldeimer.mui
 
 export {
     defaultMuiTheme as default,
     getTheme,
     COLOR_PRIMARY_GOLDEIMER,
-    COLOR_PRIMARY_VIVA_CON_AGUA
+    COLOR_PRIMARY_VIVA_CON_AGUA,
+    THEME
 }
