@@ -29,12 +29,12 @@ const SearchContainer = () => {
             return
         }
 
-        dispatch(SEARCH_ACTIONS.result.history.add(result))
+        dispatch(SEARCH_ACTIONS.result.add(result))
         setHasBeenAddedToHistory(true)
     }
 
     const setResult = (result) => (
-        dispatch(SEARCH_ACTIONS.result.current.set(result))
+        dispatch(SEARCH_ACTIONS.result.set(result))
     )
 
     const delayedAddToHistory = debounce(20000, addToHistory)

@@ -59,22 +59,27 @@ const result = createSlice({
                 ...payload,
                 searchedAt: Date.now()
             }),
-            reducer: (state, {
-                searchedAt, id, query: qry, result: res
-            }) => {
+            reducer: (
+                state,
+                {
+                    payload: {
+                        id, query: qry, result: res, searchedAt
+                    }
+                }
+            ) => {
                 state.history.unshift({
-                    searchedAt,
                     id,
                     qry,
-                    res
+                    res,
+                    searchedAt
                 })
             }
         },
         clear: () => INITIAL_RESULT,
-        reset: (state, { result: current }) => {
+        reset: (state) => {
             state.current = INITIAL_RESULT.current
         },
-        set: (state, { result: current }) => { state.current = current }
+        set: (state, { payload }) => { state.current = payload }
     }
 })
 
