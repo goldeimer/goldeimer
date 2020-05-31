@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import uuid from 'react-uuid'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -42,10 +41,10 @@ const SelectionList = ({
         >
             {items.length
                 ? items.map(
-                    ({ label }, index) => (
+                    ({ id, label }, index) => (
                         <ListItem
                             button
-                            key={uuid()}
+                            key={id}
                             onClick={() => {
                                 const selectedValue = handleSelect(index)
 
@@ -87,6 +86,10 @@ SelectionList.propTypes = {
     itemIcon: PropTypes.node,
     items: PropTypes.arrayOf(
         PropTypes.exact({
+            id: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number
+            ]),
             label: PropTypes.string,
             value: PropTypes.any
         })

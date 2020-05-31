@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import makeUuid from 'react-uuid'
 
 import geocodingRequest from 'api/map/geocoding'
+import generateId from 'util/generateId'
 import combineSlices from 'util/redux/combineSlices'
 import createAsyncSlice from 'util/redux/createAsyncSlice'
 
@@ -53,12 +53,22 @@ const result = createSlice({
     name: 'result',
     initialState: INITIAL_RESULT,
     reducers: {
-        add: (state, { query: qry, result: res, uuid = makeUuid() }) => {
-            state.history.unshift({
-                qry,
-                res,
-                uuid
-            })
+        add: {
+            prepare: (payload) => ({
+                id: generateId(),
+                ...payload,
+                searchedAt: Date.now()
+            }),
+            reducer: (state, {
+                searchedAt, id, query: qry, result: res
+            }) => {
+                state.history.unshift({
+                    searchedAt,
+                    id,
+                    qry,
+                    res
+                })
+            }
         },
         clear: () => INITIAL_RESULT,
         reset: (state, { result: current }) => {

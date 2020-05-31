@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import uuid from 'react-uuid'
-
 import FormControl from '@material-ui/core/FormControl'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
@@ -19,7 +17,7 @@ const InputSelect = ({
         >
             {
                 options.map(({ label, value: optionValue }) => (
-                    <MenuItem key={uuid()} value={optionValue}>
+                    <MenuItem key={`${label}${value}`} value={optionValue}>
                         {label}
                     </MenuItem>
                 ))

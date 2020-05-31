@@ -8,11 +8,11 @@ import Typography from '@material-ui/core/Typography'
 
 const MapMarkerDetailCard = ({
     placeName
-    // uuid
+    // id
 }) => {
     useEffect(() => {
-        // data = getMapMarkerDetails(uuid)
-        // useMapMarkerDetails(uuid) ?
+        // data = getMapMarkerDetails(id)
+        // useMapMarkerDetails(id) ?
     }, [])
 
     return (
@@ -31,7 +31,7 @@ const MapMarkerDetailCard = ({
 
 MapMarkerDetailCard.propTypes = {
     placeName: PropTypes.string.isRequired
-    //uuid: PropTypes.string.isRequired
+    //id: PropTypes.string.isRequired
 }
 
 export default MapMarkerDetailCard

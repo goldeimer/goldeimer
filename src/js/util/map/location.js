@@ -1,9 +1,9 @@
-import makeUuid from 'react-uuid'
+import generateId from 'util/generateId'
 
 const makeLocation = ({
-    latitude, longitude, placeName, uuid = makeUuid()
+    id = generateId(), latitude, longitude, placeName
 }) => ({
-    latitude, longitude, placeName, uuid
+    id, latitude, longitude, placeName
 })
 
 export default makeLocation

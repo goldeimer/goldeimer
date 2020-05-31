@@ -6,8 +6,8 @@ import {
 } from 'components/map/MapMarker'
 
 const MapMarkers = ({ component: Component, propsArray }) => propsArray.map(
-    ({ uuid, ...other }) => (
-        <Component key={uuid} uuid={uuid} {...other} />
+    ({ id, ...other }) => (
+        <Component key={id} id={id} {...other} />
     )
 )
 

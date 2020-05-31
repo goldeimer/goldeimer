@@ -7,12 +7,12 @@ import {
 const transformGeoJsonFeaturesToGeometries = (features) => features.map(
     ({
         geometry: { coordinates: [longitude, latitude] },
-        properties: { uuid }
-    }) => ({ latitude, longitude, uuid })
+        properties: { id }
+    }) => ({ id, latitude, longitude })
 )
 
 const transformGeoJsonFeaturesToLookup = (features) => new Map(features.map(
-    (feature) => [feature.properties.uuid, feature]
+    (feature) => [feature.properties.id, feature]
 ))
 
 const transformGeoJsonFeaturesToMapEssential = (
@@ -26,7 +26,7 @@ const transformGeoJsonFeaturesToMapEssential = (
             [colorTaxonomyId]: colorTaxonomyTerms,
             [iconTaxonomyId]: iconTaxonomyTerms,
             placeName,
-            uuid
+            id
         },
         ...feature
     }) => ({
@@ -35,7 +35,7 @@ const transformGeoJsonFeaturesToMapEssential = (
             colorTaxonomyTermId: colorTaxonomyTerms[0] || null,
             iconTaxonomyTermId: iconTaxonomyTerms[0] || null,
             placeName,
-            uuid
+            id
         }
     }))
 })
@@ -56,23 +56,23 @@ const transformGeoJsonFeaturesToMapEssentialFixedTaxonomiesStub = (
 const transformGeoJsonFeaturesToMarkerProps = (features) => features.map(({
     geometry: { coordinates: [longitude, latitude] },
     properties: {
-        colorTaxonomyTermId, iconTaxonomyTermId, placeName, uuid
+        colorTaxonomyTermId, iconTaxonomyTermId, placeName, id
     }
 }) => ({
     color: getColorByTaxonomyTermId(colorTaxonomyTermId),
     iconComponent: getIconComponentByTaxonomyTermId(iconTaxonomyTermId),
+    id,
     latitude,
     longitude,
-    placeName,
-    uuid
+    placeName
 }))
 
 const transformGeoJsonFeaturesToSearcheables = (
     features,
     searchableKeys
 ) => features.map(
-    ({ properties: { uuid, ...properties } }) => ({
-        uuid,
+    ({ properties: { id, ...properties } }) => ({
+        id,
         terms: searchableKeys.map((key) => properties[key])
     })
 )

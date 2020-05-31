@@ -47,10 +47,10 @@ const makeColumns = (classes, dispatch) => ([
                         className={classes.iconButton}
                         onClick={() => dispatch(
                             ACTIONS.map.features.selected.set({
+                                id: rowData.id,
                                 latitude: parseFloat(coordinates[1]),
                                 longitude: parseFloat(coordinates[0]),
-                                placeName: rowData.placeName,
-                                uuid: rowData.uuid
+                                placeName: rowData.placeName
                             })
                         )}
                         size="small"

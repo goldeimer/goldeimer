@@ -14,6 +14,7 @@ import MarkerIcon from '@material-ui/icons/Room'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 
+import { generateShortId } from 'util/generateId'
 import isFunction from 'util/isFunction'
 import useGeocoding from 'hooks/map/useGeocoding'
 import useInput from 'hooks/useInput'
@@ -60,7 +61,7 @@ const makeSuggestion = (feature) => {
     return {
         label: placeName,
         value: {
-            id: feature.id,
+            id: feature.id ? feature.id : generateShortId(),
             longitude: feature.center[0],
             latitude: feature.center[1],
             placeName

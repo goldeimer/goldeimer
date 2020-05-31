@@ -27,7 +27,7 @@ const MapMarker = ({
     latitude,
     longitude,
     placeName,
-    uuid,
+    id,
     ...other
 }) => {
     const theme = useTheme()
@@ -47,7 +47,7 @@ const MapMarker = ({
             <MapMarkerContent
                 component={component}
                 placeName={placeName}
-                uuid={uuid}
+                id={id}
                 {...other}
             />
         </Marker>
@@ -63,7 +63,7 @@ const MapMarkerEssentialPropTypes = {
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     placeName: PropTypes.string.isRequired,
-    uuid: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired
 }
 
 const MapMarkerEssentialPropTypesExact = PropTypes.exact(

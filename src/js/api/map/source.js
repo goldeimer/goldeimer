@@ -1,4 +1,3 @@
-import uuid from 'react-uuid'
 import validUrl from 'valid-url'
 
 import isString from 'util/isString'
@@ -6,6 +5,7 @@ import parseGoogleSheet from 'util/parseGoogleSheet'
 import transformObjectProperties from 'util/transformObjectProperties'
 
 import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
+import generateId from 'util/generateId'
 
 /* eslint-disable max-len */
 const GOOGLE_SPREADSHEET_PUBID_GOLDEIMER =
@@ -55,11 +55,11 @@ const spreadsheetDataToGeoJsonGoldeimer = (data) => Array.prototype.map.call(
             brands: [BRAND.goldeimer],
             city: entry.Stadt,
             country: 'Deutschland',
+            id: generateId(),
             merchantTypes: [convertMerchantType(entry.l)],
             placeName: entry.Title,
             street: entry.Location,
-            url: entry.Description,
-            uuid: uuid()
+            url: entry.Description
         }
     })
 )
@@ -79,11 +79,11 @@ const spreadsheetDataToGeoJsonVca = (data) => Array.prototype.map.call(
             brands: [BRAND.vca],
             city: entry.City,
             country: entry.Country,
+            id: generateId(),
             merchantTypes: [convertMerchantType(entry.Group)],
             placeName: entry.Title,
             street: entry.Street,
-            url: entry.Description,
-            uuid: uuid()
+            url: entry.Description
         }
     })
 )

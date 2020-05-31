@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
 const MapMarkerContent = ({
     component: Component,
     placeName,
-    uuid,
+    id,
     ...componentProps
 }) => {
     // TODO:
-    // Employ uuid to fetch detail data.
+    // Employ id to fetch detail data.
 
     const {
         bind,
@@ -53,7 +53,7 @@ const MapMarkerContent = ({
                 {...bind}
                 {...componentProps}
                 className={classes.popperTrigger}
-                uuid={uuid}
+                id={id}
             />
         </>
     )
@@ -61,8 +61,8 @@ const MapMarkerContent = ({
 
 MapMarkerContent.propTypes = {
     component: PropTypes.elementType,
-    placeName: PropTypes.string.isRequired,
-    uuid: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    placeName: PropTypes.string.isRequired
 }
 
 MapMarkerContent.defaultProps = {

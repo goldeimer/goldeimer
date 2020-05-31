@@ -83,7 +83,7 @@ const InteractiveClusterMap = ({
                     generateId
                     id={GEOJSON_SOURCE_ID}
                     maxzoom={17}
-                    promoteId="uuid"
+                    promoteId="id"
                     ref={sourceRef}
                     // mapbox-gl-js default: 0.375
                     tolerance={0.375}

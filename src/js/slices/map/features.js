@@ -15,7 +15,7 @@ const selected = createSlice({
     initialState: INITIAL_SELECTED,
     reducers: {
         reset: () => INITIAL_SELECTED,
-        set: (_, action) => action.uuid
+        set: (_, action) => action.id
     }
 })
 

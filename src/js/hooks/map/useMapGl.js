@@ -8,7 +8,7 @@ import noop from 'util/noop'
 
 import { transformGeoJsonFeaturesToMarkerProps } from 'util/map/transformations'
 
-import uniqueByKey from 'util/uniqueByKey'
+import uniqueByKey from 'util/array/uniqueByKey'
 
 const DEFAULT_VIEWPORT_TRANSITION_DURATION = 300
 const NEW_MARKER_ZOOM_LEVEL = 15
