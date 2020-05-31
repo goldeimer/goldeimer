@@ -5,7 +5,7 @@ const merge = require('webpack-merge')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const { IS_PRODUCTION_BUILD } = require('./buildEnv')
+const { IS_PRODUCTION_BUILD } = require('./env')
 const {
     PROJECT_PATH,
     PUBLIC_PATH_DEFAULT,

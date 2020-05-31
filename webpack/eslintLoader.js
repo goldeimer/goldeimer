@@ -1,4 +1,4 @@
-const { IS_DEVELOPMENT_BUILD } = require('./buildEnv')
+const { IS_DEVELOPMENT_BUILD } = require('./env')
 const { isJavaScriptFile } = require('./condition')
 
 const esLintLoader = {

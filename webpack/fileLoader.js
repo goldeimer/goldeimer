@@ -5,7 +5,7 @@ const {
     isStyleFile,
     isVectorImage,
 } = require('./condition')
-const { IS_PRODUCTION_BUILD } = require('./buildEnv')
+const { IS_PRODUCTION_BUILD } = require('./env')
 
 const makeFileLoaderOutputName = (resourcePath, resourceQuery) => {
     if (!IS_PRODUCTION_BUILD) {
