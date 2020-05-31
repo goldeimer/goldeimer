@@ -5,7 +5,7 @@ const merge = require('webpack-merge')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const isDevBuild = require('./isDevBuild')
+const { IS_PRODUCTION_BUILD } = require('./buildEnv')
 const {
     PROJECT_PATH,
     PUBLIC_PATH_DEFAULT,
@@ -17,7 +17,7 @@ const {
     SRC_JS_ENTRY_PATH,
 } = require('./paths')
 
-const webpackModeConfig = isDevBuild()
+const webpackModeConfig = !IS_PRODUCTION_BUILD
     ? require('./webpack.config.development.js')
     : require('./webpack.config.production.js')
 
@@ -33,7 +33,9 @@ const merchantMapConfig = {
         ),
     },
     output: {
-        filename: `static/js/[name].${isDevBuild() ? 'dev-bundle' : '[contenthash]'}.js`,
+        filename: `static/js/[name].${
+            !IS_PRODUCTION_BUILD ? 'dev-bundle' : '[contenthash]'
+        }.js`,
         path: merchantMapDistPath,
         publicPath: PUBLIC_PATH_DEFAULT,
     },

@@ -1,11 +1,12 @@
 /// @see https://github.com/babel/babel/blob/master/packages/babel-preset-env/src/polyfills/corejs3/built-in-definitions.js
 /// @see https://github.com/browserslist/browserslist#query-composition
 
-const isDevBuild = require('./isDevBuild')
+const { IS_PRODUCTION_BUILD } = require('./buildEnv')
 const { isJavaScriptFile } = require('./condition')
 
-const targetsByUsageStats = '> 0.5% in DE, > 0.5% in AT, > 0.5% in CH'
-const targetConditions = 'last 2 versions, Firefox ESR, not dead'
+const developmentPlugins = IS_PRODUCTION_BUILD
+    ? []
+    : ['transform-react-jsx-source']
 
 const babelLoader = {
     test: isJavaScriptFile,
@@ -19,23 +20,10 @@ const babelLoader = {
                     {
                         bugfixes: true,
                         corejs: 3,
-                        debug: !isDevBuild(),
+                        debug: !IS_PRODUCTION_BUILD,
                         loose: true,
                         modules: false,
-                        targets: `${targetsByUsageStats}, ${targetConditions}`,
-                        useBuiltIns: 'usage',
-                        include: [
-                            'es.map',
-                            'es.set',
-                            'es.array.iterator',
-                            'es.number.to-fixed',
-                            'es.object.assign',
-                            'es.object.entries',
-                            'es.object.from-entries',
-                            'es.object.keys',
-                            'es.promise',
-                            'es.string.trim',
-                        ]
+                        useBuiltIns: 'usage'
                     }
                 ],
                 '@babel/preset-react',
@@ -49,10 +37,21 @@ const babelLoader = {
                         'helpers': true,
                         'regenerator': true,
                         'useESModules': true
-                    }
+                    },
+                    ...developmentPlugins
                 ]
             ],
             cacheDirectory: true,
+//             env: {
+//                 production: {
+//                     plugins: [
+//                         [
+//                             'transform-react-remove-prop-types',
+//                             { removeImport: true },
+//                         ],
+//                     ],
+//                 },
+//             },
         },
     },
 }

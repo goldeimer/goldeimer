@@ -1,4 +1,4 @@
-const isDevBuild = require('./isDevBuild')
+const { IS_DEVELOPMENT_BUILD } = require('./buildEnv')
 const { isJavaScriptFile } = require('./condition')
 
 const esLintLoader = {
@@ -11,7 +11,7 @@ const esLintLoader = {
         'eslint-config-airbnb-standard/node_modules/eslint',
         fix: true,
         failOnError: true,
-        failOnWarning: !isDevBuild()
+        failOnWarning: !IS_DEVELOPMENT_BUILD
     },
 }
 
