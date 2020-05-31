@@ -5,8 +5,8 @@ import Link from 'components/Link'
 
 const ExternalLink = ({ children, ...props }) => (
     <Link
-        rel="noopener noreferrer"
-        target="_blank"
+        rel='noopener noreferrer'
+        target='_blank'
         {...props}
     >
         {children}

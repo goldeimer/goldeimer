@@ -10,7 +10,7 @@ const renderToDom = (
 
     if (container) {
         render(
-            <div id="merchant-map-container">
+            <div id='merchant-map-container'>
                 <Map />
             </div>,
             container

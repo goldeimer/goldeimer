@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Transition = forwardRef(
-    (props, ref) => <Slide direction="up" ref={ref} {...props} />
+    (props, ref) => <Slide direction='up' ref={ref} {...props} />
 )
 
 const LargeContentDialog = ({
@@ -76,7 +76,7 @@ const LargeContentDialog = ({
             maxWidth={MAX_WIDTH}
             open={isOpen}
             onClose={handleClose}
-            scroll="paper"
+            scroll='paper'
             TransitionComponent={useFullScreenVariant ? Transition : Fade}
             aria-labelledby={title ? 'dialog-title' : null}
         >
@@ -86,13 +86,12 @@ const LargeContentDialog = ({
                         <AppBar className={classes.appBar}>
                             <Toolbar>
                                 <Typography
-                                    variant="h6"
-                                    component="h2"
+                                    variant='h6'
+                                    component='h2'
                                     className={classes.appBarTitle}
                                 >
                                     {titleIcon &&
-                                        <TitleIcon>{titleIcon}</TitleIcon>
-                                    }
+                                        <TitleIcon>{titleIcon}</TitleIcon>}
                                     {title}
                                 </Typography>
                                 <CloseButton onClose={handleClose} />
@@ -105,7 +104,7 @@ const LargeContentDialog = ({
                                 classes.dialogTitle,
                                 classes.paddingBottomZero
                             )}
-                            id="dialog-title"
+                            id='dialog-title'
                         >
                             {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
                             <span className={classes.dialogTitleText}>
@@ -121,7 +120,7 @@ const LargeContentDialog = ({
                 {children}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleClose} color='primary'>
                     Schließen
                 </Button>
             </DialogActions>

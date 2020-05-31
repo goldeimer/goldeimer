@@ -189,11 +189,11 @@ const ToiletPaperCalculator = () => {
 
     return (
         <ThemeProvider theme={muiTheme}>
-            <Form formName="shitcalcForm">
+            <Form formName='shitcalcForm'>
                 <FormSection
-                    title="Haushalt"
+                    title='Haushalt'
                 >
-                    <FormField label="Personen im Haushalt">
+                    <FormField label='Personen im Haushalt'>
                         <InputIntegerPlusMinus
                             setValue={
                                 (value) => setValue('personsInHousehold', value)
@@ -203,9 +203,9 @@ const ToiletPaperCalculator = () => {
                     </FormField>
                 </FormSection>
                 <FormSection
-                    title="Großes Geschäft"
+                    title='Großes Geschäft'
                 >
-                    <FormField label="Große Geschäfte am Tag pro Person">
+                    <FormField label='Große Geschäfte am Tag pro Person'>
                         <InputIntegerPlusMinus
                             setValue={
                                 (value) => setValue('dailyShitCount', value)
@@ -213,7 +213,7 @@ const ToiletPaperCalculator = () => {
                             value={dailyShitCount}
                         />
                     </FormField>
-                    <FormField label="Abwischer pro Geschäft">
+                    <FormField label='Abwischer pro Geschäft'>
                         <InputIntegerPlusMinus
                             setValue={
                                 (value) => setValue('wipesPerShit', value)
@@ -221,7 +221,7 @@ const ToiletPaperCalculator = () => {
                             value={wipesPerShit}
                         />
                     </FormField>
-                    <FormField label="Blatt pro Abwischer">
+                    <FormField label='Blatt pro Abwischer'>
                         <InputIntegerPlusMinus
                             setValue={
                                 (value) => setValue('piecesPerWipe', value)
@@ -231,9 +231,9 @@ const ToiletPaperCalculator = () => {
                     </FormField>
                 </FormSection>
                 <FormSection
-                    title="Kleines Geschäft"
+                    title='Kleines Geschäft'
                 >
-                    <FormField label="Kleine Geschäfte am Tag pro Person">
+                    <FormField label='Kleine Geschäfte am Tag pro Person'>
                         <InputIntegerPlusMinus
                             setValue={
                                 (value) => setValue('dailyPissCount', value)
@@ -241,7 +241,7 @@ const ToiletPaperCalculator = () => {
                             value={dailyPissCount}
                         />
                     </FormField>
-                    <FormField label="Blatt pro Geschäft">
+                    <FormField label='Blatt pro Geschäft'>
                         <InputIntegerPlusMinus
                             setValue={
                                 (value) => setValue('piecesPerPiss', value)
@@ -251,7 +251,7 @@ const ToiletPaperCalculator = () => {
                     </FormField>
                 </FormSection>
                 <FormSection
-                    title="Zeitraum"
+                    title='Zeitraum'
                 >
                     <FormField label={
                         'Für welchen Zeitraum möchtest Du deinen '.concat(

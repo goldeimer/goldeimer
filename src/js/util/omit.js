@@ -1,4 +1,4 @@
-import ensureArray from './ensureArray'
+import ensureArray from 'util/array/ensureArray'
 
 const omit = (object, properties) => (
     /* eslint-disable-next-line no-eval */

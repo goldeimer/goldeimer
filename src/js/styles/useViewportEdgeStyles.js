@@ -11,26 +11,24 @@ const useViewportEdgeStyles = makeStyles((theme) => {
     const positionAbsolute = { position: 'absolute' }
     const gutter = makeEdgeGutterDefinition(theme)
 
-    const makeEdgePosition = (horizontal, vertical) => Object.assign(
-        {},
-        positionAbsolute,
-        {
-            [horizontal]: gutter.default,
-            [vertical]: gutter.default,
-            [theme.breakpoints.up('md')]: {
-                [horizontal]: gutter.md,
-                [vertical]: gutter.md
-            },
-            [theme.breakpoints.up('lg')]: {
-                [horizontal]: gutter.lg,
-                [vertical]: gutter.lg
-            },
-            [theme.breakpoints.up('xl')]: {
-                [horizontal]: gutter.xl,
-                [vertical]: gutter.xl
-            }
+    const makeEdgePosition = (horizontal, vertical) => ({
+
+        ...positionAbsolute,
+        [horizontal]: gutter.default,
+        [vertical]: gutter.default,
+        [theme.breakpoints.up('md')]: {
+            [horizontal]: gutter.md,
+            [vertical]: gutter.md
+        },
+        [theme.breakpoints.up('lg')]: {
+            [horizontal]: gutter.lg,
+            [vertical]: gutter.lg
+        },
+        [theme.breakpoints.up('xl')]: {
+            [horizontal]: gutter.xl,
+            [vertical]: gutter.xl
         }
-    )
+    })
 
     return {
         positionAbsolute,

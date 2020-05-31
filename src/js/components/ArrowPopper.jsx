@@ -93,8 +93,8 @@ const ArrowPopper = ({ anchorEl, children, isOpen }) => {
                 }
             }}
             open={isOpen}
-            placement="top"
-            role="presentation"
+            placement='top'
+            role='presentation'
             transition
         >
             <span className={classes.arrow} ref={setArrowRef} />

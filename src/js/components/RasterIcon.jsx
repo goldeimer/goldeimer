@@ -23,7 +23,7 @@ const RasterIcon = ({ src }) => {
 
     return (
         <div className={classes.root}>
-            <img alt="" className={classes.img} src={src} />
+            <img alt='' className={classes.img} src={src} />
         </div>
     )
 }

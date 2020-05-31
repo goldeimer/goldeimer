@@ -17,12 +17,12 @@ const Views = () => {
     return (
         <>
             <MenuDrawer
-                title="Händlerkarte"
+                title='Händlerkarte'
                 isInitiallyOpen={viewId === VIEW_ID.menu}
                 titleIcon={<LogoIconComponent />}
             />
             <FeatureList
-                title="Liste aller Einträge"
+                title='Liste aller Einträge'
                 isInitiallyOpen={viewId === VIEW_ID.browse}
                 titleIcon={<ListIcon />}
             />
@@ -32,7 +32,7 @@ const Views = () => {
 
 const UiLayer = () => (
     <>
-        <Route path="/:viewId">
+        <Route path='/:viewId'>
             <Views />
         </Route>
         <SearchContainer />

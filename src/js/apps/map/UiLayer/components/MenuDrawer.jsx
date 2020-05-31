@@ -46,14 +46,14 @@ const MenuDrawer = (props) => {
         <StandardDrawer {...props} isDense>
             <Divider />
             <List
-                component="nav"
+                component='nav'
                 dense
             >
                 <ListItem button onClick={() => { history.push('/') }}>
                     <ListItemIcon>
                         <MapIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Karte" />
+                    <ListItemText primary='Karte' />
                 </ListItem>
                 <ListItem
                     button
@@ -64,24 +64,23 @@ const MenuDrawer = (props) => {
                     <ListItemIcon>
                         <ListIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Liste aller Einträge" />
+                    <ListItemText primary='Liste aller Einträge' />
                 </ListItem>
             </List>
             <Divider />
             <List
-                component="nav"
+                component='nav'
                 dense
             >
                 <ListItem
                     button
-                    onClick={() => { toggleSubMenu('filter') }
-                    }
+                    onClick={() => { toggleSubMenu('filter') }}
                 >
                     <ListItemIcon>
                         <FilterIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Auswahl einschränken" />
-                    <Box pl={2} display="flex" alignItems="center">
+                    <ListItemText primary='Auswahl einschränken' />
+                    <Box pl={2} display='flex' alignItems='center'>
                         {
                             isSubMenuClosed('filter')
                                 ? <ExpandMore />
@@ -91,7 +90,7 @@ const MenuDrawer = (props) => {
                 </ListItem>
                 <Collapse
                     in={!isSubMenuClosed('filter')}
-                    timeout="auto"
+                    timeout='auto'
                     unmountOnExit
                 >
                     {TAXONOMIES.map(
@@ -100,10 +99,10 @@ const MenuDrawer = (props) => {
                                 {
                                     index === 0
                                         ? null
-                                        : <Divider light variant="middle" />
+                                        : <Divider light variant='middle' />
                                 }
                                 <ToggleSwitchList
-                                    component="div"
+                                    component='div'
                                     items={terms.map(({
                                         termId: itemKey,
                                         termName: label,

@@ -14,14 +14,14 @@ const StandardDialogTitle = ({
     text
 }) => (
     <Box
-        alignItems="center"
-        display="flex"
+        alignItems='center'
+        display='flex'
         px={isDense ? 2 : (onClose ? 2 : 3)}
         py={2}
     >
         {icon && <TitleIcon>{icon}</TitleIcon>}
         <Box flexGrow={1}>
-            <Typography variant="h6" component="h2">
+            <Typography variant='h6' component='h2'>
                 {text}
             </Typography>
         </Box>

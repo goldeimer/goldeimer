@@ -200,10 +200,10 @@ const GeocodingAutoComplete = ({
             elevation={3}
             ref={rootRef}
         >
-            <Box display="flex" px={0.5} py={0.25}>
+            <Box display='flex' px={0.5} py={0.25}>
                 {isFunction(onMenuClick) && (
                     <IconButton
-                        aria-label="Menü"
+                        aria-label='Menü'
                         className={classes.iconButton}
                         onClick={onMenuClick}
                     >
@@ -212,7 +212,7 @@ const GeocodingAutoComplete = ({
                 )}
                 <InputBase
                     {...bind}
-                    autoComplete="off"
+                    autoComplete='off'
                     autoFocus
                     className={classes.inputBase}
                     inputProps={{ 'aria-label': label }}
@@ -227,7 +227,7 @@ const GeocodingAutoComplete = ({
                     placeholder={label}
                 />
                 <IconButton
-                    aria-label="search"
+                    aria-label='search'
                     className={clsx(classes.iconButton, classes.submit)}
                     onClick={handleSubmit}
                 >
@@ -238,12 +238,12 @@ const GeocodingAutoComplete = ({
                 in={showSuggestions && (
                     suggestions.length === 0 || hasHadResults
                 )}
-                timeout="auto"
+                timeout='auto'
                 unmountOnExit
             >
                 <Divider />
                 <SelectionList
-                    itemIcon={<MarkerIcon size="small" />}
+                    itemIcon={<MarkerIcon size='small' />}
                     items={suggestions}
                     onItemClick={handleSuggestionClick}
                     onSelect={handleSelect}

@@ -56,14 +56,14 @@ const InteractiveClusterMap = ({
     return (
         <MapGL
             {...viewport}
-            width="100%"
-            height="100%"
+            width='100%'
+            height='100%'
             attributionControl
             interactiveLayerIds={[
                 clusterLayer.id,
                 clusterCountLayer.id
             ]}
-            mapboxApiAccessToken=""
+            mapboxApiAccessToken=''
             mapStyle={MAP_STYLE_URL}
             onClick={handleClick}
             onViewportChange={handleViewportChange}
@@ -72,7 +72,7 @@ const InteractiveClusterMap = ({
         >
             {featureCollection && (
                 <Source
-                    attribution=""
+                    attribution=''
                     // mapbox-gl-js default: 128
                     buffer={64}
                     cluster
@@ -83,11 +83,11 @@ const InteractiveClusterMap = ({
                     generateId
                     id={GEOJSON_SOURCE_ID}
                     maxzoom={17}
-                    promoteId="id"
+                    promoteId='id'
                     ref={sourceRef}
                     // mapbox-gl-js default: 0.375
                     tolerance={0.375}
-                    type="geojson"
+                    type='geojson'
                 >
                     <Layer {...clusterLayer} />
                     <Layer {...clusterCountLayer} />

@@ -30,11 +30,11 @@ const CloseButton = ({
                         ? classes.iconButtonEdgeStart
                         : ''
             }
-            color="inherit"
+            color='inherit'
             edge={edge}
             onClick={onClose}
             size={isDense ? 'small' : 'medium'}
-            aria-label="close"
+            aria-label='close'
         >
             <CloseIcon />
         </IconButton>

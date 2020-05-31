@@ -34,7 +34,7 @@ const MapApp = () => (
         favicon={theme.favicon}
         store={store}
         theme={theme.mui}
-        title="Händlerkarte"
+        title='Händlerkarte'
     >
         <MapAppInit />
     </AppRoot>

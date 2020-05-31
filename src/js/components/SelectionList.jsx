@@ -36,7 +36,7 @@ const SelectionList = ({
 
     return (
         <List
-            component="nav"
+            component='nav'
             dense
         >
             {items.length
@@ -52,7 +52,7 @@ const SelectionList = ({
                                     onItemClick(selectedValue)
                                 }
                             }}
-                            role="menuitem"
+                            role='menuitem'
                             selected={selectedIndex === index}
                         >
                             {
@@ -60,7 +60,8 @@ const SelectionList = ({
                                     <ListItemIcon>
                                         {itemIcon}
                                     </ListItemIcon>
-                                )}
+                                )
+                            }
                             <ListItemText
                                 primary={label}
                             />
@@ -72,11 +73,10 @@ const SelectionList = ({
                             <NoResultsIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary="Keine Ergebnisse."
+                            primary='Keine Ergebnisse.'
                         />
                     </ListItem>
-                )
-            }
+                )}
         </List>
     )
 }

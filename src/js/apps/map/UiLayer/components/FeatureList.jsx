@@ -43,7 +43,7 @@ const makeColumns = (classes, dispatch) => ([
             const marker = coordinates.length === 2
                 ? (
                     <IconButton
-                        aria-label="Auf Karte zeigen"
+                        aria-label='Auf Karte zeigen'
                         className={classes.iconButton}
                         onClick={() => dispatch(
                             ACTIONS.map.features.selected.set({
@@ -53,9 +53,9 @@ const makeColumns = (classes, dispatch) => ([
                                 placeName: rowData.placeName
                             })
                         )}
-                        size="small"
+                        size='small'
                     >
-                        <MarkerIcon size="small" />
+                        <MarkerIcon size='small' />
                     </IconButton>
                 )
                 : null
@@ -64,14 +64,14 @@ const makeColumns = (classes, dispatch) => ([
                 ? (
                     <ExternalLink
                         href={rowData.url}
-                        variant="inherit"
+                        variant='inherit'
                     >
                         <IconButton
-                            aria-label="Zur Webseite"
+                            aria-label='Zur Webseite'
                             className={classes.iconButton}
-                            size="small"
+                            size='small'
                         >
-                            <LinkIcon size="small" />
+                            <LinkIcon size='small' />
                         </IconButton>
                     </ExternalLink>
                 )
@@ -196,7 +196,7 @@ const FeatureList = (props) => {
                         pageSizeOptions: [5, 10, 20, 50],
                         paginationType: 'stepped'
                     }}
-                    title=""
+                    title=''
                 />
             </div>
         </LargeContentDialog>

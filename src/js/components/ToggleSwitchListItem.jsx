@@ -41,7 +41,7 @@ const ToggleSwitchListItem = ({
         >
             {IconComponent && (
                 <ListItemIcon>
-                    <IconComponent size="small" />
+                    <IconComponent size='small' />
                 </ListItemIcon>
             )}
             <ListItemText
@@ -52,8 +52,8 @@ const ToggleSwitchListItem = ({
             <ListItemSecondaryAction>
                 <SwitchComponent
                     checked={isSelected}
-                    color="primary"
-                    edge="end"
+                    color='primary'
+                    edge='end'
                     inputProps={switchProps}
                     onChange={() => { onChange(itemKey) }}
                 />

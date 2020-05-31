@@ -24,7 +24,7 @@ const ListBoxPopper = ({
             anchorEl={anchorEl}
             className={classes.popperModalChild}
             open
-            role="presentation"
+            role='presentation'
             style={{
                 width: anchorEl ? anchorEl.clientWidth : null
             }}

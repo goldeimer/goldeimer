@@ -5,8 +5,8 @@ import Box from '@material-ui/core/Box'
 
 const TitleIcon = ({ children }) => (
     <Box
-        alignItems="center"
-        display="inline-flex"
+        alignItems='center'
+        display='inline-flex'
         mr={1.5}
     >
         {children}

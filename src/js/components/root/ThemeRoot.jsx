@@ -13,8 +13,8 @@ const ThemeRoot = ({
             defaultTitle={title}
             titleTemplate={`${title} - %s`}
         >
-            <meta name="description" content={title} />
-            {favicon && <link rel="icon" href={`/static/${favicon}`} />}
+            <meta name='description' content={title} />
+            {favicon && <link rel='icon' href={`/static/${favicon}`} />}
         </Helmet>
         <CssBaseline />
         {children}

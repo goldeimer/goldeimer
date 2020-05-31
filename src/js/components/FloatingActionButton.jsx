@@ -39,13 +39,13 @@ const FloatingActionButton = ({
 
     return (
         <SpeedDial
-            ariaLabel=""
+            ariaLabel=''
             className={classes.speedDial}
             icon={<SpeedDialIcon openIcon={openIcon} />}
             onClose={handleClose}
             onOpen={handleOpen}
             open={open}
-            direction="up"
+            direction='up'
         >
             {
                 Object.entries(actions).map(

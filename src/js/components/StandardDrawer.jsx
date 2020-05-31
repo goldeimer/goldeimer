@@ -27,7 +27,7 @@ const StandardDrawer = ({
 
     return (
         <SwipeableDrawer
-            anchor="left"
+            anchor='left'
             disableDiscovery={iOS}
             open={isOpen}
             onClose={handleClose}

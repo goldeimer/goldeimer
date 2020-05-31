@@ -44,14 +44,14 @@ const StandardDialog = ({
     return (
         <Dialog
             fullWidth
-            maxWidth="sm"
+            maxWidth='sm'
             open={isOpen}
             onClose={handleClose}
             aria-labelledby={title ? 'dialog-title' : null}
         >
             <DialogTitle
                 className={classes.dialogTitle}
-                id="dialog-title"
+                id='dialog-title'
             >
                 {titleIcon && <TitleIcon>{titleIcon}</TitleIcon>}
                 <span className={classes.dialogTitleText}>
@@ -63,7 +63,7 @@ const StandardDialog = ({
                 {children}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleClose} color='primary'>
                     Abbrechen
                 </Button>
             </DialogActions>

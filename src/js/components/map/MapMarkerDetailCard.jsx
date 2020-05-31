@@ -19,8 +19,8 @@ const MapMarkerDetailCard = ({
         <Card>
             <CardContent>
                 <Typography
-                    variant="h6"
-                    component="h3"
+                    variant='h6'
+                    component='h3'
                 >
                     {placeName}
                 </Typography>
@@ -31,7 +31,7 @@ const MapMarkerDetailCard = ({
 
 MapMarkerDetailCard.propTypes = {
     placeName: PropTypes.string.isRequired
-    //id: PropTypes.string.isRequired
+    // id: PropTypes.string.isRequired
 }
 
 export default MapMarkerDetailCard
