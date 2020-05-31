@@ -7,7 +7,7 @@ import {
 } from 'selectors/map/selectSettings'
 
 import filterFeatures from 'util/map/filter'
-import sortFeaturesByProperty from 'util/map/sort'
+import sortFeatures from 'util/map/sort'
 import {
     transformGeoJsonFeaturesToGeometries,
     transformGeoJsonFeaturesToLookup,
@@ -17,9 +17,9 @@ import {
 
 /// ---------------------------- feature selectors ----------------------------
 
-const selectSourceFeatures = (state) => (state.features.source.features)
-// const selectSourceReceived = (state) => (state.features.source.received)
-const selectViewportFeatures = (state) => (state.features.viewport)
+const selectSourceFeatures = (state) => (state.map.features.source.features)
+// const selectSourceReceived = (state) => (state.map.features.source.received)
+const selectViewportFeatures = (state) => (state.map.features.viewport)
 
 /// --------------------------- selector factories ----------------------------
 
@@ -56,7 +56,7 @@ const makeSortedSelector = (inputSelector) => createSelector(
     inputSelector,
     selectSortOrderBy,
     selectSortOrder,
-    sortFeaturesByProperty
+    sortFeatures
 )
 
 /// --------------------------- composed selectors ----------------------------

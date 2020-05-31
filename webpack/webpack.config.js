@@ -15,7 +15,7 @@ const {
     SRC_IMG_PATH,
     SRC_CSS_PATH,
     SRC_JS_ENTRY_PATH,
-} = require('./path')
+} = require('./paths')
 
 const webpackModeConfig = isDevBuild()
     ? require('./webpack.config.development.js')

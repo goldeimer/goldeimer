@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { throttle, debounce } from 'throttle-debounce'
 
-import { freeFormGeocodingRequest } from 'util/map/geocoding'
+import { freeFormGeocodingRequest } from 'api/map/geocoding'
 
 const MIN_QUERY_LENGTH = 3
 const DEBOUNCE_THRESHOLD_QUERY_LENGTH = 8

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import Map from 'apps/Map/Map'
+import Map from '@map/Map'
 
 import 'css/fonts.css'
 

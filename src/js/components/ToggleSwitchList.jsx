@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ToggleSwitchList = ({
-    handleItemChange,
     items,
-    selectedItemIds,
+    onChange,
+    selectedIds,
     title,
     ...other
 }) => {
@@ -39,9 +39,9 @@ const ToggleSwitchList = ({
             {items.map(
                 ({ itemKey, label, iconComponent = null }) => (
                     <ToggleSwitchListItem
-                        handleChange={() => { handleItemChange(itemKey) }}
+                        onChange={() => { onChange(itemKey) }}
                         iconComponent={iconComponent}
-                        isSelected={selectedItemIds.includes(itemKey)}
+                        isSelected={selectedIds.includes(itemKey)}
                         itemKey={itemKey}
                         key={itemKey}
                         label={label}
@@ -53,15 +53,20 @@ const ToggleSwitchList = ({
 }
 
 ToggleSwitchList.propTypes = {
-    handleItemChange: PropTypes.func.isRequired,
     items: PropTypes.arrayOf(
         PropTypes.exact({
-            itemKey: PropTypes.string.isRequired,
-            label: PropTypes.string.isRequired,
+            itemKey: PropTypes.string,
+            label: PropTypes.string,
             iconComponent: PropTypes.elementType
         })
     ).isRequired,
-    selectedItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onChange: PropTypes.func.isRequired,
+    selectedIds: PropTypes.arrayOf(
+        PropTypes.oneOfType([
+            PropTypes.number,
+            PropTypes.string
+        ])
+    ).isRequired,
     title: PropTypes.string.isRequired
 }
 

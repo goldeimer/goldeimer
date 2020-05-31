@@ -1,8 +1,11 @@
+const path = require('path')
+
 const {
     SRC_CSS_PATH,
     SRC_IMG_PATH,
     SRC_JS_PATH,
     SRC_JS_ACTIONS_PATH,
+    SRC_JS_API_PATH,
     SRC_JS_APPS_PATH,
     SRC_JS_COMPONENTS_PATH,
     SRC_JS_CONFIG_PATH,
@@ -10,9 +13,10 @@ const {
     SRC_JS_HOOKS_PATH,
     SRC_JS_REDUCERS_PATH,
     SRC_JS_SELECTORS_PATH,
+    SRC_JS_SLICES_PATH,
     SRC_JS_STYLES_PATH,
     SRC_JS_UTIL_PATH,
-} = require('./path')
+} = require('./paths')
 
 const extAssets = ['.svg', '.png', '.jpg', '.jpeg', '.ico',]
 const extConfig = ['.cfg', '.config', '.ini', '.secret',]
@@ -21,10 +25,13 @@ const extSrc = ['.js', '.jsx', '.json', '.ts', '.wasm',]
 
 const resolve = {
     alias: {
-        // --- closed semantic logic units ---
-        apps: SRC_JS_APPS_PATH,
+        // --- semantically closed logical units ---
+        // (non-reusable, dedicated components)
+        '@map': path.resolve(SRC_JS_APPS_PATH, 'map'),
+        '@tpc': path.resolve(SRC_JS_APPS_PATH, 'tpc'),
         // --- common js src ---
         actions: SRC_JS_ACTIONS_PATH,
+        api: SRC_JS_API_PATH,
         components: SRC_JS_COMPONENTS_PATH,
         config: SRC_JS_CONFIG_PATH,
         enum: SRC_JS_ENUM_PATH,
@@ -32,6 +39,7 @@ const resolve = {
         js: SRC_JS_PATH,
         reducers: SRC_JS_REDUCERS_PATH,
         selectors: SRC_JS_SELECTORS_PATH,
+        slices: SRC_JS_SLICES_PATH,
         styles: SRC_JS_STYLES_PATH,
         util: SRC_JS_UTIL_PATH,
         // --- static assets ---

@@ -1,13 +1,10 @@
-import sortArrayOfObjects from 'util/sortArrayOfObjects'
+import sortObjects from 'util/array/sortObjects'
 
-const sortFeaturesByProperty = (
-    features,
-    orderBy,
-    order
-) => sortArrayOfObjects(
+const sortFeatures = (features, orderBy, order) => sortObjects(
     features,
     orderBy,
     order,
     'properties'
 )
-export default sortFeaturesByProperty
+
+export default sortFeatures

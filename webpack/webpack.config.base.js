@@ -13,7 +13,7 @@ const eslintLoader = require('./eslintLoader')
 const fileLoader = require('./fileLoader')
 const styleLoader = require('./styleLoader')
 const isDevBuild = require('./isDevBuild')
-const { SRC_PATH } = require('./path')
+const { SRC_PATH } = require('./paths')
 const resolve = require('./resolve')
 
 module.exports = {

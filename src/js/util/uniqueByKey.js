@@ -1,5 +1,4 @@
-import ensureArray from 'util/ensureArray'
-import isArray from 'util/isArray'
+import ensureArray from 'util/array/ensureArray'
 import log from 'util/log'
 
 const unpack = (object, nestedKeys) => {
@@ -24,7 +23,7 @@ const compareByValues = (objectA, objectB, keys) => {
 
         // If the "key" is an array, the caller wants to sort by more deeply
         // nested a value.
-        const isNested = isArray(key)
+        const isNested = Array.isArray(key)
         const valueA = isNested ? unpack(objectA, key) : objectA[key]
         const valueB = isNested ? unpack(objectB, key) : objectB[key]
 

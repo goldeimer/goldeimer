@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const ToggleSwitchListItem = ({
-    handleChange,
     iconComponent: IconComponent,
     isSelected,
     itemKey,
-    label
+    label,
+    onChange
 }) => {
     const classes = useStyles()
 
@@ -37,7 +37,7 @@ const ToggleSwitchListItem = ({
     return (
         <ListItem
             button
-            onClick={() => { handleChange(itemKey) }}
+            onClick={() => { onChange(itemKey) }}
         >
             {IconComponent && (
                 <ListItemIcon>
@@ -55,7 +55,7 @@ const ToggleSwitchListItem = ({
                     color="primary"
                     edge="end"
                     inputProps={switchProps}
-                    onChange={() => { handleChange(itemKey) }}
+                    onChange={() => { onChange(itemKey) }}
                 />
             </ListItemSecondaryAction>
         </ListItem>
@@ -63,11 +63,11 @@ const ToggleSwitchListItem = ({
 }
 
 ToggleSwitchListItem.propTypes = {
-    handleChange: PropTypes.func.isRequired,
     iconComponent: PropTypes.elementType,
     isSelected: PropTypes.bool.isRequired,
     itemKey: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 ToggleSwitchListItem.defaultProps = {
