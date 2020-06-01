@@ -98,6 +98,7 @@
         "reselect": "^4.0.0",
         "styled-components": "^5.1.0",
         "throttle-debounce": "^2.1.0",
+        "typechecker": "^7.4.0",
         "valid-url": "^1.0.9"
     },
     "sideEffects": [
