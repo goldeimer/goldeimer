@@ -11,26 +11,26 @@ const KEYS = {
 const useKeyPress = (targetKey) => {
     const [isKeyPressed, setIsKeyPressed] = useState(false)
 
-    const handleKeyDown = ({ key }) => {
-        if (key === targetKey) {
-            setIsKeyPressed(true)
-        }
-    }
-
-    const handleKeyUp = ({ key }) => {
-        if (key === targetKey) {
-            setIsKeyPressed(false)
-        }
-    }
-
     useEffect(() => {
+        const handleKeyDown = ({ key }) => {
+            if (key === targetKey) {
+                setIsKeyPressed(true)
+            }
+        }
+
+        const handleKeyUp = ({ key }) => {
+            if (key === targetKey) {
+                setIsKeyPressed(false)
+            }
+        }
+
         window.addEventListener('keydown', handleKeyDown)
         window.addEventListener('keyup', handleKeyUp)
         return () => {
             window.removeEventListener('keydown', handleKeyDown)
             window.removeEventListener('keyup', handleKeyUp)
         }
-    }, [])
+    }, [targetKey, setIsKeyPressed])
 
     return isKeyPressed
 }
@@ -42,7 +42,7 @@ const useKeyDown = (targetKey, onKeyDown) => {
         if (isKeyPressed) {
             onKeyDown()
         }
-    }, [isKeyPressed])
+    }, [isKeyPressed, onKeyDown])
 }
 
 export {

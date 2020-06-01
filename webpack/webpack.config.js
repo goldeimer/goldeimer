@@ -40,13 +40,19 @@ const merchantMapConfig = {
         publicPath: PUBLIC_PATH_DEFAULT,
     },
     plugins: [
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: path.resolve(SRC_ETC_PATH, '.htaccess'),
+                to: merchantMapDistPath,
+            }]
+        }),
         new HtmlWebpackPlugin({
             favicon: path.resolve(
                 SRC_IMG_PATH,
                 'favicon',
                 'goldeimer.favicon.png'
             ),
-            title: "Händlerkarte",
+            title: 'Händlerkarte',
             meta: {
                 viewport:
                     'width=device-width, initial-scale=1, shrink-to-fit=no',
@@ -56,16 +62,10 @@ const merchantMapConfig = {
                 rating: 'General',
                 referrer: 'origin',
                 robots: 'index,follow',
-                subject: "Hier bekommst Du unsere Produkte",
+                subject: 'Hier bekommst Du unsere Produkte',
             },
             scriptLoading: 'defer',
         }),
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(SRC_ETC_PATH, '.htaccess'),
-                to: merchantMapDistPath,
-            },
-        ]),
     ],
 }
 

@@ -1,5 +1,5 @@
-import isString from 'util/isString'
-import log from 'util/log'
+import isString from 'utilities/isString'
+import log from 'utilities/log'
 
 const parseStringifiedCollection = (value) => {
     if (!isString(value)) {

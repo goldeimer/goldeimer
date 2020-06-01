@@ -8,7 +8,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Switch from '@material-ui/core/Switch'
 
-import isIos from 'util/isIos'
+import isIos from 'utilities/isIos'
 
 import IosSwitch from 'components/IosSwitch'
 

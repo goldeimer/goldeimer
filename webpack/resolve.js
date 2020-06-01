@@ -1,5 +1,7 @@
 const path = require('path')
 
+const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
+
 const {
     SRC_CSS_PATH,
     SRC_IMG_PATH,
@@ -41,18 +43,21 @@ const resolve = {
         selectors: SRC_JS_SELECTORS_PATH,
         slices: SRC_JS_SLICES_PATH,
         styles: SRC_JS_STYLES_PATH,
-        util: SRC_JS_UTIL_PATH,
+        utilities: SRC_JS_UTIL_PATH,
         // --- static assets ---
         css: SRC_CSS_PATH,
         img: SRC_IMG_PATH
     },
     aliasFields: ['browser'],
+    cacheWithContext: false,
     extensions: Array.prototype.concat.call(
         extAssets, extConfig, extDoc, extSrc
     ),
     // sensible choices for target "web"
     mainFields: ['browser', 'module', 'main'],
-    modules: ['node_modules']
+    modules: [path.resolve(__dirname, '..', 'node_modules')],
+    plugins: [new DirectoryNamedWebpackPlugin()],
+    symlinks: false
 }
 
 module.exports = resolve

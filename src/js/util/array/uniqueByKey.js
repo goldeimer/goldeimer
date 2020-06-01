@@ -1,5 +1,5 @@
-import ensureArray from 'util/array/ensureArray'
-import log from 'util/log'
+import ensureArray from 'utilities/array/ensureArray'
+import log from 'utilities/log'
 
 const unpack = (obj, nestedKeys) => {
     let value = obj

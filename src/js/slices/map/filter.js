@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import TAXONOMIES from 'enum/taxonomies'
-import combineSlices from 'util/redux/combineSlices'
+import combineSlices from 'utilities/redux/combineSlices'
 
 const toggleImpl = (state, term, oneWayIndicator = null) => {
     const idx = state.indexOf(term)

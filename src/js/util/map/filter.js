@@ -1,4 +1,4 @@
-import ensureArray from 'util/array/ensureArray'
+import ensureArray from 'utilities/array/ensureArray'
 
 const isUnfilteredFeature = (properties, termsPerTaxonomy) => (
     termsPerTaxonomy.every(([taxonomyId, termIds]) => {

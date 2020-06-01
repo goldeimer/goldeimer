@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import geocodingRequest from 'api/map/geocoding'
-import generateId from 'util/generateId'
-import combineSlices from 'util/redux/combineSlices'
-import createAsyncSlice from 'util/redux/createAsyncSlice'
+import generateId from 'utilities/generateId'
+import combineSlices from 'utilities/redux/combineSlices'
+import createAsyncSlice from 'utilities/redux/createAsyncSlice'
 
 const INITIAL_GEOCODING = []
 const geocoding = createAsyncSlice({

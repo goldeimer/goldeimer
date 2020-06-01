@@ -6,14 +6,14 @@ import {
     selectSortOrderBy
 } from 'selectors/map/selectSettings'
 
-import filterFeatures from 'util/map/filter'
-import sortFeatures from 'util/map/sort'
+import filterFeatures from 'utilities/map/filter'
+import sortFeatures from 'utilities/map/sort'
 import {
     transformGeoJsonFeaturesToGeometries,
     transformGeoJsonFeaturesToLookup,
     transformGeoJsonFeaturesToMapEssential,
     transformGeoJsonFeaturesToSearcheables
-} from 'util/map/transformations'
+} from 'utilities/map/transformations'
 
 /// ---------------------------- feature selectors ----------------------------
 

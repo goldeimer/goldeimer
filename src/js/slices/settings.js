@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { THEME } from 'config/theme'
-import combineSlices from 'util/redux/combineSlices'
-import makeLocation from 'util/map/location'
+import combineSlices from 'utilities/redux/combineSlices'
+import makeLocation from 'utilities/map/location'
 
 const INITIAL_THEME = THEME.Goldeimer
 const theme = createSlice({

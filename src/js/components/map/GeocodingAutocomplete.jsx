@@ -14,8 +14,8 @@ import MarkerIcon from '@material-ui/icons/Room'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 
-import { generateShortId } from 'util/generateId'
-import isFunction from 'util/isFunction'
+import { generateShortId } from 'utilities/generateId'
+import isFunction from 'utilities/isFunction'
 import useGeocoding from 'hooks/map/useGeocoding'
 import useInput from 'hooks/useInput'
 
@@ -101,6 +101,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
+const defaultSuggestions = []
+
 const GeocodingAutoComplete = ({
     label,
     onMenuClick,
@@ -117,8 +119,6 @@ const GeocodingAutoComplete = ({
         result, // geojson `FeatureCollection` structure
         setQuery
     } = useGeocoding()
-
-    const defaultSuggestions = []
 
     const [selectedSuggestion, setSelectedSuggestion] = useState(null)
     const [showSuggestions, setShowSuggestions] = useState(false)
@@ -140,7 +140,7 @@ const GeocodingAutoComplete = ({
         }
 
         setQuery(inputValue)
-    }, [inputValue])
+    }, [inputValue, selectedSuggestion, setQuery])
 
     useEffect(() => {
         if (!result) {
@@ -164,7 +164,7 @@ const GeocodingAutoComplete = ({
         }
 
         setInputValue(selectedSuggestion.placeName)
-    }, [selectedSuggestion])
+    }, [selectedSuggestion, setInputValue])
 
     const handleSelect = (handledSuggestion) => {
         setSelectedSuggestion(handledSuggestion)

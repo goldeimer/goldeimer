@@ -1,4 +1,4 @@
-import generateId from 'util/generateId'
+import generateId from 'utilities/generateId'
 
 const makeLocation = ({
     id = generateId(), latitude, longitude, placeName

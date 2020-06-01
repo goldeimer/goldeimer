@@ -1,6 +1,6 @@
 import thunk from 'redux-thunk'
 
-import { IS_PRODUCTION_BUILD } from 'util/env'
+import { IS_PRODUCTION_BUILD } from 'utilities/env'
 
 const middleware = [thunk]
 

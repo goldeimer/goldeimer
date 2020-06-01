@@ -1,7 +1,8 @@
+const IP_STACK_API_KEY = '<your-api-key-here>'
 const MAP_TILER_API_KEY = '<your-api-key-here>'
 
-/* eslint-disable import/prefer-default-export */
 
 export {
+    IP_STACK_API_KEY,
     MAP_TILER_API_KEY
 }

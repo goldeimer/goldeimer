@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { getTheme } from 'config/theme'
 import ACTIONS, { reducer } from 'slices/app'
-import makeStore from 'util/redux/store'
+import makeStore from 'utilities/redux/store'
 
 import AppRoot from 'components/root/AppRoot'
 
@@ -19,7 +19,7 @@ const MapAppInit = () => {
 
     useEffect(() => {
         dispatch(ACTIONS.map.features.source.fetch())
-    }, [])
+    }, [dispatch])
 
     return (
         <>

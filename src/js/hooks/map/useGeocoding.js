@@ -96,7 +96,7 @@ const useGeocoding = (initialQuery = '') => {
 
             scheduleGeocodingRequest()
         },
-        [query]
+        [query, previousQuery]
     )
 
     return {

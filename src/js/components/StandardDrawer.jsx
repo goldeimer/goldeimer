@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
 import useDialog from 'hooks/useDialog'
-import isIos from 'util/isIos'
+import isIos from 'utilities/isIos'
 
 import StandardDialog from 'components/StandardDialog'
 import StandardDialogTitle from 'components/StandardDialogTitle'

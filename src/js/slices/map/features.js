@@ -1,10 +1,10 @@
 import sourceRequest from 'api/map/source'
 import LOADING from 'enum/loading'
-import createSegment from 'util/redux/createSegment'
+import createSegment from 'utilities/redux/createSegment'
 
 import {
     transformGeoJsonFeaturesToMarkerProps
-} from 'util/map/transformations'
+} from 'utilities/map/transformations'
 
 const INITIAL_SELECTED = null
 

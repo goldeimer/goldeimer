@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 
-import MaterialTable from 'material-table'
+import { Table as MaterialUiTable } from '@material-ui/core/Table'
 
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
@@ -51,7 +51,7 @@ const copy = {
 }
 
 const Table = (props) => (
-    <MaterialTable
+    <MaterialUiTable
         icons={tableIcons}
         localization={{
             body: {

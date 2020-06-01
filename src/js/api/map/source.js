@@ -1,11 +1,11 @@
 import validUrl from 'valid-url'
 
-import isString from 'util/isString'
-import parseGoogleSheet from 'util/parseGoogleSheet'
-import transformObjectProperties from 'util/transformObjectProperties'
+import isString from 'utilities/isString'
+import parseGoogleSheet from 'utilities/parseGoogleSheet'
+import transformObjectProperties from 'utilities/transformObjectProperties'
 
 import { BRAND, MERCHANT_TYPE } from 'enum/taxonomies'
-import generateId from 'util/generateId'
+import generateId from 'utilities/generateId'
 
 /* eslint-disable max-len */
 const GOOGLE_SPREADSHEET_PUBID_GOLDEIMER =

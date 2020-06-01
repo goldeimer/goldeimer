@@ -8,9 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import NoResultsIcon from '@material-ui/icons/NotInterested'
 
-import useSelectionByIndexKeyboardControlled, { AXES }
+import useSelectionByIndexKeyboardControlled
     from 'hooks/useSelectionByIndexKeyboardControlled'
-import isFunction from 'util/isFunction'
+import isFunction from 'utilities/isFunction'
 
 const SelectionList = ({
     dense,
@@ -25,7 +25,6 @@ const SelectionList = ({
         selectedIndex,
         handleSelect
     } = useSelectionByIndexKeyboardControlled(
-        [AXES.vertical],
         items,
         onSelect
     )

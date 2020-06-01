@@ -50,7 +50,7 @@ const InteractiveClusterMap = ({
                 flyTo(context.latitude, context.longitude)
             }
         },
-        [context]
+        [context, flyTo]
     )
 
     return (

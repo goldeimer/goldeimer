@@ -156,20 +156,20 @@ const ToiletPaperCalculator = () => {
         })
     }
 
-    const calculateRequiredRollsPerMonth = () => {
-        const piecesPerPersonPerDay = (
-            dailyShitCount * wipesPerShit * piecesPerWipe +
-            dailyPissCount * piecesPerPiss
-        )
-
-        return Math.ceil(
-            piecesPerPersonPerDay * DAYS_PER_MONTH /
-            PIECES_PER_ROLL
-        )
-    }
-
     useEffect(
         () => {
+            const calculateRequiredRollsPerMonth = () => {
+                const piecesPerPersonPerDay = (
+                    dailyShitCount * wipesPerShit * piecesPerWipe +
+                    dailyPissCount * piecesPerPiss
+                )
+
+                return Math.ceil(
+                    piecesPerPersonPerDay * DAYS_PER_MONTH /
+                    PIECES_PER_ROLL
+                )
+            }
+
             const nextRequiredRollsPerMonth = calculateRequiredRollsPerMonth()
 
             setRequiredRollsPerMonth(nextRequiredRollsPerMonth)
@@ -183,8 +183,16 @@ const ToiletPaperCalculator = () => {
                     periodInMonths
                 )
             )
-        },
-        [form]
+        }, [
+            form,
+            dailyPissCount,
+            dailyShitCount,
+            piecesPerPiss,
+            piecesPerWipe,
+            wipesPerShit,
+            normalizedSubscriptionArray,
+            periodInMonths
+        ]
     )
 
     return (

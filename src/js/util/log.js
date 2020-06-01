@@ -1,4 +1,4 @@
-import { IS_PRODUCTION_BUILD } from 'util/env'
+import { IS_PRODUCTION_BUILD } from 'utilities/env'
 
 const WITH_LOGGING = !IS_PRODUCTION_BUILD
 

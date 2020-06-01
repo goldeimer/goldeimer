@@ -9,7 +9,7 @@
 import axios from 'axios'
 
 import { MAP_TILER_API_KEY } from 'config/apiKeys'
-import log from 'util/log'
+import log from 'utilities/log'
 
 // Hamburg, Germany
 const DEFAULT_PROXIMITY = '10.00,53.56'

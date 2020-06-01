@@ -1,6 +1,6 @@
-import map from 'slices/map/map'
+import map from 'slices/map'
 import settings from 'slices/settings'
-import combineSlices from 'util/redux/combineSlices'
+import combineSlices from 'utilities/redux/combineSlices'
 
 const { actions, reducer } = combineSlices({ map, settings })
 

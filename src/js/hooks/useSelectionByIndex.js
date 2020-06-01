@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import isFunction from 'util/isFunction'
+import isFunction from 'utilities/isFunction'
 
 const useSelectionByIndex = (
     items,
@@ -44,7 +44,7 @@ const useSelectionByIndex = (
         }
 
         setSelectedIndex(null)
-    }, [items])
+    }, [items, initialIndex, lastIndex, length])
 
     const handleDecrement = () => setSelectedIndexWithSideEffects(
         Math.max(0, selectedIndex - 1)

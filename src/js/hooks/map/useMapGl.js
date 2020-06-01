@@ -4,11 +4,12 @@ import { throttle } from 'throttle-debounce'
 
 import { useTheme } from '@material-ui/core/styles'
 
-import noop from 'util/noop'
+import noop from 'utilities/noop'
 
-import { transformGeoJsonFeaturesToMarkerProps } from 'util/map/transformations'
+import { transformGeoJsonFeaturesToMarkerProps }
+    from 'utilities/map/transformations'
 
-import uniqueByKey from 'util/array/uniqueByKey'
+import uniqueByKey from 'utilities/array/uniqueByKey'
 
 const DEFAULT_VIEWPORT_TRANSITION_DURATION = 300
 const NEW_MARKER_ZOOM_LEVEL = 15
@@ -108,49 +109,49 @@ const useMapGl = (
         })
     }
 
-    const querySourceFeatures = () => {
-        if (!map) {
-            return null
+    useEffect(() => {
+        const querySourceFeatures = () => {
+            if (!map) {
+                return null
+            }
+
+            const features = transformGeoJsonFeaturesToMarkerProps(
+                uniqueByKey(
+                    map.querySourceFeatures(
+                        geoJsonSourceId,
+                        {
+                            filter: ['!', ['has', 'point_count']]
+                        }
+                    ),
+                    'id'
+                )
+            )
+
+            setUnclusteredFeatures(features)
+
+            return features
         }
 
-        const features = transformGeoJsonFeaturesToMarkerProps(
-            uniqueByKey(
-                map.querySourceFeatures(
-                    geoJsonSourceId,
-                    {
-                        filter: ['!', ['has', 'point_count']]
-                    }
-                ),
-                'id'
-            )
+        const querySourceFeaturesThrottled = throttle(
+            500,
+            () => { querySourceFeatures() }
         )
 
-        setUnclusteredFeatures(features)
+        const handleIdle = () => { querySourceFeatures() }
 
-        return features
-    }
+        const handleMoveEnd = () => { querySourceFeaturesThrottled() }
 
-    const querySourceFeaturesThrottled = throttle(
-        500,
-        () => { querySourceFeatures() }
-    )
+        const handleSourceDataUpdate = (event) => {
+            if (
+                event.sourceId !== 'features' ||
+                !event.isSourceLoaded
+            ) {
+                return
+            }
 
-    const handleIdle = () => { querySourceFeatures() }
-
-    const handleMoveEnd = () => { querySourceFeaturesThrottled() }
-
-    const handleSourceDataUpdate = (event) => {
-        if (
-            event.sourceId !== 'features' ||
-            !event.isSourceLoaded
-        ) {
-            return
+            querySourceFeatures()
         }
 
-        querySourceFeatures()
-    }
-
-    useEffect(() => {
         if (map) {
             map.on('idle', handleIdle)
             map.on('moveend', handleMoveEnd)
@@ -164,7 +165,7 @@ const useMapGl = (
         }
 
         return noop
-    }, [map])
+    }, [map, geoJsonSourceId])
 
     useEffect(() => {
         if (mapRef.current) {

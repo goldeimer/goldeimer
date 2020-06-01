@@ -7,7 +7,10 @@ const webpackModeConfig = merge(
     {
         mode: WEBPACK_MODE,
         watch: true,
-        devtool: 'inline-source-map',
+        watchOptions: {
+            ignored: /[\\/]node_modules[\\/]/
+        },
+        devtool: 'eval-cheap-module-source-map',
     }
 )
 

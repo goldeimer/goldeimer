@@ -4,7 +4,7 @@ import filter from 'slices/map/filter'
 import search from 'slices/map/search'
 import sort from 'slices/map/sort'
 
-import combineSlices from 'util/redux/combineSlices'
+import combineSlices from 'utilities/redux/combineSlices'
 
 const map = combineSlices({
     context, features, filter, search, sort

@@ -17,6 +17,11 @@ const webpackModeConfig = merge(
             ],
         },
         plugins: [
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                openAnalyzer: false,
+                reportFilename: 'bundle-analyzer.html',
+            }),
             new CleanWebpackPlugin(),
         ],
         devtool: 'source-map',

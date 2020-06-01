@@ -1,6 +1,6 @@
 import { applyMiddleware, createStore } from 'redux'
 
-import middleware from 'util/redux/middleware'
+import middleware from 'utilities/redux/middleware'
 
 const makeStore = (reducer) => createStore(
     reducer,
