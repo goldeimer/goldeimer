@@ -15,7 +15,7 @@ const {
     SRC_IMG_PATH,
     SRC_CSS_PATH,
     SRC_JS_ENTRY_PATH,
-} = require('./paths')
+} = require('./abspath')
 
 const webpackModeConfig = !IS_PRODUCTION_BUILD
     ? require('./webpack.config.development.js')
@@ -23,9 +23,9 @@ const webpackModeConfig = !IS_PRODUCTION_BUILD
 
 /// ------------------------------ Merchant Map -------------------------------
 
-const merchantMapDistPath = path.resolve(PROJECT_PATH, 'merchant-map')
+const mapDistPath = path.resolve(PROJECT_PATH, 'merchant-map')
 
-const merchantMapConfig = {
+const mapConfig = {
     name: 'merchant-map',
     entry: {
         'merchant-map': path.resolve(
@@ -36,14 +36,14 @@ const merchantMapConfig = {
         filename: `static/js/[name].${
             !IS_PRODUCTION_BUILD ? 'dev-bundle' : '[contenthash]'
         }.js`,
-        path: merchantMapDistPath,
+        path: mapDistPath,
         publicPath: PUBLIC_PATH_DEFAULT,
     },
     plugins: [
         new CopyWebpackPlugin({
             patterns: [{
                 from: path.resolve(SRC_ETC_PATH, '.htaccess'),
-                to: merchantMapDistPath,
+                to: mapDistPath,
             }]
         }),
         new HtmlWebpackPlugin({
@@ -93,5 +93,5 @@ const wordPressConfig = {
 
 module.exports = [
     merge(webpackModeConfig, wordPressConfig),
-    merge(webpackModeConfig, merchantMapConfig),
+    merge(webpackModeConfig, mapConfig),
 ]

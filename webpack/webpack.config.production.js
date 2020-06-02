@@ -4,12 +4,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 
-const WEBPACK_MODE = 'production'
+const BundleAnalyzerPlugin = require(
+    'webpack-bundle-analyzer'
+).BundleAnalyzerPlugin
 
-const webpackModeConfig = merge(
+const productionModeConfig = merge(
     require('./webpack.config.base.js'),
     {
-        mode: WEBPACK_MODE,
+        mode: 'production',
         optimization: {
             minimizer: [
                 new OptimizeCSSAssetsPlugin({}),
@@ -28,4 +30,4 @@ const webpackModeConfig = merge(
     }
 )
 
-module.exports = webpackModeConfig
+module.exports = productionModeConfig

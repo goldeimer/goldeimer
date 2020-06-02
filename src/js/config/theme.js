@@ -1,10 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
-import 'img/favicon/goldeimer.favicon.png'
-import 'img/favicon/vca.favicon.png'
+import '@assets/img/favicon/goldeimer.favicon.png'
+import '@assets/img/favicon/vca.favicon.png'
 
-import GoldeimerIcon from 'components/icons/brands/GoldeimerIcon'
-import VivaConAguaIcon from 'components/icons/brands/VivaConAguaIcon'
+import GoldeimerIcon from '@lib/components/icons/brands/GoldeimerIcon'
+import VivaConAguaIcon from '@lib/components/icons/brands/VivaConAguaIcon'
 
 const COLOR_PRIMARY_GOLDEIMER = '#ffe300'
 const COLOR_PRIMARY_VIVA_CON_AGUA = '#008fc3'
@@ -52,12 +52,12 @@ const makeTheme = (
 
 const THEME = {
     Goldeimer: {
-        favicon: 'img/favicon/goldeimer.favicon.png',
+        favicon: '@assets/img/favicon/goldeimer.favicon.png',
         logoIconComponent: GoldeimerIcon,
         mui: makeTheme(COLOR_PRIMARY_GOLDEIMER, '#000')
     },
     VivaConAgua: {
-        favicon: 'img/favicon/vca.favicon.png',
+        favicon: '@assets/img/favicon/vca.favicon.png',
         logoIconComponent: VivaConAguaIcon,
         mui: makeTheme(COLOR_PRIMARY_VIVA_CON_AGUA, '#fff')
     }

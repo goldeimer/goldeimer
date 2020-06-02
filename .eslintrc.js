@@ -1,3 +1,6 @@
+/// 'development' mode builds fail on error
+/// 'production' mode builds fail on warn
+
 module.exports = {
     extends: [
         'airbnb',
@@ -20,6 +23,9 @@ module.exports = {
             ignorePropertyModificationsFor: ['state'],
             props: true,
         }],
+        // Causes massive pain during development if set to 'error'
+        // (w/ eslint-loader and webpack-watcher).
+        'no-unused-vars': ['warn'],
         'react/jsx-indent': ['error', 4],
         'react/jsx-indent-props': ['error', 4],
         'react/jsx-props-no-spreading': ['off'],
@@ -53,6 +59,6 @@ module.exports = {
     env: {
         browser: true,
         es6: true,
-        jest: true,
+        jest: true
     }
 }

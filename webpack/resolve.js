@@ -5,54 +5,34 @@ const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin')
 const {
     SRC_CSS_PATH,
     SRC_IMG_PATH,
-    SRC_JS_PATH,
-    SRC_JS_ACTIONS_PATH,
-    SRC_JS_API_PATH,
-    SRC_JS_APPS_PATH,
-    SRC_JS_COMPONENTS_PATH,
+    SRC_JS_APP_PATH,
     SRC_JS_CONFIG_PATH,
-    SRC_JS_ENUM_PATH,
-    SRC_JS_HOOKS_PATH,
-    SRC_JS_REDUCERS_PATH,
-    SRC_JS_SELECTORS_PATH,
-    SRC_JS_SLICES_PATH,
-    SRC_JS_STYLES_PATH,
-    SRC_JS_UTIL_PATH,
-} = require('./paths')
+    SRC_JS_LIB_PATH,
+} = require('./abspath')
 
-const extAssets = ['.svg', '.png', '.jpg', '.jpeg', '.ico',]
-const extConfig = ['.cfg', '.config', '.ini', '.secret',]
+const extAsset = ['.svg', '.png', '.jpg', '.jpeg', '.ico',]
+const extCfg = ['.cfg', '.config', '.ini', '.secret',]
 const extDoc = ['.md', '.txt', '.pdf',]
-const extSrc = ['.js', '.jsx', '.json', '.ts', '.wasm',]
+const extSrc = ['.js', '.jsx', '.json', '.ts', '.tsx', '.wasm',]
 
 const resolve = {
     alias: {
-        // --- semantically closed logical units ---
+        // --- semantically closed, logical units ---
         // (non-reusable, dedicated components)
-        '@map': path.resolve(SRC_JS_APPS_PATH, 'map'),
-        '@tpc': path.resolve(SRC_JS_APPS_PATH, 'tpc'),
-        // --- common js src ---
-        actions: SRC_JS_ACTIONS_PATH,
-        api: SRC_JS_API_PATH,
-        components: SRC_JS_COMPONENTS_PATH,
-        config: SRC_JS_CONFIG_PATH,
-        enum: SRC_JS_ENUM_PATH,
-        hooks: SRC_JS_HOOKS_PATH,
-        js: SRC_JS_PATH,
-        reducers: SRC_JS_REDUCERS_PATH,
-        selectors: SRC_JS_SELECTORS_PATH,
-        slices: SRC_JS_SLICES_PATH,
-        styles: SRC_JS_STYLES_PATH,
-        utilities: SRC_JS_UTIL_PATH,
+        '@app': path.resolve(SRC_JS_APP_PATH),
+        '@map': path.resolve(SRC_JS_APP_PATH, 'map'),
+        '@tpc': path.resolve(SRC_JS_APP_PATH, 'tpc'),
+        '@settings': path.resolve(SRC_JS_APP_PATH, 'settings'),
+        // --- js src ---
+        '@config': SRC_JS_CONFIG_PATH,
+        '@lib': SRC_JS_LIB_PATH,
         // --- static assets ---
-        css: SRC_CSS_PATH,
-        img: SRC_IMG_PATH
+        '@assets/css': SRC_CSS_PATH,
+        '@assets/img': SRC_IMG_PATH
     },
     aliasFields: ['browser'],
     cacheWithContext: false,
-    extensions: Array.prototype.concat.call(
-        extAssets, extConfig, extDoc, extSrc
-    ),
+    extensions: Array.prototype.concat(extAsset, extCfg, extDoc, extSrc),
     // sensible choices for target "web"
     mainFields: ['browser', 'module', 'main'],
     modules: [path.resolve(__dirname, '..', 'node_modules')],

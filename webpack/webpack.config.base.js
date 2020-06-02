@@ -1,18 +1,15 @@
 const path = require('path')
 
 const webpack = require('webpack')
-const BundleAnalyzerPlugin = require(
-    'webpack-bundle-analyzer'
-).BundleAnalyzerPlugin
 const { BundleStatsWebpackPlugin } = require('bundle-stats-webpack-plugin')
 const ManifestWebpackPlugin = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const babelLoader = require('./babelLoader')
-const eslintLoader = require('./eslintLoader')
-const fileLoader = require('./fileLoader')
-const styleLoader = require('./styleLoader')
-const { SRC_PATH } = require('./paths')
+const babelLoader = require('./loader/babel-loader')
+const eslintLoader = require('./loader/eslint-loader')
+const fileLoader = require('./loader/file-loader')
+const styleLoader = require('./loader/style-loader')
+const { SRC_PATH } = require('./abspath')
 const resolve = require('./resolve')
 
 module.exports = {

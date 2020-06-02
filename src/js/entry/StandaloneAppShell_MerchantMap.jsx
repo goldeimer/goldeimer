@@ -4,13 +4,13 @@ import 'regenerator-runtime/runtime'
 import React from 'react'
 import { render } from 'react-dom'
 
-import Map from '@map/Map'
+import App from '@app/App'
 
-import 'css/fonts.css'
+import '@assets/css/fonts.css'
 
 const StandaloneAppShell = () => (
     <div style={{ width: '100vw', height: '100vh' }}>
-        <Map />
+        <App />
     </div>
 )
 

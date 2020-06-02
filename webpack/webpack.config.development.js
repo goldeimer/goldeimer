@@ -1,17 +1,15 @@
 const merge = require('webpack-merge')
 
-const WEBPACK_MODE = 'development'
-
-const webpackModeConfig = merge(
+const developmentModeConfig = merge(
     require('./webpack.config.base.js'),
     {
-        mode: WEBPACK_MODE,
+        mode: 'development',
         watch: true,
         watchOptions: {
-            ignored: /[\\/]node_modules[\\/]/
+            ignored: /node_modules/
         },
         devtool: 'eval-cheap-module-source-map',
     }
 )
 
-module.exports = webpackModeConfig
+module.exports = developmentModeConfig
