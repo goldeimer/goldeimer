@@ -4,18 +4,16 @@ import {
     VISUALIZED_TAXONOMY
 } from '@map/taxonomies'
 
-const transformGeoJsonFeaturesToGeometries = (features) => features.map(
-    ({
-        geometry: { coordinates: [longitude, latitude] },
-        properties: { id }
-    }) => ({ id, latitude, longitude })
-)
+const featuresToGeometries = (features) => features.map(({
+    geometry: { coordinates: [longitude, latitude] },
+    properties: { id }
+}) => ({ id, latitude, longitude }))
 
-const transformGeoJsonFeaturesToLookup = (features) => new Map(features.map(
+const featuresToLookup = (features) => new Map(features.map(
     (feature) => [feature.properties.id, feature]
 ))
 
-const transformGeoJsonFeaturesToMapEssential = (
+const featuresToMapGlProps = (
     features,
     colorTaxonomyId,
     iconTaxonomyId
@@ -45,15 +43,30 @@ const transformGeoJsonFeaturesToMapEssential = (
 // Make dynamic.
 // Since we're importing from the taxonomies stub here anyway, stub the
 // transformation here as well.
-const transformGeoJsonFeaturesToMapEssentialFixedTaxonomiesStub = (
+const featuresToMapGlPropsFixedTaxonomiesStub = (
     features
-) => transformGeoJsonFeaturesToMapEssential(
+) => featuresToMapGlProps(
     features,
     VISUALIZED_TAXONOMY.color,
     VISUALIZED_TAXONOMY.icon
 )
 
-const transformGeoJsonFeaturesToMarkerProps = (features) => features.map(({
+const featuresToSearcheables = (
+    features,
+    searchableKeys
+) => features.map(
+    ({ properties: { id, ...properties } }) => ({
+        id,
+        terms: searchableKeys.map((key) => properties[key])
+    })
+)
+
+const featuresToFeatureCollection = (features) => ({
+    type: 'FeatureCollection',
+    features
+})
+
+const mapGlFeaturesToMarkerProps = (features) => features.map(({
     geometry: { coordinates: [longitude, latitude] },
     properties: {
         colorTaxonomyTermId, iconTaxonomyTermId, placeName, id
@@ -67,21 +80,12 @@ const transformGeoJsonFeaturesToMarkerProps = (features) => features.map(({
     placeName
 }))
 
-const transformGeoJsonFeaturesToSearcheables = (
-    features,
-    searchableKeys
-) => features.map(
-    ({ properties: { id, ...properties } }) => ({
-        id,
-        terms: searchableKeys.map((key) => properties[key])
-    })
-)
-
 export {
-    transformGeoJsonFeaturesToGeometries,
-    transformGeoJsonFeaturesToLookup,
-    transformGeoJsonFeaturesToMapEssentialFixedTaxonomiesStub
-    as transformGeoJsonFeaturesToMapEssential,
-    transformGeoJsonFeaturesToMarkerProps,
-    transformGeoJsonFeaturesToSearcheables
+    featuresToFeatureCollection,
+    featuresToGeometries,
+    featuresToLookup,
+    /* eslint-disable-next-line max-len */
+    featuresToMapGlPropsFixedTaxonomiesStub as featuresToMapGlProps,
+    featuresToSearcheables,
+    mapGlFeaturesToMarkerProps
 }

@@ -1,12 +1,12 @@
-const transformCoordinatesToLatLon = ([longitude, latitude]) => (
+const coordinatesToLatLon = ([longitude, latitude]) => (
     { latitude, longitude }
 )
 
-const transformLatLonToCoordinates = ({ latitude, longitude }) => (
+const latLonToCoordinates = ({ latitude, longitude }) => (
     [longitude, latitude]
 )
 
 export {
-    transformCoordinatesToLatLon,
-    transformLatLonToCoordinates
+    coordinatesToLatLon,
+    latLonToCoordinates
 }

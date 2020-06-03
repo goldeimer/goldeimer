@@ -27,8 +27,8 @@ const resolve = {
         '@config': SRC_JS_CONFIG_PATH,
         '@lib': SRC_JS_LIB_PATH,
         // --- static assets ---
-        '@assets/css': SRC_CSS_PATH,
-        '@assets/img': SRC_IMG_PATH
+        css: SRC_CSS_PATH,
+        img: SRC_IMG_PATH
     },
     aliasFields: ['browser'],
     cacheWithContext: false,

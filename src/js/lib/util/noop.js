@@ -1,3 +1,8 @@
+const identity = (arg) => arg
+
 const noop = () => {}
 
-export default noop
+export {
+    noop as default,
+    identity
+}

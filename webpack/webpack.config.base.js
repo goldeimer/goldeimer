@@ -1,5 +1,3 @@
-const path = require('path')
-
 const webpack = require('webpack')
 const { BundleStatsWebpackPlugin } = require('bundle-stats-webpack-plugin')
 const ManifestWebpackPlugin = require('webpack-manifest-plugin')
@@ -38,8 +36,8 @@ module.exports = {
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].css',
-            chunkFilename: 'static/css/[id].css',
-        }),
+            chunkFilename: 'static/css/[id].css'
+        })
     ],
     resolve,
     module: {
@@ -48,7 +46,7 @@ module.exports = {
             eslintLoader,
             styleLoader,
             ...fileLoader
-        ],
+        ]
     },
     optimization: {
         moduleIds: 'hashed',
@@ -58,10 +56,10 @@ module.exports = {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
-                    chunks: 'all',
-                },
-            },
+                    chunks: 'all'
+                }
+            }
         },
-        usedExports: true,
-    },
+        usedExports: true
+    }
 }

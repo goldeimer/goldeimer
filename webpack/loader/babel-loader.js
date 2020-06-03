@@ -30,13 +30,13 @@ const babelLoader = {
                 [
                     '@babel/plugin-transform-runtime',
                     {
-                        'absoluteRuntime': false,
-                        'corejs': false,
-                        'helpers': true,
-                        'regenerator': true,
-                        'useESModules': true
+                        absoluteRuntime: false,
+                        corejs: false,
+                        helpers: true,
+                        regenerator: true,
+                        useESModules: true
                     }
-                ],
+                ]
             ],
             cacheDirectory: true,
             env: {
@@ -44,9 +44,9 @@ const babelLoader = {
                     plugins: [
                         [
                             'transform-react-remove-prop-types',
-                            { removeImport: true },
-                        ],
-                    ],
+                            { removeImport: true }
+                        ]
+                    ]
                 },
                 development: {
                     plugins: ['@babel/transform-react-jsx-source']
@@ -60,9 +60,9 @@ const babelLoader = {
                     // latent professionality of the project. ;)
                     presets: [[...presetEnv][1].modules = 'commonjs']
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 }
 
 module.exports = babelLoader

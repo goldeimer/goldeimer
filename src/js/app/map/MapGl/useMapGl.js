@@ -1,30 +1,61 @@
-import { useEffect, useRef, useState } from 'react'
-import { FlyToInterpolator } from 'react-map-gl'
-import { throttle } from 'throttle-debounce'
+import { useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { useTheme } from '@material-ui/core/styles'
 
+import FEATURES from '@map/features'
 import makeLayers from '@map/MapGl/makeLayers'
-import useMemo from '@lib/hooks/useMemo'
+import { useViewport } from '@map/viewport'
+
 import noop from '@lib/util/noop'
-
-import { transformGeoJsonFeaturesToMarkerProps }
-    from '@map/util/transformations'
-
 import uniqueByKey from '@lib/util/array/uniqueByKey'
+import useDebounce from '@lib/hooks/useDebounce'
+import useCallback from '@lib/hooks/useCallback'
+import useMemo from '@lib/hooks/useMemo'
 
-const DEFAULT_VIEWPORT_TRANSITION_DURATION = 300
-const NEW_MARKER_ZOOM_LEVEL = 15
+const querySourceFeatures = (mapGl, sourceId, dispatchFeatures) => {
+    if (!mapGl) {
+        return
+    }
 
-const useMapGl = (
-    center = { latitude: 0, longitude: 0 },
-    geoJsonSourceId = 'features',
-    zoomLevel = 5
-) => {
+    dispatchFeatures({
+        // TODO: implement!
+        clusters: [],
+        markers: uniqueByKey(
+            mapGl.querySourceFeatures(
+                sourceId,
+                { filter: ['!', ['has', 'point_count']] }
+            ),
+            'id'
+        )
+    })
+}
+
+const attachEventHandler = (eventIds, handler, target, handlerCache) => {
+    eventIds.forEach((eventId) => {
+        target.on(eventId, handler)
+        handlerCache.push([eventId, handler])
+    })
+}
+
+const detachEventHandlers = (target, handlerCache) => {
+    handlerCache.forEach(([eventId, handler]) => (
+        target.off(eventId, handler)
+    ))
+}
+
+const DEBOUNCED_UPDATE_TRIGGER = ['sourcedata']
+const IMMEDIATE_UPDATE_TRIGGER = ['idle']
+
+const useMapGl = (sourceId = 'features') => {
     const mapRef = useRef()
+    const mapGlInstanceRef = useRef()
     const sourceRef = useRef()
 
     const theme = useTheme()
+    const dispatch = useDispatch()
+
+    const [viewport, handleViewportChange] = useViewport()
 
     const {
         clusterLayer,
@@ -32,145 +63,52 @@ const useMapGl = (
         unclusteredPointLayer
     } = useMemo(() => makeLayers(theme), [theme])
 
-    const [map, setMap] = useState(null)
-    const [unclusteredFeatures, setUnclusteredFeatures] = useState(null)
-    const [viewport, setViewport] = useState({
-        bearing: 0,
-        latitude: center.latitude,
-        longitude: center.longitude,
-        pitch: 0,
-        transitionDuration: DEFAULT_VIEWPORT_TRANSITION_DURATION,
-        zoom: zoomLevel
-    })
+    useEffect(() => {
+        if (mapRef.current) {
+            mapGlInstanceRef.current = mapRef.current.getMap()
+        }
+    }, [mapRef])
 
-    const handleViewportChange = (nextViewport) => {
-        setViewport({
-            ...viewport,
-            transitionDuration: DEFAULT_VIEWPORT_TRANSITION_DURATION,
-            ...nextViewport
-        })
-    }
+    const queryFeatures = useCallback(() => querySourceFeatures(
+        mapGlInstanceRef.current,
+        sourceId,
+        (features) => dispatch(FEATURES.viewport.set(features))
+    ), [dispatch, sourceId])
 
-    const flyToInterpolator = new FlyToInterpolator({ speed: 1.2 })
-    const flyTo = (latitude, longitude) => {
-        handleViewportChange({
-            latitude,
-            longitude,
-            transitionInterpolator: flyToInterpolator,
-            transitionDuration: 'auto',
-            zoom: NEW_MARKER_ZOOM_LEVEL
-        })
-    }
+    const [debouncedQueryFeatures] = useDebounce(
+        queryFeatures, 200, false, 500
+    )
 
     useEffect(() => {
-        const querySourceFeatures = () => {
-            if (!map) {
-                return null
-            }
+        if (mapGlInstanceRef.current) {
+            const handlerCache = []
 
-            const features = transformGeoJsonFeaturesToMarkerProps(
-                uniqueByKey(
-                    map.querySourceFeatures(
-                        geoJsonSourceId,
-                        {
-                            filter: ['!', ['has', 'point_count']]
-                        }
-                    ),
-                    'id'
-                )
+            attachEventHandler(
+                DEBOUNCED_UPDATE_TRIGGER,
+                debouncedQueryFeatures,
+                mapGlInstanceRef.current,
+                handlerCache
+            )
+            attachEventHandler(
+                IMMEDIATE_UPDATE_TRIGGER,
+                queryFeatures,
+                mapGlInstanceRef.current,
+                handlerCache
             )
 
-            setUnclusteredFeatures(features)
-
-            return features
-        }
-
-        const querySourceFeaturesThrottled = throttle(
-            500,
-            () => { querySourceFeatures() }
-        )
-
-        const handleIdle = () => { querySourceFeatures() }
-
-        const handleMoveEnd = () => { querySourceFeaturesThrottled() }
-
-        const handleSourceDataUpdate = (event) => {
-            if (
-                event.sourceId !== 'features' ||
-                !event.isSourceLoaded
-            ) {
-                return
-            }
-
-            querySourceFeatures()
-        }
-
-        if (map) {
-            map.on('idle', handleIdle)
-            map.on('moveend', handleMoveEnd)
-            map.on('sourcedata', handleSourceDataUpdate)
-
             return () => {
-                map.off('idle', handleIdle)
-                map.off('moveend', handleMoveEnd)
-                map.off('sourcedata', handleSourceDataUpdate)
+                detachEventHandlers(mapGlInstanceRef.current, handlerCache)
             }
         }
 
         return noop
-    }, [map, geoJsonSourceId])
-
-    useEffect(() => {
-        if (mapRef.current) {
-            setMap(mapRef.current.getMap())
-        }
-    }, [mapRef])
-
-    const handleClusterClick = (feature) => {
-        const clusterId = feature.properties.cluster_id
-        const source = sourceRef.current.getSource()
-
-        source.getClusterExpansionZoom(
-            clusterId,
-            (err, zoom) => {
-                if (err) {
-                    return
-                }
-
-                handleViewportChange({
-                    latitude: feature.geometry.coordinates[1],
-                    longitude: feature.geometry.coordinates[0],
-                    zoom
-                })
-            }
-        )
-    }
-
-    const handleClick = (event) => {
-        if (geoJsonSourceId in event && event.features.length) {
-            const feature = event.features[0]
-
-            if ('layer' in feature) {
-                switch (feature.layer.id) {
-                case clusterLayer.id:
-                case clusterCountLayer.id:
-                    handleClusterClick(feature)
-                    break
-
-                default:
-                }
-            }
-        }
-    }
+    }, [sourceId, queryFeatures, debouncedQueryFeatures])
 
     return {
-        flyTo,
         clusterCountLayer,
         clusterLayer,
-        handleClick,
         handleViewportChange,
         mapRef,
-        unclusteredFeatures,
         sourceRef,
         unclusteredPointLayer,
         viewport

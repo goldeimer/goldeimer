@@ -10,4 +10,9 @@ const context = createSlice({
     }
 })
 
-export default context
+const CONTEXT = context.actions
+
+export {
+    CONTEXT as default,
+    context
+}

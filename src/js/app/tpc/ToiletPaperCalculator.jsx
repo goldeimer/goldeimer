@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 
-import muiTheme from '@config/theme'
+import defaultTheme from '@config/theme'
 
 import FormField from '@lib/components/LegacyForm/FormField'
 import FormSection from '@lib/components/LegacyForm/FormSection'
@@ -193,7 +193,7 @@ const ToiletPaperCalculator = () => {
     )
 
     return (
-        <ThemeProvider theme={muiTheme}>
+        <ThemeProvider theme={defaultTheme.mui}>
             <Form formName='shitcalcForm'>
                 <FormSection
                     title='Haushalt'

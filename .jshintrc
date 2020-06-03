@@ -5,12 +5,12 @@
     "curly": true,
     "eqeqeq": true,
     "forin": true,
-    "freeze": true, 
+    "freeze": true,
     "futurehostile": false,
     "latedef": true,
     "leanswitch": true,
     "maxdepth": 5,
-    "maxstatements": 10,
+    "maxstatements": 20,
     "maxcomplexity": 10,
     "maxerr": 50,
     "maxparams": 10,
@@ -25,7 +25,7 @@
     "undef": true,
     "unused": false,
     "varstmt": true,
-    
+
     "asi": true,
     "boss": false,
     "debug": false,

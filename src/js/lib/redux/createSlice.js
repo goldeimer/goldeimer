@@ -1,12 +1,11 @@
 import {
     createAsyncThunk,
-    createSlice as createSliceTk
+    createSlice as createSliceRtk
 } from '@reduxjs/toolkit'
 
 const createSlice = ({
     name,
     asyncReducers = {},
-    extraReducers = {},
     ...rest
 }) => {
     const thunks = Object.entries(asyncReducers).reduce((
@@ -38,7 +37,7 @@ const createSlice = ({
         }
     }, { resolutions: {}, thunks: {} })
 
-    const slice = createSliceTk({
+    const slice = createSliceRtk({
         name,
         ...rest,
         extraReducers: {

@@ -1,14 +1,14 @@
 import React from 'react'
 import clsx from 'clsx'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
-// import LinkIcon from '@material-ui/icons/Link'
+import LinkIcon from '@material-ui/icons/Link'
 import MarkerIcon from '@material-ui/icons/Room'
 
 import { BRAND_NAME, MERCHANT_TYPE_NAME } from '@map/taxonomies'
-import { selectSortedSource } from '@map/selectFeatures'
+import { useSourceFeatures, FORMAT } from '@map/features'
 import APP from '@app/app'
 
 import ExternalLink from '@lib/components/ExternalLink'
@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const FeatureBrowser = (props) => {
-    const features = useSelector(selectSortedSource)
+    const features = useSourceFeatures(FORMAT.geojson)
 
     const dispatch = useDispatch()
 
@@ -180,22 +180,7 @@ const FeatureBrowser = (props) => {
                     classes.customPaddedTableCells,
                     classes.elevationRemover
                 )}
-            >
-                <Table
-                    columns={columns}
-                    data={flattenedFeatures}
-                    options={{
-                        filtering: true,
-                        grouping: false,
-                        initialPage: 0,
-                        padding: 'dense',
-                        pageSize: 10,
-                        pageSizeOptions: [5, 10, 20, 50],
-                        paginationType: 'stepped'
-                    }}
-                    title=''
-                />
-            </div>
+            />
         </LargeContentDialog>
     )
 }

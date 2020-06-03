@@ -4,9 +4,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 
-const BundleAnalyzerPlugin = require(
+const { BundleAnalyzerPlugin } = require(
     'webpack-bundle-analyzer'
-).BundleAnalyzerPlugin
+)
 
 const productionModeConfig = merge(
     require('./webpack.config.base.js'),
@@ -15,18 +15,18 @@ const productionModeConfig = merge(
         optimization: {
             minimizer: [
                 new OptimizeCSSAssetsPlugin({}),
-                new TerserJSPlugin({}),
-            ],
+                new TerserJSPlugin({})
+            ]
         },
         plugins: [
             new BundleAnalyzerPlugin({
                 analyzerMode: 'static',
                 openAnalyzer: false,
-                reportFilename: 'bundle-analyzer.html',
+                reportFilename: 'bundle-analyzer.html'
             }),
-            new CleanWebpackPlugin(),
+            new CleanWebpackPlugin()
         ],
-        devtool: 'source-map',
+        devtool: 'source-map'
     }
 )
 

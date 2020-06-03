@@ -9,7 +9,7 @@ const esLintLoader = {
     options: {
         fix: true,
         failOnError: true,
-        failOnWarning: !IS_DEVELOPMENT_BUILD
+        failOnWarning: false //!IS_DEVELOPMENT_BUILD
     },
 }
 

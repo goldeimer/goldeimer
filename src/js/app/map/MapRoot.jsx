@@ -8,7 +8,7 @@ import MapGl from '@map/MapGl'
 import FeatureBrowser from '@map/features/FeatureBrowser'
 import FilterSelector from '@map/filter/FilterSelector'
 import SearchContainer from '@map/search/SearchContainer'
-import ZoomControl from '@map/MapGl/ZoomControl'
+import ZoomControl from '@map/viewport/ZoomControl'
 
 import ListIcon from '@lib/components/icons/ui/ListIcon'
 

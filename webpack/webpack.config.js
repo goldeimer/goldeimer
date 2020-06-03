@@ -10,11 +10,10 @@ const {
     PROJECT_PATH,
     PUBLIC_PATH_DEFAULT,
     PUBLIC_PATH_WORDPRESS,
-    SRC_PATH,
     SRC_ETC_PATH,
     SRC_IMG_PATH,
     SRC_CSS_PATH,
-    SRC_JS_ENTRY_PATH,
+    SRC_JS_ENTRY_PATH
 } = require('./abspath')
 
 const webpackModeConfig = !IS_PRODUCTION_BUILD
@@ -30,20 +29,20 @@ const mapConfig = {
     entry: {
         'merchant-map': path.resolve(
             SRC_JS_ENTRY_PATH, 'StandaloneAppShell_MerchantMap.jsx'
-        ),
+        )
     },
     output: {
         filename: `static/js/[name].${
             !IS_PRODUCTION_BUILD ? 'dev-bundle' : '[contenthash]'
         }.js`,
         path: mapDistPath,
-        publicPath: PUBLIC_PATH_DEFAULT,
+        publicPath: PUBLIC_PATH_DEFAULT
     },
     plugins: [
         new CopyWebpackPlugin({
             patterns: [{
                 from: path.resolve(SRC_ETC_PATH, '.htaccess'),
-                to: mapDistPath,
+                to: mapDistPath
             }]
         }),
         new HtmlWebpackPlugin({
@@ -56,17 +55,17 @@ const mapConfig = {
             meta: {
                 viewport:
                     'width=device-width, initial-scale=1, shrink-to-fit=no',
-                'theme-color': '#ffe300',  // TODO: Make dynamic? (Build time?)
+                'theme-color': '#ffe300', // TODO: Make dynamic? (Build time?)
                 generator: 'webpack',
                 googlebot: 'index,follow',
                 rating: 'General',
                 referrer: 'origin',
                 robots: 'index,follow',
-                subject: 'Hier bekommst Du unsere Produkte',
+                subject: 'Hier bekommst Du unsere Produkte'
             },
-            scriptLoading: 'defer',
-        }),
-    ],
+            scriptLoading: 'defer'
+        })
+    ]
 }
 
 /// -------------------------------- WordPress --------------------------------
@@ -87,11 +86,11 @@ const wordPressConfig = {
     output: {
         filename: 'static/js/[name].bundle.js',
         path: path.resolve(PROJECT_PATH, 'wordpress-theme'),
-        publicPath: PUBLIC_PATH_WORDPRESS,
+        publicPath: PUBLIC_PATH_WORDPRESS
     },
 }
 
 module.exports = [
     merge(webpackModeConfig, wordPressConfig),
-    merge(webpackModeConfig, mapConfig),
+    merge(webpackModeConfig, mapConfig)
 ]

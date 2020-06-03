@@ -59,11 +59,11 @@ const Marker = ({
 
 const MarkerEssentialPropTypes = {
     color: PropTypes.string,
+    id: PropTypes.string.isRequired,
     iconComponent: PropTypes.elementType.isRequired,
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
-    placeName: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    placeName: PropTypes.string.isRequired
 }
 
 const MarkerEssentialPropTypesExact = PropTypes.exact(

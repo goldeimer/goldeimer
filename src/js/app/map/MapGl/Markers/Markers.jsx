@@ -19,6 +19,5 @@ Markers.propTypes = {
 const MarkersMemoized = memo(Markers)
 
 export {
-    MarkersMemoized as default,
-    Markers
+    MarkersMemoized as default
 }

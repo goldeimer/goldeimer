@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import ORDER from '@lib/enum/order'
+import { ORDER } from '@map/sort/sortFeatures'
 
 const INITIAL_SORT = {
     order: ORDER.asc,
     orderBy: 'placeName'
 }
+
 const sort = createSlice({
     name: 'sort',
     initialState: INITIAL_SORT,
@@ -32,4 +33,9 @@ const sort = createSlice({
     }
 })
 
-export default sort
+const SORT = sort.actions
+
+export {
+    SORT as default,
+    sort
+}
