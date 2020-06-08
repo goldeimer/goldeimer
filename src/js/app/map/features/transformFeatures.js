@@ -1,13 +1,72 @@
+import { identity } from '@lib/util/noop'
+
 import {
     getColorByTaxonomyTermId,
     getIconComponentByTaxonomyTermId,
     VISUALIZED_TAXONOMY
 } from '@map/taxonomies'
+import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
+import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
 
-const featuresToGeometries = (features) => features.map(({
+/// ------------------- transforming individual features -----------------------
+
+const featureToGeometry = ({
     geometry: { coordinates: [longitude, latitude] },
     properties: { id }
-}) => ({ id, latitude, longitude }))
+}) => ({ id, latitude, longitude })
+
+const featureToLocation = ({
+    geometry: { coordinates: [longitude, latitude] },
+    properties: { id, placeName }
+}) => ({ id, latitude, longitude, placeName })
+
+const featureToSearchResult = ({
+    geometry: { coordinates: [longitude, latitude] },
+    properties: { city, id, placeName, street }
+}) => ({
+    label: `${placeName}, ${street}, ${city}`,
+    value: {
+        id,
+        latitude,
+        longitude,
+        placeName,
+        type: SEARCH_RESULT_TYPE.feature
+    }
+})
+
+const mapGlFeatureToMarkerProps = ({
+    geometry: { coordinates: [longitude, latitude] },
+    properties: {
+        colorTaxonomyTermId, iconTaxonomyTermId, placeName, id
+    }
+}) => ({
+    color: getColorByTaxonomyTermId(colorTaxonomyTermId),
+    iconComponent: getIconComponentByTaxonomyTermId(iconTaxonomyTermId),
+    id,
+    latitude,
+    longitude,
+    placeName
+})
+
+/// ----------------------- transforming collections ---------------------------
+
+const featuresToGeometries = (
+    features
+) => features.map(featureToGeometry)
+
+const featuresToLocations = (
+    features
+) => features.map(featureToLocation)
+
+const featuresToSearchResults = (
+    features
+) => features.map(featureToSearchResult)
+
+const mapGlFeaturesToMarkerProps = (
+    features
+) => features.map(mapGlFeatureToMarkerProps)
+
+/// --------------------- dedicated utility collections ------------------------
 
 const featuresToLookup = (features) => new Map(features.map(
     (feature) => [feature.properties.id, feature]
@@ -30,6 +89,7 @@ const featuresToMapGlProps = (
     }) => ({
         ...feature,
         properties: {
+            // TODO: More defensive array access.
             colorTaxonomyTermId: colorTaxonomyTerms[0] || null,
             iconTaxonomyTermId: iconTaxonomyTerms[0] || null,
             placeName,
@@ -61,31 +121,66 @@ const featuresToSearcheables = (
     })
 )
 
+const featuresToSearcheablesFixedPropertyNamesStub = (features) => (
+    featuresToSearcheables(
+        features,
+        ['placeName', 'street', 'city']
+    )
+)
+
+/// ------------------------------ geojson util -------------------------------
+
 const featuresToFeatureCollection = (features) => ({
     type: 'FeatureCollection',
     features
 })
 
-const mapGlFeaturesToMarkerProps = (features) => features.map(({
-    geometry: { coordinates: [longitude, latitude] },
-    properties: {
-        colorTaxonomyTermId, iconTaxonomyTermId, placeName, id
+const getTransform = (format, targetIsCollection = true) => {
+    // Most transforms are equally applicable to single items as well as
+    // collections thereof. For some, that's less the case and the choice of
+    // the single item transform returned in case of an (erroneous) false
+    // `targetIsCollection` stems simply from the lack of saner options / ideas.
+    switch (format) {
+    case FEATURE_FORMAT.geojson:
+        return identity
+
+    case FEATURE_FORMAT.geometry:
+        return targetIsCollection ? featuresToGeometries : featureToGeometry
+
+    case FEATURE_FORMAT.location:
+        return targetIsCollection ? featuresToLocations : featureToLocation
+
+    case FEATURE_FORMAT.lookup:
+        return targetIsCollection ? featuresToLookup : new Map()
+
+    case FEATURE_FORMAT.mapGl:
+        return targetIsCollection
+            ? featuresToMapGlPropsFixedTaxonomiesStub
+            : identity
+
+    case FEATURE_FORMAT.searchable:
+        return targetIsCollection
+            ? featuresToSearcheablesFixedPropertyNamesStub
+            : identity
+
+    case FEATURE_FORMAT.searchResult:
+        return targetIsCollection
+            ? featuresToSearchResults
+            : featureToSearchResult
+
+    default:
+        return identity
     }
-}) => ({
-    color: getColorByTaxonomyTermId(colorTaxonomyTermId),
-    iconComponent: getIconComponentByTaxonomyTermId(iconTaxonomyTermId),
-    id,
-    latitude,
-    longitude,
-    placeName
-}))
+}
+
+const getFeatureTransform = (format) => getTransform(format, false)
+const getFeaturesTransform = (format) => getTransform(format, true)
 
 export {
     featuresToFeatureCollection,
-    featuresToGeometries,
-    featuresToLookup,
-    /* eslint-disable-next-line max-len */
-    featuresToMapGlPropsFixedTaxonomiesStub as featuresToMapGlProps,
-    featuresToSearcheables,
-    mapGlFeaturesToMarkerProps
+    getFeatureTransform,
+    getFeaturesTransform,
+    getTransform,
+    mapGlFeaturesToMarkerProps,
+    FEATURE_FORMAT
 }

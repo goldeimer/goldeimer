@@ -8,7 +8,7 @@ import LinkIcon from '@material-ui/icons/Link'
 import MarkerIcon from '@material-ui/icons/Room'
 
 import { BRAND_NAME, MERCHANT_TYPE_NAME } from '@map/taxonomies'
-import { useSourceFeatures, FORMAT } from '@map/features'
+import { useSourceFeatures, FEATURE_FORMAT } from '@map/features'
 import APP from '@app/app'
 
 import ExternalLink from '@lib/components/ExternalLink'
@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const FeatureBrowser = (props) => {
-    const features = useSourceFeatures(FORMAT.geojson)
+    const features = useSourceFeatures(FEATURE_FORMAT.geojson)
 
     const dispatch = useDispatch()
 

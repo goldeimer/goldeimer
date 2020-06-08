@@ -12,7 +12,7 @@ import useMapGl from '@map/MapGl/useMapGl'
 import {
     useSourceFeatures,
     useViewportFeatures,
-    FORMAT
+    FEATURE_FORMAT
 } from '@map/features'
 import VIEWPORT from '@map/viewport'
 
@@ -49,7 +49,7 @@ const MapGl = () => {
     const dispatch = useDispatch()
 
     const context = useSelector((state) => (state.map.context))
-    const features = useSourceFeatures(FORMAT.mapGl)
+    const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
     const { markers } = useViewportFeatures()
 
     const {

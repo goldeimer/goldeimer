@@ -8,7 +8,6 @@ const useDebounce = (
     guarantee = false
 ) => {
     const callbackRef = useRef(null)
-    const debouncedRef = useRef(null)
     const referenceTimeRef = useRef(0)
     const timeoutIdRef = useRef(null)
 
@@ -23,51 +22,49 @@ const useDebounce = (
         callbackRef.current = callback
     })
 
-    useEffect(() => {
-        const execute = () => {
-            callbackRef.current()
-            clear()
+    const execute = (args) => {
+        callbackRef.current(...args)
+        clear()
+        updateReferenceTime()
+    }
+
+    const schedule = (timeout, args) => {
+        timeoutIdRef.current = setTimeout(() => execute(args), timeout)
+    }
+
+    const debouncedCallback = (...args) => {
+        const elapsed = Date.now() - referenceTimeRef.current
+
+        if (elapsed > delay && timeoutIdRef.current === null) {
+            if (atStart) {
+                execute(args)
+                return
+            }
+
             updateReferenceTime()
+            schedule(delay, args)
+            return
         }
 
-        const schedule = (timeout) => {
-            timeoutIdRef.current = setTimeout(execute, timeout)
-        }
-
-        debouncedRef.current = () => {
-            const elapsed = Date.now() - referenceTimeRef.current
-
-            if (elapsed > delay && timeoutIdRef.current === null) {
-                if (atStart) {
-                    execute()
-                    return
-                }
-
-                updateReferenceTime()
-                schedule(delay)
-                return
-            }
-
-            if (!guarantee) {
-                clear()
-                schedule(delay)
-                return
-            }
-
-            const nextGuaranteedExecutionIn = isNumber(guarantee)
-                ? guarantee - elapsed
-                : delay - elapsed
-
-            const nextExecutionIn = nextGuaranteedExecutionIn > delay
-                ? delay
-                : nextGuaranteedExecutionIn
-
+        if (!guarantee) {
             clear()
-            schedule(nextExecutionIn)
+            schedule(delay, args)
+            return
         }
-    }, [delay, atStart, guarantee])
 
-    return [debouncedRef.current, clear]
+        const nextGuaranteedExecutionIn = isNumber(guarantee)
+            ? guarantee - elapsed
+            : delay - elapsed
+
+        const nextExecutionIn = nextGuaranteedExecutionIn > delay
+            ? delay
+            : nextGuaranteedExecutionIn
+
+        clear()
+        schedule(nextExecutionIn, args)
+    }
+
+    return [debouncedCallback, clear]
 }
 
 export default useDebounce

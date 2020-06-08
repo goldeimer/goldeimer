@@ -12,7 +12,7 @@ module.exports = {
         'arrow-parens': ['error', 'always'],
         'global-require': ['off'],
         indent: ['error', 4],
-        'max-len': ['error', {
+        'max-len': ['warn', {
             code: 80,
             ignoreComments: false,
             ignoreTemplateLiterals: true,

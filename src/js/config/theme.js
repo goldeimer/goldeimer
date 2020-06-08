@@ -3,8 +3,8 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import 'img/favicon/goldeimer.favicon.png'
 import 'img/favicon/vca.favicon.png'
 
-import GoldeimerIcon from '@lib/components/icons/brands/GoldeimerIcon'
-import VivaConAguaIcon from '@lib/components/icons/brands/VivaConAguaIcon'
+import GoldeimerIcon from '@map/icons/brands/GoldeimerIcon'
+import VivaConAguaIcon from '@map/icons/brands/VivaConAguaIcon'
 
 const COLOR_PRIMARY_GOLDEIMER = '#ffe300'
 const COLOR_PRIMARY_VIVA_CON_AGUA = '#008fc3'

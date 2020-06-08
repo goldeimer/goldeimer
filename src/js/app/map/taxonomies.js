@@ -6,9 +6,9 @@ import EcommerceIcon from '@material-ui/icons/Shop'
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
 import RetailIcon from '@material-ui/icons/Store'
 
-import GoldeimerIcon from '@lib/components/icons/brands/GoldeimerIcon'
-import VivaConAguaIcon from '@lib/components/icons/brands/VivaConAguaIcon'
-import WholesaleIcon from '@lib/components/icons/merchant-types/WholesaleIcon'
+import GoldeimerIcon from '@map/icons/brands/GoldeimerIcon'
+import VivaConAguaIcon from '@map/icons/brands/VivaConAguaIcon'
+import WholesaleIcon from '@map/icons/merchant-types/WholesaleIcon'
 
 import {
     COLOR_PRIMARY_GOLDEIMER,

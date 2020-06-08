@@ -110,15 +110,25 @@ const getFeaturesVca = async () => {
     return spreadsheetDataToGeoJsonVca(result)
 }
 
+const stripPostCode = (city) => city.replace(/\d{4,}\w?/, '')
+
 const sanitizeProperty = (value, key) => {
     if (isString(value)) {
         const sanitized = value.trim().replace(
             /\s{2,}/g,
             ' '
+        ).replace(
+            /,{2,}/g,
+            ','
+
         )
 
         if (key === 'url' && !validUrl.isUri(sanitized)) {
             return ''
+        }
+
+        if (key === 'city') {
+            return stripPostCode(sanitized)
         }
 
         return sanitized

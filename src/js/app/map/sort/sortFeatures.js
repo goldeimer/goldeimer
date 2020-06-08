@@ -1,9 +1,9 @@
 import ORDER from '@lib/enum/order'
-import sortObjects from '@lib/util/array/sortObjects'
+import { sortObjects } from '@lib/util/array'
 
 const sortFeatures = (
     features,
-    { orderBy = 'name', order = ORDER.asc }
+    { orderBy = 'placeName', order = ORDER.asc }
 ) => sortObjects(
     features,
     orderBy,

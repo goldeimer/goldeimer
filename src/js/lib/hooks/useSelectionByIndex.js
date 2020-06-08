@@ -11,11 +11,15 @@ const useSelectionByIndex = (
     const getSelectedValueFromIndex = (index) => {
         const item = items[index]
 
+        if (!item) {
+            return null
+        }
+
         return 'value' in item ? item.value : item
     }
 
     const { length } = items
-    const lastIndex = Math.max(0, length - 1)
+    const lastIndex = Math.max(-1, length - 1)
 
     const setSelectedIndexWithSideEffects = (index) => {
         if (index >= 0 && index <= lastIndex) {
@@ -23,7 +27,7 @@ const useSelectionByIndex = (
 
             const selectedValue = getSelectedValueFromIndex(index)
 
-            if (isFunction(onSelect)) {
+            if (selectedValue && isFunction(onSelect)) {
                 onSelect(selectedValue)
             }
 

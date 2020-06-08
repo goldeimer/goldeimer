@@ -1,24 +1,30 @@
 export {
+    default,
+    features
+} from '@map/features/featuresSlice'
+
+export { default as FEATURE_FORMAT } from '@map/features/enumFeatureFormat'
+
+export {
     featuresToFeatureCollection,
-    featuresToGeometries,
-    featuresToLookup,
-    featuresToMapGlProps,
-    featuresToSearcheables,
+    getFeatureTransform,
+    getFeaturesTransform,
+    getTransform,
     mapGlFeaturesToMarkerProps
 } from '@map/features/transformFeatures'
 
 export {
     default as getSourceFeatures,
-    selectViewportFeatures,
-    FORMAT
+    getFeatureById,
+    getFeaturesById,
+    getSearchableSourceFeatures,
+    getSourceFeatureLookup,
+    selectViewportFeatures
 } from '@map/features/selectFeatures'
 
 export {
     default as useSourceFeatures,
+    useFeature,
+    useFeatures,
     useViewportFeatures
 } from '@map/features/useFeatures'
-
-export {
-    default,
-    features
-} from '@map/features/featuresSlice'

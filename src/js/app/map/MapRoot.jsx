@@ -10,7 +10,7 @@ import FilterSelector from '@map/filter/FilterSelector'
 import SearchContainer from '@map/search/SearchContainer'
 import ZoomControl from '@map/viewport/ZoomControl'
 
-import ListIcon from '@lib/components/icons/ui/ListIcon'
+import { FeatureBrowserIcon } from '@map/icons/ui'
 
 import APP from '@app/app'
 import VIEW_ID from '@map/views'
@@ -30,7 +30,7 @@ const SecondaryUi = () => {
             <FeatureBrowser
                 title='Liste aller Einträge'
                 isInitiallyOpen={viewId === VIEW_ID.browse}
-                titleIcon={<ListIcon />}
+                titleIcon={<FeatureBrowserIcon />}
             />
         </>
     )

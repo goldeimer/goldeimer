@@ -9,7 +9,6 @@
 import axios from 'axios'
 
 import { MAP_TILER_API_KEY } from '@config/apiKeys'
-import log from '@lib/util/log'
 
 // Hamburg, Germany
 const DEFAULT_PROXIMITY = '10.00,53.56'
@@ -36,29 +35,9 @@ const geocodingRequest = async (
 
     const requestUrl = `${MAP_TILER_GEOCODING_ENDPOINT}${query}.json?key=${MAP_TILER_API_KEY}&language=de,en${bboxQueryArg}${proximityQueryArg}`
 
-    try {
-        const response = await axios.get(requestUrl)
+    const response = await axios.get(requestUrl)
 
-        return response.data
-    } catch (error) {
-        log(error)
-
-        return null
-    }
-}
-
-const freeFormGeocodingRequest = async (
-    searchString,
-    bbox = DEFAULT_BOUNDING_BOX,
-    proximity = DEFAULT_PROXIMITY
-) => {
-    const response = await geocodingRequest(
-        `${searchString}`,
-        bbox,
-        proximity
-    )
-
-    return response
+    return response.data
 }
 
 const reverseGeocodingRequest = async (
@@ -78,6 +57,5 @@ const reverseGeocodingRequest = async (
 
 export {
     geocodingRequest as default,
-    freeFormGeocodingRequest,
     reverseGeocodingRequest
 }

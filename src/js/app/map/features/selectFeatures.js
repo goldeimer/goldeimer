@@ -1,29 +1,21 @@
 import { compose } from 'redux'
-import { createCachedSelector, FifoObjectCache } from 're-reselect'
+import { createCachedSelector, FifoMapCache } from 're-reselect'
 import stringify from 'json-stringify-deterministic'
-
-import makeEnum from '@lib/enum/makeEnum'
 
 import { filterFeatures, selectFilter } from '@map/filter'
 import { sortFeatures, selectSort } from '@map/sort'
 
+import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
 import {
-    featuresToGeometries,
-    featuresToLookup,
-    featuresToMapGlProps,
-    featuresToSearcheables
+    getFeatureTransform,
+    getFeaturesTransform
 } from '@map/features/transformFeatures'
 
-const CACHE_SIZE = 50
-
-const FORMAT = makeEnum([
-    'geojson',
-    'geometry',
-    'lookup',
-    'mapGl',
-    'marker',
-    'searchable'
-])
+const CACHE_SIZE = {
+    source: 50,
+    featureById: 30,
+    featuresById: 20
+}
 
 const selectSourceFeatures = (state) => (state.map.features.source.features)
 const selectViewportFeatures = (state) => (state.map.features.viewport)
@@ -55,43 +47,18 @@ const extractFeaturesFromSource = (
         addTransform(transforms, sortFeatures, sort)
     }
 
-    switch (format) {
-    case FORMAT.geojson:
-        break
-
-    case FORMAT.geometry:
-        addTransform(transforms, featuresToGeometries)
-        break
-
-    case FORMAT.lookup:
-        addTransform(transforms, featuresToLookup)
-        break
-
-    case FORMAT.mapGl:
-        addTransform(transforms, featuresToMapGlProps)
-        break
-
-        // case FORMAT.marker:
-        //     addTransform(transforms, featuresToMarkerProps)
-        //     break
-
-    case FORMAT.searchable:
-        addTransform(transforms, featuresToSearcheables)
-        break
-
-    default:
-    }
+    addTransform(transforms, getFeaturesTransform(format))
 
     return compose(...transforms)(features)
 }
 
-const getSourceFeatures = createCachedSelector(
+const selectSourceFeaturesWithOptions = createCachedSelector(
     selectSourceFeatures,
     selectFilter,
     selectSort,
     (_, format) => format,
-    (_, shouldFilter = false) => shouldFilter,
-    (_, shouldSort = false) => shouldSort,
+    (_, __, shouldFilter) => shouldFilter,
+    (_, __, ___, shouldSort) => shouldSort,
     (features, filter, sort, format, shouldFilter, shouldSort) => (
         extractFeaturesFromSource(
             features,
@@ -108,11 +75,85 @@ const getSourceFeatures = createCachedSelector(
 
         return `${format.value}:${shouldFilter ? stringify(filter) : shouldFilter}:${sortKey}`
     },
-    cacheObject: new FifoObjectCache({ cacheSize: CACHE_SIZE })
+    cacheObject: new FifoMapCache({ cacheSize: CACHE_SIZE.source })
 })
+
+const getSourceFeatures = (
+    format = FEATURE_FORMAT.geojson,
+    shouldFilter = false,
+    shouldSort = false
+) => (state) => selectSourceFeaturesWithOptions(
+    state,
+    format,
+    shouldFilter,
+    shouldSort
+)
+
+const getSourceFeatureLookup = getSourceFeatures(FEATURE_FORMAT.lookup)
+
+const getSearchableSourceFeatures = getSourceFeatures(
+    FEATURE_FORMAT.searchable,
+    true
+)
+
+const selectFeatureById = createCachedSelector(
+    getSourceFeatureLookup,
+    (_, id) => id,
+    (_, __, format) => format,
+    (lookup, id, format) => {
+        const feature = lookup.get(id)
+
+        if (!feature) {
+            return null
+        }
+
+        return getFeatureTransform(format)(feature)
+    }
+)({
+    keySelector: (_, id, format) => `${id}:${format.value}`,
+    cacheObject: new FifoMapCache({ cacheSize: CACHE_SIZE.featureById })
+})
+
+const selectFeaturesById = createCachedSelector(
+    getSourceFeatureLookup,
+    (_, ids) => ids,
+    (_, __, format) => format,
+    (lookup, ids, format) => {
+        const transform = getFeatureTransform(format)
+
+        const features = ids.reduce((acc, id) => {
+            const feature = lookup.get(id)
+
+            if (!feature) {
+                return acc
+            }
+
+            return [...acc, transform(feature)]
+        }, [])
+
+        return features
+    }
+)({
+    keySelector: (_, ids, format) => `${ids.join(',')}:${format.value}`,
+    cacheObject: new FifoMapCache({ cacheSize: CACHE_SIZE.featuresById })
+})
+
+/* eslint-disable-next-line no-extra-parens */
+const getFeatureById = (id, format = FEATURE_FORMAT.geojson) => (
+    (state) => selectFeatureById(state, id, format)
+)
+
+/* eslint-disable-next-line no-extra-parens */
+const getFeaturesById = (ids, format = FEATURE_FORMAT.geojson) => (
+    (state) => selectFeaturesById(state, ids, format)
+)
 
 export {
     getSourceFeatures as default,
-    selectViewportFeatures,
-    FORMAT
+    FEATURE_FORMAT,
+    getFeatureById,
+    getFeaturesById,
+    getSearchableSourceFeatures,
+    getSourceFeatureLookup,
+    selectViewportFeatures
 }

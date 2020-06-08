@@ -14,11 +14,12 @@ import useSelectionByIndexKeyboardControlled
 
 const SelectionList = ({
     dense,
-    itemIcon,
+    defaultItemIcon,
     items,
     noOptionsText,
     onItemClick,
     onSelect,
+    renderItemIcon,
     showNoteOnEmpty
 }) => {
     const {
@@ -40,10 +41,10 @@ const SelectionList = ({
         >
             {items.length
                 ? items.map(
-                    ({ id, label }, index) => (
+                    ({ label, value }, index) => (
                         <ListItem
                             button
-                            key={id}
+                            key={value.id}
                             onClick={() => {
                                 const selectedValue = handleSelect(index)
 
@@ -54,13 +55,15 @@ const SelectionList = ({
                             role='menuitem'
                             selected={selectedIndex === index}
                         >
-                            {
-                                itemIcon && (
-                                    <ListItemIcon>
-                                        {itemIcon}
-                                    </ListItemIcon>
-                                )
-                            }
+                            {(defaultItemIcon || renderItemIcon) && (
+                                <ListItemIcon>
+                                    {
+                                        renderItemIcon
+                                            ? renderItemIcon(value)
+                                            : defaultItemIcon
+                                    }
+                                </ListItemIcon>
+                            )}
                             <ListItemText
                                 primary={label}
                             />
@@ -82,7 +85,7 @@ const SelectionList = ({
 
 SelectionList.propTypes = {
     dense: PropTypes.bool,
-    itemIcon: PropTypes.node,
+    defaultItemIcon: PropTypes.node,
     items: PropTypes.arrayOf(
         PropTypes.exact({
             id: PropTypes.oneOfType([
@@ -96,16 +99,18 @@ SelectionList.propTypes = {
     noOptionsText: PropTypes.string,
     onItemClick: PropTypes.func,
     onSelect: PropTypes.func,
+    renderItemIcon: PropTypes.func,
     showNoteOnEmpty: PropTypes.bool
 }
 
 SelectionList.defaultProps = {
     dense: true,
-    itemIcon: null,
+    defaultItemIcon: null,
     items: [],
     noOptionsText: 'Keine Ergebnisse.',
     onItemClick: null,
     onSelect: null,
+    renderItemIcon: null,
     showNoteOnEmpty: true
 }
 

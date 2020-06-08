@@ -18,9 +18,11 @@ import useToggleStates from '@lib/hooks/useToggleStates'
 import StandardDrawer from '@lib/components/modals/StandardDrawer'
 import ToggleSwitchList from '@lib/components/buttons/ToggleSwitchList'
 
-import FilterIcon from '@lib/components/icons/ui/FilterIcon'
-import ListIcon from '@lib/components/icons/ui/ListIcon'
-import MapIcon from '@lib/components/icons/ui/MapIcon'
+import {
+    FeatureBrowserIcon,
+    FilterListIcon,
+    MapIcon
+} from '@map/icons/ui'
 
 import APP from '@app/app'
 import TAXONOMIES from '@map/taxonomies'
@@ -62,7 +64,7 @@ const FilterSelector = (props) => {
                     }}
                 >
                     <ListItemIcon>
-                        <ListIcon />
+                        <FeatureBrowserIcon />
                     </ListItemIcon>
                     <ListItemText primary='Liste aller Einträge' />
                 </ListItem>
@@ -77,7 +79,7 @@ const FilterSelector = (props) => {
                     onClick={() => { toggleSubMenu('filter') }}
                 >
                     <ListItemIcon>
-                        <FilterIcon />
+                        <FilterListIcon />
                     </ListItemIcon>
                     <ListItemText primary='Auswahl einschränken' />
                     <Box pl={2} display='flex' alignItems='center'>

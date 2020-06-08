@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import noop from '@lib/util/noop'
 
 const KEYS = {
     ARROW_DOWN: 'ArrowDown',
@@ -8,10 +10,39 @@ const KEYS = {
     ENTER: 'Enter'
 }
 
-const useKeyPress = (targetKey) => {
+const useKeyDown = (targetKey, onKeyDown, isActive = true) => {
+    const callbackRef = useRef(null)
+
+    useEffect(() => {
+        callbackRef.current = onKeyDown
+    })
+
+    useEffect(() => {
+        if (!isActive) {
+            return noop
+        }
+
+        const handleKeyDown = ({ key }) => {
+            if (key === targetKey) {
+                callbackRef.current()
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [isActive, targetKey])
+}
+
+const useKeyPress = (targetKey, isActive = true) => {
     const [isKeyPressed, setIsKeyPressed] = useState(false)
 
     useEffect(() => {
+        if (!isActive) {
+            setIsKeyPressed(false)
+        }
+
         const handleKeyDown = ({ key }) => {
             if (key === targetKey) {
                 setIsKeyPressed(true)
@@ -30,19 +61,9 @@ const useKeyPress = (targetKey) => {
             window.removeEventListener('keydown', handleKeyDown)
             window.removeEventListener('keyup', handleKeyUp)
         }
-    }, [targetKey, setIsKeyPressed])
+    }, [isActive, targetKey])
 
     return isKeyPressed
-}
-
-const useKeyDown = (targetKey, onKeyDown) => {
-    const isKeyPressed = useKeyPress(targetKey)
-
-    useEffect(() => {
-        if (isKeyPressed) {
-            onKeyDown()
-        }
-    }, [isKeyPressed, onKeyDown])
 }
 
 export {

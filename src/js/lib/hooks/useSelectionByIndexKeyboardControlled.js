@@ -7,8 +7,8 @@ const {
     ARROW_UP
 } = KEYS
 
-const useSelectionByIndexKeyboardControlled = (...args) => {
-    const selectionByIndex = useSelectionByIndex(...args)
+const useSelectionByIndexKeyboardControlled = (items, ...args) => {
+    const selectionByIndex = useSelectionByIndex(items, ...args)
 
     const {
         handleDecrement,

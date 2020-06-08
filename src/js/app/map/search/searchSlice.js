@@ -1,92 +1,117 @@
-import combineSlices from '@lib/redux/combineSlices'
-import createSlice from '@lib/redux/createSlice'
+import { createAsyncThunk, createSegment, payloadIdentity } from '@lib/redux'
 import generateId from '@lib/util/generateId'
 
 import geocodingRequest from '@map/search/geocoding'
+import { MIN_ACTIONABLE_QUERY_LENGTH } from '@map/search/searchConfig'
 
-const INITIAL_GEOCODING = []
-const geocoding = createSlice({
-    name: 'geocoding',
-    initialState: INITIAL_GEOCODING,
-    reducers: {
-        reset: () => INITIAL_GEOCODING,
-        set: (_, { candidates }) => candidates
-    },
-    asyncReducers: {
-        fetch: {
-            payloadCreator: async (query) => {
-                const result = await geocodingRequest(query)
-                return result
-            },
-            fulfilled: (_, { payload }) => payload
-        }
-    }
-})
+const INITIAL_GEOCODING = {
+    currentRequestId: null,
+    results: []
+}
 
 const INITIAL_QUERY = ''
-const query = createSlice({
-    name: 'query',
-    initialState: INITIAL_QUERY,
-    reducers: {
-        reset: () => INITIAL_QUERY,
-        set: ({ query: qry }) => qry
-    },
-    extraReducers: {
-        submit: {
-            payloadCreator: (qry, { dispatch }) => {
-                if (qry.length < 3) {
-                    return
-                }
-                dispatch(geocoding.fetch(qry))
-            },
-            pending: (_, { meta: { arg: qry } }) => qry
-        }
-    }
-})
 
 const INITIAL_RESULT = {
     current: null,
     history: []
 }
-const result = createSlice({
-    name: 'result',
-    initialState: INITIAL_RESULT,
-    reducers: {
-        add: {
-            prepare: (payload) => ({
-                id: generateId(),
-                ...payload,
-                searchedAt: Date.now()
-            }),
-            reducer: (
-                state,
-                {
-                    payload: {
-                        id, query: qry, result: res, searchedAt
+
+const fetchGeocoding = createAsyncThunk(
+    'search/geocoding/fetch',
+    async (query) => {
+        const result = await geocodingRequest(query)
+        return result
+    }
+)
+
+const search = createSegment({
+    name: 'search',
+    slices: {
+        geocoding: {
+            initialState: INITIAL_GEOCODING,
+            reducers: {
+                reset: () => INITIAL_GEOCODING
+            },
+            extraReducers: {
+                [fetchGeocoding.pending]: (state, { meta: { requestId } }) => {
+                    state.currentRequestId = requestId
+                },
+                [fetchGeocoding.fulfilled]: (
+                    state,
+                    { meta: { requestId }, payload }
+                ) => {
+                    if (state.currentRequestId === requestId) {
+                        state.results = payload
                     }
                 }
-            ) => {
-                state.history.unshift({
-                    id,
-                    qry,
-                    res,
-                    searchedAt
-                })
             }
         },
-        clear: () => INITIAL_RESULT,
-        reset: (state) => {
-            state.current = INITIAL_RESULT.current
+        query: {
+            initialState: INITIAL_QUERY,
+            reducers: {
+                reset: () => INITIAL_QUERY
+            },
+            asyncReducers: {
+                set: {
+                    payloadCreator: async (query, { dispatch }) => {
+                        const trimmed = query.trim()
+                        if (trimmed.length >= MIN_ACTIONABLE_QUERY_LENGTH) {
+                            // TODO: Debounce?
+                            dispatch(fetchGeocoding(trimmed))
+                        }
+
+                        return query
+                    },
+                    fulfilled: payloadIdentity
+                }
+            }
         },
-        set: (state, { payload }) => { state.current = payload }
+        result: {
+            initialState: INITIAL_RESULT,
+            reducers: {
+                add: {
+                    prepare: (value) => ({
+                        payload: {
+                            id: generateId(),
+                            ...value,
+                            searchedAt: Date.now()
+                        }
+                    }),
+                    reducer: (
+                        state,
+                        {
+                            payload: {
+                                id, query, result, searchedAt
+                            }
+                        }
+                    ) => {
+                        // TODO: Better validation. (In the prepare method?)
+                        if (!query || !result) {
+                            return
+                        }
+
+                        state.history.unshift({
+                            id,
+                            query,
+                            result: {
+                                type: result.type.value(),
+                                ...result
+                            },
+                            searchedAt
+                        })
+                    }
+                },
+                clear: () => INITIAL_RESULT,
+                reset: (state) => {
+                    state.current = INITIAL_RESULT.current
+                },
+                set: (state, { payload }) => { state.current = payload }
+            }
+        }
     }
 })
 
-const search = combineSlices({
-    geocoding,
-    query,
-    result
-})
+search.actions.geocoding.fetch = fetchGeocoding
 
 const SEARCH = search.actions
 

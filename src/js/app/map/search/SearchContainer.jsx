@@ -1,58 +1,115 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { debounce } from 'throttle-debounce'
+
+import useDebounce from '@lib/hooks/useDebounce'
+import useViewportEdgeStyles from '@lib/styles/useViewportEdgeStyles'
+
+import SEARCH, {
+    geocodingResultIsDach,
+    useGeocodingSearchResults,
+    useQueriedFeatureSearchResults,
+    useQueriedSearchHistoryResults,
+    useQuery,
+    useSearchResult
+} from '@map/search'
+import VIEW_ID from '@map/views'
 
 import Box from '@material-ui/core/Box'
 
-import APP from '@app/app'
-import { selectSearchResult } from '@map/search/selectSearch'
-import useViewportEdgeStyles from '@lib/styles/useViewportEdgeStyles'
+import AutoCompleteSearchBox from '@lib/components/AutoCompleteSearchBox'
+import SearchResultIcon from '@map/search/SearchResultIcon'
 
-import GeocodingAutocomplete from '@map/search/GeocodingAutocomplete'
-
-import VIEW_ID from '@map/views'
-
-const SEARCH = APP.map.search
+const MAX_RESULT_LENGTH = {
+    total: 8,
+    features: 3,
+    history: 2
+}
 
 const SearchContainer = () => {
     const classes = useViewportEdgeStyles()
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const currentResult = useSelector(selectSearchResult)
+    const query = useQuery()
+    const result = useSearchResult()
 
+    const featureResults = useQueriedFeatureSearchResults({
+        maxLength: MAX_RESULT_LENGTH.features
+    })
+
+    const searchHistoryResults = useQueriedSearchHistoryResults({
+        maxLength: MAX_RESULT_LENGTH.history
+    })
+
+    const derivedMaxGeocodingResultLength = MAX_RESULT_LENGTH.total - (
+        featureResults.length +
+        searchHistoryResults.length
+    )
+
+    const geocodingResults = useGeocodingSearchResults({
+        condition: geocodingResultIsDach,
+        maxLength: derivedMaxGeocodingResultLength
+    })
+
+    const results = [
+        ...searchHistoryResults,
+        ...geocodingResults,
+        ...featureResults
+    ]
+
+    // TODO: Is obsolete?
     const [hasBeenAddedToHistory, setHasBeenAddedToHistory] = useState(false)
 
-    const addToHistory = (result) => {
+    /// --------------------------- event util --------------------------------
+
+    const addToHistory = (rslt, qry = query) => {
         if (hasBeenAddedToHistory) {
             return
         }
 
-        dispatch(SEARCH.result.add(result))
+        dispatch(SEARCH.result.add({ query: qry, result: rslt }))
         setHasBeenAddedToHistory(true)
     }
 
-    const setResult = (result) => (
-        dispatch(SEARCH.result.set(result))
+    const setResult = (rslt) => (
+        dispatch(SEARCH.result.set(rslt))
     )
 
-    const delayedAddToHistory = debounce(20000, addToHistory)
-    const debouncedSetResult = debounce(1000, setResult)
+    const [delayedAddToHistory] = useDebounce(addToHistory, 20000)
+    const [debouncedSetResult] = useDebounce(setResult, 1000)
 
-    const handleChange = (query) => {
-        dispatch(SEARCH.query.set(query))
-    }
+    /// ------------------------- event handlers ------------------------------
 
-    const handleClose = () => {
-        if (!hasBeenAddedToHistory && currentResult) {
-            addToHistory(currentResult)
+    const handleBlur = () => {}
+    const handleFocus = () => {}
+
+    const handleChange = ({ target: { value } }) => {
+        if (value === result) {
+            return
         }
+
+        if (result) {
+            dispatch([
+                SEARCH.result.reset(),
+                SEARCH.query.set(value)
+            ])
+
+            return
+        }
+
+        dispatch(SEARCH.query.set(value))
     }
+
+    // const handleClose = () => {
+    //     if (!hasBeenAddedToHistory && currentResult) {
+    //         addToHistory(currentResult)
+    //     }
+    // }
 
     const handleSelect = (selectedItem) => {
         debouncedSetResult(selectedItem)
-        delayedAddToHistory(selectedItem)
+        delayedAddToHistory(selectedItem, query)
     }
 
     const handleSubmit = (selectedItem) => {
@@ -60,15 +117,30 @@ const SearchContainer = () => {
         addToHistory(selectedItem)
     }
 
+    /* eslint-disable react/prop-types */
+    const renderItemIcon = ({ id, type }) => (
+        <SearchResultIcon
+            id={id}
+            size='small'
+            type={type.value}
+        />
+    )
+    /* eslint-enable react/prop-types */
+
     return (
         <Box className={classes.topLeft}>
-            <GeocodingAutocomplete
-                currentResult={currentResult}
+            <AutoCompleteSearchBox
+                defaultItemIcon={<SearchResultIcon />}
+                onBlur={handleBlur}
                 onChange={handleChange}
-                onClose={handleClose}
+                onFocus={handleFocus}
                 onMenuClick={() => { history.push(`/${VIEW_ID.menu}`) }}
                 onSelect={handleSelect}
                 onSubmit={handleSubmit}
+                renderItemIcon={renderItemIcon}
+                results={results}
+                value={result && result.placeName ? result.placeName : query}
+                withMenuButton
             />
         </Box>
     )
