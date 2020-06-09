@@ -85,7 +85,9 @@ const SearchContainer = () => {
     const handleFocus = () => {}
 
     const handleChange = ({ target: { value } }) => {
-        if (value === result) {
+        console.log(value)
+
+        if (result && value === result.placeName) {
             return
         }
 

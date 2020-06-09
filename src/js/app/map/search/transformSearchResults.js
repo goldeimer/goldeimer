@@ -2,12 +2,49 @@ import { generateShortId } from '@lib/util/generateId'
 
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 
-// TODO: More defensive property access.
-const getPlaceNameFromGeocodingResult = (result) => (
-    result.place_name_de.replace(
-        /,+/g,
+const federalStates = [
+    'Baden-Württemberg',
+    'Bayern',
+    'Berlin',
+    'Brandenburg',
+    'Bremen',
+    'Hamburg',
+    'Hessen',
+    'Mecklenburg-Vorpommern',
+    'Niedersachsen',
+    'Nordrhein-Westfalen',
+    'Rheinland-Pfalz',
+    'Saarland',
+    'Sachsen',
+    'Sachsen-Anhalt',
+    'Schleswig-Holstein',
+    // MapTiler (OSM?): Erroneous data in `place_name_de`.
+    'Šlezvicko-Holštajnsko',
+    'Thüringen'
+]
+
+const sanitizeMapTilerPlaceName = (placeName) => {
+    const sanitized = placeName.replace(
+        /,+/gu,
         ','
     )
+
+    if (federalStates.some(
+        (federalState) => placeName.endsWith(federalState)
+    )) {
+        console.log(sanitized)
+
+        return sanitized.replace(
+            new RegExp(',\\s*?[\\-\\w\\sšŠ]*?$', 'gu'), ''
+        )
+    }
+
+    return sanitized
+}
+
+// TODO: More defensive property access.
+const getPlaceNameFromGeocodingResult = (result) => (
+    sanitizeMapTilerPlaceName(result.place_name_de)
 )
 
 const geocodingResultToSearchResult = ({

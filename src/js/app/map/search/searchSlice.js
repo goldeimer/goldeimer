@@ -94,7 +94,7 @@ const search = createSegment({
                             id,
                             query,
                             result: {
-                                type: result.type.value(),
+                                type: result.type.value,
                                 ...result
                             },
                             searchedAt
