@@ -62,7 +62,7 @@ const makeDefaultTransition = () => makeSerializableTransition(
     INTERPOLATOR_TYPE.linear
 )
 
-const makeTransitionCaseReducer = (serializableTransition) => () => ({
+const makeTransitionCaseReducer = (serializableTransition) => ({
     prepare: () => ({ payload: { id: generateId() } }),
     reducer: (_, { payload: { id } }) => ({ id, ...serializableTransition })
 })

@@ -1,21 +1,28 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const makeEdgeGutterDefinition = (theme) => ({
-    default: theme.spacing(1),
-    md: theme.spacing(2),
-    lg: theme.spacing(3),
-    xl: theme.spacing(4)
+const transformGutterDefinitionToSpacing = (
+    theme,
+    {
+        base = 1,
+        md = 1,
+        lg = 1,
+        xl = 1
+    }
+) => ({
+    base: theme.spacing(base),
+    md: theme.spacing(md),
+    lg: theme.spacing(lg),
+    xl: theme.spacing(xl)
 })
 
-const useViewportEdgeStyles = makeStyles((theme) => {
+const useViewportEdgeStyles = (gutterDefiniton = {}) => makeStyles((theme) => {
     const positionAbsolute = { position: 'absolute' }
-    const gutter = makeEdgeGutterDefinition(theme)
+    const gutter = transformGutterDefinitionToSpacing(theme, gutterDefiniton)
 
     const makeEdgePosition = (horizontal, vertical) => ({
-
         ...positionAbsolute,
-        [horizontal]: gutter.default,
-        [vertical]: gutter.default,
+        [horizontal]: gutter.base,
+        [vertical]: gutter.base,
         [theme.breakpoints.up('md')]: {
             [horizontal]: gutter.md,
             [vertical]: gutter.md
@@ -37,9 +44,9 @@ const useViewportEdgeStyles = makeStyles((theme) => {
         bottomLeft: makeEdgePosition('bottom', 'left'),
         bottomRight: makeEdgePosition('bottom', 'right')
     }
-})
+})()
 
 export {
     useViewportEdgeStyles as default,
-    makeEdgeGutterDefinition
+    transformGutterDefinitionToSpacing
 }

@@ -63,11 +63,11 @@ const viewport = createSegment({
                 ...transitionReducers
             },
             extraReducers: {
-                'viewport/zoom/in': transitionReducers.default,
-                'viewport/zoom/out': transitionReducers.default,
-                'viewport/zoom/reset': transitionReducers.instant,
-                'viewport/zoom/set': transitionReducers.instant,
-                'viewport/zoom/zoom': transitionReducers.default
+                // 'viewport/zoom/in': transitionReducers.default,
+                // 'viewport/zoom/out': transitionReducers.default,
+                // 'viewport/zoom/reset': transitionReducers.instant,
+                // 'viewport/zoom/set': transitionReducers.instant,
+                // 'viewport/zoom/zoom': transitionReducers.default
             }
         },
         sync: {
