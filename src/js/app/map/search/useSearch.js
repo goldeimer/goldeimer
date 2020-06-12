@@ -5,6 +5,8 @@ import { identity, yes } from '@lib/util/noop'
 
 import { FEATURE_FORMAT, useFeatures } from '@map/features'
 
+import { idNotInIds } from '@map/search/filterGeocodingResults'
+
 import {
     queryFeatureIds,
     querySearchHistory,
@@ -26,6 +28,7 @@ const useQuery = () => useSelector(selectQuery)
 
 const useGeocodingResults = ({
     condition = yes,
+    excludeIds = [],
     maxLength = null,
     transform = identity
 }) => {
@@ -33,12 +36,16 @@ const useGeocodingResults = ({
 
     if (results.features) {
         const sorted = sortObjects(
-            results.features.filter(condition),
+            results.features.filter(
+                (feature) => (
+                    condition(feature) && idNotInIds(feature, excludeIds)
+                )
+            ),
             'relevance',
             SORT_ORDER.desc
         )
 
-        const features = maxLength ? sorted.splice(0, maxLength) : sorted
+        const features = maxLength ? sorted.slice(0, maxLength) : sorted
 
         return transform(features)
     }
@@ -46,9 +53,14 @@ const useGeocodingResults = ({
     return []
 }
 
-const useGeocodingSearchResults = ({ condition = yes, maxLength = null }) => (
+const useGeocodingSearchResults = ({
+    condition = yes,
+    excludeIds = [],
+    maxLength = null
+}) => (
     useGeocodingResults({
         condition,
+        excludeIds,
         maxLength,
         transform: geocodingResultsToSearchResults
     })
@@ -61,9 +73,9 @@ const useQueriedFeatures = ({
     maxLength = null
 }) => {
     const ids = useQueriedFeatureIds()
-    const splicedIds = maxLength ? ids.splice(0, maxLength) : ids
+    const slicedIds = maxLength ? ids.slice(0, maxLength) : ids
 
-    return useFeatures(splicedIds, format)
+    return useFeatures(slicedIds, format)
 }
 
 const useQueriedFeatureSearchResults = ({ maxLength = null }) => (
@@ -79,11 +91,11 @@ const useQueriedSearchHistory = ({
 }) => {
     const historyEntries = useSelector(querySearchHistory)
 
-    if (!maxLength) {
+    if (maxLength === null) {
         return transform(historyEntries)
     }
 
-    return transform(historyEntries.splice(0, maxLength))
+    return transform(historyEntries.slice(0, maxLength))
 }
 
 const useQueriedSearchHistoryResults = ({ maxLength = null }) => (

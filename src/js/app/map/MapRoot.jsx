@@ -49,8 +49,8 @@ const MapRoot = () => {
             <Route path='/:viewId'>
                 <SecondaryUi />
             </Route>
-            <SearchContainer />
             <ZoomControl />
+            <SearchContainer />
         </>
     )
 }

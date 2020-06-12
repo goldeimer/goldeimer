@@ -17,4 +17,9 @@ const geocodingResultIsDach = (feature) => {
     return DACH_REGION_COUNTRIES.includes(countryEntry.text_en)
 }
 
-export default geocodingResultIsDach
+const idNotInIds = (feature, ids) => !ids.includes(feature.id)
+
+export {
+    geocodingResultIsDach,
+    idNotInIds
+}

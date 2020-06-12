@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { isFunction } from 'typechecker'
+import { makeStyles } from '@material-ui/core/styles'
+
+import useSelectionByIndexKeyboardControlled
+    from '@lib/hooks/useSelectionByIndexKeyboardControlled'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -9,10 +14,14 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import NoResultsIcon from '@material-ui/icons/NotInterested'
 
-import useSelectionByIndexKeyboardControlled
-    from '@lib/hooks/useSelectionByIndexKeyboardControlled'
+const useStyles = makeStyles((theme) => ({
+    root: {
+        overflowY: 'auto'
+    }
+}))
 
 const SelectionList = ({
+    classes,
     dense,
     defaultItemIcon,
     items,
@@ -22,6 +31,8 @@ const SelectionList = ({
     renderItemIcon,
     showNoteOnEmpty
 }) => {
+    const baseClasses = useStyles()
+
     const {
         selectedIndex,
         handleSelect
@@ -36,8 +47,9 @@ const SelectionList = ({
 
     return (
         <List
+            className={clsx(baseClasses.root, classes.maximums || {})}
             component='nav'
-            dense
+            dense={dense}
         >
             {items.length
                 ? items.map(
@@ -75,7 +87,7 @@ const SelectionList = ({
                             <NoResultsIcon />
                         </ListItemIcon>
                         <ListItemText
-                            primary='Keine Ergebnisse.'
+                            primary={noOptionsText}
                         />
                     </ListItem>
                 )}
@@ -84,6 +96,9 @@ const SelectionList = ({
 }
 
 SelectionList.propTypes = {
+    classes: PropTypes.shape({
+        maximums: PropTypes.string
+    }),
     dense: PropTypes.bool,
     defaultItemIcon: PropTypes.node,
     items: PropTypes.arrayOf(
@@ -104,6 +119,7 @@ SelectionList.propTypes = {
 }
 
 SelectionList.defaultProps = {
+    classes: {},
     dense: true,
     defaultItemIcon: null,
     items: [],

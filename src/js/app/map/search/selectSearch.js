@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { createCachedSelector, FifoMapCache } from 're-reselect'
 
 import { getSearchableSourceFeatures } from '@map/features/selectFeatures'
 
@@ -36,7 +37,7 @@ const queryFeatureIds = createSelector(
 // TODO:
 // - cached selector?
 // - pass maxLength, early break from filter iteration?
-const querySearchHistory = createSelector(
+const querySearchHistory = createCachedSelector(
     selectSearchHistory,
     selectQuery,
     (history, query) => {
@@ -45,10 +46,15 @@ const querySearchHistory = createSelector(
         }
 
         return history.filter(
-            (entry) => entry.result.placeName.includes(query)
+            (entry) => (entry.result.placeName.includes(query))
         )
     }
-)
+)({
+    keySelector: (history, query) => (
+        `${query}:${history.length}`
+    ),
+    cacheObject: new FifoMapCache({ cacheSize: 20 })
+})
 
 export {
     getRecentSearchHistory,

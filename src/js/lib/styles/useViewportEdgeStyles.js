@@ -15,34 +15,62 @@ const transformGutterDefinitionToSpacing = (
     xl: theme.spacing(xl)
 })
 
-const useViewportEdgeStyles = (gutterDefiniton = {}) => makeStyles((theme) => {
+const useViewportEdgeStyles = ({
+    extraSpacing: { height = 0, width = 0 } = {},
+    gutterDefiniton = {}
+} = {}) => makeStyles((theme) => {
     const positionAbsolute = { position: 'absolute' }
     const gutter = transformGutterDefinitionToSpacing(theme, gutterDefiniton)
 
-    const makeEdgePosition = (horizontal, vertical) => ({
-        ...positionAbsolute,
-        [horizontal]: gutter.base,
-        [vertical]: gutter.base,
-        [theme.breakpoints.up('md')]: {
-            [horizontal]: gutter.md,
-            [vertical]: gutter.md
-        },
-        [theme.breakpoints.up('lg')]: {
-            [horizontal]: gutter.lg,
-            [vertical]: gutter.lg
-        },
-        [theme.breakpoints.up('xl')]: {
-            [horizontal]: gutter.xl,
-            [vertical]: gutter.xl
+    const makeMaximum = (spacing) => ({
+        maxHeight: `calc(100vh - ${2 * spacing + height}px)`,
+        maxWidth: `calc(100vw - ${2 * spacing + width}px)`,
+        fallbacks: {
+            maxHeight: '96%',
+            maxWidth: '96%'
         }
+    })
+
+    const makeEdgePosition = (horizontal, vertical, spacing) => ({
+        [horizontal]: spacing,
+        [vertical]: spacing,
+        ...makeMaximum(spacing)
+    })
+
+    const makeEdgePositions = (horizontal, vertical) => ({
+        ...positionAbsolute,
+        ...makeEdgePosition(horizontal, vertical, gutter.base),
+        [theme.breakpoints.up('md')]: makeEdgePosition(
+            horizontal,
+            vertical,
+            gutter.md
+        ),
+        [theme.breakpoints.up('lg')]: makeEdgePosition(
+            horizontal,
+            vertical,
+            gutter.lg
+        ),
+        [theme.breakpoints.up('xl')]: makeEdgePosition(
+            horizontal,
+            vertical,
+            gutter.xl
+        )
+    })
+
+    const makeMaximums = () => ({
+        ...makeMaximum(gutter.base),
+        [theme.breakpoints.up('md')]: makeMaximum(gutter.md),
+        [theme.breakpoints.up('lg')]: makeMaximum(gutter.lg),
+        [theme.breakpoints.up('xl')]: makeMaximum(gutter.xl)
     })
 
     return {
         positionAbsolute,
-        topLeft: makeEdgePosition('top', 'left'),
-        topRight: makeEdgePosition('top', 'right'),
-        bottomLeft: makeEdgePosition('bottom', 'left'),
-        bottomRight: makeEdgePosition('bottom', 'right')
+        maximums: makeMaximums(),
+        topLeft: makeEdgePositions('top', 'left'),
+        topRight: makeEdgePositions('top', 'right'),
+        bottomLeft: makeEdgePositions('bottom', 'left'),
+        bottomRight: makeEdgePositions('bottom', 'right')
     }
 })()
 

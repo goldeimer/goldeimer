@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import clsx from 'clsx'
+import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
@@ -11,7 +13,8 @@ import SEARCH, {
     useQueriedFeatureSearchResults,
     useQueriedSearchHistoryResults,
     useQuery,
-    useSearchResult
+    useSearchResult,
+    MIN_ACTIONABLE_QUERY_LENGTH
 } from '@map/search'
 import VIEW_ID from '@map/views'
 
@@ -20,14 +23,24 @@ import Box from '@material-ui/core/Box'
 import AutoCompleteSearchBox from '@lib/components/AutoCompleteSearchBox'
 import SearchResultIcon from '@map/search/SearchResultIcon'
 
+const useStyles = makeStyles((theme) => ({
+    width: {
+        width: 400
+    }
+}))
+
 const MAX_RESULT_LENGTH = {
-    total: 8,
-    features: 3,
+    total: 10,
+    features: 5,
     history: 2
 }
 
 const SearchContainer = () => {
-    const classes = useViewportEdgeStyles()
+    const classes = useStyles()
+    const viewportClasses = useViewportEdgeStyles()
+    const selectionListClasses = useViewportEdgeStyles({
+        extraSpacing: { height: 48 }
+    })
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -49,10 +62,15 @@ const SearchContainer = () => {
 
     const geocodingResults = useGeocodingSearchResults({
         condition: geocodingResultIsDach,
+        excludeIds: searchHistoryResults.map((entry) => entry.value.resultId),
         maxLength: derivedMaxGeocodingResultLength
     })
 
-    const results = [
+    const results = result ? [{
+        id: result.id,
+        label: result.placeName,
+        value: result
+    }] : [
         ...searchHistoryResults,
         ...geocodingResults,
         ...featureResults
@@ -60,6 +78,7 @@ const SearchContainer = () => {
 
     // TODO: Is obsolete?
     const [hasBeenAddedToHistory, setHasBeenAddedToHistory] = useState(false)
+    const [showResults, setShowResults] = useState(false)
 
     /// --------------------------- event util --------------------------------
 
@@ -77,19 +96,24 @@ const SearchContainer = () => {
     )
 
     const [delayedAddToHistory] = useDebounce(addToHistory, 20000)
+    const [debouncedAddToHistory] = useDebounce(addToHistory, 1000)
     const [debouncedSetResult] = useDebounce(setResult, 1000)
 
     /// ------------------------- event handlers ------------------------------
 
-    const handleBlur = () => {}
-    const handleFocus = () => {}
+    const handleBlur = () => {
+        setShowResults(false)
+    }
+    const handleFocus = () => {
+        setShowResults(true)
+    }
 
     const handleChange = ({ target: { value } }) => {
-        console.log(value)
-
         if (result && value === result.placeName) {
             return
         }
+
+        setShowResults(true)
 
         if (result) {
             dispatch([
@@ -116,21 +140,22 @@ const SearchContainer = () => {
 
     const handleSubmit = (selectedItem) => {
         setResult(selectedItem)
-        addToHistory(selectedItem)
+        setShowResults(false)
+        debouncedAddToHistory(selectedItem)
     }
 
     /* eslint-disable react/prop-types */
     const renderItemIcon = ({ id, type }) => (
         <SearchResultIcon
             id={id}
-            size='small'
+            fontSize='small'
             type={type.value}
         />
     )
     /* eslint-enable react/prop-types */
 
     return (
-        <Box className={classes.topLeft}>
+        <Box className={clsx(viewportClasses.topLeft, classes.width)}>
             <AutoCompleteSearchBox
                 defaultItemIcon={<SearchResultIcon />}
                 onBlur={handleBlur}
@@ -141,6 +166,9 @@ const SearchContainer = () => {
                 onSubmit={handleSubmit}
                 renderItemIcon={renderItemIcon}
                 results={results}
+                selectionListClasses={selectionListClasses}
+                showResults={showResults}
+                showNoteOnEmpty={query.length >= MIN_ACTIONABLE_QUERY_LENGTH}
                 value={result && result.placeName ? result.placeName : query}
                 withMenuButton
             />

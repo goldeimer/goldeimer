@@ -6,8 +6,11 @@ export {
 export { default as SEARCH_RESULT_TYPE } from '@map/search/enumSearchResultType'
 
 export {
-    default as geocodingResultIsDach
+    geocodingResultIsDach,
+    idNotInIds
 } from '@map/search/filterGeocodingResults'
+
+export { MIN_ACTIONABLE_QUERY_LENGTH } from '@map/search/searchConfig'
 
 export {
     geocodingResultToSearchResult,

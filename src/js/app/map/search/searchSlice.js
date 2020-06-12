@@ -55,9 +55,12 @@ const search = createSegment({
                 set: {
                     payloadCreator: async (query, { dispatch }) => {
                         const trimmed = query.trim()
-                        if (trimmed.length >= MIN_ACTIONABLE_QUERY_LENGTH) {
+
+                        if (MIN_ACTIONABLE_QUERY_LENGTH <= trimmed.length) {
                             // TODO: Debounce?
                             dispatch(fetchGeocoding(trimmed))
+                        } else {
+                            dispatch({ type: 'search/geocoding/reset' })
                         }
 
                         return query

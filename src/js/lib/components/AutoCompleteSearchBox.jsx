@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { PropTypes } from 'prop-types'
 import clsx from 'clsx'
 
@@ -19,14 +19,9 @@ import noop from '@lib/util/noop'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: `calc(100% - ${theme.spacing(2)}px)`,
-        fallbacks: {
-            maxWidth: '96%'
-        },
-        width: 'auto',
-        [`@media (min-width: ${400 + theme.spacing(2)}px)`]: {
-            width: 400
-        }
+        maxHeight: '100%',
+        maxWidth: 400,
+        width: '100%'
     },
     iconButton: {
         padding: 10,
@@ -60,15 +55,15 @@ const AutoCompleteSearchBox = ({
     onSubmit,
     renderItemIcon,
     results,
+    selectionListClasses,
     showNoteOnEmpty,
+    showResults,
     value,
     withMenuButton
 }) => {
     const rootRef = useRef()
 
     const classes = useStyles()
-
-    const [showResults, setShowResults] = useState(false)
 
     const isResultSelectionOpen = showResults && (
         results.length > 0 || showNoteOnEmpty
@@ -100,11 +95,9 @@ const AutoCompleteSearchBox = ({
                             return
                         }
 
-                        setShowResults(false)
                         onBlur(event)
                     }}
                     onFocus={(event) => {
-                        setShowResults(true)
                         onFocus(event)
                     }}
                     onChange={onChange}
@@ -129,6 +122,7 @@ const AutoCompleteSearchBox = ({
             >
                 <Divider />
                 <SelectionList
+                    classes={selectionListClasses}
                     defaultItemIcon={defaultItemIcon}
                     items={results}
                     onItemClick={onSubmit}
@@ -151,10 +145,10 @@ AutoCompleteSearchBox.propTypes = {
     onSelect: PropTypes.func,
     onSubmit: PropTypes.func,
     renderItemIcon: PropTypes.func,
-    results: PropTypes.arrayOf(PropTypes.shape({
-        some: PropTypes.string
-    })),
+    results: SelectionList.propTypes.items,
+    selectionListClasses: SelectionList.propTypes.classes,
     showNoteOnEmpty: PropTypes.bool,
+    showResults: PropTypes.bool,
     value: PropTypes.string,
     withMenuButton: PropTypes.bool
 }
@@ -170,7 +164,9 @@ AutoCompleteSearchBox.defaultProps = {
     onSubmit: noop,
     renderItemIcon: null,
     results: [],
-    showNoteOnEmpty: false,
+    selectionListClasses: {},
+    showNoteOnEmpty: true,
+    showResults: true,
     value: '',
     withMenuButton: false
 }

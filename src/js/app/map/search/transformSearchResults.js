@@ -32,8 +32,6 @@ const sanitizeMapTilerPlaceName = (placeName) => {
     if (federalStates.some(
         (federalState) => placeName.endsWith(federalState)
     )) {
-        console.log(sanitized)
-
         return sanitized.replace(
             new RegExp(',\\s*?[\\-\\w\\sšŠ]*?$', 'gu'), ''
         )
@@ -73,6 +71,7 @@ const geocodingResultsToSearchResults = (results) => results.map(
 const historyEntryToSearchResult = ({
     id,
     result: {
+        id: resultId,
         longitude,
         latitude,
         placeName
@@ -81,6 +80,7 @@ const historyEntryToSearchResult = ({
     label: placeName,
     value: {
         id,
+        resultId,
         longitude,
         latitude,
         placeName,
@@ -89,7 +89,7 @@ const historyEntryToSearchResult = ({
 })
 
 const historyEntriesToSearchResults = (entries) => entries.map(
-    (entry) => geocodingResultToSearchResult(entry)
+    (entry) => historyEntryToSearchResult(entry)
 )
 
 export {
