@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 import InlineSvgIcon from '@lib/components/InlineSvgIcon'
 
-import WholesaleSvg from 'img/icons/merchant-types/wholesale.icon'
+import wholesaleSvg from 'img/icons/merchant-types/wholesale.icon'
 
-const WholesaleIcon = (props) => <InlineSvgIcon svg={WholesaleSvg} {...props} />
+const WholesaleIcon = (props) => <InlineSvgIcon svg={wholesaleSvg} {...props} />
 
-export default WholesaleIcon
+export default memo(WholesaleIcon)

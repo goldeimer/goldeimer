@@ -1,41 +1,81 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
-
 import { makeStyles } from '@material-ui/core/styles'
-import Avatar from '@material-ui/core/Avatar'
+
+import { hexToRgba } from '@lib/util/color'
+
+import Box from '@material-ui/core/Box'
+import ButtonBase from '@material-ui/core/ButtonBase'
 
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
+import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
-const useStyles = makeStyles((theme) => ({
-    avatar: ({ color }) => {
-        const backgroundColor = color !== null
-            ? color
-            : theme.palette.primary.main
+const getColor = (color) => (
+    color && color !== null ? color : '#757575'
+)
+
+const useStyles = makeStyles(({ palette }) => ({
+    background: ({ color: mayBeColor }) => {
+        const color = getColor(mayBeColor)
+        const contrast = palette.getContrastText(getColor(color))
 
         return {
-            color: theme.palette.getContrastText(backgroundColor),
-            backgroundColor
+            color,
+            '&:hover': {
+                '& path': {
+                    stroke: hexToRgba(contrast, 0.5),
+                    strokeWidth: 1
+                }
+            },
+            '&:active': {
+                stroke: hexToRgba(contrast, 0.8),
+                strokeWidth: 1
+            }
         }
-    }
+    },
+    icon: ({ color }) => ({
+        color: palette.getContrastText(getColor(color))
+    })
 }))
 
-const FeatureMarkerComponent = ({
+const FeatureMarkerComponent = memo(({
     color,
-    iconComponent: IconComponent,
-    ...other
+    iconComponent: IconComponent
 }) => {
     const classes = useStyles({ color })
 
     return (
-        <Avatar
-            {...other}
-            className={clsx(classes.avatar, other.className)}
+        <ButtonBase
+            // TODO: Fix.
+            disableRipple
         >
-            <IconComponent />
-        </Avatar>
+            <Box
+                fontSize='3rem'
+                position='relative'
+                display='flex'
+                flexShrink={1}
+            >
+                <MarkerBackgroundIcon
+                    className={classes.background}
+                    fontSize='inherit'
+                />
+                <Box
+                    position='absolute'
+                    fontSize='1.5rem'
+                    top={6}
+                    left={12}
+                    display='flex'
+                    flexShrink={1}
+                >
+                    <IconComponent
+                        className={classes.icon}
+                        fontSize='inherit'
+                    />
+                </Box>
+            </Box>
+        </ButtonBase>
     )
-}
+})
 
 FeatureMarkerComponent.propTypes = {
     color: PropTypes.string,
@@ -46,27 +86,17 @@ FeatureMarkerComponent.defaultProps = {
     color: null
 }
 
-const FeatureMarkerComponentMemoized = memo(FeatureMarkerComponent)
-
-const FeatureMarker = ({
-    component,
-    ...other
-}) => (
+const FeatureMarker = (props) => (
     <Marker
-        {...other}
-        anchorTo={ANCHOR_TO.center}
-        component={component || FeatureMarkerComponentMemoized}
+        {...props}
+        anchorTo={ANCHOR_TO.top}
+        component={FeatureMarkerComponent}
+        defaultDimensions={{ height: 48, width: 48 }}
     />
 )
 
-FeatureMarker.propTypes = {
-    ...Marker.propTypes,
-    component: PropTypes.elementType
-}
+FeatureMarker.propTypes = Marker.propTypes
 
-FeatureMarker.defaultProps = {
-    ...Marker.defaultProps,
-    component: null
-}
+FeatureMarker.defaultProps = Marker.defaultProps
 
 export default FeatureMarker

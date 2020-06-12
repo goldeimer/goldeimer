@@ -101,14 +101,13 @@ const featureToSearchResultFixedTaxonomiesStub = (
 const mapGlFeatureToMarkerProps = ({
     geometry: { coordinates: [longitude, latitude] },
     properties: {
-        colorTaxonomyTermId, iconTaxonomyTermId, placeName, id
+        colorTaxonomyTermId, iconTaxonomyTermId, id
     }
 }) => ({
     ...getColorAndIconComponent(colorTaxonomyTermId, iconTaxonomyTermId),
     id,
     latitude,
-    longitude,
-    placeName
+    longitude
 })
 
 /// ----------------------- transforming collections ---------------------------

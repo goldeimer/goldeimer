@@ -4,12 +4,27 @@ import PropTypes from 'prop-types'
 import Popper from '@material-ui/core/Popper'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(({ palette, zIndex }) => {
+const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
     const { paper } = palette.background
 
     return {
-        popper: {
+        arrow: {
+            position: 'absolute',
+            fontSize: 7,
+            width: '3em',
+            height: '3em',
+            '&::before': {
+                content: '""',
+                margin: 'auto',
+                display: 'block',
+                width: 0,
+                height: 0,
+                borderStyle: 'solid'
+            }
+        },
+        root: {
             zIndex: zIndex.modal,
+            top: '-8px !important',
             '&[x-placement*="bottom"] $arrow': {
                 top: 0,
                 left: 0,
@@ -51,33 +66,25 @@ const useStyles = makeStyles(({ palette, zIndex }) => {
                     borderWidth: '1em 0 1em 1em',
                     borderColor: `transparent transparent transparent ${paper}`
                 }
-            }
-        },
-        arrow: {
-            position: 'absolute',
-            fontSize: 7,
-            width: '3em',
-            height: '3em',
-            '&::before': {
-                content: '""',
-                margin: 'auto',
-                display: 'block',
-                width: 0,
-                height: 0,
-                borderStyle: 'solid'
+            },
+            '& .MuiPaper-root': {
+                // TODO:
+                // - Pass elevation as a prop?
+                // - obstacle: referenced rule `$arrow`...
+                boxShadow: shadows[8]
             }
         }
     }
 })
 
-const ArrowPopper = ({ anchorEl, children, isOpen }) => {
+const ArrowPopper = ({ anchorEl, children, isOpen, ...other }) => {
     const [arrowRef, setArrowRef] = useState(null)
     const classes = useStyles()
 
     return (
         <Popper
             anchorEl={anchorEl}
-            className={classes.popper}
+            className={classes.root}
             modifiers={{
                 arrow: {
                     enabled: true,

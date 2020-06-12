@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -7,6 +7,7 @@ import { useDetail } from '@map/features'
 import useHover from '@lib/hooks/useHover'
 
 import ArrowPopper from '@lib/components/modals/ArrowPopper'
+import Box from '@material-ui/core/Box'
 import MarkerDetailCard from '@map/MapGl/Markers/MarkerDetailCard'
 
 import { MarkerIcon } from '@map/icons/ui'
@@ -23,12 +24,11 @@ const useStyles = makeStyles(({ zIndex }) => ({
     }
 }))
 
-const MarkerContent = ({
+const MarkerContent = forwardRef(({
     component: Component,
-    placeName,
     id,
     ...componentProps
-}) => {
+}, ref) => {
     const {
         bind,
         currentTriggerEl,
@@ -50,20 +50,24 @@ const MarkerContent = ({
                     {...feature}
                 />
             </ArrowPopper>
-            <Component
+            <Box
                 {...bind}
-                {...componentProps}
-                className={classes.popperTrigger}
-                id={id}
-            />
+                display='inline-block'
+                ref={ref}
+            >
+                <Component
+                    {...componentProps}
+                    className={classes.popperTrigger}
+                    id={id}
+                />
+            </Box>
         </>
     )
-}
+})
 
 MarkerContent.propTypes = {
     component: PropTypes.elementType,
-    id: PropTypes.string.isRequired,
-    placeName: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired
 }
 
 MarkerContent.defaultProps = {

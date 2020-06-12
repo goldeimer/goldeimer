@@ -1,8 +1,6 @@
-import React, { useMemo } from 'react'
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Marker as MarkerGl } from 'react-map-gl'
-
-import { useTheme } from '@material-ui/core/styles'
 
 import MarkerContent from '@map/MapGl/Markers/MarkerContent'
 
@@ -13,29 +11,41 @@ const ANCHOR_TO = {
 
 const calculateOffsets = (
     anchorTo,
-    height,
-    width
+    { height, width }
 ) => ({
     // TODO: Grab bounding client rect from DOM node.
     left: -(width / 2),
-    top: -(anchorTo === ANCHOR_TO.top ? height : height / 2)
+    top: -(anchorTo === ANCHOR_TO.top
+        ? height
+        : height / 2
+    )
 })
+
+const DEFAULT_DIMENSIONS = { height: 24, width: 24 }
 
 const Marker = ({
     anchorTo,
-    component,
+    defaultDimensions,
     latitude,
     longitude,
-    placeName,
-    id,
     ...other
 }) => {
-    const theme = useTheme()
-    const unitSpacing = theme.spacing(1)
+    const dimensionsRef = useRef()
+    const markerRef = useRef()
 
-    const offsets = useMemo(() => calculateOffsets(
-        anchorTo, unitSpacing * 5, unitSpacing * 5
-    ), [anchorTo, unitSpacing])
+    useLayoutEffect(() => {
+        if (markerRef.current) {
+            const { height, width } = markerRef.current.getBoundingClientRect()
+
+            dimensionsRef.current = { height, width }
+        }
+    }, [markerRef])
+
+    const dimensions = dimensionsRef.current
+        ? dimensionsRef.current
+        : defaultDimensions
+
+    const offsets = calculateOffsets(anchorTo, dimensions)
 
     return (
         <MarkerGl
@@ -45,51 +55,29 @@ const Marker = ({
             offsetTop={offsets.top}
         >
             <MarkerContent
-                component={component}
-                placeName={placeName}
-                id={id}
+                ref={markerRef}
                 {...other}
             />
         </MarkerGl>
     )
 }
 
-// TODO:
-// Clean up this ill-conceived mess!
-
-const MarkerEssentialPropTypes = {
-    color: PropTypes.string,
-    id: PropTypes.string.isRequired,
-    iconComponent: PropTypes.elementType.isRequired,
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    placeName: PropTypes.string.isRequired
-}
-
-const MarkerEssentialPropTypesExact = PropTypes.exact(
-    MarkerEssentialPropTypes
-)
-
-const MarkerEssentialPropTypesArrayOf = PropTypes.arrayOf(
-    MarkerEssentialPropTypesExact
-)
-
 Marker.propTypes = {
-    ...MarkerContent.propTypes,
-    ...MarkerEssentialPropTypes,
-    anchorTo: PropTypes.string
+    anchorTo: PropTypes.string,
+    defaultDimensions: PropTypes.exact({
+        height: PropTypes.number,
+        width: PropTypes.number
+    }),
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired
 }
 
 Marker.defaultProps = {
-    ...MarkerContent.defaultProps,
     anchorTo: ANCHOR_TO.top,
-    color: null
+    defaultDimensions: DEFAULT_DIMENSIONS
 }
 
 export {
     Marker as default,
-    ANCHOR_TO,
-    MarkerEssentialPropTypes,
-    MarkerEssentialPropTypesExact,
-    MarkerEssentialPropTypesArrayOf
+    ANCHOR_TO
 }

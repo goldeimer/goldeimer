@@ -19,7 +19,6 @@ import VIEWPORT from '@map/viewport'
 import ContextMarker from '@map/MapGl/Markers/ContextMarker'
 import FeatureMarker from '@map/MapGl/Markers/FeatureMarker'
 import Markers from '@map/MapGl/Markers'
-import { MarkerEssentialPropTypesExact } from '@map/MapGl/Markers/Marker'
 import Source from '@map/MapGl/Source'
 
 import { MAP_TILER_API_KEY } from '@config/apiKeys'
@@ -29,8 +28,7 @@ const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a58
 const useStyles = makeStyles(({
     borderRadius,
     palette,
-    typography,
-    zIndex
+    typography
 }) => ({
     root: {
         height: '100%',
@@ -93,8 +91,7 @@ const MapGl = () => {
                 interactiveLayerIds={[clusterLayer.id, clusterCountLayer.id]}
                 mapboxApiAccessToken=''
                 mapOptions={{
-                    customAttribution:
-                        '<a href="" target="_blank">© 2020 Agentur Alk & Flens</a>'
+                    // customAttribution: '<a href="https://github.com/jpilkahn" target="_blank">© Agentur Alk & Flens</a>'
                 }}
                 mapStyle={MAP_STYLE_URL}
                 onClick={handleClick}
@@ -124,14 +121,6 @@ const MapGl = () => {
             </MapGL>
         </div>
     )
-}
-
-MapGl.propTypes = {
-    context: MarkerEssentialPropTypesExact
-}
-
-MapGl.defaultProps = {
-    context: null
 }
 
 export default MapGl

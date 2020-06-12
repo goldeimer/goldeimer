@@ -1,9 +1,7 @@
 import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-    MarkerEssentialPropTypesArrayOf
-} from '@map/MapGl/Markers/Marker'
+import Marker from '@map/MapGl/Markers/Marker'
 
 const Markers = memo(({ component: Component, propsArray }) => propsArray.map(
     ({ id, ...other }) => (
@@ -13,7 +11,9 @@ const Markers = memo(({ component: Component, propsArray }) => propsArray.map(
 
 Markers.propTypes = {
     component: PropTypes.elementType.isRequired,
-    propsArray: MarkerEssentialPropTypesArrayOf.isRequired
+    propsArray: PropTypes.arrayOf(
+        PropTypes.shape(Marker.propTypes)
+    ).isRequired
 }
 
 export {
