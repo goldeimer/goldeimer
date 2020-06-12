@@ -5,7 +5,7 @@ import { useTheme } from '@material-ui/core/styles'
 
 import FEATURES from '@map/features'
 import makeLayers from '@map/MapGl/makeLayers'
-import { useViewport } from '@map/viewport'
+import VIEWPORT, { useViewport } from '@map/viewport'
 
 import noop from '@lib/util/noop'
 import uniqueByKey from '@lib/util/array/uniqueByKey'
@@ -104,9 +104,43 @@ const useMapGl = (sourceId = 'features') => {
         return noop
     }, [sourceId, queryFeatures, debouncedQueryFeatures])
 
+    const handleClick = (event) => {
+        if (!event.features) {
+            return
+        }
+
+        const feature = event.features[0]
+        if (!feature) {
+            return
+        }
+
+        const clusterId = feature.properties.cluster_id
+        if (!clusterId) {
+            return
+        }
+
+        sourceRef.current.getSource().getClusterExpansionZoom(
+            clusterId,
+            (err, zoom) => {
+                if (err) {
+                    return
+                }
+
+                dispatch([
+                    VIEWPORT.coordinates.set({
+                        longitude: feature.geometry.coordinates[0],
+                        latitude: feature.geometry.coordinates[1]
+                    }),
+                    VIEWPORT.zoom.set(zoom)
+                ])
+            }
+        )
+    }
+
     return {
         clusterCountLayer,
         clusterLayer,
+        handleClick,
         handleViewportChange,
         mapRef,
         sourceRef,

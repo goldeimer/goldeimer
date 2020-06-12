@@ -8,10 +8,11 @@ const presetEnv = [
     '@babel/preset-env',
     {
         bugfixes: true,
-        corejs: 3,
+        corejs: '3.6',
         debug: IS_VERBOSE,
         loose: true,
         modules: false,
+        shippedProposals: true,
         // TODO:
         // Test the brand-spanking-new `@babel/babel-polyfills` plugins.
         // @see [repo](https://github.com/babel/babel-polyfills)

@@ -121,7 +121,9 @@ const ZoomUi = ({
                 value={currentZoom}
                 ValueLabelComponent={ValueLabelComponent}
                 valueLabelDisplay='auto'
-                valueLabelFormat={(val) => Number.parseFloat(val).toFixed(2)}
+                valueLabelFormat={(val) => Number.parseFloat(
+                    Number.parseFloat(val).toFixed(2)
+                )}
             />
             <ButtonGroup
                 aria-label='vertical button group'

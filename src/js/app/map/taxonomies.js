@@ -3,12 +3,13 @@
 
 import DeliveryServiceIcon from '@material-ui/icons/LocalShipping'
 import EcommerceIcon from '@material-ui/icons/Shop'
-import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
 import RetailIcon from '@material-ui/icons/Store'
 
 import GoldeimerIcon from '@map/icons/brands/GoldeimerIcon'
 import VivaConAguaIcon from '@map/icons/brands/VivaConAguaIcon'
 import WholesaleIcon from '@map/icons/merchant-types/WholesaleIcon'
+
+import { PointOfInterestIcon } from '@map/icons/ui'
 
 import {
     COLOR_PRIMARY_GOLDEIMER,
@@ -106,7 +107,7 @@ const getIconComponentByTaxonomyTermId = (termId) => getPropByTaxonomyTermId(
     'iconComponent',
     VISUALIZED_TAXONOMY.icon,
     termId,
-    NotListedLocationIcon
+    PointOfInterestIcon
 )
 
 const getColorByTaxonomyTermId = (termId) => getPropByTaxonomyTermId(

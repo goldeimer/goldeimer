@@ -145,11 +145,11 @@ const SearchContainer = () => {
     }
 
     /* eslint-disable react/prop-types */
-    const renderItemIcon = ({ id, type }) => (
+    const renderItemIcon = ({ type, ...other }) => (
         <SearchResultIcon
-            id={id}
             fontSize='small'
             type={type.value}
+            {...other}
         />
     )
     /* eslint-enable react/prop-types */

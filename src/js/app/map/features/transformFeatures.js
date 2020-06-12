@@ -1,3 +1,9 @@
+// TODO:
+// Taxonomies relevant to color and icon are meant to be admin user choices.
+// Make stubs dynamic.
+// Since we're importing from the taxonomies stub here anyway, stub the
+// transformation here as well.
+
 import { identity } from '@lib/util/noop'
 
 import {
@@ -20,12 +26,22 @@ const featureToLocation = ({
     properties: { id, placeName }
 }) => ({ id, latitude, longitude, placeName })
 
-const featureToSearchResult = ({
-    geometry: { coordinates: [longitude, latitude] },
-    properties: { city, id, placeName, street }
-}) => ({
+const featureToSearchResult = (
+    {
+        geometry: { coordinates: [longitude, latitude] },
+        properties: { city, id, placeName, street, ...properties }
+    },
+    colorTaxonomyTermId,
+    iconTaxonomyTermId
+) => ({
     label: `${placeName}, ${street}, ${city}`,
     value: {
+        color: getColorByTaxonomyTermId(
+            properties[colorTaxonomyTermId][0]
+        ),
+        iconComponent: getIconComponentByTaxonomyTermId(
+            properties[iconTaxonomyTermId][0]
+        ),
         id,
         latitude,
         longitude,
@@ -33,6 +49,14 @@ const featureToSearchResult = ({
         type: SEARCH_RESULT_TYPE.feature
     }
 })
+
+const featureToSearchResultFixedTaxonomiesStub = (
+    feature
+) => featureToSearchResult(
+    feature,
+    VISUALIZED_TAXONOMY.color,
+    VISUALIZED_TAXONOMY.icon
+)
 
 const mapGlFeatureToMarkerProps = ({
     geometry: { coordinates: [longitude, latitude] },
@@ -60,7 +84,7 @@ const featuresToLocations = (
 
 const featuresToSearchResults = (
     features
-) => features.map(featureToSearchResult)
+) => features.map(featureToSearchResultFixedTaxonomiesStub)
 
 const mapGlFeaturesToMarkerProps = (
     features
@@ -98,11 +122,6 @@ const featuresToMapGlProps = (
     }))
 })
 
-// TODO:
-// Taxonomies relevant to color and icon are meant to be admin user choices.
-// Make dynamic.
-// Since we're importing from the taxonomies stub here anyway, stub the
-// transformation here as well.
 const featuresToMapGlPropsFixedTaxonomiesStub = (
     features
 ) => featuresToMapGlProps(
@@ -166,7 +185,7 @@ const getTransform = (format, targetIsCollection = true) => {
     case FEATURE_FORMAT.searchResult:
         return targetIsCollection
             ? featuresToSearchResults
-            : featureToSearchResult
+            : featureToSearchResultFixedTaxonomiesStub
 
     default:
         return identity

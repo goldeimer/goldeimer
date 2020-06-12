@@ -3,31 +3,31 @@ const {
     isJavaScript,
     isRasterImage,
     isStylesheet,
-    isVectorImage,
+    isVectorImage
 } = require('../condition')
 const { IS_PRODUCTION_BUILD } = require('../env')
 
 const makeFileLoaderOutputName = (resourcePath, resourceQuery) => {
     if (!IS_PRODUCTION_BUILD) {
-        return '[path][name].[ext]';
+        return '[path][name].[ext]'
     }
 
-    return '[path][contenthash].[ext]';
+    return '[path][contenthash].[ext]'
 }
 
 const fileLoader = {
     loader: 'file-loader',
     options: {
         name: makeFileLoaderOutputName,
-        outputPath: 'static',
-    },
+        outputPath: 'static'
+    }
 }
 
 const imageLoader = {
     loader: 'image-webpack-loader',
     options: {
         gifsicle: {
-            interlaced: false,
+            interlaced: false
         },
         mozjpeg: {
             progressive: true,
@@ -53,8 +53,8 @@ const rules = [{
             loader: 'svg-inline-loader',
             options: {
                 classPrefix: true,
-                idPrefix: true,
-            },
+                idPrefix: true
+            }
         }, imageLoader]
     },
     {
@@ -65,22 +65,22 @@ const rules = [{
                 iesafe: true,
                 limit: 8192,
                 name: makeFileLoaderOutputName,
-                outputPath: 'static',
-            },
+                outputPath: 'static'
+            }
         }, imageLoader]
-    }],
+    }]
 },
 {
     test: isRasterImage,
     use: [
         fileLoader,
-        imageLoader,
-    ],
+        imageLoader
+    ]
 },
 {
     test: isFont,
     use: [
-        fileLoader,
+        fileLoader
     ]
 }]
 

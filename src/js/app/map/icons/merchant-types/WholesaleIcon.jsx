@@ -4,6 +4,6 @@ import InlineSvgIcon from '@lib/components/InlineSvgIcon'
 
 import WholesaleSvg from 'img/icons/merchant-types/wholesale.icon'
 
-const WholesaleIcon = () => <InlineSvgIcon svg={WholesaleSvg} />
+const WholesaleIcon = (props) => <InlineSvgIcon svg={WholesaleSvg} {...props} />
 
 export default WholesaleIcon

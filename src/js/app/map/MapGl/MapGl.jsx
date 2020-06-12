@@ -55,6 +55,7 @@ const MapGl = () => {
     const {
         clusterCountLayer,
         clusterLayer,
+        handleClick,
         handleViewportChange,
         mapRef,
         sourceRef,
@@ -78,6 +79,8 @@ const MapGl = () => {
             height='100%'
             attributionControl
             className={classes.attribution}
+            // TODO: Remove after fixing transitions.
+            doubleClickZoom={false}
             interactiveLayerIds={[clusterLayer.id, clusterCountLayer.id]}
             mapboxApiAccessToken=''
             mapOptions={{
@@ -85,6 +88,8 @@ const MapGl = () => {
                     '<a href="" target="_blank">© 2020 Agentur Alk & Flens</a>'
             }}
             mapStyle={MAP_STYLE_URL}
+            onClick={handleClick}
+            onDblClick={handleClick}
             onViewportChange={handleViewportChange}
             ref={mapRef}
         >
