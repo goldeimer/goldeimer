@@ -42,7 +42,7 @@ const useStyles = makeStyles(({ palette, spacing, zIndex }) => ({
     }
 }))
 
-const MarkerDetailCard = ({
+const FeatureMarkerDetailCard = ({
     city,
     color,
     country,
@@ -123,7 +123,7 @@ const MarkerDetailCard = ({
     )
 }
 
-MarkerDetailCard.propTypes = {
+FeatureMarkerDetailCard.propTypes = {
     city: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
     country: PropTypes.string.isRequired,
@@ -141,9 +141,9 @@ MarkerDetailCard.propTypes = {
     street: PropTypes.string.isRequired
 }
 
-MarkerDetailCard.defaultProps = {
+FeatureMarkerDetailCard.defaultProps = {
     postCode: '',
     secondaryTaxonomyTerms: []
 }
 
-export default memo(MarkerDetailCard)
+export default memo(FeatureMarkerDetailCard)

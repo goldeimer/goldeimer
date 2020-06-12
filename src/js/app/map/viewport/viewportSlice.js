@@ -54,6 +54,7 @@ const viewport = createSegment({
             },
             extraReducers: {
                 ...makeTransitionCoordinatesReducers(),
+                'search/result/set': coordinatesReducer,
                 'viewport/sync/sync': coordinatesReducer
             }
         },
@@ -95,6 +96,7 @@ const viewport = createSegment({
                 zoom: simpleZoomReducer
             },
             extraReducers: {
+                'search/result/set': () => 13,
                 'viewport/sync/sync': viewportObjectZoomReducer
             }
         }

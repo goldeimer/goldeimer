@@ -62,7 +62,9 @@ const SearchContainer = () => {
 
     const geocodingResults = useGeocodingSearchResults({
         condition: geocodingResultIsDach,
-        excludeIds: searchHistoryResults.map((entry) => entry.value.resultId),
+        excludeIds: searchHistoryResults.map(
+            (entry) => [entry.value.id, entry.value.resultId]
+        ).flat(),
         maxLength: derivedMaxGeocodingResultLength
     })
 

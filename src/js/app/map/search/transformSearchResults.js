@@ -71,16 +71,17 @@ const geocodingResultsToSearchResults = (results) => results.map(
 const historyEntryToSearchResult = ({
     id,
     result: {
-        id: resultId,
+        id: _id,
         longitude,
         latitude,
-        placeName
+        placeName,
+        resultId
     }
 }) => ({
     label: placeName,
     value: {
-        id,
-        resultId,
+        id: _id,
+        resultId: resultId || _id,
         longitude,
         latitude,
         placeName,

@@ -1,17 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-
 import { useTheme } from '@material-ui/core/styles'
-
-import FEATURES from '@map/features'
-import makeLayers from '@map/MapGl/makeLayers'
-import VIEWPORT, { useViewport } from '@map/viewport'
 
 import noop from '@lib/util/noop'
 import uniqueByKey from '@lib/util/array/uniqueByKey'
 import useDebounce from '@lib/hooks/useDebounce'
 import useCallback from '@lib/hooks/useCallback'
 import useMemo from '@lib/hooks/useMemo'
+
+import FEATURES from '@map/features'
+import makeLayers from '@map/MapGl/makeLayers'
+import VIEWPORT, { useViewport } from '@map/viewport'
 
 const querySourceFeatures = (mapGl, sourceId, dispatchFeatures) => {
     if (!mapGl) {

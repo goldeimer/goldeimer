@@ -46,7 +46,14 @@ const querySearchHistory = createCachedSelector(
         }
 
         return history.filter(
-            (entry) => (entry.result.placeName.includes(query))
+            (entry, index, newArray) => (
+                entry.result.placeName.includes(query) &&
+                newArray.findIndex(
+                    (element) => (
+                        element.result.placeName === entry.result.placeName
+                    )
+                ) === index
+            )
         )
     }
 )({

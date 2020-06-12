@@ -8,17 +8,18 @@ import MapGL, { Layer } from 'react-map-gl'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import useMapGl from '@map/MapGl/useMapGl'
 import {
     useSourceFeatures,
     useViewportFeatures,
     FEATURE_FORMAT
 } from '@map/features'
+import { useSearchResult } from '@map/search'
+import useMapGl from '@map/MapGl/useMapGl'
 import VIEWPORT from '@map/viewport'
 
-import ContextMarker from '@map/MapGl/Markers/ContextMarker'
 import FeatureMarker from '@map/MapGl/Markers/FeatureMarker'
 import Markers from '@map/MapGl/Markers'
+import SearchResultMarker from '@map/MapGl/Markers/SearchResultMarker'
 import Source from '@map/MapGl/Source'
 
 import { MAP_TILER_API_KEY } from '@config/apiKeys'
@@ -57,6 +58,7 @@ const MapGl = () => {
     const context = useSelector((state) => (state.map.context))
     const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
     const { markers } = useViewportFeatures()
+    const searchResult = useSearchResult()
 
     const {
         clusterCountLayer,
@@ -113,9 +115,9 @@ const MapGl = () => {
                         propsArray={markers}
                     />
                 )}
-                {context && (
-                    <ContextMarker
-                        {...context}
+                {searchResult && (
+                    <SearchResultMarker
+                        {...searchResult}
                     />
                 )}
             </MapGL>

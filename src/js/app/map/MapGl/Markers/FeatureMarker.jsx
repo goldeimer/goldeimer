@@ -7,6 +7,7 @@ import { hexToRgba } from '@lib/util/color'
 import Box from '@material-ui/core/Box'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
+import FeatureMarkerDetailCard from '@map/MapGl/Markers/FeatureMarkerDetailCard'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
 import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
@@ -92,6 +93,7 @@ const FeatureMarker = (props) => (
         anchorTo={ANCHOR_TO.top}
         component={FeatureMarkerComponent}
         defaultDimensions={{ height: 48, width: 48 }}
+        renderDetailCard={(detail) => <FeatureMarkerDetailCard {...detail} />}
     />
 )
 

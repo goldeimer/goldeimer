@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
+import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { useDetail } from '@map/features'
@@ -8,7 +9,6 @@ import useHover from '@lib/hooks/useHover'
 
 import ArrowPopper from '@lib/components/modals/ArrowPopper'
 import Box from '@material-ui/core/Box'
-import MarkerDetailCard from '@map/MapGl/Markers/MarkerDetailCard'
 
 import { MarkerIcon } from '@map/icons/ui'
 
@@ -26,6 +26,7 @@ const useStyles = makeStyles(({ zIndex }) => ({
 
 const MarkerContent = forwardRef(({
     component: Component,
+    renderDetailCard,
     id,
     ...componentProps
 }, ref) => {
@@ -35,21 +36,21 @@ const MarkerContent = forwardRef(({
         isHovered
     } = useHover()
 
-    const feature = useDetail(id)
+    const detail = useDetail(id)
 
     const classes = useStyles()
 
     return (
         <>
-            <ArrowPopper
-                anchorEl={currentTriggerEl}
-                className={classes.popper}
-                isOpen={isHovered}
-            >
-                <MarkerDetailCard
-                    {...feature}
-                />
-            </ArrowPopper>
+            {renderDetailCard && (
+                <ArrowPopper
+                    anchorEl={currentTriggerEl}
+                    className={classes.popper}
+                    isOpen={isHovered}
+                >
+                    {renderDetailCard(detail)}
+                </ArrowPopper>
+            )}
             <Box
                 {...bind}
                 display='inline-block'
@@ -57,7 +58,9 @@ const MarkerContent = forwardRef(({
             >
                 <Component
                     {...componentProps}
-                    className={classes.popperTrigger}
+                    className={clsx({
+                        [classes.popperTrigger]: renderDetailCard !== null
+                    })}
                     id={id}
                 />
             </Box>
@@ -67,11 +70,13 @@ const MarkerContent = forwardRef(({
 
 MarkerContent.propTypes = {
     component: PropTypes.elementType,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    renderDetailCard: PropTypes.func
 }
 
 MarkerContent.defaultProps = {
-    component: MarkerIcon
+    component: MarkerIcon,
+    renderDetailCard: null
 }
 
 export default MarkerContent
