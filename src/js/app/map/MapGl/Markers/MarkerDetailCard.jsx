@@ -1,37 +1,149 @@
-import React, { useEffect } from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/core/styles'
 
-// import { makeStyles } from '@material-ui/core/styles'
+import Avatar from '@material-ui/core/Avatar'
+import Box from '@material-ui/core/Box'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
+import CardHeader from '@material-ui/core/CardHeader'
+import Divider from '@material-ui/core/Divider'
+import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 
+const useStyles = makeStyles(({ palette, spacing, zIndex }) => ({
+    avatar: ({ color }) => {
+        const backgroundColor = color !== null
+            ? color
+            : palette.primary.main
+
+        return {
+            color: palette.getContrastText(backgroundColor),
+            backgroundColor
+        }
+    },
+    content: {
+        padding: spacing(2),
+        '&:last-child': {
+            paddingBottom: spacing(2)
+        }
+    },
+    title: {
+        fontWeight: 'bold',
+        whiteSpace: 'nowrap'
+    },
+    textBold: {
+    },
+    textSecondary: {
+        color: palette.text.secondary
+    },
+    textTertiary: {
+        color: palette.text.disabled
+    }
+}))
+
 const MarkerDetailCard = ({
-    placeName
-    // id
+    city,
+    color,
+    country,
+    iconComponent: IconComponent,
+    placeName,
+    primaryTaxonomyTermName,
+    postCode,
+    secondaryTaxonomyTerms,
+    street
 }) => {
-    useEffect(() => {
-        // data = getMarkerDetails(id)
-        // useMarkerDetails(id) ?
-    }, [])
+    const classes = useStyles({ color })
 
     return (
         <Card>
-            <CardContent>
+            <CardHeader
+                avatar={(
+                    <Avatar
+                        aria-label={primaryTaxonomyTermName}
+                        className={classes.avatar}
+                    >
+                        <IconComponent />
+                    </Avatar>
+                )}
+                classes={{ title: classes.title }}
+                subheader={primaryTaxonomyTermName}
+                title={placeName}
+            />
+            <Divider />
+            <CardContent className={classes.content}>
                 <Typography
-                    variant='h6'
-                    component='h3'
+                    component='p'
+                    variant='body2'
                 >
-                    {placeName}
+                    {street}
+                    <br />
+                    <span className={classes.textSecondary}>
+                        {`${postCode} ${city}`.trim()}
+                    </span>
+                    <br />
+                    <span className={classes.textSecondary}>
+                        {country}
+                    </span>
                 </Typography>
+                <Box mt={1}>
+                    {secondaryTaxonomyTerms.map(
+                        ({
+                            color: secondaryColor,
+                            iconComponent: SecondaryIconComponent,
+                            termName
+                        }) => {
+                            if (!termName) {
+                                return (
+                                    <IconComponent
+                                        color={secondaryColor}
+                                        key={secondaryColor}
+                                    />
+                                )
+                            }
+
+                            return (
+                                <Tooltip
+                                    aria-label={termName}
+                                    key={termName}
+                                    title={termName}
+                                >
+                                    <span>
+                                        <SecondaryIconComponent
+                                            color={secondaryColor}
+                                        />
+                                    </span>
+                                </Tooltip>
+                            )
+                        }
+                    )}
+                </Box>
             </CardContent>
         </Card>
     )
 }
 
 MarkerDetailCard.propTypes = {
-    placeName: PropTypes.string.isRequired
-    // id: PropTypes.string.isRequired
+    city: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    iconComponent: PropTypes.elementType.isRequired,
+    placeName: PropTypes.string.isRequired,
+    primaryTaxonomyTermName: PropTypes.string.isRequired,
+    postCode: PropTypes.string,
+    secondaryTaxonomyTerms: PropTypes.arrayOf(
+        PropTypes.shape({
+            color: PropTypes.string,
+            iconComponent: PropTypes.elementType,
+            termName: PropTypes.string
+        })
+    ),
+    street: PropTypes.string.isRequired
 }
 
-export default MarkerDetailCard
+MarkerDetailCard.defaultProps = {
+    postCode: '',
+    secondaryTaxonomyTerms: []
+}
+
+export default memo(MarkerDetailCard)

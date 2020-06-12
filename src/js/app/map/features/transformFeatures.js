@@ -7,14 +7,56 @@
 import { identity } from '@lib/util/noop'
 
 import {
-    getColorByTaxonomyTermId,
-    getIconComponentByTaxonomyTermId,
+    getColorAndIconComponent,
+    getFullTaxonomyVisualization,
+    getTermNameByTaxonomyIdAndTermId,
     VISUALIZED_TAXONOMY
 } from '@map/taxonomies'
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
 
 /// ------------------- transforming individual features -----------------------
+
+const featureToDetail = (
+    {
+        geometry: { coordinates: [longitude, latitude] },
+        properties
+    },
+    primaryTaxonomyId,
+    secondaryTaxonomyId
+) => ({
+    ...getColorAndIconComponent(
+        properties[secondaryTaxonomyId][0],
+        properties[primaryTaxonomyId][0]
+    ),
+    primaryTaxonomyTermName: properties[primaryTaxonomyId].map(
+        (termId) => getTermNameByTaxonomyIdAndTermId(
+            primaryTaxonomyId,
+            termId,
+            'Händler'
+        )
+    ).filter((termName, index, newArray) => (
+        newArray.indexOf(termName) === index
+    )).sort().join(', '),
+    secondaryTaxonomyTerms: properties[secondaryTaxonomyId].map(
+        (termId) => getFullTaxonomyVisualization({
+            taxonomyId: secondaryTaxonomyId,
+            termId,
+            defaultTermName: 'Ubekannt'
+        })
+    ),
+    latitude,
+    longitude,
+    ...properties
+})
+
+const featureToDetailFixedTaxonomiesStub = (
+    feature
+) => featureToDetail(
+    feature,
+    VISUALIZED_TAXONOMY.primary,
+    VISUALIZED_TAXONOMY.secondary
+)
 
 const featureToGeometry = ({
     geometry: { coordinates: [longitude, latitude] },
@@ -36,10 +78,8 @@ const featureToSearchResult = (
 ) => ({
     label: `${placeName}, ${street}, ${city}`,
     value: {
-        color: getColorByTaxonomyTermId(
-            properties[colorTaxonomyTermId][0]
-        ),
-        iconComponent: getIconComponentByTaxonomyTermId(
+        ...getColorAndIconComponent(
+            properties[colorTaxonomyTermId][0],
             properties[iconTaxonomyTermId][0]
         ),
         id,
@@ -64,8 +104,7 @@ const mapGlFeatureToMarkerProps = ({
         colorTaxonomyTermId, iconTaxonomyTermId, placeName, id
     }
 }) => ({
-    color: getColorByTaxonomyTermId(colorTaxonomyTermId),
-    iconComponent: getIconComponentByTaxonomyTermId(iconTaxonomyTermId),
+    ...getColorAndIconComponent(colorTaxonomyTermId, iconTaxonomyTermId),
     id,
     latitude,
     longitude,
@@ -73,6 +112,10 @@ const mapGlFeatureToMarkerProps = ({
 })
 
 /// ----------------------- transforming collections ---------------------------
+
+const featuresToDetails = (
+    features
+) => features.map(featureToDetailFixedTaxonomiesStub)
 
 const featuresToGeometries = (
     features
@@ -160,6 +203,11 @@ const getTransform = (format, targetIsCollection = true) => {
     // the single item transform returned in case of an (erroneous) false
     // `targetIsCollection` stems simply from the lack of saner options / ideas.
     switch (format) {
+    case FEATURE_FORMAT.detail:
+        return targetIsCollection
+            ? featuresToDetails
+            : featureToDetailFixedTaxonomiesStub
+
     case FEATURE_FORMAT.geojson:
         return identity
 

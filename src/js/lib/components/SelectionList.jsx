@@ -14,9 +14,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 import NoResultsIcon from '@material-ui/icons/NotInterested'
 
-const useStyles = makeStyles((theme) => ({
+const useListStyles = makeStyles(() => ({
     root: {
-        overflowY: 'auto'
+        overflowY: 'auto',
+        '& $MuiListItemIcon-root': {
+            color: '#757575'
+        }
     }
 }))
 
@@ -31,7 +34,7 @@ const SelectionList = ({
     renderItemIcon,
     showNoteOnEmpty
 }) => {
-    const baseClasses = useStyles()
+    const listClasses = useListStyles()
 
     const {
         selectedIndex,
@@ -47,7 +50,7 @@ const SelectionList = ({
 
     return (
         <List
-            className={clsx(baseClasses.root, classes.maximums || {})}
+            className={clsx(listClasses.root, classes.maximums || {})}
             component='nav'
             dense={dense}
         >

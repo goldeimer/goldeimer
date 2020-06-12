@@ -2,7 +2,6 @@ import { isString } from 'typechecker'
 import validUrl from 'valid-url'
 
 import parseGoogleSheet from '@lib/util/parseGoogleSheet'
-import transformProperties from '@lib/util/object/transformProperties'
 
 import { BRAND, MERCHANT_TYPE } from '@map/taxonomies'
 import generateId from '@lib/util/generateId'
@@ -110,11 +109,18 @@ const getFeaturesVca = async () => {
     return spreadsheetDataToGeoJsonVca(result)
 }
 
-const stripPostCode = (city) => city.replace(/\d{4,}\w?/, '')
+const cityToPostCodeAndCity = (city) => {
+    const match = city.match(/^\s*?(\d{4,})\s+?(.*)$/u)
 
-const sanitizeProperty = (value, key) => {
+    return {
+        city: match[2] || '',
+        postCode: match[1] || ''
+    }
+}
+
+const sanitizeIfString = (value) => {
     if (isString(value)) {
-        const sanitized = value.trim().replace(
+        return value.trim().replace(
             /\s{2,}/g,
             ' '
         ).replace(
@@ -122,19 +128,23 @@ const sanitizeProperty = (value, key) => {
             ','
 
         )
+    }
 
-        if (key === 'url' && !validUrl.isUri(sanitized)) {
+    return value
+}
+
+const sanitizeUrl = (url) => {
+    if (isString(url)) {
+        const sanitized = url.trim()
+
+        if (!validUrl.isUri(sanitized)) {
             return ''
-        }
-
-        if (key === 'city') {
-            return stripPostCode(sanitized)
         }
 
         return sanitized
     }
 
-    return value
+    return ''
 }
 
 const sourceRequest = async () => {
@@ -144,7 +154,14 @@ const sourceRequest = async () => {
 
     return featuresGoldeimer.concat(featuresVca).map((feature) => ({
         ...feature,
-        properties: transformProperties(feature.properties, sanitizeProperty)
+        properties: {
+            ...feature.properties,
+            ...cityToPostCodeAndCity(feature.properties.city),
+            country: sanitizeIfString(feature.properties.country),
+            placeName: sanitizeIfString(feature.properties.placeName),
+            street: sanitizeIfString(feature.properties.street),
+            url: sanitizeUrl(feature.properties.url)
+        }
     }))
 }
 

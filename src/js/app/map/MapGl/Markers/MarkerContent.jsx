@@ -1,24 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { makeStyles } from '@material-ui/core/styles'
-import MarkerIcon from '@material-ui/icons/Room'
+
+import { useDetail } from '@map/features'
 
 import useHover from '@lib/hooks/useHover'
 
 import ArrowPopper from '@lib/components/modals/ArrowPopper'
-
 import MarkerDetailCard from '@map/MapGl/Markers/MarkerDetailCard'
 
-const useStyles = makeStyles((theme) => ({
+import { MarkerIcon } from '@map/icons/ui'
+
+const useStyles = makeStyles(({ zIndex }) => ({
     popperTrigger: {
         cursor: 'pointer',
         // One below the lowest elevated element of material-ui.
         // Effectively `999`.
-        zIndex: theme.zIndex.mobileStepper - 1
+        zIndex: zIndex.mobileStepper - 1
     },
     popper: {
-        zIndex: theme.zIndex.tooltip
+        zIndex: zIndex.tooltip
     }
 }))
 
@@ -28,14 +29,13 @@ const MarkerContent = ({
     id,
     ...componentProps
 }) => {
-    // TODO:
-    // Employ id to fetch detail data.
-
     const {
         bind,
         currentTriggerEl,
         isHovered
     } = useHover()
+
+    const feature = useDetail(id)
 
     const classes = useStyles()
 
@@ -47,7 +47,7 @@ const MarkerContent = ({
                 isOpen={isHovered}
             >
                 <MarkerDetailCard
-                    placeName={placeName}
+                    {...feature}
                 />
             </ArrowPopper>
             <Component

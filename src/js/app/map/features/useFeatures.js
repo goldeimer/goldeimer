@@ -21,8 +21,11 @@ const useSourceFeatures = (format = FEATURE_FORMAT.geojson) => useSelector(
 
 const useViewportFeatures = () => useSelector(selectViewportFeatures)
 
+const useDetail = (id) => useFeature(id, FEATURE_FORMAT.detail)
+
 export {
     useSourceFeatures as default,
+    useDetail,
     useFeature,
     useFeatures,
     useViewportFeatures

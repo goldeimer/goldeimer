@@ -24,6 +24,7 @@ export {
 
 export {
     default as useSourceFeatures,
+    useDetail,
     useFeature,
     useFeatures,
     useViewportFeatures

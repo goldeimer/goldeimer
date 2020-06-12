@@ -18,7 +18,9 @@ import {
 
 const VISUALIZED_TAXONOMY = {
     color: 'brands',
-    icon: 'merchantTypes'
+    icon: 'merchantTypes',
+    primary: 'merchantTypes',
+    secondary: 'brands'
 }
 
 const makeIdEnum = (terms) => Object.fromEntries(
@@ -103,18 +105,51 @@ const getPropByTaxonomyTermId = (
     return term ? term[prop] : defaultValue
 }
 
-const getIconComponentByTaxonomyTermId = (termId) => getPropByTaxonomyTermId(
+const getColorByTaxonomyTermId = (
+    termId,
+    taxonomyId = VISUALIZED_TAXONOMY.secondary
+) => getPropByTaxonomyTermId(
+    'color',
+    taxonomyId,
+    termId,
+    '#757575'
+)
+
+const getIconComponentByTaxonomyTermId = (
+    termId,
+    taxonomyId = VISUALIZED_TAXONOMY.primary
+) => getPropByTaxonomyTermId(
     'iconComponent',
-    VISUALIZED_TAXONOMY.icon,
+    taxonomyId,
     termId,
     PointOfInterestIcon
 )
 
-const getColorByTaxonomyTermId = (termId) => getPropByTaxonomyTermId(
-    'color',
-    VISUALIZED_TAXONOMY.color,
-    termId
+const getTermNameByTaxonomyIdAndTermId = (
+    taxonomyId,
+    termId,
+    defeaultTermName = 'Eintrag'
+) => getPropByTaxonomyTermId(
+    'termName',
+    taxonomyId,
+    termId,
+    defeaultTermName
 )
+
+const getColorAndIconComponent = (colorTermId, iconTermId) => ({
+    color: getColorByTaxonomyTermId(colorTermId),
+    iconComponent: getIconComponentByTaxonomyTermId(iconTermId)
+})
+
+const getFullTaxonomyVisualization = ({
+    defeaultTermName = 'Eintrag',
+    taxonomyId,
+    termId
+}) => ({
+    color: getColorByTaxonomyTermId(termId, taxonomyId),
+    iconComponent: getIconComponentByTaxonomyTermId(termId, taxonomyId),
+    termName: defeaultTermName
+})
 
 export {
     TAXONOMIES as default,
@@ -123,6 +158,9 @@ export {
     MERCHANT_TYPE,
     MERCHANT_TYPE_NAME,
     VISUALIZED_TAXONOMY,
+    getColorAndIconComponent,
     getColorByTaxonomyTermId,
-    getIconComponentByTaxonomyTermId
+    getFullTaxonomyVisualization,
+    getIconComponentByTaxonomyTermId,
+    getTermNameByTaxonomyIdAndTermId
 }

@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import Popper from '@material-ui/core/Popper'
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles((theme) => {
-    const { paper } = theme.palette.background
+const useStyles = makeStyles(({ palette, zIndex }) => {
+    const { paper } = palette.background
 
     return {
         popper: {
-            zIndex: theme.zIndex.modal,
+            zIndex: zIndex.modal,
             '&[x-placement*="bottom"] $arrow': {
                 top: 0,
                 left: 0,
@@ -78,7 +78,6 @@ const ArrowPopper = ({ anchorEl, children, isOpen }) => {
         <Popper
             anchorEl={anchorEl}
             className={classes.popper}
-            disablePortal
             modifiers={{
                 arrow: {
                     enabled: true,

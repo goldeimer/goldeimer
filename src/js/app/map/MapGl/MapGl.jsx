@@ -26,9 +26,17 @@ import { MAP_TILER_API_KEY } from '@config/apiKeys'
 
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(({
+    borderRadius,
+    palette,
+    typography,
+    zIndex
+}) => ({
+    root: {
+        height: '100%',
+        width: '100%'
+    },
     attribution: {
-        // TODO: Better way of overriding?
         '& .mapboxgl-ctrl-bottom-right': {
             position: 'absolute',
             bottom: 0,
@@ -36,9 +44,9 @@ const useStyles = makeStyles((theme) => ({
             right: 'auto'
         },
         '& .mapboxgl-ctrl-attrib': {
-            borderRadius: theme.borderRadius,
-            color: theme.palette.getContrastText('#fff'),
-            fontFamily: theme.typography.fontFamily,
+            borderRadius,
+            color: palette.getContrastText('#fff'),
+            fontFamily: typography.fontFamily,
             opacity: 0.6
         }
     }
@@ -73,46 +81,48 @@ const MapGl = () => {
     }, [context, dispatch])
 
     return (
-        <MapGL
-            {...viewport}
-            width='100%'
-            height='100%'
-            attributionControl
-            className={classes.attribution}
-            // TODO: Remove after fixing transitions.
-            doubleClickZoom={false}
-            interactiveLayerIds={[clusterLayer.id, clusterCountLayer.id]}
-            mapboxApiAccessToken=''
-            mapOptions={{
-                customAttribution:
-                    '<a href="" target="_blank">© 2020 Agentur Alk & Flens</a>'
-            }}
-            mapStyle={MAP_STYLE_URL}
-            onClick={handleClick}
-            onDblClick={handleClick}
-            onViewportChange={handleViewportChange}
-            ref={mapRef}
-        >
-            <Source
-                featureCollection={features}
-                ref={sourceRef}
+        <div className={classes.root}>
+            <MapGL
+                {...viewport}
+                width='100%'
+                height='100%'
+                attributionControl
+                className={classes.attribution}
+                // TODO: Remove after fixing transitions.
+                doubleClickZoom={false}
+                interactiveLayerIds={[clusterLayer.id, clusterCountLayer.id]}
+                mapboxApiAccessToken=''
+                mapOptions={{
+                    customAttribution:
+                        '<a href="" target="_blank">© 2020 Agentur Alk & Flens</a>'
+                }}
+                mapStyle={MAP_STYLE_URL}
+                onClick={handleClick}
+                onDblClick={handleClick}
+                onViewportChange={handleViewportChange}
+                ref={mapRef}
             >
-                <Layer {...clusterLayer} />
-                <Layer {...clusterCountLayer} />
-                <Layer {...unclusteredPointLayer} />
-            </Source>
-            {markers && (
-                <Markers
-                    component={FeatureMarker}
-                    propsArray={markers}
-                />
-            )}
-            {context && (
-                <ContextMarker
-                    {...context}
-                />
-            )}
-        </MapGL>
+                <Source
+                    featureCollection={features}
+                    ref={sourceRef}
+                >
+                    <Layer {...clusterLayer} />
+                    <Layer {...clusterCountLayer} />
+                    <Layer {...unclusteredPointLayer} />
+                </Source>
+                {markers && (
+                    <Markers
+                        component={FeatureMarker}
+                        propsArray={markers}
+                    />
+                )}
+                {context && (
+                    <ContextMarker
+                        {...context}
+                    />
+                )}
+            </MapGL>
+        </div>
     )
 }
 
