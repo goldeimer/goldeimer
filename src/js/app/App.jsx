@@ -8,12 +8,14 @@ import MapRoot from '@map/MapRoot'
 
 import { ROOT_REDUCER } from '@app/app'
 
-const store = makeStore(ROOT_REDUCER)
+const { persistor, store } = makeStore(ROOT_REDUCER)
+
 const theme = getTheme()
 
 const App = () => (
     <AppRoot
         favicon={theme.favicon}
+        persistor={persistor}
         store={store}
         theme={theme.mui}
         title='Händlerkarte'

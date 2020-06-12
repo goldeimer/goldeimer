@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Marker as MarkerGl } from 'react-map-gl'
 

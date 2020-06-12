@@ -98,13 +98,14 @@ const featureToSearchResultFixedTaxonomiesStub = (
     VISUALIZED_TAXONOMY.icon
 )
 
-const mapGlFeatureToMarkerProps = ({
+const mapGlFeatureToMarkerState = ({
     geometry: { coordinates: [longitude, latitude] },
     properties: {
         colorTaxonomyTermId, iconTaxonomyTermId, id
     }
 }) => ({
-    ...getColorAndIconComponent(colorTaxonomyTermId, iconTaxonomyTermId),
+    colorTaxonomyTermId,
+    iconTaxonomyTermId,
     id,
     latitude,
     longitude
@@ -128,9 +129,9 @@ const featuresToSearchResults = (
     features
 ) => features.map(featureToSearchResultFixedTaxonomiesStub)
 
-const mapGlFeaturesToMarkerProps = (
+const mapGlFeaturesToMarkerState = (
     features
-) => features.map(mapGlFeatureToMarkerProps)
+) => features.map(mapGlFeatureToMarkerState)
 
 /// --------------------- dedicated utility collections ------------------------
 
@@ -247,6 +248,6 @@ export {
     getFeatureTransform,
     getFeaturesTransform,
     getTransform,
-    mapGlFeaturesToMarkerProps,
+    mapGlFeaturesToMarkerState,
     FEATURE_FORMAT
 }

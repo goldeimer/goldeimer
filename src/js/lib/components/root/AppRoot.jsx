@@ -15,8 +15,8 @@ import ThemeRoot from '@lib/components/root/ThemeRoot'
 // Meant to prevent unnecessary re-renders of the entire component tree.
 const MemoizedThemeRoot = memo(ThemeRoot)
 
-const AppRoot = ({ children, store, ...themeProps }) => (
-    <StateRoot store={store}>
+const AppRoot = ({ children, persistor, store, ...themeProps }) => (
+    <StateRoot persistor={persistor} store={store}>
         <MemoizedThemeRoot {...themeProps}>
             {children}
         </MemoizedThemeRoot>

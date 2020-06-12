@@ -10,7 +10,7 @@ export {
     getFeatureTransform,
     getFeaturesTransform,
     getTransform,
-    mapGlFeaturesToMarkerProps
+    mapGlFeaturesToMarkerState
 } from '@map/features/transformFeatures'
 
 export {

@@ -2,7 +2,7 @@ import createSegment from '@lib/redux/createSegment'
 import LOADING from '@lib/enum/loading'
 
 import sourceRequest from '@map/features/api'
-import { mapGlFeaturesToMarkerProps } from '@map/features/transformFeatures'
+import { mapGlFeaturesToMarkerState } from '@map/features/transformFeatures'
 
 const INITIAL_SELECTED = null
 
@@ -61,7 +61,7 @@ const segment = createSegment({
                 reset: () => INITIAL_VIEWPORT,
                 set: (_, { payload: { markers = [] } }) => ({
                     clusters: [], // TODO
-                    markers: mapGlFeaturesToMarkerProps(markers)
+                    markers: mapGlFeaturesToMarkerState(markers)
                 })
             }
         }

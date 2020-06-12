@@ -38,7 +38,7 @@ const useStyles = makeStyles(({ palette }) => ({
     })
 }))
 
-const FeatureMarkerComponent = memo(({
+const FeatureMarkerComponent = ({
     color,
     iconComponent: IconComponent
 }) => {
@@ -75,7 +75,7 @@ const FeatureMarkerComponent = memo(({
             </Box>
         </ButtonBase>
     )
-})
+}
 
 FeatureMarkerComponent.propTypes = {
     color: PropTypes.string,
@@ -99,4 +99,4 @@ FeatureMarker.propTypes = Marker.propTypes
 
 FeatureMarker.defaultProps = Marker.defaultProps
 
-export default FeatureMarker
+export default memo(FeatureMarker)

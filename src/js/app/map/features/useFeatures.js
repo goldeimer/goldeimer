@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
 
+import { getColorAndIconComponent } from '@map/taxonomies'
+
 import getSourceFeatures, {
     getFeatureById,
     getFeaturesById,
@@ -19,7 +21,28 @@ const useSourceFeatures = (format = FEATURE_FORMAT.geojson) => useSelector(
     getSourceFeatures(format, true)
 )
 
-const useViewportFeatures = () => useSelector(selectViewportFeatures)
+const useViewportFeatures = () => {
+    const { clusters, markers } = useSelector(selectViewportFeatures)
+
+    return {
+        clusters,
+        markers: markers.map((marker) => {
+            const {
+                colorTaxonomyTermId,
+                iconTaxonomyTermId,
+                ...rest
+            } = marker
+
+            return {
+                ...rest,
+                ...getColorAndIconComponent(
+                    colorTaxonomyTermId,
+                    iconTaxonomyTermId
+                )
+            }
+        })
+    }
+}
 
 const useDetail = (id) => useFeature(id, FEATURE_FORMAT.detail)
 
