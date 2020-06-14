@@ -4,13 +4,14 @@ import { useTheme } from '@material-ui/core/styles'
 
 import noop from '@lib/util/noop'
 import uniqueByKey from '@lib/util/array/uniqueByKey'
-import useDebounce from '@lib/hooks/useDebounce'
 import useCallback from '@lib/hooks/useCallback'
+import useDebounce from '@lib/hooks/useDebounce'
 import useMemo from '@lib/hooks/useMemo'
 
+import makeLayers from '@map/layers/makeLayers'
+
 import FEATURES from '@map/features'
-import makeLayers from '@map/MapGl/makeLayers'
-import VIEWPORT, { useViewport } from '@map/viewport'
+import VIEW from '@map/view'
 
 const querySourceFeatures = (mapGl, sourceId, dispatchFeatures) => {
     if (!mapGl) {
@@ -46,15 +47,15 @@ const detachEventHandlers = (target, handlerCache) => {
 const DEBOUNCED_UPDATE_TRIGGER = ['sourcedata']
 const IMMEDIATE_UPDATE_TRIGGER = ['idle']
 
-const useMapGl = (sourceId = 'features') => {
-    const mapRef = useRef()
+const useLayers = ({
+    mapRef,
+    sourceId = 'features',
+    sourceRef
+}) => {
     const mapGlInstanceRef = useRef()
-    const sourceRef = useRef()
 
-    const theme = useTheme()
     const dispatch = useDispatch()
-
-    const [viewport, handleViewportChange] = useViewport()
+    const theme = useTheme()
 
     const {
         clusterLayer,
@@ -71,7 +72,7 @@ const useMapGl = (sourceId = 'features') => {
     const queryFeatures = useCallback(() => querySourceFeatures(
         mapGlInstanceRef.current,
         sourceId,
-        (features) => dispatch(FEATURES.viewport.set(features))
+        (features) => dispatch(FEATURES.view.set(features))
     ), [dispatch, sourceId])
 
     const [debouncedQueryFeatures] = useDebounce(
@@ -103,7 +104,7 @@ const useMapGl = (sourceId = 'features') => {
         return noop
     }, [sourceId, queryFeatures, debouncedQueryFeatures])
 
-    const handleClick = (event) => {
+    const handleLayerClick = (event) => {
         if (!event.features) {
             return
         }
@@ -126,26 +127,24 @@ const useMapGl = (sourceId = 'features') => {
                 }
 
                 dispatch([
-                    VIEWPORT.coordinates.set({
+                    VIEW.coordinates.set({
                         longitude: feature.geometry.coordinates[0],
                         latitude: feature.geometry.coordinates[1]
                     }),
-                    VIEWPORT.zoom.set(zoom)
+                    VIEW.zoom.set(zoom)
                 ])
             }
         )
     }
 
     return {
-        clusterCountLayer,
-        clusterLayer,
-        handleClick,
-        handleViewportChange,
-        mapRef,
-        sourceRef,
-        unclusteredPointLayer,
-        viewport
+        handleLayerClick,
+        layers: {
+            clusterCountLayer,
+            clusterLayer,
+            unclusteredPointLayer
+        }
     }
 }
 
-export default useMapGl
+export default useLayers

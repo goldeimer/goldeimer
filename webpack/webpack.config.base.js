@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const { BundleStatsWebpackPlugin } = require('bundle-stats-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ManifestWebpackPlugin = require('webpack-manifest-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -14,7 +15,19 @@ module.exports = {
     context: SRC_PATH,
     target: 'web',
     plugins: [
-        new webpack.DefinePlugin({}),
+        new webpack.ProgressPlugin(),
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns: [],
+            cleanOnceBeforeBuildPatterns: ['**/*'],
+            // With `cleanStaleWebpackAssets` set to true, the plugin
+            // unfortunately removes too many files on subsequent emitting
+            // to the same directory.
+            // Likely related to bundle-stats-webpack-plugin emitting its
+            // results and/or to using multi-compiler mode.
+            //
+            // TODO: Investigate. Fix. Reactivate.
+            cleanStaleWebpackAssets: false
+        }),
         new BundleStatsWebpackPlugin({
             baseline: true,
             stats: {
@@ -33,6 +46,7 @@ module.exports = {
                 usedExports: true
             }
         }),
+        new webpack.DefinePlugin({}),
         new ManifestWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].css',

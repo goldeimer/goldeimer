@@ -5,7 +5,7 @@ import { getColorAndIconComponent } from '@map/taxonomies'
 import getSourceFeatures, {
     getFeatureById,
     getFeaturesById,
-    selectViewportFeatures,
+    selectViewFeatures,
     FEATURE_FORMAT
 } from '@map/features/selectFeatures'
 
@@ -21,8 +21,8 @@ const useSourceFeatures = (format = FEATURE_FORMAT.geojson) => useSelector(
     getSourceFeatures(format, true)
 )
 
-const useViewportFeatures = () => {
-    const { clusters, markers } = useSelector(selectViewportFeatures)
+const useViewFeatures = () => {
+    const { clusters, markers } = useSelector(selectViewFeatures)
 
     return {
         clusters,
@@ -51,5 +51,5 @@ export {
     useDetail,
     useFeature,
     useFeatures,
-    useViewportFeatures
+    useViewFeatures
 }

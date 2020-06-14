@@ -3,26 +3,30 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Box from '@material-ui/core/Box'
 
-import useViewportEdgeStyles from '@lib/styles/useViewportEdgeStyles'
+import useEdgeStyles from '@lib/styles/useEdgeStyles'
 
-import VIEWPORT, { ZOOM_LIMIT } from '@map/viewport'
-import { selectZoom } from '@map/viewport/selectViewport'
+import { sanitizeZoom, selectZoom, VIEW, ZOOM_LIMIT } from '@map/view'
 
-import ZoomUi from '@map/viewport/ZoomUi'
+import ZoomUi from '@map/view/ZoomUi'
 
 const ZoomControl = () => {
-    const classes = useViewportEdgeStyles()
+    const classes = useEdgeStyles()
     const dispatch = useDispatch()
 
     const currentZoom = useSelector(selectZoom)
 
-    const handleChange = (_ /* event */, level) => dispatch(
-        VIEWPORT.zoom.zoom(level)
+    const dispatchZoom = (zoom, delta = 1) => dispatch(
+        VIEW.transition.zoomTo({ zoom: sanitizeZoom(zoom), delta })
     )
 
-    const handleZoomIn = () => dispatch(VIEWPORT.zoom.in())
+    const handleChange = (_ /* event */, zoom) => dispatchZoom(
+        zoom,
+        currentZoom - zoom
+    )
 
-    const handleZoomOut = () => dispatch(VIEWPORT.zoom.out())
+    const handleZoomIn = () => dispatchZoom(currentZoom + 1)
+
+    const handleZoomOut = () => dispatchZoom(currentZoom - 1)
 
     return (
         <Box className={classes.bottomRight}>

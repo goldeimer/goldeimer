@@ -19,7 +19,7 @@ export {
     getFeaturesById,
     getSearchableSourceFeatures,
     getSourceFeatureLookup,
-    selectViewportFeatures
+    selectViewFeatures
 } from '@map/features/selectFeatures'
 
 export {
@@ -27,5 +27,5 @@ export {
     useDetail,
     useFeature,
     useFeatures,
-    useViewportFeatures
+    useViewFeatures
 } from '@map/features/useFeatures'

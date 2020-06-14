@@ -15,7 +15,7 @@ const transformGutterDefinitionToSpacing = (
     xl: theme.spacing(xl)
 })
 
-const useViewportEdgeStyles = ({
+const useEdgeStyles = ({
     extraSpacing: { height = 0, width = 0 } = {},
     gutterDefiniton = {}
 } = {}) => makeStyles((theme) => {
@@ -75,6 +75,6 @@ const useViewportEdgeStyles = ({
 })()
 
 export {
-    useViewportEdgeStyles as default,
+    useEdgeStyles as default,
     transformGutterDefinitionToSpacing
 }

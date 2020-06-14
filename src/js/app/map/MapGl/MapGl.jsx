@@ -2,7 +2,7 @@
 ///
 /// @see [1]: http://visgl.github.io/react-map-gl/docs/api-reference/interactive-map
 
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MapGL, { Layer } from 'react-map-gl'
 
@@ -10,12 +10,12 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import {
     useSourceFeatures,
-    useViewportFeatures,
+    useViewFeatures,
     FEATURE_FORMAT
 } from '@map/features'
+import { useLayers } from '@map/layers'
 import { useSearchResult } from '@map/search'
-import useMapGl from '@map/MapGl/useMapGl'
-import VIEWPORT from '@map/viewport'
+import { selectTransition, selectViewState, VIEW } from '@map/view'
 
 import FeatureMarker from '@map/MapGl/Markers/FeatureMarker'
 import Markers from '@map/MapGl/Markers'
@@ -52,62 +52,113 @@ const useStyles = makeStyles(({
 }))
 
 const MapGl = () => {
+    const mapRef = useRef()
+    const sourceRef = useRef()
+    const transitionIdRef = useRef(null)
+
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    const context = useSelector((state) => (state.map.context))
-    const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
-    const { markers } = useViewportFeatures()
-    const searchResult = useSearchResult()
+    const [isLoading, setIsLoading] = useState(true)
+    const [isTransitioning, setIsTransitioning] = useState(false)
+    const [viewState, setViewState] = useState({})
 
-    const {
-        clusterCountLayer,
-        clusterLayer,
-        handleClick,
-        handleViewportChange,
-        mapRef,
-        sourceRef,
-        unclusteredPointLayer,
-        viewport
-    } = useMapGl('features')
+    /// @see [`InteractiveMap::onViewStateChange`](1)
+    /// @see [State Management](2)
+    ///
+    /// [1]: http://visgl.github.io/react-map-gl/docs/api-reference/interactive-map#onviewportchange
+    /// [2]: http://visgl.github.io/react-map-gl/docs/get-started/state-management
+    const handleViewStateChange = useCallback(({
+        viewState: nextViewState
+        // interactionState,
+        // oldViewState
+    }) => {
+        if (!isLoading) {
+            setViewState(nextViewState)
+
+            if (!isTransitioning) {
+                dispatch(VIEW.state.sync(nextViewState))
+            }
+        }
+    }, [dispatch, isLoading, isTransitioning])
+
+    const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
+    const { markers } = useViewFeatures()
+    const searchResult = useSearchResult()
+    const transition = useSelector(selectTransition)
+
+    const syncedViewState = useSelector(selectViewState)
 
     useEffect(() => {
-        if (context) {
-            dispatch(VIEWPORT.transition.flyTo(
-                context.latitude,
-                context.longitude
-            ))
+        if (isLoading) {
+            setViewState(syncedViewState)
+            setIsLoading(false)
         }
-    }, [context, dispatch])
+    }, [isLoading, syncedViewState])
+
+    const makeViewStateProps = () => {
+        const { id, ...props } = transition
+
+        if (id && id !== transitionIdRef.current) {
+            transitionIdRef.current = id
+
+            console.log(id)
+
+            return {
+                ...viewState,
+                ...props
+            }
+        }
+
+        return viewState
+    }
+
+    const { handleLayerClick, layers } = useLayers({
+        mapRef,
+        sourceId: 'features',
+        sourceRef
+    })
+
+    const handleTransitionStart = () => setIsTransitioning(true)
+
+    const handleTransitionEnd = () => {
+        setIsTransitioning(false)
+        dispatch(VIEW.state.sync(viewState))
+    }
 
     return (
         <div className={classes.root}>
             <MapGL
-                {...viewport}
                 width='100%'
                 height='100%'
+                {...makeViewStateProps()}
                 attributionControl
                 className={classes.attribution}
                 // TODO: Remove after fixing transitions.
                 doubleClickZoom={false}
-                interactiveLayerIds={[clusterLayer.id, clusterCountLayer.id]}
+                interactiveLayerIds={[
+                    layers.clusterLayer.id,
+                    layers.clusterCountLayer.id
+                ]}
                 mapboxApiAccessToken=''
                 mapOptions={{
                     // customAttribution: '<a href="https://github.com/jpilkahn" target="_blank">© Agentur Alk & Flens</a>'
                 }}
                 mapStyle={MAP_STYLE_URL}
-                onClick={handleClick}
-                onDblClick={handleClick}
-                onViewportChange={handleViewportChange}
+                onClick={handleLayerClick}
+                onDblClick={handleLayerClick}
+                onTransitionEnd={handleTransitionEnd}
+                onTransitionStart={handleTransitionStart}
+                onViewStateChange={handleViewStateChange}
                 ref={mapRef}
             >
                 <Source
                     featureCollection={features}
                     ref={sourceRef}
                 >
-                    <Layer {...clusterLayer} />
-                    <Layer {...clusterCountLayer} />
-                    <Layer {...unclusteredPointLayer} />
+                    <Layer {...layers.clusterLayer} />
+                    <Layer {...layers.clusterCountLayer} />
+                    <Layer {...layers.unclusteredPointLayer} />
                 </Source>
                 {markers && (
                     <Markers

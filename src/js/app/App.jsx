@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { getTheme } from '@config/theme'
-import makeStore from '@lib/redux/store'
+import { makeStore } from '@lib/redux'
 
 import AppRoot from '@lib/components/root/AppRoot'
 import MapRoot from '@map/MapRoot'

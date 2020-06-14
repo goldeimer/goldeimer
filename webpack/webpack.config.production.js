@@ -1,6 +1,5 @@
 const merge = require('webpack-merge')
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 
@@ -23,8 +22,7 @@ const productionModeConfig = merge(
                 analyzerMode: 'static',
                 openAnalyzer: false,
                 reportFilename: 'bundle-analyzer.html'
-            }),
-            new CleanWebpackPlugin()
+            })
         ],
         devtool: 'source-map'
     }

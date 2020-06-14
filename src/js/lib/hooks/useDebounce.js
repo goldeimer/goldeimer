@@ -23,7 +23,9 @@ const useDebounce = (
     })
 
     const execute = (args) => {
-        callbackRef.current(...args)
+        if (callbackRef.current) {
+            callbackRef.current(...args)
+        }
         clear()
         updateReferenceTime()
     }
@@ -67,4 +69,14 @@ const useDebounce = (
     return [debouncedCallback, clear]
 }
 
-export default useDebounce
+const useThrottle = (callback, delay = 100) => useDebounce(
+    callback,
+    delay,
+    true,
+    true
+)
+
+export {
+    useDebounce as default,
+    useThrottle
+}

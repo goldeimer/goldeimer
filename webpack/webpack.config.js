@@ -81,13 +81,13 @@ const wordPressConfig = {
         ),
         'wordpress-theme-main': path.resolve(
             SRC_CSS_PATH, 'wordpress-theme-main.css'
-        ),
+        )
     },
     output: {
         filename: 'static/js/[name].bundle.js',
         path: path.resolve(PROJECT_PATH, 'wordpress-theme'),
         publicPath: PUBLIC_PATH_WORDPRESS
-    },
+    }
 }
 
 module.exports = [

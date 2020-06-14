@@ -5,4 +5,12 @@ const payload = (transformation = identity) => (
     { payload: value }
 ) => transformation(value, state)
 
-export default payload
+const payloadValue = (transformation = identity) => (
+    state,
+    { payload: { value } }
+) => transformation(value, state)
+
+export {
+    payload as default,
+    payloadValue
+}

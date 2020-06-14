@@ -12,7 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import ZoomInIcon from '@material-ui/icons/ZoomIn'
 import ZoomOutIcon from '@material-ui/icons/ZoomOut'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         height: 300,
         maxHeight: '100%'

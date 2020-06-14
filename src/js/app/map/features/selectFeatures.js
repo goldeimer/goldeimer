@@ -18,7 +18,7 @@ const CACHE_SIZE = {
 }
 
 const selectSourceFeatures = (state) => (state.map.features.source.features)
-const selectViewportFeatures = (state) => (state.map.features.viewport)
+const selectViewFeatures = (state) => (state.map.features.view)
 
 const makeChainable = (
     transform,
@@ -155,5 +155,5 @@ export {
     getFeaturesById,
     getSearchableSourceFeatures,
     getSourceFeatureLookup,
-    selectViewportFeatures
+    selectViewFeatures
 }

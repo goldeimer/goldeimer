@@ -1,11 +1,11 @@
-import combineSlices from '@lib/redux/combineSlices'
+import { combineSlices, persistReducer } from '@lib/redux'
 
 import { context } from '@map/context'
 import { features } from '@map/features'
 import { filter } from '@map/filter'
 import { search } from '@map/search'
 import { sort } from '@map/sort'
-import { viewport } from '@map/viewport'
+import { view } from '@map/view'
 
 const map = combineSlices({
     context,
@@ -13,8 +13,16 @@ const map = combineSlices({
     filter,
     search,
     sort,
-    viewport
+    view
 })
+
+map.reducer = persistReducer(
+    map.reducer,
+    {
+        blacklist: ['view'],
+        key: 'map'
+    }
+)
 
 const MAP = map.actions
 

@@ -1,4 +1,4 @@
-import combineSlices from '@lib/redux/combineSlices'
+import { combineSlices } from '@lib/redux'
 
 import { map } from '@map'
 import { settings } from '@settings'

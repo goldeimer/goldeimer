@@ -17,7 +17,7 @@ import NoResultsIcon from '@material-ui/icons/NotInterested'
 const useListStyles = makeStyles(() => ({
     root: {
         overflowY: 'auto',
-        '& $MuiListItemIcon-root': {
+        '& .MuiListItemIcon-root': {
             color: '#757575'
         }
     }

@@ -15,7 +15,7 @@ const sanitizeWithinRange = (value, min, max) => Math.max(
 )
 
 export {
-    sanitizeNumericValue as default,
+    sanitizeNumericValue,
     sanitizeNumericValues,
     sanitizeWithinRange
 }

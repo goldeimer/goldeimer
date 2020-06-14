@@ -1,7 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-
+import { combineSlices, createSlice, persistReducer } from '@lib/redux'
 import defaultTheme from '@config/theme'
-import combineSlices from '@lib/redux/combineSlices'
 
 import makeLocation from '@map/util/location'
 
@@ -37,6 +35,8 @@ const settings = combineSlices({
     app: combineSlices({ theme }),
     user: combineSlices({ home })
 })
+
+settings.reducer = persistReducer(settings.reducer, { key: 'settings' })
 
 const SETTINGS = settings.actions
 

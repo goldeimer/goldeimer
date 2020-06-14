@@ -13,7 +13,7 @@ const INITIAL_SOURCE = {
     receivedAt: null
 }
 
-const INITIAL_VIEWPORT = {
+const INITIAL_VIEW = {
     clusters: [],
     markers: []
 }
@@ -55,10 +55,10 @@ const segment = createSegment({
                 }
             }
         },
-        viewport: {
-            initialState: INITIAL_VIEWPORT,
+        view: {
+            initialState: INITIAL_VIEW,
             reducers: {
-                reset: () => INITIAL_VIEWPORT,
+                reset: () => INITIAL_VIEW,
                 set: (_, { payload: { markers = [] } }) => ({
                     clusters: [], // TODO
                     markers: mapGlFeaturesToMarkerState(markers)

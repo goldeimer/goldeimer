@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import useDebounce from '@lib/hooks/useDebounce'
-import useViewportEdgeStyles from '@lib/styles/useViewportEdgeStyles'
+import useEdgeStyles from '@lib/styles/useEdgeStyles'
 
 import SEARCH, {
     geocodingResultIsDach,
@@ -37,8 +37,8 @@ const MAX_RESULT_LENGTH = {
 
 const SearchContainer = () => {
     const classes = useStyles()
-    const viewportClasses = useViewportEdgeStyles()
-    const selectionListClasses = useViewportEdgeStyles({
+    const viewClasses = useEdgeStyles()
+    const selectionListClasses = useEdgeStyles({
         extraSpacing: { height: 48 }
     })
     const dispatch = useDispatch()
@@ -157,7 +157,7 @@ const SearchContainer = () => {
     /* eslint-enable react/prop-types */
 
     return (
-        <Box className={clsx(viewportClasses.topLeft, classes.width)}>
+        <Box className={clsx(viewClasses.topLeft, classes.width)}>
             <AutoCompleteSearchBox
                 defaultItemIcon={<SearchResultIcon />}
                 onBlur={handleBlur}

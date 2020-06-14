@@ -8,7 +8,7 @@ const developmentModeConfig = merge(
         watchOptions: {
             ignored: /node_modules/
         },
-        devtool: 'eval-cheap-module-source-map',
+        devtool: 'eval-cheap-module-source-map'
     }
 )
 
