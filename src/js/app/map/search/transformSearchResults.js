@@ -1,41 +1,23 @@
 import { generateShortId } from '@lib/util/generateId'
-
+import { uniqueByKey } from '@lib/util/array'
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 
-const federalStates = [
-    'Baden-Württemberg',
-    'Bayern',
-    'Berlin',
-    'Brandenburg',
-    'Bremen',
-    'Hamburg',
-    'Hessen',
-    'Mecklenburg-Vorpommern',
-    'Niedersachsen',
-    'Nordrhein-Westfalen',
-    'Rheinland-Pfalz',
-    'Saarland',
-    'Sachsen',
-    'Sachsen-Anhalt',
-    'Schleswig-Holstein',
-    // MapTiler (OSM?): Erroneous data in `place_name_de`.
-    'Šlezvicko-Holštajnsko',
-    'Thüringen'
-]
-
 const sanitizeMapTilerPlaceName = (placeName) => {
-    const sanitized = placeName.replace(
-        /,+/gu,
-        ','
+    let sanitized = placeName.split(',').map(
+        (part) => part.trim()
+    ).filter((part, index, newParts) => (
+        part && index === newParts.indexOf(part)
+    )).join(', ')
+
+    sanitized = sanitized.replace(
+        /B.densko-Wurttembersko/gu,
+        'Baden-Württemberg'
     )
 
-    if (federalStates.some(
-        (federalState) => placeName.endsWith(federalState)
-    )) {
-        return sanitized.replace(
-            new RegExp(',\\s*?[\\-\\w\\sšŠ]*?$', 'gu'), ''
-        )
-    }
+    sanitized = sanitized.replace(
+        /.lezvicko-Hol.tajnsko/gu,
+        'Schleswig-Holstein'
+    )
 
     return sanitized
 }
@@ -64,8 +46,14 @@ const geocodingResultToSearchResult = ({
     }
 }
 
-const geocodingResultsToSearchResults = (results) => results.map(
-    (result) => geocodingResultToSearchResult(result)
+// TODO:
+// Filter elsewhere.
+// Doesn't belong here.
+const geocodingResultsToSearchResults = (results) => uniqueByKey(
+    results.map(
+        (result) => geocodingResultToSearchResult(result)
+    ),
+    'label'
 )
 
 const historyEntryToSearchResult = ({
@@ -82,8 +70,8 @@ const historyEntryToSearchResult = ({
     value: {
         id: _id,
         resultId: resultId || _id,
-        longitude,
-        latitude,
+        longitude: parseFloat(longitude),
+        latitude: parseFloat(latitude),
         placeName,
         type: SEARCH_RESULT_TYPE.history
     }

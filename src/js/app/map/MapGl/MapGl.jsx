@@ -102,8 +102,6 @@ const MapGl = () => {
         if (id && id !== transitionIdRef.current) {
             transitionIdRef.current = id
 
-            console.log(id)
-
             return {
                 ...viewState,
                 ...props

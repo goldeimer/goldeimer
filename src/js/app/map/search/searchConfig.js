@@ -1,6 +1,7 @@
 const MIN_ACTIONABLE_QUERY_LENGTH = 3
+const ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH = 8
 
 export {
-    /* eslint-disable-next-line import/prefer-default-export */
+    ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH,
     MIN_ACTIONABLE_QUERY_LENGTH
 }

@@ -47,7 +47,7 @@ const makeFlyToTransition = () => makeTransition(
     easeCubic,
     new FlyToInterpolator({
         curve: 1.414,
-        speed: 1.2
+        speed: 0.8
     })
 )
 

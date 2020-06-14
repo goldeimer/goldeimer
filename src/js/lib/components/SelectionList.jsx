@@ -56,9 +56,10 @@ const SelectionList = ({
         >
             {items.length
                 ? items.map(
-                    ({ label, value }, index) => (
+                    ({ label, value, isDisabled = false }, index) => (
                         <ListItem
                             button
+                            disabled={isDisabled}
                             key={value.id}
                             onClick={() => {
                                 const selectedValue = handleSelect(index)
@@ -105,11 +106,12 @@ SelectionList.propTypes = {
     dense: PropTypes.bool,
     defaultItemIcon: PropTypes.node,
     items: PropTypes.arrayOf(
-        PropTypes.exact({
+        PropTypes.shape({
             id: PropTypes.oneOfType([
                 PropTypes.string,
                 PropTypes.number
             ]),
+            isDisabled: PropTypes.bool,
             label: PropTypes.string,
             value: PropTypes.any
         })

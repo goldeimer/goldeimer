@@ -24,7 +24,7 @@ const useButtonGroupStyles = makeStyles((theme) => ({
         padding: 5
     },
     vertical: {
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(2)
     },
     groupedContained: {
         backgroundColor: theme.palette.background.default,

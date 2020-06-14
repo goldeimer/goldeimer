@@ -10,7 +10,10 @@ export {
     idNotInIds
 } from '@map/search/filterGeocodingResults'
 
-export { MIN_ACTIONABLE_QUERY_LENGTH } from '@map/search/searchConfig'
+export {
+    ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH,
+    MIN_ACTIONABLE_QUERY_LENGTH
+} from '@map/search/searchConfig'
 
 export {
     geocodingResultToSearchResult,

@@ -37,7 +37,8 @@ const babelLoader = {
                         regenerator: true,
                         useESModules: true
                     }
-                ]
+                ],
+                '@babel/plugin-transform-unicode-regex'
             ],
             cacheDirectory: true,
             env: {

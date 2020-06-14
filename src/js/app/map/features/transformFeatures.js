@@ -83,8 +83,8 @@ const featureToSearchResult = (
             properties[iconTaxonomyTermId][0]
         ),
         id,
-        latitude,
-        longitude,
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
         placeName,
         type: SEARCH_RESULT_TYPE.feature
     }

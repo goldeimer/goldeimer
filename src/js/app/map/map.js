@@ -19,7 +19,7 @@ const map = combineSlices({
 map.reducer = persistReducer(
     map.reducer,
     {
-        blacklist: ['view'],
+        blacklist: ['search', 'view'],
         key: 'map'
     }
 )

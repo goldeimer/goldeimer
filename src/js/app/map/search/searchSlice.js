@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSegment, payloadIdentity } from '@lib/redux'
+import {
+    createAsyncThunk,
+    createSegment,
+    payloadIdentity,
+    persistReducer
+} from '@lib/redux'
 import generateId from '@lib/util/generateId'
 
 import geocodingRequest from '@map/search/geocoding'
@@ -57,7 +62,6 @@ const search = createSegment({
                         const trimmed = query.trim()
 
                         if (MIN_ACTIONABLE_QUERY_LENGTH <= trimmed.length) {
-                            // TODO: Debounce?
                             dispatch(fetchGeocoding(trimmed))
                         } else {
                             dispatch({ type: 'search/geocoding/reset' })
@@ -115,6 +119,14 @@ const search = createSegment({
 })
 
 search.actions.geocoding.fetch = fetchGeocoding
+
+search.reducer = persistReducer(
+    search.reducer,
+    {
+        blacklist: ['geocoding', 'query'],
+        key: 'search'
+    }
+)
 
 const SEARCH = search.actions
 

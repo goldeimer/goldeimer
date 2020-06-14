@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { isFunction } from 'typechecker'
 
 const useSelectionByIndex = (
@@ -6,7 +6,15 @@ const useSelectionByIndex = (
     onSelect = null,
     initialIndex = -1 // set non-negative for pre-selection
 ) => {
+    const selectedRef = useRef()
+
     const [selectedIndex, setSelectedIndex] = useState(null)
+
+    const returnFocus = () => {
+        if (selectedRef.current) {
+            selectedRef.current.focus()
+        }
+    }
 
     const getSelectedValueFromIndex = (index) => {
         const item = items[index]
@@ -28,7 +36,7 @@ const useSelectionByIndex = (
             const selectedValue = getSelectedValueFromIndex(index)
 
             if (selectedValue && isFunction(onSelect)) {
-                onSelect(selectedValue)
+                onSelect(selectedValue, returnFocus)
             }
 
             return selectedValue
@@ -63,7 +71,9 @@ const useSelectionByIndex = (
         handleDecrement,
         handleIncrement,
         handleSelect,
-        selectedIndex
+        selectedIndex,
+        selectedRef,
+        setSelectedIndex
     }
 }
 

@@ -13,6 +13,11 @@ import isIos from '@lib/detection/isIos'
 import IosSwitch from '@lib/components/buttons/IosSwitch'
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiListItemIcon-root': {
+            color: '#757575'
+        }
+    },
     listItemText: {
         marginRight: theme.spacing(4)
     }
@@ -37,6 +42,7 @@ const ToggleSwitchListItem = ({
     return (
         <ListItem
             button
+            className={classes.root}
             onClick={() => { onChange(itemKey) }}
         >
             {IconComponent && (

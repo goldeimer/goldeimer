@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch } from 'react-redux'
@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 import useDebounce from '@lib/hooks/useDebounce'
 import useEdgeStyles from '@lib/styles/useEdgeStyles'
+import useInput from '@lib/hooks/useInput'
 
 import SEARCH, {
     geocodingResultIsDach,
@@ -14,8 +15,10 @@ import SEARCH, {
     useQueriedSearchHistoryResults,
     useQuery,
     useSearchResult,
+    ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH,
     MIN_ACTIONABLE_QUERY_LENGTH
 } from '@map/search'
+import { VIEW } from '@map/view'
 import VIEW_ID from '@map/views'
 
 import Box from '@material-ui/core/Box'
@@ -36,6 +39,8 @@ const MAX_RESULT_LENGTH = {
 }
 
 const SearchContainer = () => {
+    const returnFocusRef = useRef()
+
     const classes = useStyles()
     const viewClasses = useEdgeStyles()
     const selectionListClasses = useEdgeStyles({
@@ -43,6 +48,12 @@ const SearchContainer = () => {
     })
     const dispatch = useDispatch()
     const history = useHistory()
+
+    const { setValue: setInputValue, value: inputValue } = useInput()
+
+    const [hasBeenAddedToHistory, setHasBeenAddedToHistory] = useState(false)
+    const [isResultActive, setIsResultActive] = useState(false)
+    const [showResults, setShowResults] = useState(false)
 
     const query = useQuery()
     const result = useSearchResult()
@@ -68,8 +79,9 @@ const SearchContainer = () => {
         maxLength: derivedMaxGeocodingResultLength
     })
 
-    const results = result ? [{
+    const results = result && isResultActive ? [{
         id: result.id,
+        isDisabled: true,
         label: result.placeName,
         value: result
     }] : [
@@ -78,11 +90,18 @@ const SearchContainer = () => {
         ...featureResults
     ]
 
-    // TODO: Is obsolete?
-    const [hasBeenAddedToHistory, setHasBeenAddedToHistory] = useState(false)
-    const [showResults, setShowResults] = useState(false)
-
     /// --------------------------- event util --------------------------------
+
+    const setQuery = (value) => dispatch(SEARCH.query.set(value))
+
+    const [
+        throttledSetQuery,
+        cancelThrottledSetQuery
+    ] = useDebounce(setQuery, 400, true, true)
+    const [
+        moreThrottledSetQuery,
+        cancelMoreThrottledSetQuery
+    ] = useDebounce(setQuery, 800, true, true)
 
     const addToHistory = (rslt, qry = query) => {
         if (hasBeenAddedToHistory) {
@@ -93,57 +112,71 @@ const SearchContainer = () => {
         setHasBeenAddedToHistory(true)
     }
 
-    const setResult = (rslt) => (
-        dispatch(SEARCH.result.set(rslt))
-    )
+    const setResult = (rslt) => {
+        dispatch([
+            SEARCH.result.set(rslt),
+            VIEW.transition.flyTo({ ...rslt, zoom: 13 })
+        ])
 
-    const [delayedAddToHistory] = useDebounce(addToHistory, 20000)
+        cancelThrottledSetQuery()
+        cancelMoreThrottledSetQuery()
+    }
+
     const [debouncedAddToHistory] = useDebounce(addToHistory, 1000)
-    const [debouncedSetResult] = useDebounce(setResult, 1000)
+    const [debouncedSetResult] = useDebounce(setResult, 500)
 
     /// ------------------------- event handlers ------------------------------
 
     const handleBlur = () => {
         setShowResults(false)
+
+        if (result) {
+            setIsResultActive(true)
+        }
     }
+
     const handleFocus = () => {
         setShowResults(true)
     }
 
     const handleChange = ({ target: { value } }) => {
         if (result && value === result.placeName) {
+            if (returnFocusRef.current) {
+                returnFocusRef.current()
+            }
+
             return
         }
 
         setShowResults(true)
+        setIsResultActive(false)
+        setInputValue(value)
 
         if (result) {
-            dispatch([
-                SEARCH.result.reset(),
-                SEARCH.query.set(value)
-            ])
+            dispatch(SEARCH.result.reset())
+            setHasBeenAddedToHistory(false)
+        }
 
+        if (
+            value.length &&
+            value.length > ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH
+        ) {
+            moreThrottledSetQuery(value)
             return
         }
 
-        dispatch(SEARCH.query.set(value))
+        throttledSetQuery(value)
     }
 
-    // const handleClose = () => {
-    //     if (!hasBeenAddedToHistory && currentResult) {
-    //         addToHistory(currentResult)
-    //     }
-    // }
-
-    const handleSelect = (selectedItem) => {
+    const handleSelect = (selectedItem, returnFocus) => {
+        returnFocusRef.current = returnFocus
         debouncedSetResult(selectedItem)
-        delayedAddToHistory(selectedItem, query)
     }
 
     const handleSubmit = (selectedItem) => {
         setResult(selectedItem)
         setShowResults(false)
-        debouncedAddToHistory(selectedItem)
+        debouncedAddToHistory(selectedItem, query)
     }
 
     /* eslint-disable react/prop-types */
@@ -171,7 +204,11 @@ const SearchContainer = () => {
                 selectionListClasses={selectionListClasses}
                 showResults={showResults}
                 showNoteOnEmpty={query.length >= MIN_ACTIONABLE_QUERY_LENGTH}
-                value={result && result.placeName ? result.placeName : query}
+                value={
+                    result && result.placeName
+                        ? result.placeName
+                        : inputValue
+                }
                 withMenuButton
             />
         </Box>
