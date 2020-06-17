@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 
-const useStyles = makeStyles(({ palette, spacing, zIndex }) => ({
+const useStyles = makeStyles(({ palette, spacing }) => ({
     avatar: ({ color }) => {
         const backgroundColor = color !== null
             ? color
@@ -27,6 +27,9 @@ const useStyles = makeStyles(({ palette, spacing, zIndex }) => ({
         '&:last-child': {
             paddingBottom: spacing(2)
         }
+    },
+    secondaryIconComponentWrap: {
+        marginRight: spacing(1)
     },
     title: {
         fontWeight: 'bold',
@@ -86,7 +89,7 @@ const FeatureMarkerDetailCard = ({
                         {country}
                     </span>
                 </Typography>
-                <Box mt={1}>
+                <Box display='flex' mt={1}>
                     {secondaryTaxonomyTerms.map(
                         ({
                             color: secondaryColor,
@@ -95,20 +98,30 @@ const FeatureMarkerDetailCard = ({
                         }) => {
                             if (!termName) {
                                 return (
-                                    <IconComponent
-                                        color={secondaryColor}
-                                        key={secondaryColor}
-                                    />
+                                    <span
+                                        className={
+                                            classes.secondaryIconComponentWrap
+                                        }
+                                    >
+                                        <SecondaryIconComponent
+                                            color={secondaryColor}
+                                            key={secondaryColor}
+                                        />
+                                    </span>
                                 )
                             }
 
                             return (
                                 <Tooltip
                                     aria-label={termName}
-                                    key={termName}
+                                    key={`${termName}:${secondaryColor}`}
                                     title={termName}
                                 >
-                                    <span>
+                                    <span
+                                        className={
+                                            classes.secondaryIconComponentWrap
+                                        }
+                                    >
                                         <SecondaryIconComponent
                                             color={secondaryColor}
                                         />

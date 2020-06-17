@@ -152,17 +152,43 @@ const sourceRequest = async () => {
     const featuresGoldeimer = await getFeaturesGoldeimer()
     const featuresVca = await getFeaturesVca()
 
-    return featuresGoldeimer.concat(featuresVca).map((feature) => ({
-        ...feature,
-        properties: {
-            ...feature.properties,
-            ...cityToPostCodeAndCity(feature.properties.city),
-            country: sanitizeIfString(feature.properties.country),
-            placeName: sanitizeIfString(feature.properties.placeName),
-            street: sanitizeIfString(feature.properties.street),
-            url: sanitizeUrl(feature.properties.url)
+    return featuresGoldeimer.concat(featuresVca).reduce((acc, feature) => {
+        const street = sanitizeIfString(feature.properties.street)
+
+        const accumulatorStreetIndex = acc.findIndex(
+            (element) => (element.properties.street === street)
+        )
+
+        if (accumulatorStreetIndex !== -1) {
+            const ret = acc
+
+            const accBrands = acc[accumulatorStreetIndex].properties.brands
+            const newBrands = feature.properties.brands.filter(
+                (brand) => !accBrands.includes(brand)
+            )
+
+            ret[accumulatorStreetIndex].properties.brands = (
+                accBrands.concat(newBrands)
+            )
+
+            return ret
         }
-    }))
+
+        return [
+            ...acc,
+            {
+                ...feature,
+                properties: {
+                    ...feature.properties,
+                    ...cityToPostCodeAndCity(feature.properties.city),
+                    country: sanitizeIfString(feature.properties.country),
+                    placeName: sanitizeIfString(feature.properties.placeName),
+                    street,
+                    url: sanitizeUrl(feature.properties.url)
+                }
+            }
+        ]
+    }, [])
 }
 
 export default sourceRequest
