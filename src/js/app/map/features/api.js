@@ -6,17 +6,21 @@ import parseGoogleSheet from '@lib/util/parseGoogleSheet'
 import { BRAND, MERCHANT_TYPE } from '@map/taxonomies'
 import generateId from '@lib/util/generateId'
 
+import { GOOGLE_SHEETS_API_KEY } from '@config/apiKeys'
+
 /* eslint-disable max-len */
-const GOOGLE_SPREADSHEET_PUBID_GOLDEIMER =
-'2PACX-1vRuJMztp6DfBGPv5X1ZvRhNUL95-GTXoxADEhh3XiWzmZYyaWrytx3E4-_8eb7AkW_nFuuj9Nn5fJoh'
-const GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER = '164271551'
+const GOOGLE_SPREADSHEET_ID_GOLDEIMER =
+'1Uk34qKL3uI1DRjHcFAETIj9dXJ0QEiWZFtHHBHY_SRo'
 
-const GOOGLE_SPREADSHEET_PUBID_VCA =
-'2PACX-1vSmOzTOK5Tlx0AA-gR4h1efPCWD9q2VNq2gzN8kQFVdCw_vHEv65t6uppj7iwJBc7_XyGvDoBk8jb-Q'
-const GOOGLE_SPREADSHEET_SHEET_GID_VCA = '164271551'
+const GOOGLE_SPREADSHEET_ID_VCA =
+'1UBJ6lq4583McjU8nt2prIsMN_e8n_pJbsTb4zIg5X74'
 
-const makeGoogleSpreadsheetUrl = (pubId, gid) => (
-    `https://docs.google.com/spreadsheets/d/e/${pubId}/pub?gid=${gid}&single=true&output=csv`
+const makeGoogleSpreadsheetUrl = ({
+    apiKey,
+    spreadsheetId,
+    sheetName
+}) => (
+    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}?key=${apiKey}`
 )
 /* eslint-enable max-len */
 
@@ -89,24 +93,26 @@ const spreadsheetDataToGeoJsonVca = (data) => Array.prototype.map.call(
 
 const getFeaturesGoldeimer = async () => {
     const result = await parseGoogleSheet(
-        makeGoogleSpreadsheetUrl(
-            GOOGLE_SPREADSHEET_PUBID_GOLDEIMER,
-            GOOGLE_SPREADSHEET_SHEET_GID_GOLDEIMER
-        )
+        makeGoogleSpreadsheetUrl({
+            apiKey: GOOGLE_SHEETS_API_KEY,
+            sheetName: 'Points',
+            spreadsheetId: GOOGLE_SPREADSHEET_ID_GOLDEIMER
+        })
     )
 
-    return spreadsheetDataToGeoJsonGoldeimer(result)
+    return spreadsheetDataToGeoJsonGoldeimer(result.data)
 }
 
 const getFeaturesVca = async () => {
     const result = await parseGoogleSheet(
-        makeGoogleSpreadsheetUrl(
-            GOOGLE_SPREADSHEET_PUBID_VCA,
-            GOOGLE_SPREADSHEET_SHEET_GID_VCA
-        )
+        makeGoogleSpreadsheetUrl({
+            apiKey: GOOGLE_SHEETS_API_KEY,
+            sheetName: 'Points',
+            spreadsheetId: GOOGLE_SPREADSHEET_ID_VCA
+        })
     )
 
-    return spreadsheetDataToGeoJsonVca(result)
+    return spreadsheetDataToGeoJsonVca(result.data)
 }
 
 const cityToPostCodeAndCity = (city) => {
