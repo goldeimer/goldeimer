@@ -11,21 +11,20 @@ import { CONTEXT_TYPE } from '@map/context'
 
 const useStyles = makeStyles(({ spacing }) => ({
     nearMeIcon: {
-        marginLeft: 3,
-        marginRight: spacing(2) + 2
+        marginRight: spacing(1)
     }
 }))
 
 const getNearBySectionTitleByContextType = (contextType) => {
     switch (contextType) {
-    case CONTEXT_TYPE.feature.is(contextType):
-        return 'Weitere Händler in der Umgebung'
+    case CONTEXT_TYPE.feature.value:
+        return 'Auch in der Umgebung'
 
-    case CONTEXT_TYPE.currentLocation.is(contextType):
+    case CONTEXT_TYPE.currentLocation.value:
         return 'Händler nahe deines Standorts'
 
-    case CONTEXT_TYPE.geocodingResult.is(contextType):
-        return 'Händler nahe deines Standorts'
+    case CONTEXT_TYPE.geocodingResult.value:
+        return 'Händler nahe deines Suchergebnisses'
 
     default:
         return 'In der Umgebung'
@@ -48,9 +47,9 @@ const NearBySection = ({
             <NearMeIcon
                 className={classes.nearMeIcon}
                 color='primary'
-                fontSize='large'
             />
             <Typography
+                className='small'
                 component='h2'
                 variant='h6'
             >

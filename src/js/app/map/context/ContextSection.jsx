@@ -30,7 +30,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
         const backgroundColor = color || palette.primary.main
 
         return {
-            marginRight: spacing(2),
+            marginRight: spacing(1),
             color: palette.getContrastText(backgroundColor),
             backgroundColor
         }
@@ -39,7 +39,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
         marginRight: spacing(1)
     },
     disabledIcon: {
-        color: 'rgba(0, 0, 0, 0.48)'
+        // The material-ui implementation of this component adds 0.5 opacity
+        // on the basis of a truthy `disabled` property.
+        // Hence the somewhat counter-intuitive palette pick.
+        color: palette.action.active
     },
     enabledIcon: {
         color: palette.success.main
@@ -50,10 +53,16 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
         backgroundColor: color || palette.primary.light
     }),
     link: {
-        color: '#ff0000',
         '&:hover .MuiTypography-root': {
-            color: '#ff0000',
             textDecoration: 'underline'
+        }
+    },
+    listItemText: {
+        marginRight: spacing(7),
+        '& .MuiTypography-root': {
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden'
         }
     },
     secondaryAction2: {
@@ -237,7 +246,13 @@ const ContextSection = ({
                 onClick={handleWebsiteOpen}
             />
         ),
-        text: url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''),
+        text: decodeURIComponent(url).replace(
+            /^https?:\/\/(www\.)?/,
+            ''
+        ).replace(
+            /\/$/,
+            ''
+        ),
         value: url
     }
 
@@ -266,6 +281,7 @@ const ContextSection = ({
                     label={label}
                     renderSecondaryActions={renderSecondaryActions}
                     text={text || value}
+                    textClassName={classes.listItemText}
                     value={value}
                 />
             ))}

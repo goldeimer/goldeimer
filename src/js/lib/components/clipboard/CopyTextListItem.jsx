@@ -12,12 +12,14 @@ import CopyTextListItemSecondaryAction
     from '@lib/components/clipboard/CopyTextListItemSecondaryAction'
 
 const CopyTextListItem = ({
-    icon,
+    className,
     handleClick,
     handleCopy: handleCopyImpl,
+    icon,
     label,
     renderSecondaryActions,
     text,
+    textClassName,
     value
 }) => {
     const copyLabel = 'Kopieren'
@@ -26,10 +28,11 @@ const CopyTextListItem = ({
     return (
         <ListItem
             button
+            className={className}
             onClick={handleClick || handleCopy}
             role='listitem'
         >
-            <ListItemIcon>
+            <ListItemIcon className='tighter'>
                 {icon}
             </ListItemIcon>
             <Tooltip
@@ -39,7 +42,7 @@ const CopyTextListItem = ({
                 placement='bottom'
                 title={label || copyLabel}
             >
-                <ListItemText primary={text} />
+                <ListItemText className={textClassName} primary={text} />
             </Tooltip>
             {renderSecondaryActions && renderSecondaryActions()}
             <CopyTextListItemSecondaryAction
@@ -52,20 +55,24 @@ const CopyTextListItem = ({
 }
 
 CopyTextListItem.propTypes = {
+    className: PropTypes.string,
     icon: PropTypes.node.isRequired,
     handleClick: PropTypes.func,
     handleCopy: PropTypes.func.isRequired,
     label: PropTypes.string,
     renderSecondaryActions: PropTypes.func,
     text: PropTypes.string,
+    textClassName: PropTypes.string,
     value: PropTypes.string.isRequired
 }
 
 CopyTextListItem.defaultProps = {
+    className: null,
     handleClick: null,
     label: null,
     renderSecondaryActions: null,
-    text: null
+    text: null,
+    textClassName: null
 }
 
 export default CopyTextListItem

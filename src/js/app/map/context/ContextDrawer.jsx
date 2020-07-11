@@ -18,46 +18,79 @@ import { latLonToCoordinates } from '@map/util/geometry'
 import ContextSection from '@map/context/ContextSection'
 import NearBySection from '@map/context/NearBySection'
 
-const useStyles = makeStyles(({ palette, spacing, zIndex }) => {
-    const collapseButtonWidth = spacing(2)
+const useStyles = makeStyles(({
+    breakpoints,
+    palette,
+    spacing,
+    zIndex
+}) => {
+    const collapseButtonWidth = spacing(3)
+    const collapseButtonSpacing = spacing(1)
+
+    // width of `AutoCompleteSearchBox` + margins
+    const idealDrawerWidth = 400 + spacing(2)
+
+    // the collapse button resides outside of its container element
+    const idealDrawerWrapWidth = idealDrawerWidth +
+        collapseButtonWidth +
+        collapseButtonSpacing
 
     // height of `AutoCompleteSearchBox` + margins
     const headerSectionMinHeight = spacing(8)
-    // width of `AutoCompleteSearchBox` + margins
-    const minDrawerWidth = 400 + spacing(2)
+
+    const rootWidths = {
+        maxWidth: idealDrawerWrapWidth,
+        [breakpoints.up('drawer')]: {
+            width: idealDrawerWrapWidth
+        }
+    }
 
     return {
         root: {
-            width: minDrawerWidth,
-            maxWidth: '90%',
             right: 'auto !important',
-            zIndex: `${zIndex.mobileStepper} !important`
+            zIndex: `${zIndex.mobileStepper} !important`,
+            ...rootWidths
+        },
+        paperWrap: {
+            background: 'transparent',
+            zIndex: `${zIndex.mobileStepper} !important`,
+            ...rootWidths
         },
         paper: {
-            width: minDrawerWidth,
-            maxWidth: '90%',
-            overflowY: 'visible'
+            width: 'auto',
+            maxWidth: `calc(100% - ${collapseButtonWidth + collapseButtonSpacing}px)`,
+            minHeight: '100%',
+            position: 'relative',
+            fallbacks: {
+                maxWidth: '90%'
+            }
         },
-        // collapseButton: {
-        //     position: 'absolute',
-        //     width: collapseButtonWidth,
-        //     height: spacing(4),
-        //     right: -collapseButtonWidth,
-        //     top: headerSectionMinHeight + spacing(1)
-        //     // backgroundColor: palette.background.paper
-        // },
-        // collapseButtonFocusVisible: {
+        collapsePaper: {
+            position: 'absolute',
+            width: collapseButtonWidth,
+            height: spacing(6),
+            left: '100%',
+            top: collapseButtonSpacing,
+            zIndex: zIndex.mobileStepper - 1,
+            display: 'flex',
+            alignItems: 'center',
+            color: palette.text.secondary,
+            backgroundColor: palette.background.paper,
+            borderLeft: '1px solid #d4d4d4'
+        },
+        collapseButton: {
+            width: '100%',
+            height: '100%',
+            '&:hover': {
+                backgroundColor: palette.action.hover
+            }
+        },
+        collapseButtonFocusVisible: {
 
-        // },
-        // collapseIcon: {
-        //     color: palette.action.active
-        // },
-        // collapsePaper: {
-        //     borderRadius: 0,
-        //     width: '100%',
-        //     height: '100%',
-        //     zIndex: zIndex.mobileStepper - 1
-        // },
+        },
+        collapseIcon: {
+            color: palette.action.active
+        },
         headerSection: {
             minHeight: headerSectionMinHeight,
             backgroundColor: palette.primary.main
@@ -83,8 +116,12 @@ const ContextDrawer = ({ isOpenIfContext }) => {
         setIsOpen(false)
     }
 
+    const handleToggle = () => {
+        setIsOpen(!isOpen)
+    }
+
     return (
-        <div>
+        <>
             <SwipeableDrawer
                 anchor='left'
                 className={classes.root}
@@ -96,34 +133,43 @@ const ContextDrawer = ({ isOpenIfContext }) => {
                 onOpen={handleOpen}
                 open={isOpen}
                 PaperProps={{
-                    className: classes.paper,
-                    elevation: 6
+                    className: classes.paperWrap,
+                    elevation: 0
                 }}
             >
-                {/* <ButtonBase
-                    focusRipple
-                    className={classes.collapseButton}
-                    focusVisibleClassName={classes.collapseButtonFocusVisible}
-                    onClick={handlecollapseButtonClick}
+                <Paper
+                    className={classes.paper}
+                    elevation={6}
+                    square
                 >
                     <Paper
                         className={classes.collapsePaper}
-                        elevation={6}
+                        elevation={4}
+                        square
                     >
-                        {isOpen
-                            ? <ArrowLeftIcon />
-                            : <ArrowRightIcon />}
+                        <ButtonBase
+                            focusRipple
+                            className={classes.collapseButton}
+                            focusVisibleClassName={
+                                classes.collapseButtonFocusVisible
+                            }
+                            onClick={handleToggle}
+                        >
+                            {isOpen
+                                ? <ArrowLeftIcon />
+                                : <ArrowRightIcon />}
+                        </ButtonBase>
                     </Paper>
-                </ButtonBase> */}
-                <ContextSection {...context} context={context} />
-                <Divider />
-                <NearBySection
-                    contextType={type}
-                    latitude={latitude}
-                    longitude={longitude}
-                />
+                    <ContextSection {...context} context={context} />
+                    <Divider />
+                    <NearBySection
+                        contextType={type}
+                        latitude={latitude}
+                        longitude={longitude}
+                    />
+                </Paper>
             </SwipeableDrawer>
-        </div>
+        </>
     )
 }
 

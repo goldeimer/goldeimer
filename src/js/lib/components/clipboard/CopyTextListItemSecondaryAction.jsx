@@ -15,7 +15,7 @@ const CopyTextListItemSecondaryAction = ({
         arrow
         enterDelay={300}
         enterNextDelay={500}
-        placement='right-end'
+        placement='bottom-end'
         title={label}
     >
         <ListItemSecondaryAction className={className}>

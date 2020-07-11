@@ -13,7 +13,6 @@ const calculateOffsets = (
     anchorTo,
     { height, width }
 ) => ({
-    // TODO: Grab bounding client rect from DOM node.
     left: -(width / 2),
     top: -(anchorTo === ANCHOR_TO.top
         ? height

@@ -87,7 +87,7 @@ const AutoCompleteSearchBox = ({
                 )}
                 <InputBase
                     autoComplete='off'
-                    autoFocus
+                    // autoFocus
                     className={classes.inputBase}
                     inputProps={{ 'aria-label': label }}
                     onBlur={(event) => {
@@ -102,7 +102,7 @@ const AutoCompleteSearchBox = ({
                     }}
                     onChange={onChange}
                     placeholder={label}
-                    value={value}
+                    defaultValue={value}
                 />
                 {
                     // TODO: Is this button needed?
@@ -155,7 +155,7 @@ AutoCompleteSearchBox.propTypes = {
 
 AutoCompleteSearchBox.defaultProps = {
     defaultItemIcon: null,
-    label: 'In meiner Umgebung suchen',
+    label: 'Finde deinen Händler',
     onBlur: noop,
     onChange: noop,
     onFocus: noop,

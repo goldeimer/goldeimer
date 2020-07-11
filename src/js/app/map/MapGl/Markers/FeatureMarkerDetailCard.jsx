@@ -18,6 +18,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
             : palette.primary.main
 
         return {
+            marginRight: spacing(1),
             color: palette.getContrastText(backgroundColor),
             backgroundColor
         }
@@ -34,8 +35,6 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     title: {
         fontWeight: 'bold',
         whiteSpace: 'nowrap'
-    },
-    textBold: {
     },
     textSecondary: {
         color: palette.text.secondary

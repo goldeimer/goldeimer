@@ -18,6 +18,16 @@ const makeTheme = (
     colorLayerHighlight = '#000',
     headingFontStyle = TYPOGRAPHY_VENEER
 ) => createMuiTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            drawer: 449,
+            sm: 600,
+            md: 960,
+            lg: 1280,
+            xl: 1920
+        }
+    },
     palette: {
         primary: {
             main: colorPrimary
@@ -40,6 +50,26 @@ const makeTheme = (
         button: {
             ...headingFontStyle,
             fontSize: '1rem'
+        }
+    },
+    overrides: {
+        MuiListItemIcon: {
+            root: {
+                minWidth: 48,
+                '&.tight': {
+                    minWidth: 40
+                },
+                '&.tighter': {
+                    minWidth: 32
+                }
+            }
+        },
+        MuiTypography: {
+            h6: {
+                '&.small': {
+                    fontSize: '1.125rem'
+                }
+            }
         }
     }
 })
