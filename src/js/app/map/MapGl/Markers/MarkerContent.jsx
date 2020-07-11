@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { useDetail } from '@map/features'
+import { detailToFeatureContext, useDetail } from '@map/features'
 
 import useHover from '@lib/hooks/useHover'
 
@@ -37,8 +37,9 @@ const MarkerContent = forwardRef(({
     } = useHover()
 
     const detail = useDetail(id)
-
     const classes = useStyles()
+
+    const context = detail ? detailToFeatureContext(detail) : null
 
     return (
         <>
@@ -61,7 +62,7 @@ const MarkerContent = forwardRef(({
                     className={clsx({
                         [classes.popperTrigger]: renderDetailCard !== null
                     })}
-                    id={id}
+                    context={context}
                 />
             </Box>
         </>

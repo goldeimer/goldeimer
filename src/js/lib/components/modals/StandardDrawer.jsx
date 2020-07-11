@@ -23,16 +23,14 @@ const StandardDrawer = ({
         handleOpen
     } = useDialog(isInitiallyOpen)
 
-    const iOS = isIos()
-
     return (
         <SwipeableDrawer
             anchor='left'
-            disableDiscovery={iOS}
+            disableDiscovery={isIos()}
             open={isOpen}
             onClose={handleClose}
             onOpen={handleOpen}
-            transitionDuration={500}
+            transitionDuration={300}
         >
             <StandardDialogTitle
                 icon={titleIcon}

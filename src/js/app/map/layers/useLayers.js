@@ -126,13 +126,13 @@ const useLayers = ({
                     return
                 }
 
-                dispatch([
-                    VIEW.coordinates.set({
+                dispatch(
+                    VIEW.transition.linearTransitionTo({
                         longitude: feature.geometry.coordinates[0],
-                        latitude: feature.geometry.coordinates[1]
-                    }),
-                    VIEW.zoom.set(zoom)
-                ])
+                        latitude: feature.geometry.coordinates[1],
+                        zoom
+                    })
+                )
             }
         )
     }

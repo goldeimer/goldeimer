@@ -56,6 +56,8 @@ const Marker = ({
         >
             <MarkerContent
                 ref={markerRef}
+                latitude={latitude}
+                longitude={longitude}
                 {...other}
             />
         </MarkerGl>

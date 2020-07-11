@@ -65,6 +65,6 @@ view.reducer = persistReducer(
 const VIEW = view.actions
 
 export {
-    view,
-    VIEW
+    VIEW as default,
+    view
 }

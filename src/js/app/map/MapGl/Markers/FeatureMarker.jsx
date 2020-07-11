@@ -1,8 +1,11 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { hexToRgba } from '@lib/util/color'
+
+import CONTEXT, { PropTypeContext } from '@map/context'
 
 import Box from '@material-ui/core/Box'
 import ButtonBase from '@material-ui/core/ButtonBase'
@@ -41,14 +44,26 @@ const useStyles = makeStyles(({ palette }) => ({
 
 const FeatureMarkerComponent = ({
     color,
+    context,
     iconComponent: IconComponent
 }) => {
     const classes = useStyles({ color })
+    const dispatch = useDispatch()
+
+    const handleClick = useCallback(
+        () => {
+            if (context !== null) {
+                dispatch(CONTEXT.set(context))
+            }
+        },
+        [context, dispatch]
+    )
 
     return (
         <ButtonBase
             // TODO: Fix.
             disableRipple
+            onClick={handleClick}
         >
             <Box
                 fontSize='3rem'
@@ -80,11 +95,13 @@ const FeatureMarkerComponent = ({
 
 FeatureMarkerComponent.propTypes = {
     color: PropTypes.string,
+    context: PropTypeContext,
     iconComponent: PropTypes.elementType.isRequired
 }
 
 FeatureMarkerComponent.defaultProps = {
-    color: null
+    color: null,
+    context: null
 }
 
 const FeatureMarker = (props) => (

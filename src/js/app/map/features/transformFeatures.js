@@ -6,12 +6,14 @@
 
 import { identity } from '@lib/util/noop'
 
+import { CONTEXT_TYPE } from '@map/context'
 import {
     getColorAndIconComponent,
     getFullTaxonomyVisualization,
     getTermNameByTaxonomyIdAndTermId,
     VISUALIZED_TAXONOMY
 } from '@map/taxonomies'
+import { makeLocation } from '@map/util'
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
 
@@ -42,12 +44,17 @@ const featureToDetail = (
         (termId) => getFullTaxonomyVisualization({
             taxonomyId: secondaryTaxonomyId,
             termId,
-            defaultTermName: 'Ubekannt'
+            defaultTermName: 'Unbekannt'
         })
     ),
-    latitude,
-    longitude,
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
     ...properties
+})
+
+const detailToFeatureContext = (detail) => ({
+    ...makeLocation(detail),
+    type: CONTEXT_TYPE.feature.value
 })
 
 const featureToDetailFixedTaxonomiesStub = (
@@ -244,6 +251,7 @@ const getFeatureTransform = (format) => getTransform(format, false)
 const getFeaturesTransform = (format) => getTransform(format, true)
 
 export {
+    detailToFeatureContext,
     featuresToFeatureCollection,
     getFeatureTransform,
     getFeaturesTransform,

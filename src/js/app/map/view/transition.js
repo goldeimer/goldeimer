@@ -36,12 +36,6 @@ const makeTransition = (
     transitionInterpolator
 })
 
-const makeZoomTransition = (delta = 1) => makeTransition(
-    500 + 100 * (sanitizeWithinRange(Math.abs(delta), 1, 20) - 1),
-    easePolyOneHalf,
-    new LinearInterpolator()
-)
-
 const makeFlyToTransition = () => makeTransition(
     'auto',
     easeCubic,
@@ -49,6 +43,18 @@ const makeFlyToTransition = () => makeTransition(
         curve: 1.414,
         speed: 0.8
     })
+)
+
+const makeLinearTransition = (delta = 1) => makeTransition(
+    500 + 100 * (sanitizeWithinRange(Math.abs(delta), 1, 20) - 1),
+    easePolyOneHalf,
+    new LinearInterpolator()
+)
+
+const makeZoomTransition = (delta = 1) => makeTransition(
+    500 + 100 * (sanitizeWithinRange(Math.abs(delta), 1, 20) - 1),
+    easePolyOneHalf,
+    new LinearInterpolator()
 )
 
 const transition = {
@@ -77,6 +83,22 @@ const transition = {
                 latitude,
                 longitude,
                 transitionDuration: 0
+            }
+        },
+        linearTransitionTo: (
+            state,
+            { payload: { id, latitude, longitude, zoom } }
+        ) => {
+            if (!areValidCoordinates({ latitude, longitude })) {
+                return state
+            }
+
+            return {
+                id,
+                latitude,
+                longitude,
+                zoom: sanitizeZoom(zoom),
+                ...makeLinearTransition()
             }
         },
         zoomTo: (state, { payload: { id, zoom, delta = 1 } }) => {

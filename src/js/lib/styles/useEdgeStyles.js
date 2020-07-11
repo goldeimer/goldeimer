@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 const transformGutterDefinitionToSpacing = (
     theme,
     {
+        // Fixed to `1` for now.
+        // Premature parametrization...
         base = 1,
         md = 1,
         lg = 1,

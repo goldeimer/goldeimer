@@ -1,18 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
-
-const INITIAL_CONTEXT = null
-const context = createSlice({
-    name: 'context',
-    initialState: INITIAL_CONTEXT,
-    reducers: {
-        reset: () => INITIAL_CONTEXT,
-        set: (_, action) => action.location
-    }
-})
-
-const CONTEXT = context.actions
-
 export {
-    CONTEXT as default,
+    default,
     context
-}
+} from '@map/context/contextSlice'
+
+export { default as CONTEXT_TYPE } from '@map/context/enumContextType'
+
+export { default as PropTypeContext } from '@map/context/PropTypeContext'
+
+export { default as useContext } from '@map/context/useContext'

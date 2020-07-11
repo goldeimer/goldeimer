@@ -15,7 +15,7 @@ import {
 } from '@map/features'
 import { useLayers } from '@map/layers'
 import { useSearchResult } from '@map/search'
-import { selectTransition, selectViewState, VIEW } from '@map/view'
+import VIEW, { selectTransition, selectViewState } from '@map/view'
 
 import FeatureMarker from '@map/MapGl/Markers/FeatureMarker'
 import Markers from '@map/MapGl/Markers'

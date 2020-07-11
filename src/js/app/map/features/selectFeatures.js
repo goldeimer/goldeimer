@@ -2,6 +2,9 @@ import { compose } from 'redux'
 import { createCachedSelector, FifoMapCache } from 're-reselect'
 import stringify from 'json-stringify-deterministic'
 
+import { sortObjects } from '@lib/util/array'
+
+import { distanceByHaversine } from '@map/util'
 import { filterFeatures, selectFilter } from '@map/filter'
 import { sortFeatures, selectSort } from '@map/sort'
 
@@ -14,7 +17,8 @@ import {
 const CACHE_SIZE = {
     source: 50,
     featureById: 30,
-    featuresById: 20
+    featuresById: 20,
+    featuresByProximity: 20
 }
 
 const selectSourceFeatures = (state) => (state.map.features.source.features)
@@ -148,12 +152,97 @@ const getFeaturesById = (ids, format = FEATURE_FORMAT.geojson) => (
     (state) => selectFeaturesById(state, ids, format)
 )
 
+const makeFeaturesByProximitySelector = (
+    featuresSelector
+) => createCachedSelector(
+    featuresSelector,
+    (_, latitude) => latitude,
+    (_, __, longitude) => longitude,
+    (_, __, ___, options) => options,
+    (
+        features,
+        latitude,
+        longitude,
+        { excludeIds, format, maxDistance, maxResults }
+    ) => {
+        const tmp = sortObjects(
+            features.reduce((acc, feature) => {
+                if (excludeIds.includes(feature.id)) {
+                    return acc
+                }
+
+                const distance = distanceByHaversine(
+                    { latitude, longitude },
+                    feature
+                )
+
+                if (maxDistance && distance > maxDistance) {
+                    return acc
+                }
+
+                return [...acc, { ...feature, distance }]
+            }, []),
+            'distance'
+        )
+
+        const tmp2 = maxResults ? tmp.slice(0, maxResults) : tmp
+
+        return getFeaturesById(
+            tmp2.reduce((acc, { id }) => [...acc, id], []),
+            format
+        )
+    }
+)({
+    keySelector: (
+        _,
+        latitude,
+        longitude,
+        { excludeIds, format, maxDistance, maxResults }
+    ) => (
+        `${latitude}:${longitude}:${excludeIds.join(',')}:${maxDistance}:${maxResults}:${format.value}:`
+    ),
+    cacheObject: new FifoMapCache({ cacheSize: CACHE_SIZE.featuresByProximity })
+})
+
+const makeSourceFeaturesByProximitySelector = (
+    shouldFilter = false
+) => makeFeaturesByProximitySelector(
+    getSourceFeatures(
+        FEATURE_FORMAT.geometry,
+        shouldFilter
+    )
+)
+
+const getSourceFeaturesByProximity = (
+    latitude,
+    longitude,
+    {
+        excludeIds = [],
+        format = FEATURE_FORMAT.geojson,
+        maxDistance = 25,
+        maxResults = 10,
+        shouldFilter = false
+    }
+) => (state) => {
+    const featuresSelector = (
+        makeSourceFeaturesByProximitySelector(shouldFilter)
+    )
+
+    return featuresSelector(
+        state,
+        latitude,
+        longitude,
+        { excludeIds, format, maxDistance, maxResults }
+    )
+}
+
 export {
     getSourceFeatures as default,
     FEATURE_FORMAT,
     getFeatureById,
     getFeaturesById,
     getSearchableSourceFeatures,
+    getSourceFeaturesByProximity,
     getSourceFeatureLookup,
     selectViewFeatures
 }

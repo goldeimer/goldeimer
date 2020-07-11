@@ -18,17 +18,18 @@ import SEARCH, {
     ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH,
     MIN_ACTIONABLE_QUERY_LENGTH
 } from '@map/search'
-import { VIEW } from '@map/view'
-import VIEW_ID from '@map/views'
+import ROUTE from '@map/routes'
+import VIEW from '@map/view'
 
 import Box from '@material-ui/core/Box'
 
 import AutoCompleteSearchBox from '@lib/components/AutoCompleteSearchBox'
 import SearchResultIcon from '@map/search/SearchResultIcon'
 
-const useStyles = makeStyles((theme) => ({
-    width: {
-        width: 400
+const useStyles = makeStyles(({ zIndex }) => ({
+    root: {
+        width: 400,
+        zIndex: zIndex.appBar
     }
 }))
 
@@ -190,13 +191,13 @@ const SearchContainer = () => {
     /* eslint-enable react/prop-types */
 
     return (
-        <Box className={clsx(viewClasses.topLeft, classes.width)}>
+        <Box className={clsx(viewClasses.topLeft, classes.root)}>
             <AutoCompleteSearchBox
                 defaultItemIcon={<SearchResultIcon />}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 onFocus={handleFocus}
-                onMenuClick={() => { history.push(`/${VIEW_ID.menu}`) }}
+                onMenuClick={() => { history.push(`/${ROUTE.menu.key}`) }}
                 onSelect={handleSelect}
                 onSubmit={handleSubmit}
                 renderItemIcon={renderItemIcon}

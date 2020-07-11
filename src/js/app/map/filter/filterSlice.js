@@ -45,6 +45,6 @@ const filter = combineSlices(
 const FILTER = filter.actions
 
 export {
-    FILTER as default,
+    FILTER,
     filter
 }

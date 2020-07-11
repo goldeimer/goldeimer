@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box'
 
 import useEdgeStyles from '@lib/styles/useEdgeStyles'
 
-import { sanitizeZoom, selectZoom, VIEW, ZOOM_LIMIT } from '@map/view'
+import VIEW, { sanitizeZoom, selectZoom, ZOOM_LIMIT } from '@map/view'
 
 import ZoomUi from '@map/view/ZoomUi'
 

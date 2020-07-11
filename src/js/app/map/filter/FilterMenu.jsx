@@ -24,20 +24,20 @@ import {
     MapIcon
 } from '@map/icons/ui'
 
-import APP from '@app/app'
+import { selectFilter, FILTER } from '@map/filter'
+import ROUTE from '@map/routes'
 import TAXONOMIES from '@map/taxonomies'
-import VIEW_ID from '@map/views'
 
-const FilterSelector = (props) => {
+const FilterMenu = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
     const [isSubMenuClosed, toggleSubMenu] = useToggleStates()
 
-    const selectedFilter = useSelector((state) => (state.map.filter))
+    const selectedFilter = useSelector(selectFilter)
 
     const handleTermChange = (taxonomyId, termId) => {
-        const taxonomyActions = APP.map.filter[taxonomyId]
+        const taxonomyActions = FILTER[taxonomyId]
 
         if (taxonomyActions) {
             dispatch(taxonomyActions.toggle(termId))
@@ -60,7 +60,7 @@ const FilterSelector = (props) => {
                 <ListItem
                     button
                     onClick={() => {
-                        history.push(`/${VIEW_ID.browse}`)
+                        history.push(`/${ROUTE.browse.value}`)
                     }}
                 >
                     <ListItemIcon>
@@ -131,4 +131,4 @@ const FilterSelector = (props) => {
     )
 }
 
-export default FilterSelector
+export default FilterMenu

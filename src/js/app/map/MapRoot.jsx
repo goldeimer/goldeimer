@@ -1,35 +1,35 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Route, useParams } from 'react-router-dom'
+import { Route, Switch, useParams } from 'react-router-dom'
 
 import { getTheme } from '@config/theme'
 
 import MapGl from '@map/MapGl'
+import ContextDrawer from '@map/context/ContextDrawer'
 import FeatureBrowser from '@map/features/FeatureBrowser'
-import FilterSelector from '@map/filter/FilterSelector'
+import FilterMenu from '@map/filter/FilterMenu'
 import SearchContainer from '@map/search/SearchContainer'
+import { FeatureBrowserIcon } from '@map/icons/ui'
 import ZoomControl from '@map/view/ZoomControl'
 
-import { FeatureBrowserIcon } from '@map/icons/ui'
-
-import APP from '@app/app'
-import VIEW_ID from '@map/views'
+import FEATURES from '@map/features'
+import ROUTE from '@map/routes'
 
 const { logoIconComponent: LogoIconComponent } = getTheme()
 
 const SecondaryUi = () => {
-    const { viewId } = useParams()
+    const { secondaryUiRoute } = useParams()
 
     return (
         <>
-            <FilterSelector
+            <FilterMenu
                 title='Händlerkarte'
-                isInitiallyOpen={viewId === VIEW_ID.menu}
+                isInitiallyOpen={ROUTE.menu.is(secondaryUiRoute)}
                 titleIcon={<LogoIconComponent />}
             />
             <FeatureBrowser
                 title='Liste aller Einträge'
-                isInitiallyOpen={viewId === VIEW_ID.browse}
+                isInitiallyOpen={ROUTE.browse.is(secondaryUiRoute)}
                 titleIcon={<FeatureBrowserIcon />}
             />
         </>
@@ -40,15 +40,22 @@ const MapRoot = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(APP.map.features.source.fetch())
+        dispatch(FEATURES.source.fetch())
     }, [dispatch])
 
     return (
         <>
             <MapGl />
-            <Route path='/:viewId'>
-                <SecondaryUi />
-            </Route>
+            <Switch>
+                <Route path='/:secondaryUiRoute'>
+                    <SecondaryUi />
+                </Route>
+                <Route path='/' exact>
+                    <ContextDrawer
+                        isOpenIfContext
+                    />
+                </Route>
+            </Switch>
             <ZoomControl />
             <SearchContainer />
         </>

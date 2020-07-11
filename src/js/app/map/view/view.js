@@ -1,6 +1,6 @@
 export {
-    view,
-    VIEW
+    default,
+    view
 } from '@map/view/viewSlice'
 
 export {

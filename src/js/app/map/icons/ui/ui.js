@@ -6,4 +6,8 @@ export { default as MapIcon } from '@material-ui/icons/Map'
 
 export { default as MarkerIcon } from '@material-ui/icons/LocationOn'
 
+export {
+    default as MarkerOutlinedIcon
+} from '@material-ui/icons/LocationOnOutlined'
+
 export { default as PointOfInterestIcon } from '@material-ui/icons/Flag'

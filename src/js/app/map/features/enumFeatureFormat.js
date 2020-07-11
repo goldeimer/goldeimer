@@ -1,4 +1,4 @@
-import makeEnum from '@lib/enum/makeEnum'
+import { makeEnum } from '@lib/enum'
 
 const FEATURE_FORMAT = makeEnum([
     'detail',

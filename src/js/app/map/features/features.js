@@ -6,6 +6,7 @@ export {
 export { default as FEATURE_FORMAT } from '@map/features/enumFeatureFormat'
 
 export {
+    detailToFeatureContext,
     featuresToFeatureCollection,
     getFeatureTransform,
     getFeaturesTransform,
@@ -19,6 +20,7 @@ export {
     getFeaturesById,
     getSearchableSourceFeatures,
     getSourceFeatureLookup,
+    getSourceFeaturesByProximity,
     selectViewFeatures
 } from '@map/features/selectFeatures'
 

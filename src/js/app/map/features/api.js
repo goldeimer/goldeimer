@@ -1,10 +1,10 @@
+import SparkMd5 from 'spark-md5'
 import { isString } from 'typechecker'
 import validUrl from 'valid-url'
 
 import parseGoogleSheet from '@lib/util/parseGoogleSheet'
 
 import { BRAND, MERCHANT_TYPE } from '@map/taxonomies'
-import generateId from '@lib/util/generateId'
 
 import { GOOGLE_SHEETS_API_KEY } from '@config/apiKeys'
 
@@ -58,7 +58,6 @@ const spreadsheetDataToGeoJsonGoldeimer = (data) => Array.prototype.map.call(
             brands: [BRAND.goldeimer],
             city: entry.Stadt,
             country: 'Deutschland',
-            id: generateId(),
             merchantTypes: [convertMerchantType(entry.l)],
             placeName: entry.Title,
             street: entry.Location,
@@ -82,7 +81,6 @@ const spreadsheetDataToGeoJsonVca = (data) => Array.prototype.map.call(
             brands: [BRAND.vca],
             city: entry.City,
             country: entry.Country,
-            id: generateId(),
             merchantTypes: [convertMerchantType(entry.Group)],
             placeName: entry.Title,
             street: entry.Street,
@@ -159,21 +157,33 @@ const sourceRequest = async () => {
     const featuresVca = await getFeaturesVca()
 
     return featuresGoldeimer.concat(featuresVca).reduce((acc, feature) => {
+        const placeName = sanitizeIfString(feature.properties.placeName)
         const street = sanitizeIfString(feature.properties.street)
 
-        const accumulatorStreetIndex = acc.findIndex(
+        const accIndex = acc.findIndex(
+            // Note:
+            // The `street` property holds the full "address line 1"
+            // (incl. house/apt number and inner white space(s)).
             (element) => (element.properties.street === street)
         )
 
-        if (accumulatorStreetIndex !== -1) {
+        // Deduplicate entries existent in both legacy data sources
+        // (brand-separated google sheets).
+        if (
+            accIndex !== -1 &&
+            (
+                placeName.substring(0, 5) ===
+                acc[accIndex].properties.placeName.substring(0, 5)
+            )
+        ) {
             const ret = acc
 
-            const accBrands = acc[accumulatorStreetIndex].properties.brands
+            const accBrands = acc[accIndex].properties.brands
             const newBrands = feature.properties.brands.filter(
                 (brand) => !accBrands.includes(brand)
             )
 
-            ret[accumulatorStreetIndex].properties.brands = (
+            ret[accIndex].properties.brands = (
                 accBrands.concat(newBrands)
             )
 
@@ -188,7 +198,8 @@ const sourceRequest = async () => {
                     ...feature.properties,
                     ...cityToPostCodeAndCity(feature.properties.city),
                     country: sanitizeIfString(feature.properties.country),
-                    placeName: sanitizeIfString(feature.properties.placeName),
+                    id: SparkMd5.hash(`${placeName}:${street}`),
+                    placeName,
                     street,
                     url: sanitizeUrl(feature.properties.url)
                 }

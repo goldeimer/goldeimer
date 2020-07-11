@@ -142,14 +142,18 @@ const getColorAndIconComponent = (colorTermId, iconTermId) => ({
 })
 
 const getFullTaxonomyVisualization = ({
-    defeaultTermName = 'Eintrag',
+    defaultTermName = 'Eintrag',
     taxonomyId,
     termId
 }) => ({
     color: getColorByTaxonomyTermId(termId, taxonomyId),
     iconComponent: getIconComponentByTaxonomyTermId(termId, taxonomyId),
-    termName: defeaultTermName
+    termId,
+    termName: defaultTermName
 })
+
+const getPrimaryTaxonomy = () => merchantTypes
+const getSecondaryTaxonomy = () => brands
 
 export {
     TAXONOMIES as default,
@@ -162,5 +166,7 @@ export {
     getColorByTaxonomyTermId,
     getFullTaxonomyVisualization,
     getIconComponentByTaxonomyTermId,
+    getPrimaryTaxonomy,
+    getSecondaryTaxonomy,
     getTermNameByTaxonomyIdAndTermId
 }
