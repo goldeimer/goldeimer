@@ -30,7 +30,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
         const backgroundColor = color || palette.primary.main
 
         return {
-            marginRight: spacing(1),
+            marginRight: spacing(1.5),
             color: palette.getContrastText(backgroundColor),
             backgroundColor
         }
@@ -79,6 +79,9 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     },
     textSecondary: {
         color: palette.text.secondary
+    },
+    thinLine: {
+        lineHeight: 1.3
     }
 }))
 
@@ -110,7 +113,10 @@ const ContextSection = ({
             return (
                 <>
                     <Typography
-                        className={classes.textSecondary}
+                        className={clsx(
+                            classes.textSecondary,
+                            classes.thinLine
+                        )}
                         component='h4'
                         variant='subtitle2'
                     >

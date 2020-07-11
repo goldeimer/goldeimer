@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { hexToRgba } from '@lib/util/color'
-
 import CONTEXT, { PropTypeContext } from '@map/context'
 
 import Box from '@material-ui/core/Box'
@@ -14,29 +12,13 @@ import FeatureMarkerDetailCard from '@map/MapGl/Markers/FeatureMarkerDetailCard'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
 import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
-const getColor = (color) => (
-    color && color !== null ? color : '#757575'
-)
+const getColor = (color) => color || '#757575'
 
 const useStyles = makeStyles(({ palette }) => ({
-    background: ({ color: mayBeColor }) => {
-        const color = getColor(mayBeColor)
-        const contrast = palette.getContrastText(getColor(color))
-
-        return {
-            color,
-            '&:hover': {
-                '& path': {
-                    stroke: hexToRgba(contrast, 0.5),
-                    strokeWidth: 1
-                }
-            },
-            '&:active': {
-                stroke: hexToRgba(contrast, 0.8),
-                strokeWidth: 1
-            }
-        }
-    },
+    background: ({ color }) => ({
+        color: getColor(color),
+        filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 1))'
+    }),
     icon: ({ color }) => ({
         color: palette.getContrastText(getColor(color))
     })
@@ -61,12 +43,12 @@ const FeatureMarkerComponent = ({
 
     return (
         <ButtonBase
-            // TODO: Fix.
             disableRipple
+            disableTouchRipple
             onClick={handleClick}
         >
             <Box
-                fontSize='3rem'
+                fontSize='2rem'
                 position='relative'
                 display='flex'
                 flexShrink={1}
@@ -77,9 +59,9 @@ const FeatureMarkerComponent = ({
                 />
                 <Box
                     position='absolute'
-                    fontSize='1.5rem'
-                    top={6}
-                    left={12}
+                    fontSize='1rem'
+                    top={4}
+                    left={8}
                     display='flex'
                     flexShrink={1}
                 >
@@ -109,7 +91,7 @@ const FeatureMarker = (props) => (
         {...props}
         anchorTo={ANCHOR_TO.top}
         component={FeatureMarkerComponent}
-        defaultDimensions={{ height: 48, width: 48 }}
+        defaultDimensions={{ height: 32, width: 32 }}
         renderDetailCard={(detail) => <FeatureMarkerDetailCard {...detail} />}
     />
 )

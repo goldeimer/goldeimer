@@ -18,9 +18,13 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
             : palette.primary.main
 
         return {
-            marginRight: spacing(1),
             color: palette.getContrastText(backgroundColor),
             backgroundColor
+        }
+    },
+    cardHeader: {
+        '& .MuiCardHeader-avatar': {
+            marginRight: spacing(1.5)
         }
     },
     content: {
@@ -47,7 +51,6 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 const FeatureMarkerDetailCard = ({
     city,
     color,
-    country,
     iconComponent: IconComponent,
     placeName,
     primaryTaxonomyTermName,
@@ -69,6 +72,7 @@ const FeatureMarkerDetailCard = ({
                     </Avatar>
                 )}
                 classes={{ title: classes.title }}
+                className={classes.cardHeader}
                 subheader={primaryTaxonomyTermName}
                 title={placeName}
             />
@@ -82,10 +86,6 @@ const FeatureMarkerDetailCard = ({
                     <br />
                     <span className={classes.textSecondary}>
                         {`${postCode} ${city}`.trim()}
-                    </span>
-                    <br />
-                    <span className={classes.textSecondary}>
-                        {country}
                     </span>
                 </Typography>
                 <Box display='flex' mt={1}>
@@ -138,7 +138,6 @@ const FeatureMarkerDetailCard = ({
 FeatureMarkerDetailCard.propTypes = {
     city: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
     iconComponent: PropTypes.elementType.isRequired,
     placeName: PropTypes.string.isRequired,
     primaryTaxonomyTermName: PropTypes.string.isRequired,

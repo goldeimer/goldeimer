@@ -9,8 +9,14 @@ import NearMeIcon from '@material-ui/icons/NearMe'
 
 import { CONTEXT_TYPE } from '@map/context'
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ palette, spacing }) => ({
     nearMeIcon: {
+        color: palette.text.secondary
+    },
+    nearMeIconWrap: {
+        display: 'flex',
+        fontSize: spacing(3.5),
+        lineHeight: 1,
         marginRight: spacing(1)
     }
 }))
@@ -18,16 +24,16 @@ const useStyles = makeStyles(({ spacing }) => ({
 const getNearBySectionTitleByContextType = (contextType) => {
     switch (contextType) {
     case CONTEXT_TYPE.feature.value:
-        return 'Auch in der Umgebung'
+        return 'Weiteres im Umkreis'
 
     case CONTEXT_TYPE.currentLocation.value:
-        return 'Händler nahe deines Standorts'
+        return 'Nahe deines Standorts'
 
     case CONTEXT_TYPE.geocodingResult.value:
-        return 'Händler nahe deines Suchergebnisses'
+        return 'Nahe deines Suchergebnisses'
 
     default:
-        return 'In der Umgebung'
+        return 'Im Umkreis'
     }
 }
 
@@ -44,10 +50,12 @@ const NearBySection = ({
             display='flex'
             p={2}
         >
-            <NearMeIcon
-                className={classes.nearMeIcon}
-                color='primary'
-            />
+            <span className={classes.nearMeIconWrap}>
+                <NearMeIcon
+                    className={classes.nearMeIcon}
+                    fontSize='inherit'
+                />
+            </span>
             <Typography
                 className='small'
                 component='h2'

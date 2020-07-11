@@ -29,18 +29,14 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
             backgroundColor: 'inherit'
         }
     },
-    submit: {
-        '&:hover': {
-            color: palette.primary.dark
-        }
-    },
     inputBase: {
         marginLeft: spacing(1),
         flex: 1,
-        color: palette.text.secondary,
-        '& input:focus': {
-            color: palette.text.primary
-        }
+        color: palette.text.secondary
+        // ,
+        // '& input:focus': {
+        //     color: palette.text.primary
+        // }
     }
 }))
 

@@ -72,7 +72,7 @@ const SelectionList = ({
                             selected={selectedIndex === index}
                         >
                             {(defaultItemIcon || renderItemIcon) && (
-                                <ListItemIcon className='tighter'>
+                                <ListItemIcon className='tightest'>
                                     {
                                         renderItemIcon
                                             ? renderItemIcon(value)

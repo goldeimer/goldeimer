@@ -15,12 +15,10 @@ import { MarkerIcon } from '@map/icons/ui'
 const useStyles = makeStyles(({ zIndex }) => ({
     popperTrigger: {
         cursor: 'pointer',
-        // One below the lowest elevated element of material-ui.
-        // Effectively `999`.
-        zIndex: zIndex.mobileStepper - 1
+        zIndex: zIndex.mobileStepper - 100
     },
     popper: {
-        zIndex: zIndex.tooltip
+        zIndex: zIndex.mobileStepper - 50
     }
 }))
 

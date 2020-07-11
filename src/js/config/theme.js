@@ -60,8 +60,16 @@ const makeTheme = (
                     minWidth: 40
                 },
                 '&.tighter': {
+                    minWidth: 36
+                },
+                '&.tightest': {
                     minWidth: 32
                 }
+            }
+        },
+        MuiTooltip: {
+            tooltip: {
+                fontWeight: 700
             }
         },
         MuiTypography: {
