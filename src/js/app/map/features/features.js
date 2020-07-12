@@ -5,14 +5,7 @@ export {
 
 export { default as FEATURE_FORMAT } from '@map/features/enumFeatureFormat'
 
-export {
-    detailToFeatureContext,
-    featuresToFeatureCollection,
-    getFeatureTransform,
-    getFeaturesTransform,
-    getTransform,
-    mapGlFeaturesToMarkerState
-} from '@map/features/transformFeatures'
+export { default as PropTypeColor } from '@map/features/PropTypeColor'
 
 export {
     default as getSourceFeatures,
@@ -23,6 +16,15 @@ export {
     getSourceFeaturesByProximity,
     selectViewFeatures
 } from '@map/features/selectFeatures'
+
+export {
+    detailToFeatureContext,
+    featuresToFeatureCollection,
+    getFeatureTransform,
+    getFeaturesTransform,
+    getTransform,
+    mapGlFeaturesToMarkerState
+} from '@map/features/transformFeatures'
 
 export {
     default as useSourceFeatures,

@@ -13,9 +13,8 @@ const CopyTextListItemSecondaryAction = ({
 }) => (
     <Tooltip
         arrow
-        enterDelay={300}
-        enterNextDelay={500}
-        placement='bottom-end'
+        enterNextDelay={300}
+        placement='right'
         title={label}
     >
         <ListItemSecondaryAction className={className}>

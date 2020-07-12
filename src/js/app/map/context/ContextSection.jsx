@@ -22,12 +22,13 @@ import CopyTextListItemSecondaryAction
     from '@lib/components/clipboard/CopyTextListItemSecondaryAction'
 
 import { CONTEXT_TYPE } from '@map/context'
+import { PropTypeColor } from '@map/features'
 import { MarkerOutlinedIcon } from '@map/icons/ui'
 import { getSecondaryTaxonomy } from '@map/taxonomies'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     avatar: ({ color }) => {
-        const backgroundColor = color || palette.primary.main
+        const backgroundColor = color.main || palette.primary.main
 
         return {
             marginRight: spacing(1.5),
@@ -50,7 +51,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     headerSpacer: ({ color }) => ({
         // height of `AutoCompleteSearchBox` + margins
         minHeight: spacing(8),
-        backgroundColor: color || palette.primary.light
+        backgroundColor: color.light || palette.primary.light
     }),
     link: {
         '&:hover .MuiTypography-root': {
@@ -168,13 +169,13 @@ const ContextSection = ({
 
                     return 1
                 }).map(({
-                    color: contextColor,
+                    color: termColor,
                     isEnabledForContext,
                     termId,
                     termName
                 }) => {
                     const highlightColor = isEnabledForContext
-                        ? contextColor || palette.primary.main
+                        ? termColor.main || palette.primary.main
                         : 'rgba(0, 0, 0, 0.23)'
 
                     return (
@@ -339,7 +340,7 @@ const ContextSection = ({
 ContextSection.propTypes = {
     context: PropTypes.shape({
         city: PropTypes.string,
-        color: PropTypes.string,
+        color: PropTypeColor,
         iconComponent: PropTypes.elementType,
         phoneNumber: PropTypes.string,
         postCode: PropTypes.string,

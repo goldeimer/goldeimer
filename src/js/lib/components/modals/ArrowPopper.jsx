@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import Popper from '@material-ui/core/Popper'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
     const { paper } = palette.background
@@ -78,8 +78,10 @@ const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
 })
 
 const ArrowPopper = ({ anchorEl, children, isOpen, ...other }) => {
-    const [arrowRef, setArrowRef] = useState(null)
     const classes = useStyles()
+    const { spacing } = useTheme()
+
+    const [arrowRef, setArrowRef] = useState(null)
 
     return (
         <Popper
@@ -90,12 +92,14 @@ const ArrowPopper = ({ anchorEl, children, isOpen, ...other }) => {
                     enabled: true,
                     element: arrowRef
                 },
+                flip: {
+                    enabled: true,
+                    padding: spacing(1)
+                },
                 preventOverflow: {
                     enabled: true,
-                    boundariesElement: 'scrollParent'
-                },
-                flip: {
-                    enabled: true
+                    boundariesElement: 'scrollParent',
+                    padding: spacing(1)
                 }
             }}
             open={isOpen}

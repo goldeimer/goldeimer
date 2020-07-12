@@ -18,9 +18,7 @@ const makeLayers = (theme) => ({
                 500, 33
             ],
             'circle-stroke-width': 1,
-            'circle-stroke-color': theme.palette.getContrastText(
-                theme.palette.primary.main
-            )
+            'circle-stroke-color': theme.palette.primary.contrastText
         }
     },
     clusterCountLayer: {
@@ -34,7 +32,7 @@ const makeLayers = (theme) => ({
             'text-size': 12
         },
         paint: {
-            'text-color': theme.palette.layerHighlight.main
+            'text-color': theme.palette.primary.contrastText
         }
     },
     unclusteredPointLayer: {

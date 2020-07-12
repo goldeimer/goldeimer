@@ -1,6 +1,8 @@
 // TODO: The entire file is a stub.
 // Allow admins to set these in the not yet existent backend.
 
+import { augmentColor } from '@lib/util/color'
+
 import DeliveryServiceIcon from '@material-ui/icons/LocalShipping'
 import EcommerceIcon from '@material-ui/icons/Shop'
 import RetailIcon from '@material-ui/icons/Store'
@@ -56,13 +58,13 @@ const brands = makeTaxonomy(
             'goldeimer',
             'Goldeimer',
             GoldeimerIcon,
-            { color: COLOR_PRIMARY_GOLDEIMER }
+            { color: augmentColor(COLOR_PRIMARY_GOLDEIMER) }
         ],
         [
             'vca',
             'Viva con Agua',
             VivaConAguaIcon,
-            { color: COLOR_PRIMARY_VIVA_CON_AGUA }
+            { color: augmentColor(COLOR_PRIMARY_VIVA_CON_AGUA) }
         ]
     ]
 )
@@ -112,7 +114,11 @@ const getColorByTaxonomyTermId = (
     'color',
     taxonomyId,
     termId,
-    '#757575'
+    {
+        main: '#777',
+        light: '#888',
+        dark: '#666'
+    }
 )
 
 const getIconComponentByTaxonomyTermId = (

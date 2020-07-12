@@ -23,6 +23,12 @@ module.exports = {
             ignorePropertyModificationsFor: ['state'],
             props: true,
         }],
+        'no-restricted-imports': ['error', {
+            'patterns': [
+                '@material-ui/*/*/*',
+                '!@material-ui/core/test-utils/*'
+            ]
+        }],
         // Causes massive pain during development if set to 'error'
         // (w/ eslint-loader and webpack-watcher).
         'no-unused-vars': ['warn'],

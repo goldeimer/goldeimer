@@ -78,7 +78,7 @@ const FilterMenu = (props) => {
                     button
                     onClick={() => { toggleSubMenu('filter') }}
                 >
-                    <ListItemIcon>
+                    <ListItemIcon className='tightest'>
                         <FilterListIcon />
                     </ListItemIcon>
                     <ListItemText primary='Auswahl einschränken' />

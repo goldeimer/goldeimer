@@ -15,8 +15,7 @@ const TYPOGRAPHY_VENEER = {
 
 const makeTheme = (
     colorPrimary = COLOR_PRIMARY_GOLDEIMER,
-    colorLayerHighlight = '#000',
-    headingFontStyle = TYPOGRAPHY_VENEER
+    fontStyleEmphasis = TYPOGRAPHY_VENEER
 ) => createMuiTheme({
     breakpoints: {
         values: {
@@ -35,20 +34,18 @@ const makeTheme = (
         secondary: {
             main: '#000'
         },
-        layerHighlight: {
-            main: colorLayerHighlight
-        }
+        tonalOffset: 0.3
     },
     typography: {
         fontFamily: 'museo',
-        h1: headingFontStyle,
-        h2: headingFontStyle,
-        h3: headingFontStyle,
-        h4: headingFontStyle,
-        h5: headingFontStyle,
-        h6: headingFontStyle,
+        h1: fontStyleEmphasis,
+        h2: fontStyleEmphasis,
+        h3: fontStyleEmphasis,
+        h4: fontStyleEmphasis,
+        h5: fontStyleEmphasis,
+        h6: fontStyleEmphasis,
         button: {
-            ...headingFontStyle,
+            ...fontStyleEmphasis,
             fontSize: '1rem'
         }
     },
@@ -87,20 +84,20 @@ const THEME = {
         id: 'goldeimer',
         favicon: 'img/favicon/goldeimer.favicon.png',
         logoIconComponent: GoldeimerIcon,
-        mui: makeTheme(COLOR_PRIMARY_GOLDEIMER, '#000')
+        mui: makeTheme(COLOR_PRIMARY_GOLDEIMER)
     },
     VivaConAgua: {
-        id: 'vica-con-agua',
+        id: 'viva-con-agua',
         favicon: 'img/favicon/vca.favicon.png',
         logoIconComponent: VivaConAguaIcon,
-        mui: makeTheme(COLOR_PRIMARY_VIVA_CON_AGUA, '#fff')
+        mui: makeTheme(COLOR_PRIMARY_VIVA_CON_AGUA)
     }
 }
 
 const getTheme = () => {
     const urlParams = new URLSearchParams(window.location.search)
 
-    if (urlParams.has('theme') && urlParams.get('theme') === 'vivaconagua') {
+    if (urlParams.has('theme') && urlParams.get('theme') === 'viva-con-agua') {
         return THEME.VivaConAgua
     }
 

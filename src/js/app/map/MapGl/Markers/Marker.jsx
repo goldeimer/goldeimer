@@ -20,7 +20,7 @@ const calculateOffsets = (
     )
 })
 
-const DEFAULT_DIMENSIONS = { height: 24, width: 24 }
+const DEFAULT_DIMENSIONS = { height: 32, width: 32 }
 
 const Marker = ({
     anchorTo,

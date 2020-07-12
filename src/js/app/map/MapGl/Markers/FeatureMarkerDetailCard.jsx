@@ -11,11 +11,11 @@ import Divider from '@material-ui/core/Divider'
 import Tooltip from '@material-ui/core/Tooltip'
 import Typography from '@material-ui/core/Typography'
 
+import { PropTypeColor } from '@map/features'
+
 const useStyles = makeStyles(({ palette, spacing }) => ({
     avatar: ({ color }) => {
-        const backgroundColor = color !== null
-            ? color
-            : palette.primary.main
+        const backgroundColor = color.main || palette.primary.main
 
         return {
             color: palette.getContrastText(backgroundColor),
@@ -61,7 +61,7 @@ const FeatureMarkerDetailCard = ({
     const classes = useStyles({ color })
 
     return (
-        <Card>
+        <Card elevation={4}>
             <CardHeader
                 avatar={(
                     <Avatar
@@ -137,14 +137,14 @@ const FeatureMarkerDetailCard = ({
 
 FeatureMarkerDetailCard.propTypes = {
     city: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
+    color: PropTypeColor.isRequired,
     iconComponent: PropTypes.elementType.isRequired,
     placeName: PropTypes.string.isRequired,
     primaryTaxonomyTermName: PropTypes.string.isRequired,
     postCode: PropTypes.string,
     secondaryTaxonomyTerms: PropTypes.arrayOf(
         PropTypes.shape({
-            color: PropTypes.string,
+            color: PropTypeColor,
             iconComponent: PropTypes.elementType,
             termName: PropTypes.string
         })

@@ -10,10 +10,9 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 
-import isIos from '@lib/detection/isIos'
+import StandardTooltip from '@lib/components/modals/StandardTooltip'
 
 import { useContext } from '@map/context'
-import { latLonToCoordinates } from '@map/util/geometry'
 
 import ContextSection from '@map/context/ContextSection'
 import NearBySection from '@map/context/NearBySection'
@@ -127,6 +126,11 @@ const ContextDrawer = ({ isOpenIfContext }) => {
                 className={classes.root}
                 keepMounted
                 ModalProps={{
+                    disableAutoFocus: true,
+                    disableEnforceFocus: true,
+                    disableEscapeKeyDown: true,
+                    disableRestoreFocus: true,
+                    disableScrollLock: true,
                     hideBackdrop: true
                 }}
                 onClose={handleClose}
@@ -147,18 +151,25 @@ const ContextDrawer = ({ isOpenIfContext }) => {
                         elevation={4}
                         square
                     >
-                        <ButtonBase
-                            focusRipple
-                            className={classes.collapseButton}
-                            focusVisibleClassName={
-                                classes.collapseButtonFocusVisible
-                            }
-                            onClick={handleToggle}
+                        <StandardTooltip
+                            placement='right'
+                            title={isOpen
+                                ? 'Dialog minimieren'
+                                : 'Detailansicht öffnen'}
                         >
-                            {isOpen
-                                ? <ArrowLeftIcon />
-                                : <ArrowRightIcon />}
-                        </ButtonBase>
+                            <ButtonBase
+                                focusRipple
+                                className={classes.collapseButton}
+                                focusVisibleClassName={
+                                    classes.collapseButtonFocusVisible
+                                }
+                                onClick={handleToggle}
+                            >
+                                {isOpen
+                                    ? <ArrowLeftIcon />
+                                    : <ArrowRightIcon />}
+                            </ButtonBase>
+                        </StandardTooltip>
                     </Paper>
                     <ContextSection {...context} context={context} />
                     <Divider />

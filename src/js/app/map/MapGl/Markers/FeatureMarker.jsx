@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import CONTEXT, { PropTypeContext } from '@map/context'
+import { PropTypeColor } from '@map/features'
 
 import Box from '@material-ui/core/Box'
 import ButtonBase from '@material-ui/core/ButtonBase'
@@ -12,17 +13,26 @@ import FeatureMarkerDetailCard from '@map/MapGl/Markers/FeatureMarkerDetailCard'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
 import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
-const getColor = (color) => color || '#757575'
+const colorOrFallback = (color) => color || '#757575'
 
-const useStyles = makeStyles(({ palette }) => ({
+const useStyles = makeStyles(({ palette: { getContrastText } }) => ({
+    root: () => ({
+        color: '#000'
+    }),
     background: ({ color }) => ({
-        color: getColor(color),
-        filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 1))'
+        color: colorOrFallback(color.main),
+        filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 1))',
+        '$root:hover &, $root:focus &': {
+            color: colorOrFallback(color.light)
+        },
+        '$root:active &': {
+            color: colorOrFallback(color.light)
+        }
     }),
     icon: ({ color }) => ({
-        color: palette.getContrastText(getColor(color))
+        color: getContrastText(colorOrFallback(color.main))
     })
-}))
+}), { name: 'FeatureMarker' })
 
 const FeatureMarkerComponent = ({
     color,
@@ -43,6 +53,8 @@ const FeatureMarkerComponent = ({
 
     return (
         <ButtonBase
+            // centerRipple // satisfactory?
+            className={classes.root}
             disableRipple
             disableTouchRipple
             onClick={handleClick}
@@ -76,7 +88,7 @@ const FeatureMarkerComponent = ({
 }
 
 FeatureMarkerComponent.propTypes = {
-    color: PropTypes.string,
+    color: PropTypeColor,
     context: PropTypeContext,
     iconComponent: PropTypes.elementType.isRequired
 }
