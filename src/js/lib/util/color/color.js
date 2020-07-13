@@ -1,3 +1,8 @@
 export { default as augmentColor } from '@lib/util/color/augmentColor'
 
-export { default as hexToRgba } from '@lib/util/color/hexToRgba'
+export {
+    hexToRgbCss,
+    hexToRgbaCss,
+    hexToRgbValues,
+    rgbCssToRgbValues
+} from '@lib/util/color/transformColor'

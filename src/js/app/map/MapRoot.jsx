@@ -23,7 +23,7 @@ const SecondaryUi = () => {
     return (
         <>
             <FilterMenu
-                title='Händlerkarte'
+                title='HändlerInnenkarte'
                 isInitiallyOpen={ROUTE.menu.is(secondaryUiRoute)}
                 titleIcon={<LogoIconComponent />}
             />

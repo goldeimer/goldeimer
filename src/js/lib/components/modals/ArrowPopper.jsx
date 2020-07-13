@@ -8,20 +8,6 @@ const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
     const { paper } = palette.background
 
     return {
-        arrow: {
-            position: 'absolute',
-            fontSize: 7,
-            width: '3em',
-            height: '3em',
-            '&::before': {
-                content: '""',
-                margin: 'auto',
-                display: 'block',
-                width: 0,
-                height: 0,
-                borderStyle: 'solid'
-            }
-        },
         root: {
             zIndex: zIndex.modal,
             top: '-8px !important',
@@ -66,12 +52,20 @@ const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
                     borderWidth: '1em 0 1em 1em',
                     borderColor: `transparent transparent transparent ${paper}`
                 }
-            },
-            '& .MuiPaper-root': {
-                // TODO:
-                // - Pass elevation as a prop?
-                // - obstacle: referenced rule `$arrow`...
-                boxShadow: shadows[8]
+            }
+        },
+        arrow: {
+            position: 'absolute',
+            fontSize: 7,
+            width: '3em',
+            height: '3em',
+            '&::before': {
+                content: '""',
+                margin: 'auto',
+                display: 'block',
+                width: 0,
+                height: 0,
+                borderStyle: 'solid'
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -12,7 +12,7 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 
 import StandardTooltip from '@lib/components/modals/StandardTooltip'
 
-import { useContext } from '@map/context'
+import { useContext, CONTEXT_TYPE } from '@map/context'
 
 import ContextSection from '@map/context/ContextSection'
 import NearBySection from '@map/context/NearBySection'
@@ -101,86 +101,112 @@ const ContextDrawer = ({ isOpenIfContext }) => {
     const classes = useStyles()
 
     const context = useContext()
-    const { hasContext, latitude, longitude, type } = context
+    const { id, hasContext, latitude, longitude, setAt, type } = context
 
     const [isOpen, setIsOpen] = useState(
         isOpenIfContext && hasContext
     )
+
+    const previousContextRef = useRef({
+        id: null,
+        setAt: null,
+        type: CONTEXT_TYPE.noContext
+    })
 
     const handleClose = () => {
         setIsOpen(false)
     }
 
     const handleOpen = () => {
-        setIsOpen(false)
+        setIsOpen(true)
     }
 
     const handleToggle = () => {
         setIsOpen(!isOpen)
     }
 
+    useEffect(() => {
+        if (CONTEXT_TYPE.noContext.is(type)) {
+            if (isOpen) {
+                handleClose()
+            }
+
+            return
+        }
+
+        if (
+            id !== previousContextRef.current.id ||
+            setAt !== previousContextRef.current.setAt ||
+            type !== previousContextRef.current.type
+        ) {
+            if (!isOpen) {
+                handleOpen()
+            }
+
+            previousContextRef.current = { id, setAt, type }
+        }
+    }, [id, isOpen, previousContextRef, setAt, type])
+
     return (
-        <>
-            <SwipeableDrawer
-                anchor='left'
-                className={classes.root}
-                keepMounted
-                ModalProps={{
-                    disableAutoFocus: true,
-                    disableEnforceFocus: true,
-                    disableEscapeKeyDown: true,
-                    disableRestoreFocus: true,
-                    disableScrollLock: true,
-                    hideBackdrop: true
-                }}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                open={isOpen}
-                PaperProps={{
-                    className: classes.paperWrap,
-                    elevation: 0
-                }}
+        <SwipeableDrawer
+            anchor='left'
+            className={classes.root}
+            keepMounted
+            ModalProps={{
+                disableAutoFocus: true,
+                disableEnforceFocus: true,
+                disableEscapeKeyDown: true,
+                disableRestoreFocus: true,
+                disableScrollLock: true,
+                hideBackdrop: true
+            }}
+            onClose={handleClose}
+            onOpen={handleOpen}
+            open={isOpen}
+            PaperProps={{
+                className: classes.paperWrap,
+                elevation: 0
+            }}
+        >
+            <Paper
+                className={classes.paper}
+                elevation={6}
+                square
             >
                 <Paper
-                    className={classes.paper}
-                    elevation={6}
+                    className={classes.collapsePaper}
+                    elevation={4}
                     square
                 >
-                    <Paper
-                        className={classes.collapsePaper}
-                        elevation={4}
-                        square
+                    <StandardTooltip
+                        placement='right'
+                        title={isOpen
+                            ? 'Dialog minimieren'
+                            : 'Detailansicht öffnen'}
                     >
-                        <StandardTooltip
-                            placement='right'
-                            title={isOpen
-                                ? 'Dialog minimieren'
-                                : 'Detailansicht öffnen'}
+                        <ButtonBase
+                            focusRipple
+                            className={classes.collapseButton}
+                            focusVisibleClassName={
+                                classes.collapseButtonFocusVisible
+                            }
+                            onClick={handleToggle}
                         >
-                            <ButtonBase
-                                focusRipple
-                                className={classes.collapseButton}
-                                focusVisibleClassName={
-                                    classes.collapseButtonFocusVisible
-                                }
-                                onClick={handleToggle}
-                            >
-                                {isOpen
-                                    ? <ArrowLeftIcon />
-                                    : <ArrowRightIcon />}
-                            </ButtonBase>
-                        </StandardTooltip>
-                    </Paper>
-                    <ContextSection {...context} context={context} />
-                    <Divider />
-                    <NearBySection
-                        contextType={type}
-                        latitude={latitude}
-                        longitude={longitude}
-                    />
+                            {isOpen
+                                ? <ArrowLeftIcon />
+                                : <ArrowRightIcon />}
+                        </ButtonBase>
+                    </StandardTooltip>
                 </Paper>
-            </SwipeableDrawer>
-        </>
+                <ContextSection {...context} context={context} />
+                <Divider />
+                <NearBySection
+                    contextType={type}
+                    latitude={latitude}
+                    longitude={longitude}
+                />
+            </Paper>
+        </SwipeableDrawer>
     )
 }
 

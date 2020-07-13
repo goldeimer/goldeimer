@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import CONTEXT_TYPE from '@map/context/enumContextType'
 
-const INITIAL_CONTEXT = {
+const DEFAULT_CONTEXT = {
     id: null,
     latitude: 0,
     longitude: 0,
@@ -12,24 +12,34 @@ const INITIAL_CONTEXT = {
 
 const context = createSlice({
     name: 'context',
-    initialState: INITIAL_CONTEXT,
+    initialState: DEFAULT_CONTEXT,
     reducers: {
-        reset: () => INITIAL_CONTEXT,
-        set: (_, {
-            payload: {
+        reset: () => DEFAULT_CONTEXT,
+        set: {
+            prepare: (value) => ({
+                payload: {
+                    ...value,
+                    setAt: Date.now()
+                }
+            }),
+            reducer: (_, {
+                payload: {
+                    id,
+                    latitude,
+                    longitude,
+                    placeName,
+                    setAt,
+                    type
+                }
+            }) => ({
                 id,
                 latitude,
                 longitude,
                 placeName,
+                setAt,
                 type
-            }
-        }) => ({
-            id,
-            latitude,
-            longitude,
-            placeName,
-            type
-        })
+            })
+        }
     }
 })
 
@@ -37,5 +47,6 @@ const CONTEXT = context.actions
 
 export {
     CONTEXT as default,
-    context
+    context,
+    DEFAULT_CONTEXT
 }

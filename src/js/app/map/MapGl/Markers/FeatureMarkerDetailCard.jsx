@@ -61,7 +61,7 @@ const FeatureMarkerDetailCard = ({
     const classes = useStyles({ color })
 
     return (
-        <Card elevation={4}>
+        <Card elevation={3}>
             <CardHeader
                 avatar={(
                     <Avatar

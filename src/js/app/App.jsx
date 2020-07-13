@@ -18,7 +18,7 @@ const App = () => (
         persistor={persistor}
         store={store}
         theme={theme.mui}
-        title='Händlerkarte'
+        title='HändlerInnenkarte'
     >
         <MapRoot />
     </AppRoot>

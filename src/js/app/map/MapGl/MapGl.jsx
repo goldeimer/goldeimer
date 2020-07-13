@@ -8,6 +8,7 @@ import MapGL, { Layer } from 'react-map-gl'
 
 import { makeStyles } from '@material-ui/core/styles'
 
+import { useContext } from '@map/context'
 import {
     useSourceFeatures,
     useViewFeatures,
@@ -44,7 +45,7 @@ const useStyles = makeStyles(({
         },
         '& .mapboxgl-ctrl-attrib': {
             borderRadius,
-            color: palette.getContrastText('#fff'),
+            color: palette.text.secondary,
             fontFamily: typography.fontFamily,
             opacity: 0.6
         }
@@ -62,6 +63,37 @@ const MapGl = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isTransitioning, setIsTransitioning] = useState(false)
     const [viewState, setViewState] = useState({})
+
+    const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
+    const { markers: markerProps } = useViewFeatures()
+    const searchResult = useSearchResult()
+    const syncedViewState = useSelector(selectViewState)
+    const transition = useSelector(selectTransition)
+
+    const context = useContext()
+    const contextInfo = (({ id, type } = context) => ({ id, type }))()
+
+    const makeViewStateProps = () => {
+        const { id, ...props } = transition
+
+        if (id && id !== transitionIdRef.current) {
+            transitionIdRef.current = id
+
+            return {
+                ...viewState,
+                ...props
+            }
+        }
+
+        return viewState
+    }
+
+    useEffect(() => {
+        if (isLoading) {
+            setViewState(syncedViewState)
+            setIsLoading(false)
+        }
+    }, [isLoading, syncedViewState])
 
     /// @see [`InteractiveMap::onViewStateChange`](1)
     /// @see [State Management](2)
@@ -81,35 +113,6 @@ const MapGl = () => {
             }
         }
     }, [dispatch, isLoading, isTransitioning])
-
-    const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
-    const { markers } = useViewFeatures()
-    const searchResult = useSearchResult()
-    const transition = useSelector(selectTransition)
-
-    const syncedViewState = useSelector(selectViewState)
-
-    useEffect(() => {
-        if (isLoading) {
-            setViewState(syncedViewState)
-            setIsLoading(false)
-        }
-    }, [isLoading, syncedViewState])
-
-    const makeViewStateProps = () => {
-        const { id, ...props } = transition
-
-        if (id && id !== transitionIdRef.current) {
-            transitionIdRef.current = id
-
-            return {
-                ...viewState,
-                ...props
-            }
-        }
-
-        return viewState
-    }
 
     const { handleLayerClick, layers } = useLayers({
         mapRef,
@@ -158,10 +161,11 @@ const MapGl = () => {
                     <Layer {...layers.clusterCountLayer} />
                     <Layer {...layers.unclusteredPointLayer} />
                 </Source>
-                {markers && (
+                {markerProps && (
                     <Markers
                         component={FeatureMarker}
-                        propsArray={markers}
+                        contextInfo={contextInfo}
+                        markerProps={markerProps}
                     />
                 )}
                 {searchResult && (

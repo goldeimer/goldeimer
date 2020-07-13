@@ -2,18 +2,27 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 
+import { PropTypeColor } from '@map/features'
 import { SEARCH_RESULT_TYPE } from '@map/search'
 
 import SearchHistoryResultIcon from '@material-ui/icons/AccessTime'
 
 import { MarkerIcon, PointOfInterestIcon } from '@map/icons/ui'
 
-const useStyles = makeStyles(({ palette, shape: { borderRadius } }) => ({
-    featureIcon: ({ color }) => ({
-        backgroundColor: color || 'transparent',
-        borderRadius,
-        color: color ? palette.getContrastText(color) : '#757575'
-    })
+const useStyles = makeStyles(({
+    palette,
+    shape: { borderRadius }
+}) => ({
+    featureIcon: ({ color }) => {
+        const backgroundColor = color ? color.main : palette.grey[600]
+        const iconColor = color ? color.contrastText : palette.common.white
+
+        return {
+            backgroundColor,
+            borderRadius,
+            color: iconColor
+        }
+    }
 }))
 
 const SearchResultIcon = ({
@@ -47,7 +56,7 @@ const SearchResultIcon = ({
 }
 
 SearchResultIcon.propTypes = {
-    color: PropTypes.string,
+    color: PropTypeColor,
     fontSize: PropTypes.string,
     iconComponent: PropTypes.elementType,
     type: PropTypes.oneOfType([

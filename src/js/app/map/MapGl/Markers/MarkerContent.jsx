@@ -37,8 +37,6 @@ const MarkerContent = forwardRef(({
     const detail = useDetail(id)
     const classes = useStyles()
 
-    const context = detail ? detailToFeatureContext(detail) : null
-
     return (
         <>
             {renderDetailCard && (
@@ -60,7 +58,9 @@ const MarkerContent = forwardRef(({
                     className={clsx({
                         [classes.popperTrigger]: renderDetailCard !== null
                     })}
-                    context={context}
+                    thisContext={
+                        detail ? detailToFeatureContext(detail) : null
+                    }
                 />
             </Box>
         </>

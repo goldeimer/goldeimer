@@ -1,9 +1,15 @@
 import React, { memo, useCallback } from 'react'
+import clsx from 'clsx'
+import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
 
-import CONTEXT, { PropTypeContext } from '@map/context'
+import { rgbCssToRgbValues } from '@lib/util/color'
+
+import CONTEXT, {
+    PropTypeContext,
+    PropTypeContextInfo
+} from '@map/context'
 import { PropTypeColor } from '@map/features'
 
 import Box from '@material-ui/core/Box'
@@ -13,30 +19,57 @@ import FeatureMarkerDetailCard from '@map/MapGl/Markers/FeatureMarkerDetailCard'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
 import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
-const colorOrFallback = (color) => color || '#757575'
+const colorOrFallback = (value, fallback = '#757575') => value || fallback
 
-const useStyles = makeStyles(({ palette: { getContrastText } }) => ({
+const makeDropShadow = (r, g, b, opacity = 1) => (
+    `drop-shadow(0 0 1px rgba(${r}, ${g}, ${b}, ${opacity}))`
+)
+
+const useStyles = makeStyles(({ palette }) => ({
     root: () => ({
-        color: '#000'
+        color: palette.text.primary
     }),
     background: ({ color }) => ({
         color: colorOrFallback(color.main),
-        filter: 'drop-shadow(0 0 1px rgba(255, 255, 255, 1))',
+        filter: makeDropShadow(255, 255, 255),
+        transition: [
+            'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+            'fill 300ms cubic-bezier(0.4, 0, 0.2, 1)'
+        ],
         '$root:hover &, $root:focus &': {
-            color: colorOrFallback(color.light)
+            color: colorOrFallback(color.light, palette.action.hover)
+        },
+        '$root:focus &, $root:active &': {
+            filter: makeDropShadow(
+                ...rgbCssToRgbValues(
+                    colorOrFallback(color.light, palette.action.focus)
+                )
+            )
         },
         '$root:active &': {
-            color: colorOrFallback(color.light)
+            color: colorOrFallback(color.dark, palette.action.active)
         }
     }),
+    currentContext: ({ color }) => ({
+        color: colorOrFallback(color.dark),
+        filter: makeDropShadow(
+            ...rgbCssToRgbValues(
+                colorOrFallback(color.light, palette.action.active)
+            )
+        )
+    }),
     icon: ({ color }) => ({
-        color: getContrastText(colorOrFallback(color.main))
+        color: colorOrFallback(
+            color.contrastText,
+            palette.common.black
+        )
     })
 }), { name: 'FeatureMarker' })
 
 const FeatureMarkerComponent = ({
     color,
-    context,
+    contextInfo,
+    thisContext,
     iconComponent: IconComponent
 }) => {
     const classes = useStyles({ color })
@@ -44,17 +77,24 @@ const FeatureMarkerComponent = ({
 
     const handleClick = useCallback(
         () => {
-            if (context !== null) {
-                dispatch(CONTEXT.set(context))
+            if (thisContext !== null) {
+                dispatch(CONTEXT.set(thisContext))
             }
         },
-        [context, dispatch]
+        [thisContext, dispatch]
+    )
+
+    const isCurrentContext = (
+        contextInfo.id === thisContext.id &&
+        contextInfo.type === thisContext.type
     )
 
     return (
         <ButtonBase
-            // centerRipple // satisfactory?
             className={classes.root}
+            // material-ui's ripple effect assumes a non-transparent box,
+            // we are dealing with a map marker icon svg on transparent
+            // background...
             disableRipple
             disableTouchRipple
             onClick={handleClick}
@@ -66,7 +106,10 @@ const FeatureMarkerComponent = ({
                 flexShrink={1}
             >
                 <MarkerBackgroundIcon
-                    className={classes.background}
+                    className={clsx(
+                        classes.background,
+                        { [classes.currentContext]: isCurrentContext }
+                    )}
                     fontSize='inherit'
                 />
                 <Box
@@ -89,13 +132,14 @@ const FeatureMarkerComponent = ({
 
 FeatureMarkerComponent.propTypes = {
     color: PropTypeColor,
-    context: PropTypeContext,
-    iconComponent: PropTypes.elementType.isRequired
+    contextInfo: PropTypeContextInfo.isRequired,
+    iconComponent: PropTypes.elementType.isRequired,
+    thisContext: PropTypeContext
 }
 
 FeatureMarkerComponent.defaultProps = {
     color: null,
-    context: null
+    thisContext: null
 }
 
 const FeatureMarker = (props) => (

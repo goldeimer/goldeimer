@@ -16,6 +16,8 @@ export {
     yes
 } from '@lib/util/noop'
 
+export { default as omit } from '@lib/util/object/omit'
+
 export { default as parseGoogleSheet } from '@lib/util/parseGoogleSheet'
 
 export { default as preventBubble } from '@lib/util/preventBubble'

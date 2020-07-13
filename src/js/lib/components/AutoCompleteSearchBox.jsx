@@ -19,9 +19,16 @@ import noop from '@lib/util/noop'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     root: {
-        maxHeight: '100%',
-        maxWidth: 400,
-        width: '100%'
+        // `spacing(2)`: Account for margins.
+        // TODO: Keep it DRY, define in the same place.
+        maxHeight: `calc(100% - ${spacing(2)})`,
+        maxWidth: `calc(400px - ${spacing(2)})`,
+        width: `calc(100% - ${spacing(2)})`,
+        fallbacks: {
+            maxHeight: '100%',
+            maxWidth: 400,
+            width: '100%'
+        }
     },
     iconButton: {
         padding: 10,
@@ -32,11 +39,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     inputBase: {
         marginLeft: spacing(1),
         flex: 1,
-        color: palette.text.secondary
-        // ,
-        // '& input:focus': {
-        //     color: palette.text.primary
-        // }
+        color: palette.text.secondary,
+        '& input:focus': {
+            color: palette.text.primary
+        }
     }
 }))
 
@@ -68,7 +74,7 @@ const AutoCompleteSearchBox = ({
     return (
         <Paper
             className={classes.root}
-            elevation={8}
+            elevation={4}
             ref={rootRef}
         >
             <Box display='flex' px={0.5} py={0.25}>
@@ -151,7 +157,7 @@ AutoCompleteSearchBox.propTypes = {
 
 AutoCompleteSearchBox.defaultProps = {
     defaultItemIcon: null,
-    label: 'Finde deinen Händler',
+    label: 'Finde deine HändlerIn',
     onBlur: noop,
     onChange: noop,
     onFocus: noop,
