@@ -101,10 +101,10 @@ const FeatureMarkerDetailCard = ({
                                         className={
                                             classes.secondaryIconComponentWrap
                                         }
+                                        key={secondaryColor.main}
                                     >
                                         <SecondaryIconComponent
                                             color={secondaryColor}
-                                            key={secondaryColor}
                                         />
                                     </span>
                                 )
@@ -113,7 +113,7 @@ const FeatureMarkerDetailCard = ({
                             return (
                                 <Tooltip
                                     aria-label={termName}
-                                    key={`${termName}:${secondaryColor}`}
+                                    key={`${termName}:${secondaryColor.main}`}
                                     title={termName}
                                 >
                                     <span

@@ -3,11 +3,24 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import 'img/favicon/goldeimer.favicon.png'
 import 'img/favicon/vca.favicon.png'
 
+import { hexToRgbCss } from '@lib/util/color'
+
 import GoldeimerIcon from '@map/icons/brands/GoldeimerIcon'
 import VivaConAguaIcon from '@map/icons/brands/VivaConAguaIcon'
 
-const COLOR_PRIMARY_GOLDEIMER = '#ffe300'
-const COLOR_PRIMARY_VIVA_CON_AGUA = '#008fc3'
+const COLOR_PRIMARY_GOLDEIMER = {
+    main: hexToRgbCss('#ffe300'),
+    light: hexToRgbCss('#ffea64'),
+    dark: hexToRgbCss('#fece00'),
+    contrastText: hexToRgbCss('#000')
+}
+
+const COLOR_PRIMARY_VIVA_CON_AGUA = {
+    main: hexToRgbCss('#008fc3'),
+    light: hexToRgbCss('#11a2d6'),
+    dark: hexToRgbCss('#005e8f'),
+    contrastText: hexToRgbCss('#fff')
+}
 
 const TYPOGRAPHY_VENEER = {
     fontFamily: 'veneer'
@@ -28,13 +41,11 @@ const makeTheme = (
         }
     },
     palette: {
-        primary: {
-            main: colorPrimary
-        },
+        primary: colorPrimary,
         secondary: {
             main: '#000'
         },
-        tonalOffset: 0.3
+        tonalOffset: 0.2
     },
     typography: {
         fontFamily: 'museo',

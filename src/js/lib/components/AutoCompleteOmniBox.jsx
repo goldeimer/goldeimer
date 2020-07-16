@@ -46,7 +46,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     }
 }))
 
-const AutoCompleteSearchBox = ({
+const AutoCompleteOmniBox = ({
     defaultItemIcon,
     label,
     onBlur,
@@ -137,7 +137,7 @@ const AutoCompleteSearchBox = ({
     )
 }
 
-AutoCompleteSearchBox.propTypes = {
+AutoCompleteOmniBox.propTypes = {
     defaultItemIcon: PropTypes.node,
     label: PropTypes.string,
     onBlur: PropTypes.func,
@@ -155,7 +155,7 @@ AutoCompleteSearchBox.propTypes = {
     withMenuButton: PropTypes.bool
 }
 
-AutoCompleteSearchBox.defaultProps = {
+AutoCompleteOmniBox.defaultProps = {
     defaultItemIcon: null,
     label: 'Finde deine HändlerIn',
     onBlur: noop,
@@ -173,4 +173,4 @@ AutoCompleteSearchBox.defaultProps = {
     withMenuButton: false
 }
 
-export default AutoCompleteSearchBox
+export default AutoCompleteOmniBox

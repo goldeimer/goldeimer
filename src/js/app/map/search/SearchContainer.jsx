@@ -23,7 +23,7 @@ import VIEW from '@map/view'
 
 import Box from '@material-ui/core/Box'
 
-import AutoCompleteSearchBox from '@lib/components/AutoCompleteSearchBox'
+import AutoCompleteOmniBox from '@lib/components/AutoCompleteOmniBox'
 import SearchResultIcon from '@map/search/SearchResultIcon'
 
 const useStyles = makeStyles(({ zIndex }) => ({
@@ -192,7 +192,7 @@ const SearchContainer = () => {
 
     return (
         <Box className={clsx(viewClasses.topLeft, classes.root)}>
-            <AutoCompleteSearchBox
+            <AutoCompleteOmniBox
                 defaultItemIcon={<SearchResultIcon />}
                 onBlur={handleBlur}
                 onChange={handleChange}

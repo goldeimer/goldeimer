@@ -20,8 +20,8 @@ module.exports = {
         }],
         'no-nested-ternary': ['off'],
         'no-param-reassign': ['error', {
-            ignorePropertyModificationsFor: ['state'],
-            props: true,
+            ignorePropertyModificationsFor: ['node', 'state'],
+            props: true
         }],
         'no-restricted-imports': ['error', {
             'patterns': [

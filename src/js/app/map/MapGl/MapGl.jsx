@@ -2,11 +2,10 @@
 ///
 /// @see [1]: http://visgl.github.io/react-map-gl/docs/api-reference/interactive-map
 
+import { makeStyles } from '@material-ui/core/styles'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import MapGL, { Layer } from 'react-map-gl'
-
-import { makeStyles } from '@material-ui/core/styles'
 
 import { useContext } from '@map/context'
 import {
@@ -15,7 +14,7 @@ import {
     FEATURE_FORMAT
 } from '@map/features'
 import { useLayers } from '@map/layers'
-import { useSearchResult } from '@map/search'
+import { useSearchResult, SEARCH_RESULT_TYPE } from '@map/search'
 import VIEW, { selectTransition, selectViewState } from '@map/view'
 
 import FeatureMarker from '@map/MapGl/Markers/FeatureMarker'
@@ -168,7 +167,9 @@ const MapGl = () => {
                         markerProps={markerProps}
                     />
                 )}
-                {searchResult && (
+                {searchResult &&
+                !SEARCH_RESULT_TYPE.feature.is(searchResult.type) && (
+
                     <SearchResultMarker
                         {...searchResult}
                     />

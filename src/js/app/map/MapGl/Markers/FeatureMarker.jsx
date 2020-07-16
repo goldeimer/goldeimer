@@ -1,7 +1,7 @@
-import React, { memo, useCallback } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
+import React, { memo, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { rgbCssToRgbValues } from '@lib/util/color'
@@ -15,8 +15,11 @@ import { PropTypeColor } from '@map/features'
 import Box from '@material-ui/core/Box'
 import ButtonBase from '@material-ui/core/ButtonBase'
 
+import { D3Transition } from '@lib/transition'
+
 import FeatureMarkerDetailCard from '@map/MapGl/Markers/FeatureMarkerDetailCard'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
+import { transitionContextMarker } from '@map/MapGl/Markers/markerTransitions'
 import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
 const colorOrFallback = (value, fallback = '#757575') => value || fallback
@@ -26,14 +29,14 @@ const makeDropShadow = (r, g, b, opacity = 1) => (
 )
 
 const useStyles = makeStyles(({ palette }) => ({
-    root: () => ({
-        color: palette.text.primary
+    root: ({ color }) => ({
+        color: colorOrFallback(color.main)
     }),
     background: ({ color }) => ({
         color: colorOrFallback(color.main),
         filter: makeDropShadow(255, 255, 255),
         transition: [
-            'background-color 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+            'color 300ms cubic-bezier(0.4, 0, 0.2, 1)',
             'fill 300ms cubic-bezier(0.4, 0, 0.2, 1)'
         ],
         '$root:hover &, $root:focus &': {
@@ -50,13 +53,17 @@ const useStyles = makeStyles(({ palette }) => ({
             color: colorOrFallback(color.dark, palette.action.active)
         }
     }),
+    component: {
+        '&-entered': {
+            transform: 'scale(1.25) translateY(4px)'
+        }
+    },
     currentContext: ({ color }) => ({
-        color: colorOrFallback(color.dark),
-        filter: makeDropShadow(
-            ...rgbCssToRgbValues(
-                colorOrFallback(color.light, palette.action.active)
-            )
-        )
+        color: colorOrFallback(color.main),
+        '$root:hover &, $root:focus &, $root:active &': {
+            color: colorOrFallback(color.main),
+            filter: 'none'
+        }
     }),
     icon: ({ color }) => ({
         color: colorOrFallback(
@@ -91,41 +98,43 @@ const FeatureMarkerComponent = ({
 
     return (
         <ButtonBase
+            centerRipple
             className={classes.root}
-            // material-ui's ripple effect assumes a non-transparent box,
-            // we are dealing with a map marker icon svg on transparent
-            // background...
-            disableRipple
-            disableTouchRipple
             onClick={handleClick}
         >
-            <Box
-                fontSize='2rem'
-                position='relative'
-                display='flex'
-                flexShrink={1}
+            <D3Transition
+                {...transitionContextMarker}
+                classes={{ component: classes.component }}
+                in={isCurrentContext}
             >
-                <MarkerBackgroundIcon
-                    className={clsx(
-                        classes.background,
-                        { [classes.currentContext]: isCurrentContext }
-                    )}
-                    fontSize='inherit'
-                />
                 <Box
-                    position='absolute'
-                    fontSize='1rem'
-                    top={4}
-                    left={8}
+                    fontSize='2rem'
+                    position='relative'
                     display='flex'
                     flexShrink={1}
                 >
-                    <IconComponent
-                        className={classes.icon}
+                    <MarkerBackgroundIcon
+                        className={clsx(
+                            classes.background,
+                            { [classes.currentContext]: isCurrentContext }
+                        )}
                         fontSize='inherit'
                     />
+                    <Box
+                        position='absolute'
+                        fontSize='50%'
+                        top={4}
+                        left={8}
+                        display='flex'
+                        flexShrink={1}
+                    >
+                        <IconComponent
+                            className={classes.icon}
+                            fontSize='inherit'
+                        />
+                    </Box>
                 </Box>
-            </Box>
+            </D3Transition>
         </ButtonBase>
     )
 }

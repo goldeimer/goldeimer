@@ -39,7 +39,7 @@ const MarkerContent = forwardRef(({
 
     return (
         <>
-            {renderDetailCard && (
+            {renderDetailCard && detail && (
                 <ArrowPopper
                     anchorEl={currentTriggerEl}
                     className={classes.popper}
@@ -50,6 +50,7 @@ const MarkerContent = forwardRef(({
             )}
             <Box
                 {...bind}
+                className={`markerId-${id}`}
                 display='inline-block'
                 ref={ref}
             >
