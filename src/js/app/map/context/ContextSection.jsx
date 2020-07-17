@@ -93,9 +93,15 @@ const ContextSection = ({
     placeName,
     type
 }) => {
+    const { palette } = useTheme()
+
     const {
         city,
-        color,
+        color = {
+            main: palette.grey[600],
+            dark: palette.grey[700],
+            light: palette.grey[400]
+        },
         iconComponent: IconComponent,
         phoneNumber,
         postCode,
@@ -106,7 +112,6 @@ const ContextSection = ({
     } = context
 
     const classes = useStyles({ color })
-    const { palette } = useTheme()
 
     const renderSubheading = () => {
         switch (type) {

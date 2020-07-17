@@ -23,7 +23,9 @@ const makeStateDependentHtmlClassAttribute = (
 )
 
 const useStyles = makeStyles(() => ({
-    component: {},
+    component: {
+
+    },
     wrapper: {}
 }))
 

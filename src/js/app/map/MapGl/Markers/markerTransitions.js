@@ -13,7 +13,7 @@ const transitionContextMarker = {
             {
                 node,
                 delay: 0,
-                duration: 300,
+                duration: 200,
                 ease: easePolyIn,
                 tweens: [{
                     name: 'style:transform',
@@ -54,7 +54,7 @@ const transitionContextMarker = {
                     value: () => {
                         const i = interpolateString(
                             'scale(1.25) translateY(-12px)',
-                            'scale(1.25) translateY(4px)'
+                            'scale(1.25) translateY(0px)'
                         )
 
                         return (t) => { node.style.transform = i(t) }
@@ -64,10 +64,10 @@ const transitionContextMarker = {
         ]
     ]),
     onEntered: (node) => {
-        node.style.transform = 'scale(1.25) translateY(4px)'
+        node.style.transform = 'scale(1.25) translateY(0px)'
     },
     onExit: (node) => {
-        node.style.transform = 'scale(1.25) translateY(4px)'
+        node.style.transform = 'scale(1.25) translateY(0px)'
     },
     onExiting: (node) => ({
         node,
@@ -78,7 +78,7 @@ const transitionContextMarker = {
             name: 'style:transform',
             value: () => {
                 const i = interpolateString(
-                    'scale(1.25) translateY(4px)',
+                    'scale(1.25) translateY(0px)',
                     'scale(1) translateY(0px)'
                 )
 

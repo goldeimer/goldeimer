@@ -2,9 +2,44 @@ import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { Source as SourceGl } from 'react-map-gl'
 
+import {
+    getPrimaryTaxonomy,
+    getSecondaryTaxonomy
+} from '@map/taxonomies'
+
 const GEOJSON_SOURCE_ID = 'features'
 
-const Source = forwardRef(({ children, featureCollection }, ref) => {
+const makeClusterPropertyTermCount = (
+    {
+        taxonomyId,
+        terms = []
+    },
+    taxonomyMetaName = 'primaryTaxonomy'
+) => terms.reduce((acc, term) => ({
+    ...acc,
+    [`${taxonomyMetaName}:${term.termId}`]: (
+        ['+', ['case', ['in', term.termId, ['get', `${taxonomyId}`]], 1, 0]]
+    )
+}), {})
+
+const makeClusterProperties = (
+    primaryTaxonomy = getPrimaryTaxonomy(),
+    secondaryTaxonomy = getSecondaryTaxonomy()
+) => ({
+    ...makeClusterPropertyTermCount(
+        primaryTaxonomy,
+        'primaryTaxonomy'
+    ),
+    ...makeClusterPropertyTermCount(
+        secondaryTaxonomy,
+        'secondaryTaxonomy'
+    )
+})
+
+const Source = forwardRef(({
+    children,
+    featureCollection
+}, ref) => {
     if (!featureCollection) {
         return null
     }
@@ -16,8 +51,8 @@ const Source = forwardRef(({ children, featureCollection }, ref) => {
             buffer={64}
             cluster
             clusterMaxZoom={14}
-            clusterProperties={null}
-            clusterRadius={50}
+            clusterProperties={makeClusterProperties()}
+            clusterRadius={80}
             data={featureCollection}
             id={GEOJSON_SOURCE_ID}
             maxzoom={17}

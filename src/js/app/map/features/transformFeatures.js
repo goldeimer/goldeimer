@@ -10,12 +10,17 @@ import { CONTEXT_TYPE } from '@map/context'
 import {
     getColorAndIconComponent,
     getFullTaxonomyVisualization,
+    getPrimaryTaxonomy,
+    getSecondaryTaxonomy,
     getTermNameByTaxonomyIdAndTermId,
     VISUALIZED_TAXONOMY
 } from '@map/taxonomies'
 import { makeLocation } from '@map/util'
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
+
+const primaryTaxonomy = getPrimaryTaxonomy()
+const secondaryTaxonomy = getSecondaryTaxonomy()
 
 /// ------------------- transforming individual features -----------------------
 
@@ -105,6 +110,42 @@ const featureToSearchResultFixedTaxonomiesStub = (
     VISUALIZED_TAXONOMY.icon
 )
 
+const mapGlClusterToMarkerState = (
+    {
+        geometry: { coordinates: [longitude, latitude] },
+        id,
+        properties: {
+            featureIds = '',
+            point_count: pointCount,
+            ...properties
+        },
+        tile
+    }
+) => ({
+    featureIds: featureIds.split(':'),
+    id,
+    latitude,
+    longitude,
+    pointCount: {
+        total: pointCount,
+        primaryTaxonomy: primaryTaxonomy.terms.reduce(
+            (acc, { termId }) => ({
+                ...acc,
+                [termId]: properties[`primaryTaxonomy:${termId}`] || 0
+            }),
+            {}
+        ),
+        secondaryTaxonomy: secondaryTaxonomy.terms.reduce(
+            (acc, { termId }) => ({
+                ...acc,
+                [termId]: properties[`secondaryTaxonomy:${termId}`] || 0
+            }),
+            {}
+        )
+    },
+    tile
+})
+
 const mapGlFeatureToMarkerState = ({
     geometry: { coordinates: [longitude, latitude] },
     properties: {
@@ -136,6 +177,10 @@ const featuresToSearchResults = (
     features
 ) => features.map(featureToSearchResultFixedTaxonomiesStub)
 
+const mapGlClustersToMarkerState = (
+    clusters
+) => clusters.map(mapGlClusterToMarkerState)
+
 const mapGlFeaturesToMarkerState = (
     features
 ) => features.map(mapGlFeatureToMarkerState)
@@ -148,14 +193,14 @@ const featuresToLookup = (features) => new Map(features.map(
 
 const featuresToMapGlProps = (
     features,
-    colorTaxonomyId,
-    iconTaxonomyId
+    primaryTaxonomyId,
+    secondaryTaxonomyId
 ) => ({
     type: 'FeatureCollection',
     features: features.map(({
         properties: {
-            [colorTaxonomyId]: colorTaxonomyTerms,
-            [iconTaxonomyId]: iconTaxonomyTerms,
+            [primaryTaxonomyId]: primaryTaxonomyTerms,
+            [secondaryTaxonomyId]: secondaryTaxonomyTerms,
             placeName,
             id
         },
@@ -163,11 +208,12 @@ const featuresToMapGlProps = (
     }) => ({
         ...feature,
         properties: {
-            // TODO: More defensive array access.
-            colorTaxonomyTermId: colorTaxonomyTerms[0] || null,
-            iconTaxonomyTermId: iconTaxonomyTerms[0] || null,
+            colorTaxonomyTermId: secondaryTaxonomyTerms[0] || null,
+            iconTaxonomyTermId: primaryTaxonomyTerms[0] || null,
+            id,
             placeName,
-            id
+            [primaryTaxonomyId]: primaryTaxonomyTerms,
+            [secondaryTaxonomyId]: secondaryTaxonomyTerms
         }
     }))
 })
@@ -176,8 +222,8 @@ const featuresToMapGlPropsFixedTaxonomiesStub = (
     features
 ) => featuresToMapGlProps(
     features,
-    VISUALIZED_TAXONOMY.color,
-    VISUALIZED_TAXONOMY.icon
+    VISUALIZED_TAXONOMY.primary,
+    VISUALIZED_TAXONOMY.secondary
 )
 
 const featuresToSearcheables = (
@@ -256,6 +302,7 @@ export {
     getFeatureTransform,
     getFeaturesTransform,
     getTransform,
+    mapGlClustersToMarkerState,
     mapGlFeaturesToMarkerState,
     FEATURE_FORMAT
 }

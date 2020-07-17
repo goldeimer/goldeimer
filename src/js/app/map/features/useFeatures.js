@@ -23,9 +23,18 @@ const useSourceFeatures = (format = FEATURE_FORMAT.geojson) => useSelector(
 
 const useViewFeatures = () => {
     const { clusters, markers } = useSelector(selectViewFeatures)
+    const pointCounts = clusters.reduce((acc, { pointCount }) => ([
+        ...acc,
+        pointCount.total
+    ]), [])
+
+    const domain = [Math.min(...pointCounts), Math.max(...pointCounts)]
 
     return {
-        clusters,
+        clusters: clusters.map((cluster) => ({
+            ...cluster,
+            domain
+        })),
         markers: markers.map((marker) => {
             const {
                 colorTaxonomyTermId,

@@ -115,7 +115,8 @@ const getColorByTaxonomyTermId = (
     {
         main: '#777',
         light: '#888',
-        dark: '#666'
+        dark: '#666',
+        contrastText: '#fff'
     }
 )
 
@@ -153,7 +154,11 @@ const getFullTaxonomyVisualization = ({
     color: getColorByTaxonomyTermId(termId, taxonomyId),
     iconComponent: getIconComponentByTaxonomyTermId(termId, taxonomyId),
     termId,
-    termName: defaultTermName
+    termName: getTermNameByTaxonomyIdAndTermId(
+        taxonomyId,
+        termId,
+        defaultTermName
+    )
 })
 
 const getPrimaryTaxonomy = () => merchantTypes

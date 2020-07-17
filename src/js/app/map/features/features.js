@@ -23,6 +23,7 @@ export {
     getFeatureTransform,
     getFeaturesTransform,
     getTransform,
+    mapGlClustersToMarkerState,
     mapGlFeaturesToMarkerState
 } from '@map/features/transformFeatures'
 

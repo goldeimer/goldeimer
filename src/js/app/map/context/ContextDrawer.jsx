@@ -24,15 +24,12 @@ const useStyles = makeStyles(({
     zIndex
 }) => {
     const collapseButtonWidth = spacing(3)
-    const collapseButtonSpacing = spacing(1)
 
     // width of `AutoCompleteSearchBox` + margins
     const idealDrawerWidth = 400 + spacing(2)
 
     // the collapse button resides outside of its container element
-    const idealDrawerWrapWidth = idealDrawerWidth +
-        collapseButtonWidth +
-        collapseButtonSpacing
+    const idealDrawerWrapWidth = idealDrawerWidth + collapseButtonWidth
 
     // height of `AutoCompleteSearchBox` + margins
     const headerSectionMinHeight = spacing(8)
@@ -57,7 +54,7 @@ const useStyles = makeStyles(({
         },
         paper: {
             width: 'auto',
-            maxWidth: `calc(100% - ${collapseButtonWidth + collapseButtonSpacing}px)`,
+            maxWidth: `calc(100% - ${collapseButtonWidth}px)`,
             minHeight: '100%',
             position: 'relative',
             fallbacks: {
@@ -69,7 +66,7 @@ const useStyles = makeStyles(({
             width: collapseButtonWidth,
             height: spacing(6),
             left: '100%',
-            top: collapseButtonSpacing,
+            top: spacing(1),
             zIndex: zIndex.mobileStepper - 1,
             display: 'flex',
             alignItems: 'center',
@@ -84,9 +81,9 @@ const useStyles = makeStyles(({
                 backgroundColor: palette.action.hover
             }
         },
-        collapseButtonFocusVisible: {
-
-        },
+        // TODO:
+        // Remove. Not needed, if FocusRipple does its thing.
+        collapseButtonFocusVisible: {},
         collapseIcon: {
             color: palette.action.active
         },

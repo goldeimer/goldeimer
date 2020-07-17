@@ -11,14 +11,17 @@ import Marker from '@map/MapGl/Markers/Marker'
 const Markers = memo(({
     component: Component,
     contextInfo,
-    markerProps
-}) => markerProps.map(
+    dynamicComponentProps,
+    keyPrefix,
+    staticComponentProps
+}) => dynamicComponentProps.map(
     ({ id, ...other }) => (
         <Component
+            {...staticComponentProps}
+            {...other}
             contextInfo={contextInfo}
             id={id}
-            key={id}
-            {...other}
+            key={`${keyPrefix}-${id}`}
         />
     )
 ))
@@ -26,13 +29,21 @@ const Markers = memo(({
 Markers.propTypes = {
     component: PropTypes.elementType.isRequired,
     contextInfo: PropTypeContextInfo,
-    markerProps: PropTypes.arrayOf(
-        PropTypes.shape(Marker.propTypes)
-    ).isRequired
+    dynamicComponentProps: PropTypes.arrayOf(
+        PropTypes.shape(
+            Marker.propTypes
+        )
+    ).isRequired,
+    keyPrefix: PropTypes.string,
+    staticComponentProps: PropTypes.shape({
+        domain: PropTypes.arrayOf(PropTypes.number)
+    })
 }
 
 Markers.defaultProps = {
-    contextInfo: ({ id, type } = DEFAULT_CONTEXT) => ({ id, type })()
+    contextInfo: ({ id, type } = DEFAULT_CONTEXT) => ({ id, type })(),
+    keyPrefix: 'marker',
+    staticComponentProps: {}
 }
 
 export {

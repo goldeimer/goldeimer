@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Popper from '@material-ui/core/Popper'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
+const useStyles = makeStyles(({ palette, zIndex }) => {
     const { paper } = palette.background
 
     return {
@@ -71,7 +71,7 @@ const useStyles = makeStyles(({ palette, shadows, zIndex }) => {
     }
 })
 
-const ArrowPopper = ({ anchorEl, children, isOpen, ...other }) => {
+const ArrowPopper = ({ anchorEl, children, isOpen }) => {
     const classes = useStyles()
     const { spacing } = useTheme()
 

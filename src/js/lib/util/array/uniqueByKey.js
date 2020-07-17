@@ -5,7 +5,9 @@ const unpack = (obj, nestedKeys) => {
     let value = obj
 
     try {
-        nestedKeys.forEach((key) => { value = obj[key] })
+        nestedKeys.forEach((key) => {
+            value = value[key]
+        })
     } catch (error) {
         log(error)
     }

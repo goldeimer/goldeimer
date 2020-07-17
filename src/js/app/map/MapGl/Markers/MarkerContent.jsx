@@ -37,11 +37,12 @@ const MarkerContent = forwardRef(({
     const detail = useDetail(id)
     const classes = useStyles()
 
+    const shouldRenderDetail = renderDetailCard && detail
     return (
         <>
-            {renderDetailCard && detail && (
+            {shouldRenderDetail && (
                 <ArrowPopper
-                    anchorEl={currentTriggerEl}
+                    anchorEl={ref.current || currentTriggerEl}
                     className={classes.popper}
                     isOpen={isHovered}
                 >
@@ -50,15 +51,15 @@ const MarkerContent = forwardRef(({
             )}
             <Box
                 {...bind}
-                className={`markerId-${id}`}
-                display='inline-block'
-                ref={ref}
+                className={`marker-${id}`}
             >
                 <Component
                     {...componentProps}
                     className={clsx({
                         [classes.popperTrigger]: renderDetailCard !== null
                     })}
+                    id={id}
+                    ref={ref}
                     thisContext={
                         detail ? detailToFeatureContext(detail) : null
                     }
@@ -70,7 +71,10 @@ const MarkerContent = forwardRef(({
 
 MarkerContent.propTypes = {
     component: PropTypes.elementType,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]).isRequired,
     renderDetailCard: PropTypes.func
 }
 

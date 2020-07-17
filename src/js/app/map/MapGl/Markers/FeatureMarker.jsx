@@ -1,7 +1,13 @@
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import React, { memo, useCallback } from 'react'
+import React, {
+    forwardRef,
+    memo,
+    useCallback,
+    useEffect,
+    useRef
+} from 'react'
 import { useDispatch } from 'react-redux'
 
 import { rgbCssToRgbValues } from '@lib/util/color'
@@ -36,8 +42,8 @@ const useStyles = makeStyles(({ palette }) => ({
         color: colorOrFallback(color.main),
         filter: makeDropShadow(255, 255, 255),
         transition: [
-            'color 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-            'fill 300ms cubic-bezier(0.4, 0, 0.2, 1)'
+            'color 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+            'fill 200ms cubic-bezier(0.4, 0, 0.2, 1)'
         ],
         '$root:hover &, $root:focus &': {
             color: colorOrFallback(color.light, palette.action.hover)
@@ -54,14 +60,14 @@ const useStyles = makeStyles(({ palette }) => ({
         }
     }),
     component: {
-        '&-entered': {
-            transform: 'scale(1.25) translateY(4px)'
-        }
+        transformOrigin: 'bottom center',
+        transform: 'scale(1) translateY(0)'
     },
     currentContext: ({ color }) => ({
-        color: colorOrFallback(color.main),
+        color: colorOrFallback(color.dark, palette.action.active),
+        filter: 'none',
         '$root:hover &, $root:focus &, $root:active &': {
-            color: colorOrFallback(color.main),
+            color: colorOrFallback(color.dark, palette.action.active),
             filter: 'none'
         }
     }),
@@ -73,12 +79,14 @@ const useStyles = makeStyles(({ palette }) => ({
     })
 }), { name: 'FeatureMarker' })
 
-const FeatureMarkerComponent = ({
+const FeatureMarkerComponent = forwardRef(({
     color,
     contextInfo,
     thisContext,
     iconComponent: IconComponent
-}) => {
+}, ref) => {
+    const transitionHandleRef = useRef()
+
     const classes = useStyles({ color })
     const dispatch = useDispatch()
 
@@ -96,16 +104,35 @@ const FeatureMarkerComponent = ({
         contextInfo.type === thisContext.type
     )
 
+    // We don't run the full transition on mount
+    // (could be set via the `appear` prop),
+    // hence the manual call to the final callback.
+    useEffect(() => {
+        if (!transitionHandleRef.current) {
+            return
+        }
+
+        if (isCurrentContext) {
+            transitionContextMarker.onEntered(transitionHandleRef.current)
+            return
+        }
+
+        transitionContextMarker.onExited(transitionHandleRef.current)
+    }, [isCurrentContext, transitionHandleRef])
+
     return (
-        <ButtonBase
-            centerRipple
-            className={classes.root}
-            onClick={handleClick}
+        <D3Transition
+            {...transitionContextMarker}
+            classes={{ component: classes.component }}
+            in={isCurrentContext}
+            ref={transitionHandleRef}
         >
-            <D3Transition
-                {...transitionContextMarker}
-                classes={{ component: classes.component }}
-                in={isCurrentContext}
+            <ButtonBase
+                centerRipple
+                className={classes.root}
+                disabled={isCurrentContext}
+                onClick={handleClick}
+                ref={ref}
             >
                 <Box
                     fontSize='2rem'
@@ -134,10 +161,10 @@ const FeatureMarkerComponent = ({
                         />
                     </Box>
                 </Box>
-            </D3Transition>
-        </ButtonBase>
+            </ButtonBase>
+        </D3Transition>
     )
-}
+})
 
 FeatureMarkerComponent.propTypes = {
     color: PropTypeColor,

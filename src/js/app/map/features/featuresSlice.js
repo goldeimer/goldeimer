@@ -2,7 +2,10 @@ import createSegment from '@lib/redux/createSegment'
 import LOADING from '@lib/enum/loading'
 
 import sourceRequest from '@map/features/api'
-import { mapGlFeaturesToMarkerState } from '@map/features/transformFeatures'
+import {
+    mapGlClustersToMarkerState,
+    mapGlFeaturesToMarkerState
+} from '@map/features/transformFeatures'
 
 const INITIAL_SELECTED = null
 
@@ -59,8 +62,8 @@ const segment = createSegment({
             initialState: INITIAL_VIEW,
             reducers: {
                 reset: () => INITIAL_VIEW,
-                set: (_, { payload: { markers = [] } }) => ({
-                    clusters: [], // TODO
+                set: (_, { payload: { clusters = [], markers = [] } }) => ({
+                    clusters: mapGlClustersToMarkerState(clusters),
                     markers: mapGlFeaturesToMarkerState(markers)
                 })
             }

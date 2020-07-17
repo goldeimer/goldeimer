@@ -13,10 +13,11 @@ import {
     useViewFeatures,
     FEATURE_FORMAT
 } from '@map/features'
-import { useLayers } from '@map/layers'
 import { useSearchResult, SEARCH_RESULT_TYPE } from '@map/search'
 import VIEW, { selectTransition, selectViewState } from '@map/view'
 
+import useMapGlInstance from '@map/MapGl/useMapGlInstance'
+import ClusterMarker from '@map/MapGl/Markers/ClusterMarker'
 import FeatureMarker from '@map/MapGl/Markers/FeatureMarker'
 import Markers from '@map/MapGl/Markers'
 import SearchResultMarker from '@map/MapGl/Markers/SearchResultMarker'
@@ -64,7 +65,7 @@ const MapGl = () => {
     const [viewState, setViewState] = useState({})
 
     const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
-    const { markers: markerProps } = useViewFeatures()
+    const { clusters, markers } = useViewFeatures()
     const searchResult = useSearchResult()
     const syncedViewState = useSelector(selectViewState)
     const transition = useSelector(selectTransition)
@@ -94,6 +95,13 @@ const MapGl = () => {
         }
     }, [isLoading, syncedViewState])
 
+    const { layers } = useMapGlInstance({
+        mapRef,
+        sourceId: 'features'
+    })
+
+    const getSource = () => sourceRef.current.getSource()
+
     /// @see [`InteractiveMap::onViewStateChange`](1)
     /// @see [State Management](2)
     ///
@@ -113,12 +121,6 @@ const MapGl = () => {
         }
     }, [dispatch, isLoading, isTransitioning])
 
-    const { handleLayerClick, layers } = useLayers({
-        mapRef,
-        sourceId: 'features',
-        sourceRef
-    })
-
     const handleTransitionStart = () => setIsTransitioning(true)
 
     const handleTransitionEnd = () => {
@@ -134,19 +136,13 @@ const MapGl = () => {
                 {...makeViewStateProps()}
                 attributionControl
                 className={classes.attribution}
-                // TODO: Remove after fixing transitions.
-                doubleClickZoom={false}
-                interactiveLayerIds={[
-                    layers.clusterLayer.id,
-                    layers.clusterCountLayer.id
-                ]}
                 mapboxApiAccessToken=''
                 mapOptions={{
-                    // customAttribution: '<a href="https://github.com/jpilkahn" target="_blank">© Agentur Alk & Flens</a>'
+                    customAttribution: (
+                        '<a href="https://github.com/jpilkahn" target="_blank">© Alk & Flens</a>'
+                    )
                 }}
                 mapStyle={MAP_STYLE_URL}
-                onClick={handleLayerClick}
-                onDblClick={handleLayerClick}
                 onTransitionEnd={handleTransitionEnd}
                 onTransitionStart={handleTransitionStart}
                 onViewStateChange={handleViewStateChange}
@@ -157,19 +153,25 @@ const MapGl = () => {
                     ref={sourceRef}
                 >
                     <Layer {...layers.clusterLayer} />
-                    <Layer {...layers.clusterCountLayer} />
                     <Layer {...layers.unclusteredPointLayer} />
                 </Source>
-                {markerProps && (
+                {clusters && (
+                    <Markers
+                        component={ClusterMarker}
+                        contextInfo={contextInfo}
+                        dynamicComponentProps={clusters}
+                        staticComponentProps={{ getSource }}
+                    />
+                )}
+                {markers && (
                     <Markers
                         component={FeatureMarker}
                         contextInfo={contextInfo}
-                        markerProps={markerProps}
+                        dynamicComponentProps={markers}
                     />
                 )}
                 {searchResult &&
                 !SEARCH_RESULT_TYPE.feature.is(searchResult.type) && (
-
                     <SearchResultMarker
                         {...searchResult}
                     />
