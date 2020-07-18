@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box'
 
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
 
-import { MarkerIcon } from '@map/icons/ui'
+import { MarkerIcon } from '@map/icons'
 
 const SearchResultMarkerComponent = () => (
     <Box

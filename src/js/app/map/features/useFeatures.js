@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux'
 
-import { getColorAndIconComponent } from '@map/taxonomies'
+import { summateObjects } from '@lib/util/collections'
+
+import { getColorAndIconComponent } from '@map/config/taxonomies'
 
 import getSourceFeatures, {
     getFeatureById,
@@ -23,33 +25,31 @@ const useSourceFeatures = (format = FEATURE_FORMAT.geojson) => useSelector(
 
 const useViewFeatures = () => {
     const { clusters, markers } = useSelector(selectViewFeatures)
-    const pointCounts = clusters.reduce((acc, { pointCount }) => ([
-        ...acc,
-        pointCount.total
-    ]), [])
+    const pointCounts = summateObjects(clusters, 'pointCount')
 
-    const domain = [Math.min(...pointCounts), Math.max(...pointCounts)]
+    const totals = clusters.map(({ pointCount }) => pointCount.total)
+    const domain = [
+        Math.min(...totals),
+        Math.max(...totals)
+    ]
 
     return {
         clusters: clusters.map((cluster) => ({
             ...cluster,
             domain
         })),
-        markers: markers.map((marker) => {
-            const {
-                colorTaxonomyTermId,
-                iconTaxonomyTermId,
-                ...rest
-            } = marker
-
-            return {
-                ...rest,
-                ...getColorAndIconComponent(
-                    colorTaxonomyTermId,
-                    iconTaxonomyTermId
-                )
-            }
-        })
+        markers: markers.map(({
+            colorTermId,
+            iconTermId,
+            ...rest
+        }) => ({
+            ...rest,
+            ...getColorAndIconComponent(
+                colorTermId,
+                iconTermId
+            )
+        })),
+        pointCounts
     }
 }
 

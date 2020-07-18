@@ -3,9 +3,21 @@ export {
     features
 } from '@map/features/featuresSlice'
 
-export { default as FEATURE_FORMAT } from '@map/features/enumFeatureFormat'
+export {
+    default as FEATURE_FORMAT
+} from '@map/features/enumFeatureFormat'
 
-export { default as PropTypeColor } from '@map/features/PropTypeColor'
+export {
+    default as FeatureIcon
+} from '@map/features/FeatureIcon'
+
+export {
+    default as FeatureIconBadgeTooltip
+} from '@map/features/FeatureIconBadgeTooltip'
+
+export {
+    default as PropTypeColor
+} from '@map/features/PropTypeColor'
 
 export {
     default as getSourceFeatures,

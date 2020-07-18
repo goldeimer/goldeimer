@@ -53,9 +53,9 @@ const FeatureMarkerDetailCard = ({
     color,
     iconComponent: IconComponent,
     placeName,
-    primaryTaxonomyTermName,
+    primaryTermName,
     postCode,
-    secondaryTaxonomyTerms,
+    secondaryTerms,
     street
 }) => {
     const classes = useStyles({ color })
@@ -65,7 +65,7 @@ const FeatureMarkerDetailCard = ({
             <CardHeader
                 avatar={(
                     <Avatar
-                        aria-label={primaryTaxonomyTermName}
+                        aria-label={primaryTermName}
                         className={classes.avatar}
                     >
                         <IconComponent />
@@ -73,7 +73,7 @@ const FeatureMarkerDetailCard = ({
                 )}
                 classes={{ title: classes.title }}
                 className={classes.cardHeader}
-                subheader={primaryTaxonomyTermName}
+                subheader={primaryTermName}
                 title={placeName}
             />
             <Divider />
@@ -89,7 +89,7 @@ const FeatureMarkerDetailCard = ({
                     </span>
                 </Typography>
                 <Box display='flex' mt={1}>
-                    {secondaryTaxonomyTerms.map(
+                    {secondaryTerms.map(
                         ({
                             color: secondaryColor,
                             iconComponent: SecondaryIconComponent,
@@ -140,9 +140,9 @@ FeatureMarkerDetailCard.propTypes = {
     color: PropTypeColor.isRequired,
     iconComponent: PropTypes.elementType.isRequired,
     placeName: PropTypes.string.isRequired,
-    primaryTaxonomyTermName: PropTypes.string.isRequired,
+    primaryTermName: PropTypes.string.isRequired,
     postCode: PropTypes.string,
-    secondaryTaxonomyTerms: PropTypes.arrayOf(
+    secondaryTerms: PropTypes.arrayOf(
         PropTypes.shape({
             color: PropTypeColor,
             iconComponent: PropTypes.elementType,
@@ -154,7 +154,7 @@ FeatureMarkerDetailCard.propTypes = {
 
 FeatureMarkerDetailCard.defaultProps = {
     postCode: '',
-    secondaryTaxonomyTerms: []
+    secondaryTerms: []
 }
 
 export default memo(FeatureMarkerDetailCard)

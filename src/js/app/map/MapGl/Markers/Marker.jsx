@@ -1,6 +1,8 @@
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Marker as MarkerGl } from 'react-map-gl'
+
+import useCallback from '@lib/hooks/useCallback'
 
 import MarkerContent from '@map/MapGl/Markers/MarkerContent'
 
@@ -20,7 +22,7 @@ const calculateOffsets = (
     )
 })
 
-const DEFAULT_DIMENSIONS = { height: 32, width: 32 }
+const DEFAULT_DIMENSIONS = { width: 32, height: 32 }
 
 const Marker = ({
     anchorTo,
@@ -29,22 +31,23 @@ const Marker = ({
     longitude,
     ...other
 }) => {
-    const dimensionsRef = useRef()
     const markerRef = useRef()
 
-    useLayoutEffect(() => {
+    const [dimensions, setDimensions] = useState(DEFAULT_DIMENSIONS)
+
+    const handleDraw = useCallback(() => {
         if (markerRef.current) {
             const { height, width } = markerRef.current.getBoundingClientRect()
 
-            dimensionsRef.current = { height, width }
+            setDimensions({ width, height })
         }
     }, [markerRef])
 
-    const dimensions = dimensionsRef.current
-        ? dimensionsRef.current
-        : defaultDimensions
-
     const offsets = calculateOffsets(anchorTo, dimensions)
+
+    useLayoutEffect(() => {
+        handleDraw()
+    }, [handleDraw])
 
     return (
         <MarkerGl
@@ -57,6 +60,7 @@ const Marker = ({
                 ref={markerRef}
                 latitude={latitude}
                 longitude={longitude}
+                onDraw={handleDraw}
                 {...other}
             />
         </MarkerGl>

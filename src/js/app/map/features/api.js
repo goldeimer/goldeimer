@@ -4,7 +4,7 @@ import validUrl from 'valid-url'
 
 import parseGoogleSheet from '@lib/util/parseGoogleSheet'
 
-import { BRAND, MERCHANT_TYPE } from '@map/taxonomies'
+import { BRAND, MERCHANT_TYPE } from '@map/config/taxonomies'
 
 import { GOOGLE_SHEETS_API_KEY } from '@config/apiKeys'
 

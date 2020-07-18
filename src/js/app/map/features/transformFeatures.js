@@ -14,7 +14,7 @@ import {
     getSecondaryTaxonomy,
     getTermNameByTaxonomyIdAndTermId,
     VISUALIZED_TAXONOMY
-} from '@map/taxonomies'
+} from '@map/config/taxonomies'
 import { makeLocation } from '@map/util'
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
@@ -36,7 +36,7 @@ const featureToDetail = (
         properties[secondaryTaxonomyId][0],
         properties[primaryTaxonomyId][0]
     ),
-    primaryTaxonomyTermName: properties[primaryTaxonomyId].map(
+    primaryTermName: properties[primaryTaxonomyId].map(
         (termId) => getTermNameByTaxonomyIdAndTermId(
             primaryTaxonomyId,
             termId,
@@ -45,7 +45,7 @@ const featureToDetail = (
     ).filter((termName, index, newArray) => (
         newArray.indexOf(termName) === index
     )).sort().join(', '),
-    secondaryTaxonomyTerms: properties[secondaryTaxonomyId].map(
+    secondaryTerms: properties[secondaryTaxonomyId].map(
         (termId) => getFullTaxonomyVisualization({
             taxonomyId: secondaryTaxonomyId,
             termId,
@@ -85,14 +85,14 @@ const featureToSearchResult = (
         geometry: { coordinates: [longitude, latitude] },
         properties: { city, id, placeName, street, ...properties }
     },
-    colorTaxonomyTermId,
-    iconTaxonomyTermId
+    colorTermId,
+    iconTermId
 ) => ({
     label: `${placeName}, ${street}, ${city}`,
     value: {
         ...getColorAndIconComponent(
-            properties[colorTaxonomyTermId][0],
-            properties[iconTaxonomyTermId][0]
+            properties[colorTermId][0],
+            properties[iconTermId][0]
         ),
         id,
         latitude: parseFloat(latitude),
@@ -115,33 +115,77 @@ const mapGlClusterToMarkerState = (
         geometry: { coordinates: [longitude, latitude] },
         id,
         properties: {
-            featureIds = '',
             point_count: pointCount,
             ...properties
         },
         tile
     }
 ) => ({
-    featureIds: featureIds.split(':'),
     id,
     latitude,
     longitude,
     pointCount: {
         total: pointCount,
-        primaryTaxonomy: primaryTaxonomy.terms.reduce(
-            (acc, { termId }) => ({
-                ...acc,
-                [termId]: properties[`primaryTaxonomy:${termId}`] || 0
-            }),
-            {}
-        ),
-        secondaryTaxonomy: secondaryTaxonomy.terms.reduce(
-            (acc, { termId }) => ({
-                ...acc,
-                [termId]: properties[`secondaryTaxonomy:${termId}`] || 0
-            }),
-            {}
-        )
+        ...primaryTaxonomy.terms.reduce((
+            acc,
+            { termId: primaryTermId },
+            primaryIndex
+        ) => {
+            const primaryTermValue = properties[primaryTermId] || 0
+
+            return secondaryTaxonomy.terms.reduce((
+                acc2,
+                { termId: secondaryTermId },
+                secondaryIndex
+            ) => {
+                const secondaryTermValue = properties[secondaryTermId] || 0
+                const sharedValue = properties[`${primaryTermId}:${secondaryTermId}`] || 0
+
+                const acc2PrimarySecondary = (
+                    acc2.primary[primaryTermId] || {}
+                ).secondary || {}
+
+                const acc2SecondaryPrimary = (
+                    acc2.secondary[secondaryTermId] || {}
+                ).primary || {}
+
+                return {
+                    primary: {
+                        ...acc2.primary,
+                        [primaryTermId]: {
+                            secondary: {
+                                ...acc2PrimarySecondary,
+                                [secondaryTermId]: sharedValue
+                            },
+                            total: primaryTermValue
+                        },
+                        total: acc2.primary.total + (
+                            secondaryIndex === 0 ? primaryTermValue : 0
+                        )
+                    },
+                    secondary: {
+                        ...acc2.secondary,
+                        [secondaryTermId]: {
+                            primary: {
+                                ...acc2SecondaryPrimary,
+                                [primaryTermId]: sharedValue
+                            },
+                            total: secondaryTermValue
+                        },
+                        total: acc2.secondary.total + (
+                            primaryIndex === 0 ? secondaryTermValue : 0
+                        )
+                    }
+                }
+            }, acc)
+        }, {
+            primary: {
+                total: 0
+            },
+            secondary: {
+                total: 0
+            }
+        })
     },
     tile
 })
@@ -149,11 +193,11 @@ const mapGlClusterToMarkerState = (
 const mapGlFeatureToMarkerState = ({
     geometry: { coordinates: [longitude, latitude] },
     properties: {
-        colorTaxonomyTermId, iconTaxonomyTermId, id
+        colorTermId, iconTermId, id
     }
 }) => ({
-    colorTaxonomyTermId,
-    iconTaxonomyTermId,
+    colorTermId,
+    iconTermId,
     id,
     latitude,
     longitude
@@ -199,8 +243,8 @@ const featuresToMapGlProps = (
     type: 'FeatureCollection',
     features: features.map(({
         properties: {
-            [primaryTaxonomyId]: primaryTaxonomyTerms,
-            [secondaryTaxonomyId]: secondaryTaxonomyTerms,
+            [primaryTaxonomyId]: primaryTerms,
+            [secondaryTaxonomyId]: secondaryTerms,
             placeName,
             id
         },
@@ -208,12 +252,12 @@ const featuresToMapGlProps = (
     }) => ({
         ...feature,
         properties: {
-            colorTaxonomyTermId: secondaryTaxonomyTerms[0] || null,
-            iconTaxonomyTermId: primaryTaxonomyTerms[0] || null,
+            colorTermId: secondaryTerms[0] || null,
+            iconTermId: primaryTerms[0] || null,
             id,
             placeName,
-            [primaryTaxonomyId]: primaryTaxonomyTerms,
-            [secondaryTaxonomyId]: secondaryTaxonomyTerms
+            [primaryTaxonomyId]: primaryTerms,
+            [secondaryTaxonomyId]: secondaryTerms
         }
     }))
 })

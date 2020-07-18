@@ -1,20 +1,20 @@
 // TODO: The entire file is a stub.
 // Allow admins to set these in the not yet existent backend.
 
-import DeliveryServiceIcon from '@material-ui/icons/LocalShipping'
-import EcommerceIcon from '@material-ui/icons/Shop'
-import RetailIcon from '@material-ui/icons/Store'
-
-import GoldeimerIcon from '@map/icons/brands/GoldeimerIcon'
-import VivaConAguaIcon from '@map/icons/brands/VivaConAguaIcon'
-import WholesaleIcon from '@map/icons/merchant-types/WholesaleIcon'
-
-import { PointOfInterestIcon } from '@map/icons/ui'
+import getTermIcon
+    from '@map/config/getTermIcon'
 
 import {
     COLOR_PRIMARY_GOLDEIMER,
     COLOR_PRIMARY_VIVA_CON_AGUA
 } from '@config/theme'
+
+const COLOR_FALLBACK = {
+    main: 'rgb(127, 127, 127)',
+    light: 'rgb(95, 95, 95)',
+    dark: 'rgb(159, 159, 159)',
+    contrastText: 'rgb(0, 0, 0)'
+}
 
 const VISUALIZED_TAXONOMY = {
     color: 'brands',
@@ -35,11 +35,16 @@ const makeNameEnum = (terms) => Object.fromEntries(
     )
 )
 
-const makeTerm = ([termId, termName, iconComponent = null, props = {}]) => ({
+const makeTerm = ([
     termId,
     termName,
-    iconComponent,
-    ...props
+    iconId = null,
+    color = COLOR_FALLBACK
+]) => ({
+    termId,
+    termName,
+    iconId,
+    color
 })
 
 const makeTaxonomy = (taxonomyId, taxonomyName, terms) => ({
@@ -55,14 +60,14 @@ const brands = makeTaxonomy(
         [
             'goldeimer',
             'Goldeimer',
-            GoldeimerIcon,
-            { color: COLOR_PRIMARY_GOLDEIMER }
+            'GoldeimerIcon',
+            COLOR_PRIMARY_GOLDEIMER
         ],
         [
             'vca',
             'Viva con Agua',
-            VivaConAguaIcon,
-            { color: COLOR_PRIMARY_VIVA_CON_AGUA }
+            'VivaConAguaIcon',
+            COLOR_PRIMARY_VIVA_CON_AGUA
         ]
     ]
 )
@@ -73,10 +78,10 @@ const merchantTypes = makeTaxonomy(
     'merchantTypes',
     'Kategorie',
     [
-        ['retail', 'Einzelhandel', RetailIcon],
-        ['wholesale', 'Großhandel', WholesaleIcon],
-        ['delivery', 'Lieferservice', DeliveryServiceIcon],
-        ['ecommerce', 'Online Shop', EcommerceIcon]
+        ['retail', 'Einzelhandel', 'RetailIcon'],
+        ['wholesale', 'Großhandel', 'WholesaleIcon'],
+        ['delivery', 'Lieferservice', 'DeliveryServiceIcon'],
+        ['ecommerce', 'Online Shop', 'EcommerceIcon']
     ]
 )
 const MERCHANT_TYPE = makeIdEnum(merchantTypes.terms)
@@ -89,7 +94,7 @@ const TAXONOMY_LOOKUP = {
 
 const TAXONOMIES = Object.entries(TAXONOMY_LOOKUP).map(([, t]) => t)
 
-const getPropByTaxonomyTermId = (
+const getPropByTermId = (
     prop,
     taxonomyId,
     termId,
@@ -105,36 +110,32 @@ const getPropByTaxonomyTermId = (
     return term ? term[prop] : defaultValue
 }
 
-const getColorByTaxonomyTermId = (
+const getColorByTermId = (
     termId,
     taxonomyId = VISUALIZED_TAXONOMY.secondary
-) => getPropByTaxonomyTermId(
+) => getPropByTermId(
     'color',
     taxonomyId,
-    termId,
-    {
-        main: '#777',
-        light: '#888',
-        dark: '#666',
-        contrastText: '#fff'
-    }
+    termId
+
 )
 
-const getIconComponentByTaxonomyTermId = (
+const getIconComponentByTermId = (
     termId,
     taxonomyId = VISUALIZED_TAXONOMY.primary
-) => getPropByTaxonomyTermId(
-    'iconComponent',
-    taxonomyId,
-    termId,
-    PointOfInterestIcon
+) => getTermIcon(
+    getPropByTermId(
+        'iconId',
+        taxonomyId,
+        termId
+    )
 )
 
 const getTermNameByTaxonomyIdAndTermId = (
     taxonomyId,
     termId,
     defeaultTermName = 'Eintrag'
-) => getPropByTaxonomyTermId(
+) => getPropByTermId(
     'termName',
     taxonomyId,
     termId,
@@ -142,8 +143,8 @@ const getTermNameByTaxonomyIdAndTermId = (
 )
 
 const getColorAndIconComponent = (colorTermId, iconTermId) => ({
-    color: getColorByTaxonomyTermId(colorTermId),
-    iconComponent: getIconComponentByTaxonomyTermId(iconTermId)
+    color: getColorByTermId(colorTermId),
+    iconComponent: getIconComponentByTermId(iconTermId)
 })
 
 const getFullTaxonomyVisualization = ({
@@ -151,8 +152,8 @@ const getFullTaxonomyVisualization = ({
     taxonomyId,
     termId
 }) => ({
-    color: getColorByTaxonomyTermId(termId, taxonomyId),
-    iconComponent: getIconComponentByTaxonomyTermId(termId, taxonomyId),
+    color: getColorByTermId(termId, taxonomyId),
+    iconComponent: getIconComponentByTermId(termId, taxonomyId),
     termId,
     termName: getTermNameByTaxonomyIdAndTermId(
         taxonomyId,
@@ -168,14 +169,16 @@ export {
     TAXONOMIES as default,
     BRAND,
     BRAND_NAME,
+    COLOR_FALLBACK,
     MERCHANT_TYPE,
     MERCHANT_TYPE_NAME,
     VISUALIZED_TAXONOMY,
     getColorAndIconComponent,
-    getColorByTaxonomyTermId,
+    getColorByTermId,
     getFullTaxonomyVisualization,
-    getIconComponentByTaxonomyTermId,
+    getIconComponentByTermId,
     getPrimaryTaxonomy,
     getSecondaryTaxonomy,
+    getTermIcon,
     getTermNameByTaxonomyIdAndTermId
 }

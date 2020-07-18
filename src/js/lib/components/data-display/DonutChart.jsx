@@ -20,6 +20,7 @@ const DonutChart = forwardRef(({
     colorName,
     data,
     keyToColor,
+    padding,
     radius: radiusProp,
     strokeColor: strokeColorProp,
     strokeWidth
@@ -30,10 +31,10 @@ const DonutChart = forwardRef(({
     const { palette, spacing } = useTheme()
 
     const arcWidth = arcWidthProp || spacing(1)
-    const radius = (radiusProp || spacing(2.5)) - strokeWidth
+    const radius = radiusProp || spacing(2.5)
     const strokeColor = strokeColorProp || palette.background.paper
 
-    const diameter = radius * 2
+    const svgDimension = (radius + spacing(padding)) * 2
 
     const arcClassName = 'donut-arc'
     useEffect(() => {
@@ -62,7 +63,6 @@ const DonutChart = forwardRef(({
                     (d) => keyToColor(d.data.key)[colorName]
                 )
                 .attr('stroke', strokeColor)
-                .style('stroke-width', `${strokeWidth}px`)
         }
 
         draw()
@@ -81,12 +81,14 @@ const DonutChart = forwardRef(({
     return (
         <svg
             ref={svgRef}
-            width={diameter}
-            height={diameter}
-            style={{ display: 'block' }}
+            width={svgDimension}
+            height={svgDimension}
+            viewBox={`0 0 ${svgDimension} ${svgDimension}`}
+            style={{ display: 'block', position: 'relative' }}
         >
             <g
-                transform={`translate(${radius},${radius})`}
+                transform={`translate(${svgDimension / 2}, ${svgDimension / 2})`}
+                style={{ strokeOpacity: 0.8, strokeWidth: `${strokeWidth}px` }}
             />
         </svg>
     )
@@ -97,6 +99,7 @@ DonutChart.propTypes = {
     colorName: PropTypes.string,
     data: PropTypes.objectOf(PropTypes.number).isRequired,
     keyToColor: PropTypes.func.isRequired,
+    padding: PropTypes.number,
     radius: PropTypes.number,
     strokeColor: PropTypes.string,
     strokeWidth: PropTypes.number
@@ -105,6 +108,7 @@ DonutChart.propTypes = {
 DonutChart.defaultProps = {
     arcWidth: null,
     colorName: 'main',
+    padding: 2,
     radius: null,
     strokeColor: null,
     strokeWidth: 2

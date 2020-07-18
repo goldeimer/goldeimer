@@ -1,4 +1,4 @@
-import ensureArray from '@lib/util/array/ensureArray'
+import ensureArray from '@lib/util/collections/ensureArray'
 import log from '@lib/util/log'
 
 const unpack = (obj, nestedKeys) => {

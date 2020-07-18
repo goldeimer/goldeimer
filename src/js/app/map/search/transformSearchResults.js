@@ -1,5 +1,5 @@
 import { generateShortId } from '@lib/util/generateId'
-import { uniqueByKey } from '@lib/util/array'
+import { uniqueByKey } from '@lib/util/collections'
 import SEARCH_RESULT_TYPE from '@map/search/enumSearchResultType'
 
 const sanitizeMapTilerPlaceName = (placeName) => {

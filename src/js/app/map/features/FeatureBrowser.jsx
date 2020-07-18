@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles'
 // import LinkIcon from '@material-ui/icons/Link'
 // import MarkerIcon from '@material-ui/icons/Room'
 
-// import { BRAND_NAME, MERCHANT_TYPE_NAME } from '@map/taxonomies'
+// import { BRAND_NAME, MERCHANT_TYPE_NAME } from '@map/config/taxonomies'
 // import { useSourceFeatures, FEATURE_FORMAT } from '@map/features'
 
 // import ExternalLink from '@lib/components/ExternalLink'

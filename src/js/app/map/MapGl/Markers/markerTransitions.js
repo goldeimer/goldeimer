@@ -7,62 +7,69 @@ import {
 import { interpolateString } from 'd3-interpolate'
 
 const transitionContextMarker = {
-    onEnter: (node) => { node.style.transform = 'scale(1) translateY(0px)' },
-    onEntering: (node) => ([
-        [
-            {
-                node,
-                delay: 0,
-                duration: 200,
-                ease: easePolyIn,
-                tweens: [{
-                    name: 'style:transform',
-                    value: () => {
-                        const i = interpolateString(
-                            'scale(1) translateY(0px)',
-                            'scale(0) translateY(0px)'
-                        )
+    onEnter: (node, isAppearing = false) => {
+        node.style.transform = isAppearing
+            ? 'scale(1.25) translateY(0px)'
+            : 'scale(1) translateY(0px)'
+    },
+    onEntering: (node, isAppearing = false) => (isAppearing
+        ? []
+        : [
+            [
+                {
+                    node,
+                    delay: 0,
+                    duration: 200,
+                    ease: easePolyIn,
+                    tweens: [{
+                        name: 'style:transform',
+                        value: () => {
+                            const i = interpolateString(
+                                'scale(1) translateY(0px)',
+                                'scale(0) translateY(0px)'
+                            )
 
-                        return (t) => { node.style.transform = i(t) }
-                    }
-                }]
-            },
-            {
-                node,
-                delay: 0,
-                duration: 300,
-                ease: easePolyOut,
-                tweens: [{
-                    name: 'style:transform',
-                    value: () => {
-                        const i = interpolateString(
-                            'scale(0) translateY(0px)',
-                            'scale(1.25) translateY(-12px)'
-                        )
+                            return (t) => { node.style.transform = i(t) }
+                        }
+                    }]
+                },
+                {
+                    node,
+                    delay: 0,
+                    duration: 300,
+                    ease: easePolyOut,
+                    tweens: [{
+                        name: 'style:transform',
+                        value: () => {
+                            const i = interpolateString(
+                                'scale(0) translateY(0px)',
+                                'scale(1.25) translateY(-12px)'
+                            )
 
-                        return (t) => { node.style.transform = i(t) }
-                    }
-                }]
-            },
-            {
-                node,
-                delay: 0,
-                duration: 2000,
-                ease: easeElasticOut,
-                tweens: [{
-                    name: 'style:transform',
-                    value: () => {
-                        const i = interpolateString(
-                            'scale(1.25) translateY(-12px)',
-                            'scale(1.25) translateY(0px)'
-                        )
+                            return (t) => { node.style.transform = i(t) }
+                        }
+                    }]
+                },
+                {
+                    node,
+                    delay: 0,
+                    duration: 2000,
+                    ease: easeElasticOut,
+                    tweens: [{
+                        name: 'style:transform',
+                        value: () => {
+                            const i = interpolateString(
+                                'scale(1.25) translateY(-12px)',
+                                'scale(1.25) translateY(0px)'
+                            )
 
-                        return (t) => { node.style.transform = i(t) }
-                    }
-                }]
-            }
+                            return (t) => { node.style.transform = i(t) }
+                        }
+                    }]
+                }
+            ]
         ]
-    ]),
+    ),
     onEntered: (node) => {
         node.style.transform = 'scale(1.25) translateY(0px)'
     },

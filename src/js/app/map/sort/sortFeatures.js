@@ -1,5 +1,5 @@
 import ORDER from '@lib/enum/order'
-import { sortObjects } from '@lib/util/array'
+import { sortObjects } from '@lib/util/collections'
 
 const sortFeatures = (
     features,

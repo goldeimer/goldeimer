@@ -27,6 +27,12 @@ import { MAP_TILER_API_KEY } from '@config/apiKeys'
 
 const MAP_STYLE_URL = `https://api.maptiler.com/maps/dc1364cc-f025-4bac-9773-a5871f2b14eb/style.json?key=${MAP_TILER_API_KEY}`
 
+const MAP_OPTIONS = {
+    customAttribution: (
+        '<a href="https://github.com/jpilkahn" target="_blank">© Alk & Flens</a>'
+    )
+}
+
 const useStyles = makeStyles(({
     borderRadius,
     palette,
@@ -65,7 +71,12 @@ const MapGl = () => {
     const [viewState, setViewState] = useState({})
 
     const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
-    const { clusters, markers } = useViewFeatures()
+    const {
+        clusters,
+        markers
+        // pointCounts
+    } = useViewFeatures()
+
     const searchResult = useSearchResult()
     const syncedViewState = useSelector(selectViewState)
     const transition = useSelector(selectTransition)
@@ -137,11 +148,7 @@ const MapGl = () => {
                 attributionControl
                 className={classes.attribution}
                 mapboxApiAccessToken=''
-                mapOptions={{
-                    customAttribution: (
-                        '<a href="https://github.com/jpilkahn" target="_blank">© Alk & Flens</a>'
-                    )
-                }}
+                mapOptions={MAP_OPTIONS}
                 mapStyle={MAP_STYLE_URL}
                 onTransitionEnd={handleTransitionEnd}
                 onTransitionStart={handleTransitionStart}

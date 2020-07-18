@@ -5,36 +5,34 @@ import { Source as SourceGl } from 'react-map-gl'
 import {
     getPrimaryTaxonomy,
     getSecondaryTaxonomy
-} from '@map/taxonomies'
+} from '@map/config/taxonomies'
 
 const GEOJSON_SOURCE_ID = 'features'
 
-const makeClusterPropertyTermCount = (
-    {
-        taxonomyId,
-        terms = []
-    },
-    taxonomyMetaName = 'primaryTaxonomy'
-) => terms.reduce((acc, term) => ({
-    ...acc,
-    [`${taxonomyMetaName}:${term.termId}`]: (
-        ['+', ['case', ['in', term.termId, ['get', `${taxonomyId}`]], 1, 0]]
-    )
-}), {})
+const inProperty = (el, key) => ['in', el, ['get', `${key}`]]
+
+const incrementIf = (condition) => ['+', ['case', condition, 1, 0]]
 
 const makeClusterProperties = (
     primaryTaxonomy = getPrimaryTaxonomy(),
     secondaryTaxonomy = getSecondaryTaxonomy()
-) => ({
-    ...makeClusterPropertyTermCount(
-        primaryTaxonomy,
-        'primaryTaxonomy'
+) => primaryTaxonomy.terms.reduce((acc, { termId }) => ({
+    ...acc,
+    [`${termId}`]: incrementIf(
+        inProperty(termId, primaryTaxonomy.taxonomyId)
     ),
-    ...makeClusterPropertyTermCount(
-        secondaryTaxonomy,
-        'secondaryTaxonomy'
-    )
-})
+    ...secondaryTaxonomy.terms.reduce((acc2, { termId: termId2 }) => ({
+        ...acc2,
+        [`${termId2}`]: incrementIf(
+            inProperty(termId2, secondaryTaxonomy.taxonomyId)
+        ),
+        [`${termId}:${termId2}`]: incrementIf(
+            ['all',
+                inProperty(termId, primaryTaxonomy.taxonomyId),
+                inProperty(termId2, secondaryTaxonomy.taxonomyId)]
+        )
+    }), {})
+}), {})
 
 const Source = forwardRef(({
     children,

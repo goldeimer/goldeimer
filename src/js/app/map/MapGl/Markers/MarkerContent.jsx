@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react'
-import PropTypes from 'prop-types'
+import React, { forwardRef, useState } from 'react'
 import clsx from 'clsx'
+import PropTypes from 'prop-types'
+
 import { makeStyles } from '@material-ui/core/styles'
 
 import { detailToFeatureContext, useDetail } from '@map/features'
@@ -10,7 +11,7 @@ import useHover from '@lib/hooks/useHover'
 import ArrowPopper from '@lib/components/modals/ArrowPopper'
 import Box from '@material-ui/core/Box'
 
-import { MarkerIcon } from '@map/icons/ui'
+import { MarkerIcon } from '@map/icons'
 
 const useStyles = makeStyles(({ zIndex }) => ({
     popperTrigger: {
@@ -24,44 +25,57 @@ const useStyles = makeStyles(({ zIndex }) => ({
 
 const MarkerContent = forwardRef(({
     component: Component,
-    renderDetailCard,
+    detailPopperComponent: DetailPopperComponent,
     id,
     ...componentProps
 }, ref) => {
+    const classes = useStyles()
+
     const {
         bind,
         currentTriggerEl,
         isHovered
     } = useHover()
 
-    const detail = useDetail(id)
-    const classes = useStyles()
+    const [isDetailEnabled, setIsDetailEnabled] = useState(true)
 
-    const shouldRenderDetail = renderDetailCard && detail
+    const staticDetail = useDetail(id)
+    const [dynamicDetail, setDynamicDetail] = useState(staticDetail)
+
+    const shouldRenderDetail = (
+        isDetailEnabled &&
+        DetailPopperComponent &&
+        dynamicDetail
+    )
+
     return (
         <>
             {shouldRenderDetail && (
                 <ArrowPopper
-                    anchorEl={ref.current || currentTriggerEl}
+                    anchorEl={currentTriggerEl}
                     className={classes.popper}
                     isOpen={isHovered}
                 >
-                    {renderDetailCard(detail)}
+                    <DetailPopperComponent
+                        {...componentProps}
+                        {...dynamicDetail}
+                    />
                 </ArrowPopper>
             )}
-            <Box
-                {...bind}
-                className={`marker-${id}`}
-            >
+            <Box {...bind}>
                 <Component
                     {...componentProps}
                     className={clsx({
-                        [classes.popperTrigger]: renderDetailCard !== null
+                        [classes.popperTrigger]: shouldRenderDetail
                     })}
                     id={id}
                     ref={ref}
+                    onDetailsReceived={setDynamicDetail}
+                    setIsDetailEnabled={setIsDetailEnabled}
                     thisContext={
-                        detail ? detailToFeatureContext(detail) : null
+                        dynamicDetail
+                            ? detailToFeatureContext(dynamicDetail)
+                            : null
                     }
                 />
             </Box>
@@ -74,13 +88,14 @@ MarkerContent.propTypes = {
     id: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
-    ]).isRequired,
-    renderDetailCard: PropTypes.func
+    ]),
+    detailPopperComponent: PropTypes.elementType
 }
 
 MarkerContent.defaultProps = {
     component: MarkerIcon,
-    renderDetailCard: null
+    detailPopperComponent: null,
+    id: null
 }
 
 export default MarkerContent

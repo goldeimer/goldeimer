@@ -22,11 +22,11 @@ import {
     FeatureBrowserIcon,
     FilterListIcon,
     MapIcon
-} from '@map/icons/ui'
+} from '@map/icons'
 
 import { selectFilter, FILTER } from '@map/filter'
 import ROUTE from '@map/routes'
-import TAXONOMIES from '@map/taxonomies'
+import TAXONOMIES from '@map/config/taxonomies'
 
 const FilterMenu = (props) => {
     const dispatch = useDispatch()

@@ -1,4 +1,4 @@
-import isString from 'typechecker'
+import { isString } from 'typechecker'
 
 const capitalize = (str) => {
     if (!isString(str)) {

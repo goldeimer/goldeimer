@@ -5,7 +5,6 @@ import React, {
     forwardRef,
     memo,
     useCallback,
-    useEffect,
     useRef
 } from 'react'
 import { useDispatch } from 'react-redux'
@@ -82,46 +81,37 @@ const useStyles = makeStyles(({ palette }) => ({
 const FeatureMarkerComponent = forwardRef(({
     color,
     contextInfo,
-    thisContext,
-    iconComponent: IconComponent
+    iconComponent: IconComponent,
+    setIsDetailEnabled,
+    thisContext
 }, ref) => {
     const transitionHandleRef = useRef()
 
     const classes = useStyles({ color })
     const dispatch = useDispatch()
 
-    const handleClick = useCallback(
-        () => {
-            if (thisContext !== null) {
-                dispatch(CONTEXT.set(thisContext))
+    const handleClick = useCallback(() => {
+        if (thisContext !== null) {
+            dispatch(CONTEXT.set(thisContext))
+
+            if (setIsDetailEnabled) {
+                setIsDetailEnabled(false)
             }
-        },
-        [thisContext, dispatch]
-    )
+        }
+    }, [
+        dispatch,
+        setIsDetailEnabled,
+        thisContext
+    ])
 
     const isCurrentContext = (
         contextInfo.id === thisContext.id &&
         contextInfo.type === thisContext.type
     )
 
-    // We don't run the full transition on mount
-    // (could be set via the `appear` prop),
-    // hence the manual call to the final callback.
-    useEffect(() => {
-        if (!transitionHandleRef.current) {
-            return
-        }
-
-        if (isCurrentContext) {
-            transitionContextMarker.onEntered(transitionHandleRef.current)
-            return
-        }
-
-        transitionContextMarker.onExited(transitionHandleRef.current)
-    }, [isCurrentContext, transitionHandleRef])
-
     return (
         <D3Transition
+            appear
             {...transitionContextMarker}
             classes={{ component: classes.component }}
             in={isCurrentContext}
@@ -170,11 +160,13 @@ FeatureMarkerComponent.propTypes = {
     color: PropTypeColor,
     contextInfo: PropTypeContextInfo.isRequired,
     iconComponent: PropTypes.elementType.isRequired,
+    setIsDetailEnabled: PropTypes.func,
     thisContext: PropTypeContext
 }
 
 FeatureMarkerComponent.defaultProps = {
     color: null,
+    setIsDetailEnabled: null,
     thisContext: null
 }
 
@@ -184,7 +176,7 @@ const FeatureMarker = (props) => (
         anchorTo={ANCHOR_TO.top}
         component={FeatureMarkerComponent}
         defaultDimensions={{ height: 32, width: 32 }}
-        renderDetailCard={(detail) => <FeatureMarkerDetailCard {...detail} />}
+        detailPopperComponent={FeatureMarkerDetailCard}
     />
 )
 

@@ -19,17 +19,19 @@ import {
     CONTEXT_TYPE,
     PropTypeContextInfo
 } from '@map/context'
-import { getColorByTaxonomyTermId } from '@map/taxonomies'
+import { getColorByTermId } from '@map/config/taxonomies'
 import VIEW from '@map/view'
 
 import Box from '@material-ui/core/Box'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 
-import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
-import DonutChart from './DonutChart'
+import DonutChart from '@lib/components/data-display/DonutChart'
 
-const DETAIL_THRESHOLD = 5
+import ClusterMarkerDetailCard
+    from '@map/MapGl/Markers/ClusterMarkerDetailCard'
+import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
+import PropTypePointCount from '@map/MapGl/Markers/PropTypePointCount'
 
 const makeScale = (domain, range) => (
     d3ScaleLog().domain(domain).range(range)
@@ -37,11 +39,17 @@ const makeScale = (domain, range) => (
 
 const useStyles = makeStyles(({ palette }) => ({
     root: {
-        borderRadius: '50%',
-        backgroundColor: palette.primary.main
+        color: palette.primary.main
     },
-    currentContext: {
-        backgroundColor: palette.primary.dark
+    background: {
+        borderRadius: '50%',
+        backgroundColor: palette.primary.main,
+        '$root:hover &': {
+            backgroundColor: palette.primary.dark
+        },
+        '&-currentContext': {
+            backgroundColor: palette.primary.dark
+        }
     },
     pointCount: {
         display: 'block',
@@ -49,7 +57,8 @@ const useStyles = makeStyles(({ palette }) => ({
         lineHeight: 1,
         marginTop: 1,
         marginLeft: 1,
-        fontSize: '0.75rem'
+        fontSize: '0.75rem',
+        fontWeight: 700
     }
 }), { name: 'ClusterMarker' })
 
@@ -60,10 +69,10 @@ const ClusterMarkerComponent = forwardRef(({
     id,
     latitude,
     longitude,
+    onDetailsReceived,
     pointCount
 }, ref) => {
-    const [featureIds, setFeatureIds] = useState([])
-    // const [features, setFeatures] = useState([])
+    const [isCurrentContext, setIsCurrentContext] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -71,16 +80,30 @@ const ClusterMarkerComponent = forwardRef(({
     const classes = useStyles({ rootPadding: strokeWidth })
     const { palette, spacing } = useTheme()
 
-    const range = [spacing(5), spacing(9)]
+    const range = [spacing(5), spacing(8.5)]
     const scale = useMemo(() => makeScale(
         domain,
         range
     ), [domain, range])
 
-    const isCurrentContext = contextInfo ? (
-        CONTEXT_TYPE.feature.is(contextInfo.type) &&
-        featureIds.includes(contextInfo.id)
-    ) : false
+    const radius = (
+        domain
+            ? Math.ceil(scale(pointCount.total))
+            : (range[1] - (range[1] - range[0]))
+    ) / 2
+
+    const donutData = Object.entries(
+        pointCount.secondary
+    ).reduce((acc, [k, v]) => {
+        if (k === 'total') {
+            return acc
+        }
+
+        return {
+            ...acc,
+            [k]: v.total
+        }
+    }, {})
 
     const handleClick = useCallback(
         () => {
@@ -108,12 +131,6 @@ const ClusterMarkerComponent = forwardRef(({
         [dispatch, getSource, id, latitude, longitude]
     )
 
-    const circumference = domain
-        ? Math.ceil(scale(pointCount.total))
-        : (range[1] - (range[1] - range[0]))
-
-    const radius = circumference / 2
-
     useEffect(() => {
         const source = getSource()
         if (source) {
@@ -126,57 +143,80 @@ const ClusterMarkerComponent = forwardRef(({
                         return
                     }
 
-                    setFeatureIds(
-                        leaves.map(
-                            ({ properties: { id: _id } }) => _id
+                    if (
+                        contextInfo &&
+                        CONTEXT_TYPE.feature.is(contextInfo.type)
+                    ) {
+                        setIsCurrentContext(
+                            leaves.findIndex(
+                                ({ properties: { id: _id } }) => (
+                                    _id === contextInfo.id
+                                )
+                            ) !== -1
                         )
-                    )
+                    }
 
-                    // if (pointCount.total < DETAIL_THRESHOLD) {
-                    //     setFeatures(leaves)
-                    // }
+                    if (onDetailsReceived) {
+                        onDetailsReceived(leaves)
+                    }
                 }
             )
         }
-    }, [getSource, pointCount.total, id])
+    }, [
+        contextInfo,
+        getSource,
+        onDetailsReceived,
+        pointCount.total,
+        id
+    ])
+
+    const spacingFactor = 0.25
 
     return (
         <ButtonBase
             centerRipple
-            className={clsx(
-                classes.root,
-                { [classes.currentContext]: isCurrentContext }
-            )}
+            className={classes.root}
             onClick={handleClick}
             ref={ref}
         >
             <Box position='relative'>
-                <DonutChart
-                    colorName={isCurrentContext ? 'dark' : 'main'}
-                    data={pointCount.secondaryTaxonomy}
-                    keyToColor={getColorByTaxonomyTermId}
-                    radius={radius}
-                    strokeColor={palette.background.paper}
-                    strokeWidth={strokeWidth}
-                />
                 <Box
-                    display='flex'
                     position='absolute'
                     top={0}
                     left={0}
                     width={1}
                     height={1}
-                    alignItems='center'
-                    justifyContent='center'
+                    p={spacingFactor}
                 >
-                    <Typography
-                        className={classes.pointCount}
-                        component='span'
-                        variant='subtitle2'
+                    <Box
+                        className={clsx(
+                            classes.background,
+                            { [`${classes.background}-currentContext`]: isCurrentContext }
+                        )}
+                        width={1}
+                        height={1}
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='center'
                     >
-                        {pointCount.total}
-                    </Typography>
+                        <Typography
+                            className={classes.pointCount}
+                            component='span'
+                            variant='subtitle2'
+                        >
+                            {pointCount.total}
+                        </Typography>
+                    </Box>
                 </Box>
+                <DonutChart
+                    colorName={isCurrentContext ? 'dark' : 'main'}
+                    data={donutData}
+                    keyToColor={getColorByTermId}
+                    padding={spacingFactor}
+                    radius={radius}
+                    strokeColor={palette.background.paper}
+                    strokeWidth={strokeWidth}
+                />
             </Box>
         </ButtonBase>
     )
@@ -189,16 +229,14 @@ ClusterMarkerComponent.propTypes = {
     id: PropTypes.number.isRequired,
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
-    pointCount: PropTypes.shape({
-        total: PropTypes.number,
-        primaryTaxonomy: PropTypes.objectOf(PropTypes.number),
-        secondaryTaxonomy: PropTypes.objectOf(PropTypes.number)
-    }).isRequired
+    onDetailsReceived: PropTypes.func,
+    pointCount: PropTypePointCount.isRequired
 }
 
 ClusterMarkerComponent.defaultProps = {
     contextInfo: null,
-    domain: null
+    domain: null,
+    onDetailsReceived: null
 }
 
 const ClusterMarker = (props) => (
@@ -207,8 +245,7 @@ const ClusterMarker = (props) => (
         anchorTo={ANCHOR_TO.center}
         component={ClusterMarkerComponent}
         defaultDimensions={{ height: 48, width: 48 }}
-        // renderDetailCard={(detail) =>
-        // <FeatureMarkerDetailCard {...detail} />}
+        detailPopperComponent={ClusterMarkerDetailCard}
     />
 )
 

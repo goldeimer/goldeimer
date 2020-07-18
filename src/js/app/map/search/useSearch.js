@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 
-import { sortObjects, SORT_ORDER } from '@lib/util/array'
+import { sortObjects, SORT_ORDER } from '@lib/util/collections'
 import { identity, yes } from '@lib/util/noop'
 
 import { FEATURE_FORMAT, useFeatures } from '@map/features'

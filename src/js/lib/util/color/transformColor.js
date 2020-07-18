@@ -39,7 +39,7 @@ const rgbCssToRgbValues = (val) => {
         /^\s*?rgba?\(\s*?(\d{1,3})\s*?,\s*?(\d{1,3})\s*?,\s*?(\d{1,3})/u
     )
 
-    if (match.length === 4) {
+    if (match && match.length === 4) {
         if (
             isInRgbRange(match[1]) &&
             isInRgbRange(match[2]) &&

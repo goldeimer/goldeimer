@@ -2,7 +2,7 @@ import { compose } from 'redux'
 import { createCachedSelector, FifoMapCache } from 're-reselect'
 import stringify from 'json-stringify-deterministic'
 
-import { sortObjects } from '@lib/util/array'
+import { sortObjects } from '@lib/util/collections'
 
 import { distanceByHaversine } from '@map/util'
 import { filterFeatures, selectFilter } from '@map/filter'

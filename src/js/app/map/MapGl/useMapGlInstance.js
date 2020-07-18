@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
 import noop from '@lib/util/noop'
-import uniqueByKey from '@lib/util/array/uniqueByKey'
+import uniqueByKey from '@lib/util/collections/uniqueByKey'
 import useCallback from '@lib/hooks/useCallback'
 import useDebounce from '@lib/hooks/useDebounce'
 

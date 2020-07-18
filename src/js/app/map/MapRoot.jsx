@@ -9,7 +9,7 @@ import ContextDrawer from '@map/context/ContextDrawer'
 import FeatureBrowser from '@map/features/FeatureBrowser'
 import FilterMenu from '@map/filter/FilterMenu'
 import SearchContainer from '@map/search/SearchContainer'
-import { FeatureBrowserIcon } from '@map/icons/ui'
+import { FeatureBrowserIcon } from '@map/icons'
 import ZoomControl from '@map/view/ZoomControl'
 
 import FEATURES from '@map/features'

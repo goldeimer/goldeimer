@@ -16,15 +16,16 @@ import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
+import { CONTEXT_TYPE } from '@map/context'
+import { getSecondaryTaxonomy } from '@map/config/taxonomies'
+
 import CopyTextList from '@lib/components/clipboard/CopyTextList'
 import CopyTextListItem from '@lib/components/clipboard/CopyTextListItem'
 import CopyTextListItemSecondaryAction
     from '@lib/components/clipboard/CopyTextListItemSecondaryAction'
 
-import { CONTEXT_TYPE } from '@map/context'
+import { MarkerOutlinedIcon } from '@map/icons'
 import { PropTypeColor } from '@map/features'
-import { MarkerOutlinedIcon } from '@map/icons/ui'
-import { getSecondaryTaxonomy } from '@map/taxonomies'
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     avatar: ({ color }) => {
@@ -105,8 +106,8 @@ const ContextSection = ({
         iconComponent: IconComponent,
         phoneNumber,
         postCode,
-        primaryTaxonomyTermName,
-        secondaryTaxonomyTerms,
+        primaryTermName,
+        secondaryTerms,
         street,
         url
     } = context
@@ -126,7 +127,7 @@ const ContextSection = ({
                         component='h4'
                         variant='subtitle2'
                     >
-                        {primaryTaxonomyTermName}
+                        {primaryTermName}
                     </Typography>
                 </>
             )
@@ -155,8 +156,8 @@ const ContextSection = ({
                 </Box>
                 {secondaryTaxonomy.terms.map((term) => ({
                     ...term,
-                    isEnabledForContext: secondaryTaxonomyTerms
-                        ? secondaryTaxonomyTerms.findIndex((secondaryTerm) => (
+                    isEnabledForContext: secondaryTerms
+                        ? secondaryTerms.findIndex((secondaryTerm) => (
                             secondaryTerm.termId === term.termId
                         )) !== -1
                         : false
@@ -311,7 +312,7 @@ const ContextSection = ({
             >
                 {IconComponent && (
                     <Avatar
-                        aria-label={primaryTaxonomyTermName}
+                        aria-label={primaryTermName}
                         className={classes.avatar}
                     >
                         <IconComponent />
@@ -349,8 +350,8 @@ ContextSection.propTypes = {
         iconComponent: PropTypes.elementType,
         phoneNumber: PropTypes.string,
         postCode: PropTypes.string,
-        primaryTaxonomyTermName: PropTypes.string,
-        secondaryTaxonomyTerms: PropTypes.arrayOf(
+        primaryTermName: PropTypes.string,
+        secondaryTerms: PropTypes.arrayOf(
             PropTypes.shape({
                 termId: PropTypes.string,
                 termName: PropTypes.string

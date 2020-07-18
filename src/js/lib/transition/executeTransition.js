@@ -1,7 +1,7 @@
 import { select as d3Select } from 'd3-selection'
 import 'd3-transition'
 
-import { ensureArray } from '@lib/util/array'
+import { ensureArray } from '@lib/util/collections'
 import { generateShortId } from '@lib/util/generateId'
 
 import { DEFAULT_DURATION } from '@lib/transition/config'
