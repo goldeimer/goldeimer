@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useSnackbar } from 'notistack'
 
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
@@ -19,15 +20,20 @@ const useStyles = makeStyles(() => ({
 }))
 
 const CopyTextList = ({ renderItems }) => {
-    const { copyText, textareaRef } = useClipboard()
-
     const classes = useStyles()
+
+    const { copyText, textareaRef } = useClipboard()
+    const { enqueueSnackbar } = useSnackbar()
 
     const handleCopy = async (text) => {
         try {
             await copyText(text)
+            enqueueSnackbar('Kopiert!')
         } catch (_) {
-            // TODO: Handle.
+            enqueueSnackbar(
+                'Fehler beim Kopieren...',
+                { variant: 'error' }
+            )
         }
     }
 

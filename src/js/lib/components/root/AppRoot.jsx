@@ -6,6 +6,7 @@
 /// - `ComponentRoot` (business logic & presentation entry)
 
 import React, { memo } from 'react'
+import { SnackbarProvider } from 'notistack'
 
 import StateRoot from '@lib/components/root/StateRoot'
 import ThemeRoot from '@lib/components/root/ThemeRoot'
@@ -18,7 +19,15 @@ const MemoizedThemeRoot = memo(ThemeRoot)
 const AppRoot = ({ children, persistor, store, ...themeProps }) => (
     <StateRoot persistor={persistor} store={store}>
         <MemoizedThemeRoot {...themeProps}>
-            {children}
+            <SnackbarProvider
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center'
+                }}
+                maxSnack={3}
+            >
+                {children}
+            </SnackbarProvider>
         </MemoizedThemeRoot>
     </StateRoot>
 )

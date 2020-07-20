@@ -1,8 +1,9 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useRef, useState } from 'react'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
+import { useForkRef } from '@material-ui/core/utils'
 
 import useCallback from '@lib/hooks/useCallback'
 import useHover from '@lib/hooks/useHover'
@@ -35,6 +36,9 @@ const MarkerContent = forwardRef(({
 }, ref) => {
     const classes = useStyles()
 
+    const nodeRef = useRef()
+    const handleRef = useForkRef(ref, nodeRef)
+
     const {
         bind,
         currentTriggerEl,
@@ -62,7 +66,11 @@ const MarkerContent = forwardRef(({
         <>
             {shouldRenderDetail && (
                 <ArrowPopper
-                    anchorEl={currentTriggerEl}
+                    anchorEl={
+                        nodeRef.current
+                            ? nodeRef.current
+                            : currentTriggerEl
+                    }
                     className={classes.popper}
                     isOpen={isHovered}
                 >
@@ -79,7 +87,7 @@ const MarkerContent = forwardRef(({
                         [classes.popperTrigger]: shouldRenderDetail
                     })}
                     id={id}
-                    ref={ref}
+                    ref={handleRef}
                     onDetailsReceived={handleDetailsReceived}
                     setIsDetailEnabled={setIsDetailEnabled}
                     thisContext={

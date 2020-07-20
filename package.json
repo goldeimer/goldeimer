@@ -96,6 +96,7 @@
         "json-stringify-deterministic": "^1.0.1",
         "localforage": "^1.7.4",
         "nanoid-generate": "^1.0.0",
+        "notistack": "^0.9.17",
         "papaparse": "^5.2.0",
         "prop-types": "^15.7.2",
         "re-reselect": "^4.0.0",

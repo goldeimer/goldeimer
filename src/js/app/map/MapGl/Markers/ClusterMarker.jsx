@@ -141,22 +141,22 @@ const ClusterMarkerComponent = forwardRef(({
                 ]
             }
 
-            if (clusterExpansionZoom) {
-                actions.push(
-                    VIEW.transition.linearTransitionTo({
-                        latitude,
-                        longitude,
-                        zoom: clusterExpansionZoom
-                    })
-                )
-            }
+            // if (clusterExpansionZoom) {
+            //     actions.push(
+            //         VIEW.transition.flyTo({
+            //             latitude,
+            //             longitude,
+            //             zoom: clusterExpansionZoom
+            //         })
+            //     )
+            // }
 
             if (actions) {
                 dispatch(actions)
             }
         }, [
             clusterChildren,
-            clusterExpansionZoom,
+            // clusterExpansionZoom,
             dispatch,
             id,
             latitude,
@@ -242,61 +242,61 @@ const ClusterMarkerComponent = forwardRef(({
     }
 
     return (
-        <FeatureMarkerTransition
-            appear
-            in
-            onEnter={handleEnter}
-            onEntered={handleEntered}
-            parentClusterOrigin={parentClusterOrigin}
-            unmountOnExit
+        // <FeatureMarkerTransition
+        //     appear
+        //     in
+        //     onEnter={handleEnter}
+        //     onEntered={handleEntered}
+        //     parentClusterOrigin={parentClusterOrigin}
+        //     unmountOnExit
+        // >
+        <ButtonBase
+            centerRipple
+            className={classes.root}
+            onClick={handleClick}
+            ref={handleRef}
         >
-            <ButtonBase
-                centerRipple
-                className={classes.root}
-                onClick={handleClick}
-                ref={handleRef}
-            >
-                <Box position='relative'>
+            <Box position='relative'>
+                <Box
+                    position='absolute'
+                    top={0}
+                    left={0}
+                    width={1}
+                    height={1}
+                    p={spacingFactor}
+                >
                     <Box
-                        position='absolute'
-                        top={0}
-                        left={0}
+                        className={clsx(
+                            classes.background,
+                            { [`${classes.background}-currentContext`]: isCurrentContext }
+                        )}
                         width={1}
                         height={1}
-                        p={spacingFactor}
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='center'
                     >
-                        <Box
-                            className={clsx(
-                                classes.background,
-                                { [`${classes.background}-currentContext`]: isCurrentContext }
-                            )}
-                            width={1}
-                            height={1}
-                            display='flex'
-                            alignItems='center'
-                            justifyContent='center'
+                        <Typography
+                            className={classes.pointCount}
+                            component='span'
+                            variant='subtitle2'
                         >
-                            <Typography
-                                className={classes.pointCount}
-                                component='span'
-                                variant='subtitle2'
-                            >
-                                {pointCount.total}
-                            </Typography>
-                        </Box>
+                            {pointCount.total}
+                        </Typography>
                     </Box>
-                    <DonutChart
-                        colorName={isCurrentContext ? 'dark' : 'main'}
-                        data={donutData}
-                        keyToColor={getColorByTermId}
-                        padding={spacingFactor}
-                        radius={radius}
-                        strokeColor={palette.background.paper}
-                        strokeWidth={strokeWidth}
-                    />
                 </Box>
-            </ButtonBase>
-        </FeatureMarkerTransition>
+                <DonutChart
+                    colorName={isCurrentContext ? 'dark' : 'main'}
+                    data={donutData}
+                    keyToColor={getColorByTermId}
+                    padding={spacingFactor}
+                    radius={radius}
+                    strokeColor={palette.background.paper}
+                    strokeWidth={strokeWidth}
+                />
+            </Box>
+        </ButtonBase>
+        // </FeatureMarkerTransition>
     )
 })
 

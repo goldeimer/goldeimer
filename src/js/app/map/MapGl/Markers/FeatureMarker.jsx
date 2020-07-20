@@ -64,7 +64,7 @@ const useStyles = makeStyles(({ palette }) => ({
     transitionComponent: {
         transformOrigin: 'bottom center',
         transform: 'scale(1) translateY(0)',
-        '&-entered': {
+        '&-entering': {
             transform: 'scale(1.25) translateY(0)'
         }
     },
@@ -127,62 +127,62 @@ const FeatureMarkerComponent = forwardRef(({
     }
 
     return (
-        <FeatureMarkerTransition
+        // <FeatureMarkerTransition
+        //     appear
+        //     in
+        //     onEnter={handleEnter}
+        //     parentClusterOrigin={parentClusterOrigin}
+        // >
+        //     {/* TODO:
+        //       * Convert the `transitionContextMarker` props object
+        //       * into a component (i.e. a parent of `D3Transition`).
+        //       */}
+        <D3Transition
             appear
-            in
+            {...transitionContextMarker}
+            classes={{ component: classes.transitionComponent }}
+            in={isCurrentContext}
             onEnter={handleEnter}
-            parentClusterOrigin={parentClusterOrigin}
+            onEntered={handleEntered}
+            ref={transitionHandleRef}
         >
-            {/* TODO:
-              * Convert the `transitionContextMarker` props object
-              * into a component (i.e. a parent of `D3Transition`).
-              */}
-            <D3Transition
-                appear
-                {...transitionContextMarker}
-                classes={{ component: classes.transitionComponent }}
-                in={isCurrentContext}
-                onEnter={handleEnter}
-                onEntered={handleEntered}
-                ref={transitionHandleRef}
+            <ButtonBase
+                centerRipple
+                className={classes.root}
+                disabled={isCurrentContext}
+                onClick={handleClick}
+                ref={ref}
             >
-                <ButtonBase
-                    centerRipple
-                    className={classes.root}
-                    disabled={isCurrentContext}
-                    onClick={handleClick}
-                    ref={ref}
+                <Box
+                    fontSize='2rem'
+                    position='relative'
+                    display='flex'
+                    flexShrink={1}
                 >
+                    <MarkerBackgroundIcon
+                        className={clsx(
+                            classes.background,
+                            { [classes.currentContext]: isCurrentContext }
+                        )}
+                        fontSize='inherit'
+                    />
                     <Box
-                        fontSize='2rem'
-                        position='relative'
+                        position='absolute'
+                        fontSize='50%'
+                        top={4}
+                        left={8}
                         display='flex'
                         flexShrink={1}
                     >
-                        <MarkerBackgroundIcon
-                            className={clsx(
-                                classes.background,
-                                { [classes.currentContext]: isCurrentContext }
-                            )}
+                        <IconComponent
+                            className={classes.icon}
                             fontSize='inherit'
                         />
-                        <Box
-                            position='absolute'
-                            fontSize='50%'
-                            top={4}
-                            left={8}
-                            display='flex'
-                            flexShrink={1}
-                        >
-                            <IconComponent
-                                className={classes.icon}
-                                fontSize='inherit'
-                            />
-                        </Box>
                     </Box>
-                </ButtonBase>
-            </D3Transition>
-        </FeatureMarkerTransition>
+                </Box>
+            </ButtonBase>
+        </D3Transition>
+        // </FeatureMarkerTransition>
     )
 })
 
