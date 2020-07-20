@@ -87,6 +87,13 @@ const makeTheme = (
                     fontSize: '1.125rem'
                 }
             }
+        },
+        MuiCssBaseline: {
+            '@global': {
+                '.simplebar-scrollbar::before': {
+                    backgroundColor: colorPrimary.dark
+                }
+            }
         }
     }
 })

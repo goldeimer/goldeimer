@@ -1,4 +1,7 @@
-export { default as distanceByHaversine } from '@map/util/distance'
+export {
+    distanceByHaversine,
+    formatDistance
+} from '@map/util/distance'
 
 export {
     coordinatesToLatLon,

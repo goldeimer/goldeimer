@@ -18,7 +18,31 @@ const distanceByHaversine = (
         Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
     )
 
-    return earthRadius * (2 * Math.atan2(Math.sqrt(tmp), Math.sqrt(1 - tmp)))
+    return earthRadius * (
+        2 * Math.atan2(
+            Math.sqrt(tmp), Math.sqrt(1 - tmp)
+        )
+    )
 }
 
-export default distanceByHaversine
+const formatDistance = (distanceInMeters) => {
+    const shouldReturnKilometers = distanceInMeters >= 1000
+
+    const distance = shouldReturnKilometers
+        ? distanceInMeters / 1000
+        : distanceInMeters
+
+    const fixed = distance.toFixed(
+        shouldReturnKilometers ? 1 : 0
+    ).replace(
+        /\.?0+$/,
+        ''
+    )
+
+    return `${fixed} ${shouldReturnKilometers ? 'km' : 'm'}`
+}
+
+export {
+    distanceByHaversine,
+    formatDistance
+}

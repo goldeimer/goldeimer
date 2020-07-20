@@ -16,13 +16,13 @@ import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
+import { concatenateAddress } from '@lib/util'
+
 import { CONTEXT_TYPE } from '@map/context'
 import { getSecondaryTaxonomy } from '@map/config/taxonomies'
 
 import CopyTextList from '@lib/components/clipboard/CopyTextList'
 import CopyTextListItem from '@lib/components/clipboard/CopyTextListItem'
-import CopyTextListItemSecondaryAction
-    from '@lib/components/clipboard/CopyTextListItemSecondaryAction'
 
 import { MarkerOutlinedIcon } from '@map/icons'
 import { PropTypeColor } from '@map/features'
@@ -49,35 +49,10 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     enabledIcon: {
         color: palette.success.main
     },
-    headerSpacer: ({ color }) => ({
-        // height of `AutoCompleteSearchBox` + margins
-        minHeight: spacing(8),
-        backgroundColor: color.light || palette.primary.light
-    }),
     link: {
         '&:hover .MuiTypography-root': {
             textDecoration: 'underline'
         }
-    },
-    listItemText: {
-        marginRight: spacing(7),
-        '& .MuiTypography-root': {
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden'
-        }
-    },
-    secondaryAction2: {
-        //   2 by default (i.e. value for the first button)
-        // + 1 for "margin"
-        // + 3 to shift by an icon's with
-        right: spacing(6)
-    },
-    textarea: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        visibility: 'hidden'
     },
     textSecondary: {
         color: palette.text.secondary
@@ -217,94 +192,50 @@ const ContextSection = ({
         </>
     )
 
-    const address = {
-        icon: <MarkerOutlinedIcon color='primary' />,
-        label: 'Adresse kopieren',
-        value: [street, `${postCode} ${city}`.trim()].filter(
-            (part) => Boolean(part)
-        ).join(', ')
-    }
-
     const phoneCallLabel = 'Telefonnummer anrufen'
     const handlePhoneCall = () => {
         window.location.href = `tel:${phoneNumber}`
     }
-    const phone = {
-        handleClick: handlePhoneCall,
-        icon: <CallIcon color='primary' />,
-        label: phoneCallLabel,
-        renderSecondaryActions: () => (
-            <CopyTextListItemSecondaryAction
-                className={classes.secondaryAction2}
-                iconComponent={CallIcon}
-                label={phoneCallLabel}
-                onClick={handlePhoneCall}
-            />
-        ),
-        value: phoneNumber
-    }
 
     const websiteLabel = 'Webseite öffnen'
     const handleWebsiteOpen = () => { window.open(url, '_blank') }
-    const website = {
+
+    const copyInfoListItems = [{
+        iconComponent: MarkerOutlinedIcon,
+        label: 'Adresse kopieren',
+        primaryText: concatenateAddress({ city, postCode, street })
+    }, {
+        iconComponent: CallIcon,
+        label: phoneCallLabel,
+        onClick: handlePhoneCall,
+        primaryText: phoneNumber,
+        secondaryActions: [{
+            iconComponent: CallIcon,
+            label: phoneCallLabel,
+            onClick: handlePhoneCall
+        }]
+    }, {
         className: classes.link,
-        handleClick: handleWebsiteOpen,
-        icon: <PublicOutlinedIcon color='primary' />,
+        iconComponent: PublicOutlinedIcon,
         label: websiteLabel,
-        renderSecondaryActions: () => (
-            <CopyTextListItemSecondaryAction
-                className={classes.secondaryAction2}
-                iconComponent={LaunchIcon}
-                label={websiteLabel}
-                onClick={handleWebsiteOpen}
-            />
-        ),
-        text: decodeURIComponent(url).replace(
+        onClick: handleWebsiteOpen,
+        primaryText: decodeURIComponent(url).replace(
             /^https?:\/\/(www\.)?/,
             ''
         ).replace(
             /\/$/,
             ''
         ),
+        secondaryActions: [{
+            iconComponent: LaunchIcon,
+            label: websiteLabel,
+            onClick: handleWebsiteOpen
+        }],
         value: url
-    }
-
-    const renderCopyTextListItems = (handleCopy) => (
-        <>
-            {[
-                // order is deliberate, as shown to the user
-                address,
-                website,
-                phone
-            ].filter((item) => Boolean(item.value)).map(({
-                className = '',
-                handleClick = null,
-                icon,
-                label,
-                renderSecondaryActions = null,
-                text,
-                value
-            }) => (
-                <CopyTextListItem
-                    className={className}
-                    handleClick={handleClick}
-                    handleCopy={handleCopy}
-                    icon={icon}
-                    key={value}
-                    label={label}
-                    renderSecondaryActions={renderSecondaryActions}
-                    text={text || value}
-                    textClassName={classes.listItemText}
-                    value={value}
-                />
-            ))}
-        </>
-    )
+    }]
 
     return (
         <>
-            <div className={classes.headerSpacer} />
-            <Divider />
             <Box
                 alignItems='center'
                 display='flex'
@@ -335,9 +266,14 @@ const ContextSection = ({
             {CONTEXT_TYPE.feature.is(type) && renderSecondaryTaxonomySection()}
             <Divider />
             <Box py={2}>
-                <CopyTextList
-                    renderItems={renderCopyTextListItems}
-                />
+                <CopyTextList>
+                    {copyInfoListItems.map((itemProps) => (
+                        <CopyTextListItem
+                            key={itemProps.label}
+                            {...itemProps}
+                        />
+                    ))}
+                </CopyTextList>
             </Box>
         </>
     )

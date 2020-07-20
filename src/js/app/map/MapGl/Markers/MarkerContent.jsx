@@ -31,6 +31,7 @@ const useStyles = makeStyles(({ zIndex }) => ({
 const MarkerContent = forwardRef(({
     component: Component,
     detailPopperComponent: DetailPopperComponent,
+    highlightId,
     id,
     ...componentProps
 }, ref) => {
@@ -86,6 +87,7 @@ const MarkerContent = forwardRef(({
                     className={clsx({
                         [classes.popperTrigger]: shouldRenderDetail
                     })}
+                    highlightId={highlightId}
                     id={id}
                     ref={handleRef}
                     onDetailsReceived={handleDetailsReceived}
@@ -103,6 +105,7 @@ const MarkerContent = forwardRef(({
 
 MarkerContent.propTypes = {
     component: PropTypes.elementType,
+    highlightId: PropTypes.string,
     id: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
@@ -113,6 +116,7 @@ MarkerContent.propTypes = {
 MarkerContent.defaultProps = {
     component: MarkerIcon,
     detailPopperComponent: null,
+    highlightId: null,
     id: null
 }
 

@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { cloneElement, Children } from 'react'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 
 import { makeStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
 
 import useClipboard from '@lib/hooks/useClipboard'
 
+import StandardList from '@lib/components/StandardList'
+
 const useStyles = makeStyles(() => ({
-    list: {
-        padding: 0
-    },
     textarea: {
         position: 'fixed',
         top: 0,
@@ -19,17 +17,17 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-const CopyTextList = ({ renderItems }) => {
+const CopyTextList = ({ children }) => {
     const classes = useStyles()
 
     const { copyText, textareaRef } = useClipboard()
     const { enqueueSnackbar } = useSnackbar()
 
-    const handleCopy = async (text) => {
+    const handleCopy = async (_, text) => {
         try {
             await copyText(text)
             enqueueSnackbar('Kopiert!')
-        } catch (_) {
+        } catch (__) {
             enqueueSnackbar(
                 'Fehler beim Kopieren...',
                 { variant: 'error' }
@@ -40,19 +38,21 @@ const CopyTextList = ({ renderItems }) => {
     return (
         <>
             <textarea className={classes.textarea} ref={textareaRef} />
-            <List dense className={classes.list}>
-                {renderItems && renderItems(handleCopy)}
-            </List>
+            <StandardList>
+                {Children.map(children, (child) => (
+                    cloneElement(child, { onCopy: handleCopy })
+                ))}
+            </StandardList>
         </>
     )
 }
 
 CopyTextList.propTypes = {
-    renderItems: PropTypes.func
+    children: PropTypes.node
 }
 
 CopyTextList.defaultProps = {
-    renderItems: null
+    children: null
 }
 
 export default CopyTextList

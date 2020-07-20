@@ -55,6 +55,9 @@ const useStyles = makeStyles(({ palette }) => ({
         },
         '&-currentContext': {
             backgroundColor: palette.primary.dark
+        },
+        '&-currentHighlight': {
+            backgroundColor: palette.primary.light
         }
     },
     pointCount: {
@@ -72,6 +75,7 @@ const ClusterMarkerComponent = forwardRef(({
     contextInfo,
     domain,
     getSource,
+    highlightId,
     id,
     latitude,
     longitude,
@@ -118,6 +122,8 @@ const ClusterMarkerComponent = forwardRef(({
             [k]: v.total
         }
     }, {})
+
+    const isCurrentHightlight = highlightId === id
 
     const handleClick = useCallback(
         () => {
@@ -268,7 +274,10 @@ const ClusterMarkerComponent = forwardRef(({
                     <Box
                         className={clsx(
                             classes.background,
-                            { [`${classes.background}-currentContext`]: isCurrentContext }
+                            {
+                                [`${classes.background}-currentContext`]: isCurrentContext,
+                                [`${classes.background}-currentHighlight`]: isCurrentHightlight
+                            }
                         )}
                         width={1}
                         height={1}
@@ -304,6 +313,7 @@ ClusterMarkerComponent.propTypes = {
     contextInfo: PropTypeContextInfo,
     domain: PropTypes.arrayOf(PropTypes.number),
     getSource: PropTypes.func.isRequired,
+    highlightId: PropTypes.string,
     id: PropTypes.number.isRequired,
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
@@ -316,6 +326,7 @@ ClusterMarkerComponent.propTypes = {
 ClusterMarkerComponent.defaultProps = {
     contextInfo: null,
     domain: null,
+    highlightId: null,
     onDetailsReceived: null,
     parentClusterOrigin: null,
     setIsDetailEnabled: null

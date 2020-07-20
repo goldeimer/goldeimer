@@ -25,18 +25,17 @@ const useStyles = makeStyles(({
 const FeatureIcon = ({
     className: classNameProp,
     color,
-    fontSize,
-    iconComponent: IconComponent
+    component: Component,
+    fontSize
 }) => {
     const classes = useStyles({ color })
 
     return (
-        <IconComponent
+        <Component
             className={clsx(
                 classes.root,
                 classNameProp
             )}
-            color={color}
             fontSize={fontSize}
         />
     )
@@ -45,15 +44,14 @@ const FeatureIcon = ({
 FeatureIcon.propTypes = {
     className: PropTypes.string,
     color: PropTypeColor,
-    fontSize: PropTypes.string,
-    iconComponent: PropTypes.elementType
+    component: PropTypes.elementType.isRequired,
+    fontSize: PropTypes.string
 }
 
 FeatureIcon.defaultProps = {
-    className: null,
+    className: '',
     color: null,
-    fontSize: 'default',
-    iconComponent: null
+    fontSize: 'default'
 }
 
 export default memo(FeatureIcon)

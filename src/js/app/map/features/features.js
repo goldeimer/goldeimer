@@ -25,7 +25,7 @@ export {
     getFeaturesById,
     getSearchableSourceFeatures,
     getSourceFeatureLookup,
-    getSourceFeaturesByProximity,
+    getSourceFeatureGeometriesByProximity,
     selectViewFeatures
 } from '@map/features/selectFeatures'
 
@@ -44,5 +44,6 @@ export {
     useDetail,
     useFeature,
     useFeatures,
+    useSourceFeaturesByProximity,
     useViewFeatures
 } from '@map/features/useFeatures'

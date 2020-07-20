@@ -1,78 +1,59 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import Tooltip from '@material-ui/core/Tooltip'
-
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 
-import CopyTextListItemSecondaryAction
-    from '@lib/components/clipboard/CopyTextListItemSecondaryAction'
+import StandardListItem from '@lib/components/StandardList/StandardListItem'
 
 const CopyTextListItem = ({
-    className,
-    handleClick,
-    handleCopy: handleCopyImpl,
-    icon,
-    label,
-    renderSecondaryActions,
-    text,
-    textClassName,
-    value
+    onClick,
+    onCopy,
+    primaryText,
+    secondaryActions,
+    value,
+    ...standardListProps
 }) => {
     const copyLabel = 'Kopieren'
-    const handleCopy = () => handleCopyImpl(value)
+
+    const copyValue = value || primaryText
+
+    if (!copyValue) {
+        return null
+    }
+
+    const actions = (secondaryActions || []).concat([{
+        iconComponent: FileCopyOutlinedIcon,
+        label: copyLabel,
+        onClick: onCopy,
+        value: copyValue
+    }])
 
     return (
-        <ListItem
-            button
-            className={className}
-            onClick={handleClick || handleCopy}
-            role='listitem'
-        >
-            <ListItemIcon className='tighter'>
-                {icon}
-            </ListItemIcon>
-            <Tooltip
-                arrow
-                enterDelay={300}
-                enterNextDelay={500}
-                placement='bottom'
-                title={label || copyLabel}
-            >
-                <ListItemText className={textClassName} primary={text} />
-            </Tooltip>
-            {renderSecondaryActions && renderSecondaryActions()}
-            <CopyTextListItemSecondaryAction
-                iconComponent={FileCopyOutlinedIcon}
-                label={copyLabel}
-                onClick={handleCopy}
-            />
-        </ListItem>
+        <StandardListItem
+            {...standardListProps}
+            primaryText={primaryText}
+            secondaryIconActions={actions}
+            onClick={onClick || onCopy}
+        />
     )
 }
 
 CopyTextListItem.propTypes = {
-    className: PropTypes.string,
-    icon: PropTypes.node.isRequired,
-    handleClick: PropTypes.func,
-    handleCopy: PropTypes.func.isRequired,
-    label: PropTypes.string,
-    renderSecondaryActions: PropTypes.func,
-    text: PropTypes.string,
-    textClassName: PropTypes.string,
-    value: PropTypes.string.isRequired
+    onClick: PropTypes.func,
+    onCopy: PropTypes.func,
+    primaryText: PropTypes.string,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ]),
+    ...StandardListItem.propTypes
 }
 
 CopyTextListItem.defaultProps = {
-    className: null,
-    handleClick: null,
-    label: null,
-    renderSecondaryActions: null,
-    text: null,
-    textClassName: null
+    onClick: null,
+    onCopy: null,
+    primaryText: null,
+    value: null
 }
 
 export default CopyTextListItem

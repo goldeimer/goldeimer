@@ -45,8 +45,8 @@ const makeFlyToTransition = () => makeTransition(
     })
 )
 
-const makeLinearTransition = (delta = 1) => makeTransition(
-    500 + 100 * (sanitizeWithinRange(Math.abs(delta), 1, 20) - 1),
+const makeLinearTransition = ({ duration = 500 }) => makeTransition(
+    duration,
     easePolyOneHalf,
     new LinearInterpolator()
 )
@@ -60,7 +60,17 @@ const makeZoomTransition = (delta = 1) => makeTransition(
 const transition = {
     initialState: { id: null },
     reducers: {
-        flyTo: (state, { payload: { id, latitude, longitude, zoom } }) => {
+        flyTo: (
+            state,
+            {
+                payload: {
+                    id,
+                    latitude,
+                    longitude,
+                    zoom
+                }
+            }
+        ) => {
             if (!areValidCoordinates({ latitude, longitude })) {
                 return state
             }
@@ -69,7 +79,7 @@ const transition = {
                 id,
                 latitude,
                 longitude,
-                zoom: sanitizeZoom(zoom),
+                zoom: zoom ? sanitizeZoom(zoom) : state.zoom,
                 ...makeFlyToTransition()
             }
         },
@@ -85,9 +95,17 @@ const transition = {
                 transitionDuration: 0
             }
         },
-        linearTransitionTo: (
+        linearTo: (
             state,
-            { payload: { id, latitude, longitude, zoom } }
+            {
+                payload: {
+                    duration = 500,
+                    id,
+                    latitude,
+                    longitude,
+                    zoom = null
+                }
+            }
         ) => {
             if (!areValidCoordinates({ latitude, longitude })) {
                 return state
@@ -97,8 +115,8 @@ const transition = {
                 id,
                 latitude,
                 longitude,
-                zoom: sanitizeZoom(zoom),
-                ...makeLinearTransition()
+                zoom: zoom ? sanitizeZoom(zoom) : state.zoom,
+                ...makeLinearTransition({ duration })
             }
         },
         zoomTo: (state, { payload: { id, zoom, delta = 1 } }) => {

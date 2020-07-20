@@ -60,7 +60,7 @@ const FilterMenu = (props) => {
                 <ListItem
                     button
                     onClick={() => {
-                        history.push(`/${ROUTE.browse.value}`)
+                        history.push(`/${ROUTE.browse.key}`)
                     }}
                 >
                     <ListItemIcon>

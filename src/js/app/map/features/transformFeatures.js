@@ -12,7 +12,6 @@ import {
     getFullTaxonomyVisualization,
     getPrimaryTaxonomy,
     getSecondaryTaxonomy,
-    getTermNameByTaxonomyIdAndTermId,
     VISUALIZED_TAXONOMY
 } from '@map/config/taxonomies'
 import { makeLocation } from '@map/util'
@@ -31,31 +30,36 @@ const featureToDetail = (
     },
     primaryTaxonomyId,
     secondaryTaxonomyId
-) => ({
-    ...getColorAndIconComponent(
-        properties[secondaryTaxonomyId][0],
-        properties[primaryTaxonomyId][0]
-    ),
-    primaryTermName: properties[primaryTaxonomyId].map(
-        (termId) => getTermNameByTaxonomyIdAndTermId(
-            primaryTaxonomyId,
-            termId,
-            'Händler'
-        )
-    ).filter((termName, index, newArray) => (
-        newArray.indexOf(termName) === index
-    )).sort().join(', '),
-    secondaryTerms: properties[secondaryTaxonomyId].map(
+) => {
+    const primaryTerms = properties[primaryTaxonomyId].map(
         (termId) => getFullTaxonomyVisualization({
-            taxonomyId: secondaryTaxonomyId,
+            taxonomyId: primaryTaxonomyId,
             termId,
             defaultTermName: 'Unbekannt'
         })
-    ),
-    latitude: parseFloat(latitude),
-    longitude: parseFloat(longitude),
-    ...properties
-})
+    )
+
+    return {
+        ...getColorAndIconComponent(
+            properties[secondaryTaxonomyId][0],
+            properties[primaryTaxonomyId][0]
+        ),
+        primaryTerms,
+        primaryTermName: primaryTerms.map(
+            ({ termName }) => termName
+        ).sort().join(', '),
+        secondaryTerms: properties[secondaryTaxonomyId].map(
+            (termId) => getFullTaxonomyVisualization({
+                taxonomyId: secondaryTaxonomyId,
+                termId,
+                defaultTermName: 'Unbekannt'
+            })
+        ),
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        ...properties
+    }
+}
 
 const detailToFeatureContext = (detail) => ({
     ...makeLocation(detail),

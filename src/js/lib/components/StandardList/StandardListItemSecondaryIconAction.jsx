@@ -1,21 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { preventBubble } from '@lib/util'
-
 import IconButton from '@material-ui/core/IconButton'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Tooltip from '@material-ui/core/Tooltip'
 
-const CopyTextListItemSecondaryAction = ({
+import { preventBubble } from '@lib/util'
+
+const StandardListItemSecondaryIconAction = ({
     className,
     iconComponent: IconComponent,
     label,
-    onClick
+    onClick,
+    value
 }) => {
     const handleClick = (event) => {
         preventBubble(event)
-        onClick(event)
+        if (onClick) {
+            onClick(event, value)
+        }
     }
 
     return (
@@ -39,15 +42,18 @@ const CopyTextListItemSecondaryAction = ({
     )
 }
 
-CopyTextListItemSecondaryAction.propTypes = {
+StandardListItemSecondaryIconAction.propTypes = {
     className: PropTypes.string,
     iconComponent: PropTypes.elementType.isRequired,
     label: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func,
+    value: PropTypes.string
 }
 
-CopyTextListItemSecondaryAction.defaultProps = {
-    className: ''
+StandardListItemSecondaryIconAction.defaultProps = {
+    className: '',
+    onClick: null,
+    value: null
 }
 
-export default CopyTextListItemSecondaryAction
+export default StandardListItemSecondaryIconAction

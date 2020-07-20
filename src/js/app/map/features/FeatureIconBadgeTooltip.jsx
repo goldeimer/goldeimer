@@ -12,7 +12,7 @@ const FeatureIconBadgeTooltip = ({
         {...other}
         iconComponent={FeatureIcon}
         iconProps={{
-            iconComponent: IconComponent
+            component: IconComponent
         }}
     />
 )

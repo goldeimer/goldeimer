@@ -28,7 +28,10 @@ export {
     sanitizeWithinRange
 } from '@lib/util/number'
 
-export { capitalize } from '@lib/util/string'
+export {
+    capitalize,
+    concatenateAddress
+} from '@lib/util/string'
 
 export {
     default as generateId,

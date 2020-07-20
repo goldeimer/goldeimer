@@ -18,8 +18,8 @@ const INITIAL_SOURCE = {
 
 const INITIAL_VIEW = {
     clusters: [],
-    markers: [],
-    pointCount: []
+    highlightId: null,
+    markers: []
 }
 
 const prepareMapGlFeatures = (features) => {
@@ -156,6 +156,14 @@ const segment = createSegment({
                         }).concat(markers.filter(
                             (marker) => !existingMarkers.has(marker.id)
                         ))
+                    }
+                },
+                setHighlightId: (state, { payload: id }) => {
+                    state.highlightId = id
+                },
+                unsetHighlightId: (state, { payload: id }) => {
+                    if (state.highlightId === id) {
+                        state.highlightId = null
                     }
                 }
             }

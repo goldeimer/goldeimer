@@ -28,7 +28,7 @@ const selectViewFeatures = (state) => (state.map.features.view)
 
 const selectEnrichedViewFeatures = createSelector(
     selectViewFeatures,
-    ({ clusters, markers }) => {
+    ({ clusters, highlightId, markers }) => {
         const pointCounts = summateObjects(clusters, 'pointCount')
 
         const totals = clusters.map(({ pointCount }) => pointCount.total)
@@ -42,6 +42,7 @@ const selectEnrichedViewFeatures = createSelector(
                 ...cluster,
                 domain
             })),
+            highlightId,
             markers: markers.map(({
                 colorTermId,
                 iconTermId,
@@ -186,7 +187,7 @@ const getFeaturesById = (ids, format = FEATURE_FORMAT.geojson) => (
     (state) => selectFeaturesById(state, ids, format)
 )
 
-const makeFeaturesByProximitySelector = (
+const makeFeatureIdsByProximitySelector = (
     featuresSelector
 ) => createCachedSelector(
     featuresSelector,
@@ -197,76 +198,66 @@ const makeFeaturesByProximitySelector = (
         features,
         latitude,
         longitude,
-        { excludeIds, format, maxDistance, maxResults }
-    ) => {
-        const tmp = sortObjects(
-            features.reduce((acc, feature) => {
-                if (excludeIds.includes(feature.id)) {
-                    return acc
-                }
+        { excludeIds, maxDistance, maxResults }
+    ) => sortObjects(
+        features.reduce((acc, feature) => {
+            if (excludeIds.includes(feature.id)) {
+                return acc
+            }
 
-                const distance = distanceByHaversine(
-                    { latitude, longitude },
-                    feature
-                )
+            const distance = distanceByHaversine(
+                { latitude, longitude },
+                feature
+            )
 
-                if (maxDistance && distance > maxDistance) {
-                    return acc
-                }
+            if (maxDistance && distance > maxDistance) {
+                return acc
+            }
 
-                return [...acc, { ...feature, distance }]
-            }, []),
-            'distance'
-        )
-
-        const tmp2 = maxResults ? tmp.slice(0, maxResults) : tmp
-
-        return getFeaturesById(
-            tmp2.reduce((acc, { id }) => [...acc, id], []),
-            format
-        )
-    }
+            return [...acc, { ...feature, distance }]
+        }, []),
+        'distance'
+    ).slice(0, maxResults || undefined)
 )({
     keySelector: (
         _,
         latitude,
         longitude,
-        { excludeIds, format, maxDistance, maxResults }
+        { excludeIds, maxDistance, maxResults }
     ) => (
-        `${latitude}:${longitude}:${excludeIds.join(',')}:${maxDistance}:${maxResults}:${format.value}:`
+        `${latitude}:${longitude}:${excludeIds.join(',')}:${maxDistance}:${maxResults}`
     ),
     cacheObject: new FifoMapCache({ cacheSize: CACHE_SIZE.featuresByProximity })
 })
 
-const makeSourceFeaturesByProximitySelector = (
+const makeSourceFeatureGeometriesByProximitySelector = (
     shouldFilter = false
-) => makeFeaturesByProximitySelector(
+) => makeFeatureIdsByProximitySelector(
     getSourceFeatures(
         FEATURE_FORMAT.geometry,
         shouldFilter
     )
 )
 
-const getSourceFeaturesByProximity = (
+const getSourceFeatureGeometriesByProximity = (
     latitude,
     longitude,
     {
         excludeIds = [],
-        format = FEATURE_FORMAT.geojson,
-        maxDistance = 25,
+        maxDistance = 25e3,
         maxResults = 10,
         shouldFilter = false
     }
 ) => (state) => {
     const featuresSelector = (
-        makeSourceFeaturesByProximitySelector(shouldFilter)
+        makeSourceFeatureGeometriesByProximitySelector(shouldFilter)
     )
 
     return featuresSelector(
         state,
         latitude,
         longitude,
-        { excludeIds, format, maxDistance, maxResults }
+        { excludeIds, maxDistance, maxResults }
     )
 }
 
@@ -276,7 +267,7 @@ export {
     getFeatureById,
     getFeaturesById,
     getSearchableSourceFeatures,
-    getSourceFeaturesByProximity,
+    getSourceFeatureGeometriesByProximity,
     getSourceFeatureLookup,
     selectViewFeatures,
     selectEnrichedViewFeatures

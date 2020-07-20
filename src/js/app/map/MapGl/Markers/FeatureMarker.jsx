@@ -76,6 +76,9 @@ const useStyles = makeStyles(({ palette }) => ({
             filter: 'none'
         }
     }),
+    currentHighlight: ({ color }) => ({
+        color: colorOrFallback(color.light, palette.action.active)
+    }),
     icon: ({ color }) => ({
         color: colorOrFallback(
             color.contrastText,
@@ -87,6 +90,7 @@ const useStyles = makeStyles(({ palette }) => ({
 const FeatureMarkerComponent = forwardRef(({
     color,
     contextInfo,
+    highlightId,
     iconComponent: IconComponent,
     parentClusterOrigin,
     setIsDetailEnabled,
@@ -116,6 +120,8 @@ const FeatureMarkerComponent = forwardRef(({
         contextInfo.type === thisContext.type
     )
 
+    const isCurrentHighlight = highlightId === thisContext.id
+
     const handleEnter = (isAppearing) => {
         if (parentClusterOrigin && isAppearing) {
             setIsDetailEnabled(false)
@@ -141,7 +147,7 @@ const FeatureMarkerComponent = forwardRef(({
             appear
             {...transitionContextMarker}
             classes={{ component: classes.transitionComponent }}
-            in={isCurrentContext}
+            in={isCurrentContext || isCurrentHighlight}
             onEnter={handleEnter}
             onEntered={handleEntered}
             ref={transitionHandleRef}
@@ -162,7 +168,10 @@ const FeatureMarkerComponent = forwardRef(({
                     <MarkerBackgroundIcon
                         className={clsx(
                             classes.background,
-                            { [classes.currentContext]: isCurrentContext }
+                            {
+                                [classes.currentContext]: isCurrentContext,
+                                [classes.currentHighlight]: isCurrentHighlight
+                            }
                         )}
                         fontSize='inherit'
                     />
@@ -189,6 +198,7 @@ const FeatureMarkerComponent = forwardRef(({
 FeatureMarkerComponent.propTypes = {
     color: PropTypeColor,
     contextInfo: PropTypeContextInfo.isRequired,
+    highlightId: PropTypes.string,
     iconComponent: PropTypes.elementType.isRequired,
     parentClusterOrigin: PropTypeParentClusterOrigin,
     setIsDetailEnabled: PropTypes.func,
@@ -197,6 +207,7 @@ FeatureMarkerComponent.propTypes = {
 
 FeatureMarkerComponent.defaultProps = {
     color: null,
+    highlightId: null,
     parentClusterOrigin: null,
     setIsDetailEnabled: null,
     thisContext: null

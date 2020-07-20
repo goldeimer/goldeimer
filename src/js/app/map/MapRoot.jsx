@@ -46,16 +46,14 @@ const MapRoot = () => {
     return (
         <>
             <MapGl />
-            <Switch>
-                <Route path='/:secondaryUiRoute'>
-                    <SecondaryUi />
-                </Route>
-                <Route path='/' exact>
-                    <ContextDrawer
-                        isOpenIfContext
-                    />
-                </Route>
-            </Switch>
+            <Route path='/:secondaryUiRoute'>
+                <SecondaryUi />
+            </Route>
+            <Route path='/'>
+                <ContextDrawer
+                    isOpenIfContext
+                />
+            </Route>
             <ZoomControl />
             <SearchContainer />
         </>

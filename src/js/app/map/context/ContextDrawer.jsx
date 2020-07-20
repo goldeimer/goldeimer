@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Box from '@material-ui/core/Box'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Divider from '@material-ui/core/Divider'
 import Paper from '@material-ui/core/Paper'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
+import SimpleBarReact from 'simplebar-react'
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
@@ -16,6 +19,8 @@ import { useContext, CONTEXT_TYPE } from '@map/context'
 
 import ContextSection from '@map/context/ContextSection'
 import NearBySection from '@map/context/NearBySection'
+
+import 'simplebar/dist/simplebar.min.css'
 
 const useStyles = makeStyles(({
     breakpoints,
@@ -47,9 +52,19 @@ const useStyles = makeStyles(({
             zIndex: `${zIndex.mobileStepper} !important`,
             ...rootWidths
         },
+        headerSpacer: ({ color }) => ({
+            // height of `AutoCompleteSearchBox` + margins
+            minHeight: spacing(8),
+            backgroundColor: color && color.light
+                ? color.light
+                : palette.primary.light,
+            flexGrow: 0
+        }),
         paperWrap: {
             background: 'transparent',
             zIndex: `${zIndex.mobileStepper} !important`,
+            maxHeight: '100%',
+            overflow: 'hidden',
             ...rootWidths
         },
         paper: {
@@ -60,6 +75,12 @@ const useStyles = makeStyles(({
             fallbacks: {
                 maxWidth: '90%'
             }
+        },
+        maxHeight100: {
+            maxHeight: '100%'
+        },
+        flexWrapper: {
+            height: '100%'
         },
         collapsePaper: {
             position: 'absolute',
@@ -95,10 +116,20 @@ const useStyles = makeStyles(({
 })
 
 const ContextDrawer = ({ isOpenIfContext }) => {
-    const classes = useStyles()
-
     const context = useContext()
-    const { id, hasContext, latitude, longitude, setAt, type } = context
+    const {
+        color,
+        id,
+        hasContext,
+        latitude,
+        longitude,
+        setAt,
+        type
+    } = context
+
+    const classes = useStyles({ color })
+
+    const shouldScrollNearBySectionOnly = useMediaQuery('(min-height:700px)')
 
     const [isOpen, setIsOpen] = useState(
         isOpenIfContext && hasContext
@@ -143,6 +174,20 @@ const ContextDrawer = ({ isOpenIfContext }) => {
             previousContextRef.current = { id, setAt, type }
         }
     }, [id, isOpen, previousContextRef, setAt, type])
+
+    const scrollable = (
+        <>
+            <ContextSection {...context} context={context} />
+            <Divider />
+            <NearBySection
+                contextId={id}
+                contextType={type}
+                latitude={latitude}
+                longitude={longitude}
+                isScrollEnabled={shouldScrollNearBySectionOnly}
+            />
+        </>
+    )
 
     return (
         <SwipeableDrawer
@@ -195,13 +240,39 @@ const ContextDrawer = ({ isOpenIfContext }) => {
                         </ButtonBase>
                     </StandardTooltip>
                 </Paper>
-                <ContextSection {...context} context={context} />
-                <Divider />
-                <NearBySection
-                    contextType={type}
-                    latitude={latitude}
-                    longitude={longitude}
-                />
+                <Box
+                    display='flex'
+                    flexDirection='column'
+                    className={classes.flexWrapper}
+                >
+                    <div className={classes.headerSpacer} />
+                    <Divider />
+                    <Box
+                        flexGrow={1}
+                        position='relative'
+                    >
+                        <Box
+                            position='absolute'
+                            top={0}
+                            left={0}
+                            bottom={0}
+                            right={0}
+                        >
+                            {shouldScrollNearBySectionOnly
+                                ? (
+                                    <div className={classes.maxHeight100}>
+                                        {scrollable}
+                                    </div>
+                                ) : (
+                                    <SimpleBarReact
+                                        style={{ maxHeight: '100%' }}
+                                    >
+                                        {scrollable}
+                                    </SimpleBarReact>
+                                )}
+                        </Box>
+                    </Box>
+                </Box>
             </Paper>
         </SwipeableDrawer>
     )

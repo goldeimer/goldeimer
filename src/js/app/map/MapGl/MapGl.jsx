@@ -73,8 +73,8 @@ const MapGl = () => {
     const features = useSourceFeatures(FEATURE_FORMAT.mapGl)
     const {
         clusters,
+        highlightId,
         markers
-        // pointCounts
     } = useViewFeatures()
 
     const searchResult = useSearchResult()
@@ -173,7 +173,7 @@ const MapGl = () => {
                         component={ClusterMarker}
                         contextInfo={contextInfo}
                         dynamicComponentProps={clusters}
-                        staticComponentProps={{ getSource }}
+                        staticComponentProps={{ getSource, highlightId }}
                     />
                 )}
                 {markers && (
@@ -181,6 +181,7 @@ const MapGl = () => {
                         component={FeatureMarker}
                         contextInfo={contextInfo}
                         dynamicComponentProps={markers}
+                        staticComponentProps={{ highlightId }}
                     />
                 )}
                 {searchResult &&
