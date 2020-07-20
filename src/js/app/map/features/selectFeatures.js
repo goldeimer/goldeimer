@@ -26,6 +26,8 @@ const CACHE_SIZE = {
 const selectSourceFeatures = (state) => (state.map.features.source.features)
 const selectViewFeatures = (state) => (state.map.features.view)
 
+const selectSourceReceivedAt = (state) => (state.map.features.source.receivedAt)
+
 const selectEnrichedViewFeatures = createSelector(
     selectViewFeatures,
     ({ clusters, highlightId, markers }) => {
@@ -269,6 +271,7 @@ export {
     getSearchableSourceFeatures,
     getSourceFeatureGeometriesByProximity,
     getSourceFeatureLookup,
+    selectSourceReceivedAt,
     selectViewFeatures,
     selectEnrichedViewFeatures
 }

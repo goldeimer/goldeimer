@@ -147,7 +147,7 @@ const FeatureMarkerComponent = forwardRef(({
             appear
             {...transitionContextMarker}
             classes={{ component: classes.transitionComponent }}
-            in={isCurrentContext || isCurrentHighlight}
+            in={isCurrentContext}
             onEnter={handleEnter}
             onEntered={handleEntered}
             ref={transitionHandleRef}

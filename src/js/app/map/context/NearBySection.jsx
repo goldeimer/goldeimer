@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
@@ -23,7 +23,7 @@ import FEATURES, {
 
 import CONTEXT, { CONTEXT_TYPE } from '@map/context'
 
-import VIEW from '@map/view'
+import VIEW, { selectViewState } from '@map/view'
 
 import 'simplebar/dist/simplebar.min.css'
 
@@ -72,6 +72,8 @@ const NearBySection = ({
     const dispatch = useDispatch()
 
     const classes = useStyles()
+
+    const { zoom } = useSelector(selectViewState)
 
     const excludeIds = CONTEXT_TYPE.feature.is(contextType)
         ? [contextId]
@@ -123,15 +125,18 @@ const NearBySection = ({
                 CONTEXT.set(
                     detailToFeatureContext(feature)
                 ),
-                VIEW.transition.linearTo({
+                VIEW.transition.flyTo({
                     latitude: feature.latitude,
                     longitude: feature.longitude,
-                    duration: 300
+                    zoom
                 })
             ])
         }
     }
 
+    // TODO:
+    // Throttle dispatches.
+    // Kills performance like this.
     const handleMouseEnter = (_, hoveredId) => {
         dispatch([
             FEATURES.view.setHighlightId(hoveredId)
@@ -185,8 +190,8 @@ const NearBySection = ({
                             component: iconComponent
                         }}
                         onClick={handleClick}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
+                        // onMouseEnter={handleMouseEnter}
+                        // onMouseLeave={handleMouseLeave}
                         primaryText={placeName}
                         secondaryAction={(
                             <Chip

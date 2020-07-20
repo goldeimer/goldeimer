@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Route, Switch, useParams } from 'react-router-dom'
+import { Route, useParams } from 'react-router-dom'
 
 import { getTheme } from '@config/theme'
 
@@ -12,8 +12,10 @@ import SearchContainer from '@map/search/SearchContainer'
 import { FeatureBrowserIcon } from '@map/icons'
 import ZoomControl from '@map/view/ZoomControl'
 
-import FEATURES from '@map/features'
+import FEATURES, { useSourceRedeivedAt } from '@map/features'
 import ROUTE from '@map/routes'
+
+const MAX_SOURCE_AGE_IN_HOURS = 48
 
 const { logoIconComponent: LogoIconComponent } = getTheme()
 
@@ -23,7 +25,7 @@ const SecondaryUi = () => {
     return (
         <>
             <FilterMenu
-                title='HändlerInnenkarte'
+                title='Händlerkarte'
                 isInitiallyOpen={ROUTE.menu.is(secondaryUiRoute)}
                 titleIcon={<LogoIconComponent />}
             />
@@ -39,9 +41,24 @@ const SecondaryUi = () => {
 const MapRoot = () => {
     const dispatch = useDispatch()
 
+    const sourceReceivedAt = useSourceRedeivedAt()
+
     useEffect(() => {
-        dispatch(FEATURES.source.fetch())
-    }, [dispatch])
+        const shouldDispatch = () => {
+            if (!sourceReceivedAt) {
+                return true
+            }
+
+            return (
+                MAX_SOURCE_AGE_IN_HOURS <
+                (Date.now() - sourceReceivedAt) / 36e5
+            )
+        }
+
+        if (shouldDispatch()) {
+            dispatch(FEATURES.source.fetch())
+        }
+    }, [dispatch, sourceReceivedAt])
 
     return (
         <>

@@ -50,7 +50,7 @@ const Source = forwardRef(({
             cluster
             clusterMaxZoom={14}
             clusterProperties={makeClusterProperties()}
-            clusterRadius={80}
+            clusterRadius={128}
             data={featureCollection}
             id={GEOJSON_SOURCE_ID}
             maxzoom={17}

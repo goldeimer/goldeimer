@@ -147,22 +147,22 @@ const ClusterMarkerComponent = forwardRef(({
                 ]
             }
 
-            // if (clusterExpansionZoom) {
-            //     actions.push(
-            //         VIEW.transition.flyTo({
-            //             latitude,
-            //             longitude,
-            //             zoom: clusterExpansionZoom
-            //         })
-            //     )
-            // }
+            if (clusterExpansionZoom) {
+                actions.push(
+                    VIEW.transition.linearTo({
+                        latitude,
+                        longitude,
+                        zoom: clusterExpansionZoom
+                    })
+                )
+            }
 
             if (actions) {
                 dispatch(actions)
             }
         }, [
             clusterChildren,
-            // clusterExpansionZoom,
+            clusterExpansionZoom,
             dispatch,
             id,
             latitude,

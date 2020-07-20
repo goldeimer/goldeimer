@@ -5,6 +5,7 @@ import getSourceFeatures, {
     getFeaturesById,
     getSourceFeatureGeometriesByProximity,
     selectEnrichedViewFeatures,
+    selectSourceReceivedAt,
     FEATURE_FORMAT
 } from '@map/features/selectFeatures'
 
@@ -15,6 +16,8 @@ const useFeature = (id, format = FEATURE_FORMAT.geojson) => useSelector(
 const useFeatures = (ids = [], format = FEATURE_FORMAT.geojson) => useSelector(
     getFeaturesById(ids, format)
 )
+
+const useSourceRedeivedAt = () => useSelector(selectSourceReceivedAt)
 
 const useSourceFeatures = (
     format = FEATURE_FORMAT.geojson,
@@ -63,5 +66,6 @@ export {
     useFeature,
     useFeatures,
     useSourceFeaturesByProximity,
+    useSourceRedeivedAt,
     useViewFeatures
 }

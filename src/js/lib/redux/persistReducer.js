@@ -1,10 +1,13 @@
-import { persistReducer as persistReducerRp } from 'redux-persist'
 import localForage from 'localforage'
+import { persistReducer as persistReducerRp } from 'redux-persist'
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
 const defaultPersistConfig = {
     key: 'root',
+    stateReconciler: autoMergeLevel2,
     storage: localForage,
-    transforms: []
+    transforms: [],
+    version: 1
 }
 
 const makePersistConfig = (config = {}) => ({

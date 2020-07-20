@@ -45,5 +45,6 @@ export {
     useFeature,
     useFeatures,
     useSourceFeaturesByProximity,
+    useSourceRedeivedAt,
     useViewFeatures
 } from '@map/features/useFeatures'

@@ -79,7 +79,7 @@ const transition = {
                 id,
                 latitude,
                 longitude,
-                zoom: zoom ? sanitizeZoom(zoom) : state.zoom,
+                zoom: sanitizeZoom(zoom),
                 ...makeFlyToTransition()
             }
         },
@@ -103,7 +103,7 @@ const transition = {
                     id,
                     latitude,
                     longitude,
-                    zoom = null
+                    zoom
                 }
             }
         ) => {
@@ -115,7 +115,7 @@ const transition = {
                 id,
                 latitude,
                 longitude,
-                zoom: zoom ? sanitizeZoom(zoom) : state.zoom,
+                zoom: sanitizeZoom(zoom),
                 ...makeLinearTransition({ duration })
             }
         },
