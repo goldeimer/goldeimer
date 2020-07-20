@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
 import noop from '@lib/util/noop'
-import uniqueByKey from '@lib/util/collections/uniqueByKey'
 import useCallback from '@lib/hooks/useCallback'
 import useDebounce from '@lib/hooks/useDebounce'
 
@@ -14,42 +13,11 @@ const querySourceFeatures = (mapGl, sourceId, dispatchFeatures) => {
         return
     }
 
-    dispatchFeatures({
-        clusters: uniqueByKey(
-            mapGl.querySourceFeatures(
-                sourceId,
-                { filter: ['has', 'point_count'] }
-            ),
-            [['properties', 'cluster_id']]
-        ).reduce((acc, {
-            geometry,
-            properties,
-            tile
-        }) => ([
-            ...acc,
-            {
-                id: properties.cluster_id,
-                geometry,
-                properties,
-                tile
-            }
-        ]), []),
-        markers: uniqueByKey(
-            mapGl.querySourceFeatures(
-                sourceId,
-                { filter: ['!', ['has', 'point_count']] }
-            ),
-            'id'
-        ).reduce((acc, { id, geometry, properties, tile }) => ([
-            ...acc,
-            {
-                id,
-                geometry,
-                properties,
-                tile
-            }
-        ]), [])
-    })
+    const features = mapGl.querySourceFeatures(sourceId)
+
+    if (features) {
+        dispatchFeatures(features)
+    }
 }
 
 const attachEventHandler = (eventIds, handler, target, handlerCache) => {

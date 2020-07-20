@@ -24,13 +24,13 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
 const getNearBySectionTitleByContextType = (contextType) => {
     switch (contextType) {
     case CONTEXT_TYPE.feature.value:
-        return 'Weiteres im Umkreis'
+        return 'Im Umkreis'
 
     case CONTEXT_TYPE.currentLocation.value:
-        return 'Nahe deines Standorts'
+        return 'Im Umkreis deines Standorts'
 
     case CONTEXT_TYPE.geocodingResult.value:
-        return 'Nahe deines Suchergebnisses'
+        return 'Im Umkreis deines Suchergebnisses'
 
     default:
         return 'Im Umkreis'

@@ -190,7 +190,7 @@ const sourceRequest = async () => {
             return ret
         }
 
-        return [
+        return Object.freeze([
             ...acc,
             {
                 ...feature,
@@ -204,7 +204,7 @@ const sourceRequest = async () => {
                     url: sanitizeUrl(feature.properties.url)
                 }
             }
-        ]
+        ])
     }, [])
 }
 

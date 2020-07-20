@@ -1,13 +1,17 @@
-import clsx from 'clsx'
-import { useForkRef } from '@material-ui/core/utils'
-import { makeStyles } from '@material-ui/core/styles'
-import PropTypes from 'prop-types'
+
 import React, { forwardRef, useRef } from 'react'
+import clsx from 'clsx'
+import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 
+import { useForkRef } from '@material-ui/core/utils'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+
 import { PropTypeComponent } from '@lib/prop-types'
-import executeTransition from '@lib/transition/executeTransition'
-import { generateShortId } from '@lib/util/generateId'
+import { reflow } from '@lib/util'
+
+import PropTypeParentClusterOrigin
+    from '@map/MapGl/Markers/PropTypeParentClusterOrigin'
 
 const makeStateDependentHtmlClassAttribute = (
     className,
@@ -23,7 +27,15 @@ const useStyles = makeStyles(() => ({
     wrapper: {}
 }))
 
-const D3Transition = forwardRef(({
+const setTranslateValue = (node, x, y) => {
+    const transform = `translate3d(${x}px, ${y}px, 0)`
+
+    node.style.webkitTransform = transform
+    node.style.transform = transform
+}
+
+const FeatureMarkerTransition = forwardRef(({
+    appear,
     children,
     classes: classesProp,
     component: Component,
@@ -34,44 +46,75 @@ const D3Transition = forwardRef(({
     onExit,
     onExiting,
     onExited,
+    parentClusterOrigin,
     TransitionComponent,
+    unmountOnExit,
     ...transitionProps
 }, ref) => {
-    const idRef = useRef(generateShortId())
     const nodeRef = useRef(null)
     const handleRef = useForkRef(ref, nodeRef)
 
     const classes = useStyles()
+    const { transitions } = useTheme()
 
     const addEndListener = (done) => {
         nodeRef.current.addEventListener(
-            `d3:transition-end:${idRef.current}`,
+            // browser native css event
+            'transitionend',
             done,
             false
         )
     }
 
-    const onTransitionEnd = () => {
-        const event = new Event(
-            `d3:transition-end:${idRef.current}`
-        )
-        nodeRef.current.dispatchEvent(event)
-    }
-
     const handleEnter = (isAppearing) => {
+        if (isAppearing && parentClusterOrigin) {
+            const rect = nodeRef.current.getBoundingClientRect()
+
+            nodeRef.current.style.opacity = 0
+
+            setTranslateValue(
+                nodeRef.current,
+                parentClusterOrigin.x - (rect.x + (rect.width / 2)),
+                parentClusterOrigin.y - (rect.y + (rect.height / 2))
+            )
+
+            reflow(nodeRef.current)
+        }
+
         if (onEnter) {
             onEnter(nodeRef.current, isAppearing)
         }
     }
 
     const handleEntering = (isAppearing) => {
-        if (onEntering) {
-            executeTransition(
-                onEntering(nodeRef.current, isAppearing),
-                onTransitionEnd
+        if (isAppearing && parentClusterOrigin) {
+            const transition = {
+                duration: transitions.duration.enteringScreen,
+                easing: transitions.easing.easeOut
+            }
+
+            const opacityTransition = transitions.create(
+                'opacity',
+                transition
             )
-        } else {
-            onTransitionEnd()
+
+            nodeRef.current.style.webkitTransition = `${transitions.create(
+                '-webkit-transform',
+                transition
+            )}, ${opacityTransition}`
+
+            nodeRef.current.style.transition = `${transitions.create(
+                'transform',
+                transition
+            )}, ${opacityTransition}`
+
+            nodeRef.current.style.opacity = 1
+            nodeRef.current.style.webkitTransform = 'none'
+            nodeRef.current.style.transform = 'none'
+        }
+
+        if (onEntering) {
+            onEntering(nodeRef.current, isAppearing)
         }
     }
 
@@ -88,13 +131,30 @@ const D3Transition = forwardRef(({
     }
 
     const handleExiting = () => {
+        const transition = {
+            duration: transitions.duration.leavingScreen,
+            easing: transitions.easing.sharp
+        }
+
+        const opacityTransition = transitions.create(
+            'opacity',
+            transition
+        )
+
+        nodeRef.current.style.webkitTransition = `${transitions.create(
+            '-webkit-transform',
+            transition
+        )}, ${opacityTransition}`
+
+        nodeRef.current.style.transition = `${transitions.create(
+            'transform',
+            transition
+        )}, ${opacityTransition}`
+
+        nodeRef.current.style.opacity = 0
+
         if (onExiting) {
-            executeTransition(
-                onExiting(nodeRef.current),
-                onTransitionEnd
-            )
-        } else {
-            onTransitionEnd()
+            onExiting(nodeRef.current)
         }
     }
 
@@ -107,6 +167,7 @@ const D3Transition = forwardRef(({
     return (
         <TransitionComponent
             {...transitionProps}
+            appear={appear}
             addEndListener={addEndListener}
             in={inProp}
             onEnter={handleEnter}
@@ -116,6 +177,7 @@ const D3Transition = forwardRef(({
             onExiting={handleExiting}
             onExited={handleExited}
             nodeRef={nodeRef}
+            unmountOnExit={unmountOnExit}
         >
             {(transitionState) => (
                 <Component
@@ -133,16 +195,15 @@ const D3Transition = forwardRef(({
                         )
                     )}
                 >
-                    <div className={clsx(classes.wrapper, classesProp.wrapper)}>
-                        {children}
-                    </div>
+                    {children}
                 </Component>
             )}
         </TransitionComponent>
     )
 })
 
-D3Transition.propTypes = {
+FeatureMarkerTransition.propTypes = {
+    appear: PropTypes.bool,
     children: PropTypes.oneOfType([
         PropTypes.node,
         PropTypes.func
@@ -159,10 +220,13 @@ D3Transition.propTypes = {
     onExit: PropTypes.func,
     onExiting: PropTypes.func,
     onExited: PropTypes.func,
-    TransitionComponent: PropTypes.elementType
+    parentClusterOrigin: PropTypeParentClusterOrigin,
+    TransitionComponent: PropTypes.elementType,
+    unmountOnExit: PropTypes.bool
 }
 
-D3Transition.defaultProps = {
+FeatureMarkerTransition.defaultProps = {
+    appear: true,
     classes: {
         component: null,
         wrapper: null
@@ -175,7 +239,9 @@ D3Transition.defaultProps = {
     onExit: null,
     onExiting: null,
     onExited: null,
-    TransitionComponent: Transition
+    parentClusterOrigin: null,
+    TransitionComponent: Transition,
+    unmountOnExit: false
 }
 
-export default D3Transition
+export default FeatureMarkerTransition

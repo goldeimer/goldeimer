@@ -111,7 +111,13 @@ const MapGl = () => {
         sourceId: 'features'
     })
 
-    const getSource = () => sourceRef.current.getSource()
+    const getSource = () => {
+        if (sourceRef.current) {
+            return sourceRef.current.getSource()
+        }
+
+        return null
+    }
 
     /// @see [`InteractiveMap::onViewStateChange`](1)
     /// @see [State Management](2)

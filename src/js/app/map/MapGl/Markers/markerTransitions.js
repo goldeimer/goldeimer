@@ -6,11 +6,15 @@ import {
 } from 'd3-ease'
 import { interpolateString } from 'd3-interpolate'
 
+import { reflow } from '@lib/util'
+
 const transitionContextMarker = {
     onEnter: (node, isAppearing = false) => {
         node.style.transform = isAppearing
             ? 'scale(1.25) translateY(0px)'
             : 'scale(1) translateY(0px)'
+
+        reflow(node)
     },
     onEntering: (node, isAppearing = false) => (isAppearing
         ? []
@@ -75,6 +79,7 @@ const transitionContextMarker = {
     },
     onExit: (node) => {
         node.style.transform = 'scale(1.25) translateY(0px)'
+        reflow(node)
     },
     onExiting: (node) => ({
         node,

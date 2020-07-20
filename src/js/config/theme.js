@@ -77,6 +77,7 @@ const makeTheme = (
         },
         MuiTooltip: {
             tooltip: {
+                backgroundColor: 'rgba(127, 127, 127, 0.95)',
                 fontWeight: 700
             }
         },

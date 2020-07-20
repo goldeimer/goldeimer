@@ -40,7 +40,8 @@ const useStyles = makeStyles(({ spacing }) => ({
     },
     verticalDivider: {
         marginLeft: spacing(1),
-        marginRight: spacing(1)
+        marginRight: spacing(1),
+        marginTop: 5
     }
 }), { name: 'ClusterMarkerDetailCard' })
 
@@ -59,7 +60,10 @@ const ClusterMarkerDetailCard = ({
     return (
         <Card elevation={3}>
             <CardContent className={classes.root}>
-                {secondaryTerms.map(({
+                {secondaryTerms.filter(({ termId }) => (
+                    !shouldHideOnEmpty ||
+                    pointCount.secondary[termId].total > 0
+                )).map(({
                     iconComponent: SecondaryIconComponent,
                     termId: secondaryTermId,
                     termName: secondaryTermName
@@ -100,13 +104,18 @@ const ClusterMarkerDetailCard = ({
                                 termId: primaryTermId,
                                 termName: primaryTermName
                             }) => {
-                                const termPointCount = pointCount.secondary[
-                                    secondaryTermId
-                                ].primary[
-                                    primaryTermId
-                                ]
+                                const primaryTermPointCount = (
+                                    pointCount.secondary[
+                                        secondaryTermId
+                                    ].primary[
+                                        primaryTermId
+                                    ]
+                                )
 
-                                if (!termPointCount && shouldHideOnEmpty) {
+                                if (
+                                    !primaryTermPointCount &&
+                                    shouldHideOnEmpty
+                                ) {
                                     return null
                                 }
 
@@ -123,7 +132,7 @@ const ClusterMarkerDetailCard = ({
                                                     ]
                                                 }
                                             }}
-                                            badgeContent={termPointCount}
+                                            badgeContent={primaryTermPointCount}
                                             iconComponent={PrimaryIconComponent}
                                             tooltipPlacement={
                                                 secondaryIndex === 0

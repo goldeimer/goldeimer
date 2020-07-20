@@ -110,20 +110,20 @@ const featureToSearchResultFixedTaxonomiesStub = (
     VISUALIZED_TAXONOMY.icon
 )
 
-const mapGlClusterToMarkerState = (
-    {
-        geometry: { coordinates: [longitude, latitude] },
-        id,
-        properties: {
-            point_count: pointCount,
-            ...properties
-        },
-        tile
-    }
-) => ({
+const mapGlClusterToMarkerState = ({
+    parentClusterOrigin = null,
+    geometry: { coordinates: [longitude, latitude] },
+    properties: {
+        cluster_id: id,
+        point_count: pointCount,
+        ...properties
+    },
+    tile
+}) => ({
+    parentClusterOrigin,
     id,
-    latitude,
-    longitude,
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
     pointCount: {
         total: pointCount,
         ...primaryTaxonomy.terms.reduce((
@@ -191,16 +191,20 @@ const mapGlClusterToMarkerState = (
 })
 
 const mapGlFeatureToMarkerState = ({
+    parentClusterOrigin = null,
     geometry: { coordinates: [longitude, latitude] },
     properties: {
         colorTermId, iconTermId, id
-    }
+    },
+    tile
 }) => ({
+    parentClusterOrigin,
     colorTermId,
     iconTermId,
     id,
-    latitude,
-    longitude
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
+    tile
 })
 
 /// ----------------------- transforming collections ---------------------------
@@ -346,7 +350,9 @@ export {
     getFeatureTransform,
     getFeaturesTransform,
     getTransform,
+    mapGlClusterToMarkerState,
     mapGlClustersToMarkerState,
+    mapGlFeatureToMarkerState,
     mapGlFeaturesToMarkerState,
     FEATURE_FORMAT
 }

@@ -37,7 +37,8 @@ const Marker = ({
 
     const handleDraw = useCallback(() => {
         if (markerRef.current) {
-            const { height, width } = markerRef.current.getBoundingClientRect()
+            const rect = markerRef.current.getBoundingClientRect()
+            const { height, width } = rect
 
             setDimensions({ width, height })
         }
@@ -60,7 +61,6 @@ const Marker = ({
                 ref={markerRef}
                 latitude={latitude}
                 longitude={longitude}
-                onDraw={handleDraw}
                 {...other}
             />
         </MarkerGl>

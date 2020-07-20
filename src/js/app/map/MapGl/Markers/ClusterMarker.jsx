@@ -2,6 +2,7 @@ import React, {
     forwardRef,
     memo,
     useCallback,
+    useRef,
     useEffect,
     useState
 } from 'react'
@@ -12,6 +13,7 @@ import { useDispatch } from 'react-redux'
 import { scaleLog as d3ScaleLog } from 'd3-scale'
 
 import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useForkRef } from '@material-ui/core/utils'
 
 import useMemo from '@lib/hooks/useMemo'
 
@@ -20,6 +22,7 @@ import {
     PropTypeContextInfo
 } from '@map/context'
 import { getColorByTermId } from '@map/config/taxonomies'
+import FEATURES from '@map/features'
 import VIEW from '@map/view'
 
 import Box from '@material-ui/core/Box'
@@ -30,7 +33,10 @@ import DonutChart from '@lib/components/data-display/DonutChart'
 
 import ClusterMarkerDetailCard
     from '@map/MapGl/Markers/ClusterMarkerDetailCard'
+import FeatureMarkerTransition from '@map/MapGl/Markers/FeatureMarkerTransition'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
+import PropTypeParentClusterOrigin
+    from '@map/MapGl/Markers/PropTypeParentClusterOrigin'
 import PropTypePointCount from '@map/MapGl/Markers/PropTypePointCount'
 
 const makeScale = (domain, range) => (
@@ -70,11 +76,19 @@ const ClusterMarkerComponent = forwardRef(({
     latitude,
     longitude,
     onDetailsReceived,
-    pointCount
+    pointCount,
+    parentClusterOrigin,
+    setIsDetailEnabled
 }, ref) => {
+    const nodeRef = useRef(null)
+    const handleRef = useForkRef(ref, nodeRef)
+
     const [isCurrentContext, setIsCurrentContext] = useState(false)
+    const [clusterExpansionZoom, setClusterExpansionZoom] = useState(null)
+    const [clusterChildren, setClusterChildren] = useState(null)
 
     const dispatch = useDispatch()
+    const source = getSource()
 
     const strokeWidth = 2
     const classes = useStyles({ rootPadding: strokeWidth })
@@ -107,39 +121,60 @@ const ClusterMarkerComponent = forwardRef(({
 
     const handleClick = useCallback(
         () => {
-            const source = getSource()
-            // const children = source.getClusterChildren(id)
-            // console.log(children)
+            setIsDetailEnabled(false)
 
-            source.getClusterExpansionZoom(
-                id,
-                (err, zoom) => {
-                    if (err) {
-                        return
-                    }
+            let actions = []
+            if (clusterChildren) {
+                const rect = nodeRef.current.getBoundingClientRect()
 
-                    dispatch(
-                        VIEW.transition.linearTransitionTo({
+                actions = [
+                    FEATURES.view.removeCluster(id),
+                    FEATURES.view.push(clusterChildren.map((feature) => ({
+                        ...feature,
+                        parentClusterOrigin: {
                             latitude,
                             longitude,
-                            zoom
-                        })
-                    )
-                }
-            )
-        },
-        [dispatch, getSource, id, latitude, longitude]
+                            x: rect.x + rect.width / 2,
+                            y: rect.y + rect.height / 2
+                        }
+                    })))
+                ]
+            }
+
+            if (clusterExpansionZoom) {
+                actions.push(
+                    VIEW.transition.linearTransitionTo({
+                        latitude,
+                        longitude,
+                        zoom: clusterExpansionZoom
+                    })
+                )
+            }
+
+            if (actions) {
+                dispatch(actions)
+            }
+        }, [
+            clusterChildren,
+            clusterExpansionZoom,
+            dispatch,
+            id,
+            latitude,
+            longitude,
+            setIsDetailEnabled
+        ]
     )
 
     useEffect(() => {
-        const source = getSource()
+        let isMounted = true
+
         if (source) {
             source.getClusterLeaves(
                 id,
                 pointCount.total,
                 0,
                 (err, leaves) => {
-                    if (err) {
+                    if (err || !isMounted) {
                         return
                     }
 
@@ -161,64 +196,107 @@ const ClusterMarkerComponent = forwardRef(({
                     }
                 }
             )
+
+            source.getClusterChildren(
+                id,
+                (err, features) => {
+                    if (err || !isMounted) {
+                        return
+                    }
+
+                    setClusterChildren(features)
+                }
+            )
+
+            source.getClusterExpansionZoom(
+                id,
+                (err, zoom) => {
+                    if (err || !isMounted) {
+                        return
+                    }
+
+                    setClusterExpansionZoom(zoom)
+                }
+            )
         }
+
+        return () => { isMounted = false }
     }, [
         contextInfo,
-        getSource,
+        id,
         onDetailsReceived,
         pointCount.total,
-        id
+        source
     ])
 
     const spacingFactor = 0.25
 
+    const handleEnter = (isAppearing) => {
+        if (parentClusterOrigin && isAppearing) {
+            setIsDetailEnabled(false)
+        }
+    }
+
+    const handleEntered = (isAppearing) => {
+        setIsDetailEnabled(true)
+    }
+
     return (
-        <ButtonBase
-            centerRipple
-            className={classes.root}
-            onClick={handleClick}
-            ref={ref}
+        <FeatureMarkerTransition
+            appear
+            in
+            onEnter={handleEnter}
+            onEntered={handleEntered}
+            parentClusterOrigin={parentClusterOrigin}
+            unmountOnExit
         >
-            <Box position='relative'>
-                <Box
-                    position='absolute'
-                    top={0}
-                    left={0}
-                    width={1}
-                    height={1}
-                    p={spacingFactor}
-                >
+            <ButtonBase
+                centerRipple
+                className={classes.root}
+                onClick={handleClick}
+                ref={handleRef}
+            >
+                <Box position='relative'>
                     <Box
-                        className={clsx(
-                            classes.background,
-                            { [`${classes.background}-currentContext`]: isCurrentContext }
-                        )}
+                        position='absolute'
+                        top={0}
+                        left={0}
                         width={1}
                         height={1}
-                        display='flex'
-                        alignItems='center'
-                        justifyContent='center'
+                        p={spacingFactor}
                     >
-                        <Typography
-                            className={classes.pointCount}
-                            component='span'
-                            variant='subtitle2'
+                        <Box
+                            className={clsx(
+                                classes.background,
+                                { [`${classes.background}-currentContext`]: isCurrentContext }
+                            )}
+                            width={1}
+                            height={1}
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='center'
                         >
-                            {pointCount.total}
-                        </Typography>
+                            <Typography
+                                className={classes.pointCount}
+                                component='span'
+                                variant='subtitle2'
+                            >
+                                {pointCount.total}
+                            </Typography>
+                        </Box>
                     </Box>
+                    <DonutChart
+                        colorName={isCurrentContext ? 'dark' : 'main'}
+                        data={donutData}
+                        keyToColor={getColorByTermId}
+                        padding={spacingFactor}
+                        radius={radius}
+                        strokeColor={palette.background.paper}
+                        strokeWidth={strokeWidth}
+                    />
                 </Box>
-                <DonutChart
-                    colorName={isCurrentContext ? 'dark' : 'main'}
-                    data={donutData}
-                    keyToColor={getColorByTermId}
-                    padding={spacingFactor}
-                    radius={radius}
-                    strokeColor={palette.background.paper}
-                    strokeWidth={strokeWidth}
-                />
-            </Box>
-        </ButtonBase>
+            </ButtonBase>
+        </FeatureMarkerTransition>
     )
 })
 
@@ -230,13 +308,17 @@ ClusterMarkerComponent.propTypes = {
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     onDetailsReceived: PropTypes.func,
-    pointCount: PropTypePointCount.isRequired
+    pointCount: PropTypePointCount.isRequired,
+    parentClusterOrigin: PropTypeParentClusterOrigin,
+    setIsDetailEnabled: PropTypes.func
 }
 
 ClusterMarkerComponent.defaultProps = {
     contextInfo: null,
     domain: null,
-    onDetailsReceived: null
+    onDetailsReceived: null,
+    parentClusterOrigin: null,
+    setIsDetailEnabled: null
 }
 
 const ClusterMarker = (props) => (

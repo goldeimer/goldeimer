@@ -6,6 +6,8 @@ export {
     uniqueByKey
 } from '@lib/util/collections'
 
+export { reflow } from '@lib/util/dom'
+
 export {
     IS_DEVELOPMENT_BUILD,
     IS_PRODUCTION_BUILD

@@ -23,7 +23,10 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import { D3Transition } from '@lib/transition'
 
 import FeatureMarkerDetailCard from '@map/MapGl/Markers/FeatureMarkerDetailCard'
+import FeatureMarkerTransition from '@map/MapGl/Markers/FeatureMarkerTransition'
 import Marker, { ANCHOR_TO } from '@map/MapGl/Markers/Marker'
+import PropTypeParentClusterOrigin
+    from '@map/MapGl/Markers/PropTypeParentClusterOrigin'
 import { transitionContextMarker } from '@map/MapGl/Markers/markerTransitions'
 import MarkerBackgroundIcon from '@map/icons/map/MarkerBackgroundIcon'
 
@@ -58,9 +61,12 @@ const useStyles = makeStyles(({ palette }) => ({
             color: colorOrFallback(color.dark, palette.action.active)
         }
     }),
-    component: {
+    transitionComponent: {
         transformOrigin: 'bottom center',
-        transform: 'scale(1) translateY(0)'
+        transform: 'scale(1) translateY(0)',
+        '&-entered': {
+            transform: 'scale(1.25) translateY(0)'
+        }
     },
     currentContext: ({ color }) => ({
         color: colorOrFallback(color.dark, palette.action.active),
@@ -82,6 +88,7 @@ const FeatureMarkerComponent = forwardRef(({
     color,
     contextInfo,
     iconComponent: IconComponent,
+    parentClusterOrigin,
     setIsDetailEnabled,
     thisContext
 }, ref) => {
@@ -109,50 +116,73 @@ const FeatureMarkerComponent = forwardRef(({
         contextInfo.type === thisContext.type
     )
 
+    const handleEnter = (isAppearing) => {
+        if (parentClusterOrigin && isAppearing) {
+            setIsDetailEnabled(false)
+        }
+    }
+
+    const handleEntered = (isAppearing) => {
+        setIsDetailEnabled(true)
+    }
+
     return (
-        <D3Transition
+        <FeatureMarkerTransition
             appear
-            {...transitionContextMarker}
-            classes={{ component: classes.component }}
-            in={isCurrentContext}
-            ref={transitionHandleRef}
+            in
+            onEnter={handleEnter}
+            parentClusterOrigin={parentClusterOrigin}
         >
-            <ButtonBase
-                centerRipple
-                className={classes.root}
-                disabled={isCurrentContext}
-                onClick={handleClick}
-                ref={ref}
+            {/* TODO:
+              * Convert the `transitionContextMarker` props object
+              * into a component (i.e. a parent of `D3Transition`).
+              */}
+            <D3Transition
+                appear
+                {...transitionContextMarker}
+                classes={{ component: classes.transitionComponent }}
+                in={isCurrentContext}
+                onEnter={handleEnter}
+                onEntered={handleEntered}
+                ref={transitionHandleRef}
             >
-                <Box
-                    fontSize='2rem'
-                    position='relative'
-                    display='flex'
-                    flexShrink={1}
+                <ButtonBase
+                    centerRipple
+                    className={classes.root}
+                    disabled={isCurrentContext}
+                    onClick={handleClick}
+                    ref={ref}
                 >
-                    <MarkerBackgroundIcon
-                        className={clsx(
-                            classes.background,
-                            { [classes.currentContext]: isCurrentContext }
-                        )}
-                        fontSize='inherit'
-                    />
                     <Box
-                        position='absolute'
-                        fontSize='50%'
-                        top={4}
-                        left={8}
+                        fontSize='2rem'
+                        position='relative'
                         display='flex'
                         flexShrink={1}
                     >
-                        <IconComponent
-                            className={classes.icon}
+                        <MarkerBackgroundIcon
+                            className={clsx(
+                                classes.background,
+                                { [classes.currentContext]: isCurrentContext }
+                            )}
                             fontSize='inherit'
                         />
+                        <Box
+                            position='absolute'
+                            fontSize='50%'
+                            top={4}
+                            left={8}
+                            display='flex'
+                            flexShrink={1}
+                        >
+                            <IconComponent
+                                className={classes.icon}
+                                fontSize='inherit'
+                            />
+                        </Box>
                     </Box>
-                </Box>
-            </ButtonBase>
-        </D3Transition>
+                </ButtonBase>
+            </D3Transition>
+        </FeatureMarkerTransition>
     )
 })
 
@@ -160,12 +190,14 @@ FeatureMarkerComponent.propTypes = {
     color: PropTypeColor,
     contextInfo: PropTypeContextInfo.isRequired,
     iconComponent: PropTypes.elementType.isRequired,
+    parentClusterOrigin: PropTypeParentClusterOrigin,
     setIsDetailEnabled: PropTypes.func,
     thisContext: PropTypeContext
 }
 
 FeatureMarkerComponent.defaultProps = {
     color: null,
+    parentClusterOrigin: null,
     setIsDetailEnabled: null,
     thisContext: null
 }

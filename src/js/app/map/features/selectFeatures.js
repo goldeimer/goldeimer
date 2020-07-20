@@ -1,11 +1,13 @@
 import { compose } from 'redux'
+import { createSelector } from 'reselect'
 import { createCachedSelector, FifoMapCache } from 're-reselect'
 import stringify from 'json-stringify-deterministic'
 
-import { sortObjects } from '@lib/util/collections'
+import { sortObjects, summateObjects } from '@lib/util/collections'
 
 import { distanceByHaversine } from '@map/util'
 import { filterFeatures, selectFilter } from '@map/filter'
+import { getColorAndIconComponent } from '@map/config/taxonomies'
 import { sortFeatures, selectSort } from '@map/sort'
 
 import FEATURE_FORMAT from '@map/features/enumFeatureFormat'
@@ -23,6 +25,38 @@ const CACHE_SIZE = {
 
 const selectSourceFeatures = (state) => (state.map.features.source.features)
 const selectViewFeatures = (state) => (state.map.features.view)
+
+const selectEnrichedViewFeatures = createSelector(
+    selectViewFeatures,
+    ({ clusters, markers }) => {
+        const pointCounts = summateObjects(clusters, 'pointCount')
+
+        const totals = clusters.map(({ pointCount }) => pointCount.total)
+        const domain = [
+            Math.min(...totals),
+            Math.max(...totals)
+        ]
+
+        return {
+            clusters: clusters.map((cluster) => ({
+                ...cluster,
+                domain
+            })),
+            markers: markers.map(({
+                colorTermId,
+                iconTermId,
+                ...rest
+            }) => ({
+                ...rest,
+                ...getColorAndIconComponent(
+                    colorTermId,
+                    iconTermId
+                )
+            })),
+            pointCounts
+        }
+    }
+)
 
 const makeChainable = (
     transform,
@@ -244,5 +278,6 @@ export {
     getSearchableSourceFeatures,
     getSourceFeaturesByProximity,
     getSourceFeatureLookup,
-    selectViewFeatures
+    selectViewFeatures,
+    selectEnrichedViewFeatures
 }

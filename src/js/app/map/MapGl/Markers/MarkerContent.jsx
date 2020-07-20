@@ -4,9 +4,13 @@ import PropTypes from 'prop-types'
 
 import { makeStyles } from '@material-ui/core/styles'
 
-import { detailToFeatureContext, useDetail } from '@map/features'
-
+import useCallback from '@lib/hooks/useCallback'
 import useHover from '@lib/hooks/useHover'
+
+import {
+    detailToFeatureContext,
+    useDetail
+} from '@map/features'
 
 import ArrowPopper from '@lib/components/modals/ArrowPopper'
 import Box from '@material-ui/core/Box'
@@ -48,6 +52,12 @@ const MarkerContent = forwardRef(({
         dynamicDetail
     )
 
+    const handleDetailsReceived = useCallback(
+        (details) => {
+            setDynamicDetail(details)
+        }, []
+    )
+
     return (
         <>
             {shouldRenderDetail && (
@@ -70,7 +80,7 @@ const MarkerContent = forwardRef(({
                     })}
                     id={id}
                     ref={ref}
-                    onDetailsReceived={setDynamicDetail}
+                    onDetailsReceived={handleDetailsReceived}
                     setIsDetailEnabled={setIsDetailEnabled}
                     thisContext={
                         dynamicDetail
