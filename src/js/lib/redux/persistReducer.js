@@ -7,7 +7,7 @@ const defaultPersistConfig = {
     stateReconciler: autoMergeLevel2,
     storage: localForage,
     transforms: [],
-    version: 1
+    version: 2
 }
 
 const makePersistConfig = (config = {}) => ({

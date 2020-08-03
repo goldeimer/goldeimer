@@ -116,6 +116,13 @@ const getFeaturesVca = async () => {
 const cityToPostCodeAndCity = (city) => {
     const match = city.match(/^\s*?(\d{4,})\s+?(.*)$/u)
 
+    if (!match || match.length < 3) {
+        return {
+            city,
+            postCode: ''
+        }
+    }
+
     return {
         city: match[2] || '',
         postCode: match[1] || ''

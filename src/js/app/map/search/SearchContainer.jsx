@@ -8,6 +8,9 @@ import useDebounce from '@lib/hooks/useDebounce'
 import useEdgeStyles from '@lib/styles/useEdgeStyles'
 import useInput from '@lib/hooks/useInput'
 
+import CONTEXT from '@map/context'
+import { detailToFeatureContext } from '@map/features'
+import ROUTE from '@map/routes'
 import SEARCH, {
     geocodingResultIsDach,
     useGeocodingSearchResults,
@@ -18,7 +21,6 @@ import SEARCH, {
     ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH,
     MIN_ACTIONABLE_QUERY_LENGTH
 } from '@map/search'
-import ROUTE from '@map/routes'
 import VIEW from '@map/view'
 
 import Box from '@material-ui/core/Box'
@@ -116,6 +118,7 @@ const SearchContainer = () => {
     const setResult = (rslt) => {
         dispatch([
             SEARCH.result.set(rslt),
+            // CONTEXT.set(detailToFeatureContext()),
             VIEW.transition.flyTo({ ...rslt, zoom: 13 })
         ])
 

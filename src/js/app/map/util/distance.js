@@ -33,10 +33,7 @@ const formatDistance = (distanceInMeters) => {
         : distanceInMeters
 
     const fixed = distance.toFixed(
-        shouldReturnKilometers ? 1 : 0
-    ).replace(
-        /\.?0+$/,
-        ''
+        shouldReturnKilometers && distance < 100 ? 1 : 0
     )
 
     return `${fixed} ${shouldReturnKilometers ? 'km' : 'm'}`

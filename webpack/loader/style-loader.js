@@ -8,8 +8,8 @@ const styleLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         { loader: 'css-loader', options: { sourceMap: true } },
-        { loader: 'postcss-loader', options: { sourceMap: true } },
-    ],
+        { loader: 'postcss-loader', options: { sourceMap: true } }
+    ]
 }
 
 module.exports = styleLoader

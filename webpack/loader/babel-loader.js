@@ -23,7 +23,7 @@ const presetEnv = [
 const babelLoader = {
     test: isJavaScript,
     exclude: /node_modules/,
-    use: {
+    use: [{
         loader: 'babel-loader',
         options: {
             presets: [presetEnv, '@babel/preset-react'],
@@ -64,7 +64,8 @@ const babelLoader = {
                 }
             }
         }
-    }
+    },
+    'astroturf/loader']
 }
 
 module.exports = babelLoader

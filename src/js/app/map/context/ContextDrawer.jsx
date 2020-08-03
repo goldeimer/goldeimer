@@ -57,20 +57,19 @@ const useStyles = makeStyles(({
             minHeight: spacing(8),
             backgroundColor: color && color.light
                 ? color.light
-                : palette.primary.light,
-            flexGrow: 0
+                : palette.primary.light
         }),
         paperWrap: {
             background: 'transparent',
             zIndex: `${zIndex.mobileStepper} !important`,
-            maxHeight: '100%',
+            height: '100%',
             overflow: 'hidden',
             ...rootWidths
         },
         paper: {
             width: 'auto',
             maxWidth: `calc(100% - ${collapseButtonWidth}px)`,
-            minHeight: '100%',
+            height: '100%',
             position: 'relative',
             fallbacks: {
                 maxWidth: '90%'
@@ -245,8 +244,10 @@ const ContextDrawer = ({ isOpenIfContext }) => {
                     flexDirection='column'
                     className={classes.flexWrapper}
                 >
-                    <div className={classes.headerSpacer} />
-                    <Divider />
+                    <Box flexGrow={0}>
+                        <div className={classes.headerSpacer} />
+                        <Divider />
+                    </Box>
                     <Box
                         flexGrow={1}
                         position='relative'

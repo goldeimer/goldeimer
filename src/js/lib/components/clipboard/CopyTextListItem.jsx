@@ -34,6 +34,7 @@ const CopyTextListItem = ({
             primaryText={primaryText}
             secondaryIconActions={actions}
             onClick={onClick || onCopy}
+            value={copyValue}
         />
     )
 }

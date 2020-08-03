@@ -26,6 +26,11 @@ import StandardDialog, {
     STANDARD_DIALOG_STYLES
 } from '@lib/components/modals/StandardDialog'
 
+import {
+    getPrimaryTaxonomy,
+    getSecondaryTaxonomy
+} from '@map/config/taxonomies'
+
 const FULLSCREEN_BREAKPOINT = 'md'
 const MAX_WIDTH = 'xl'
 

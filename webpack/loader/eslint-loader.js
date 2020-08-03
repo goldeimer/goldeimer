@@ -10,7 +10,7 @@ const esLintLoader = {
         fix: true,
         failOnError: true,
         failOnWarning: false //!IS_DEVELOPMENT_BUILD
-    },
+    }
 }
 
 module.exports = esLintLoader

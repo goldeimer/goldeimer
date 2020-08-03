@@ -23,9 +23,11 @@ import FEATURES, {
 
 import CONTEXT, { CONTEXT_TYPE } from '@map/context'
 
-import VIEW, { selectViewState } from '@map/view'
+import VIEW from '@map/view'
 
 import 'simplebar/dist/simplebar.min.css'
+
+const FLY_TO_TRANSITION_ZOOM = 15
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
     chip: {
@@ -73,8 +75,6 @@ const NearBySection = ({
 
     const classes = useStyles()
 
-    const { zoom } = useSelector(selectViewState)
-
     const excludeIds = CONTEXT_TYPE.feature.is(contextType)
         ? [contextId]
         : []
@@ -90,26 +90,33 @@ const NearBySection = ({
     )
 
     const [maxHeight, setMaxHeight] = useState('100%')
-    useLayoutEffect(() => {
-        const calculateAndSetMaxHeight = () => {
-            if (rootRef.current) {
-                const rect = rootRef.current.getBoundingClientRect()
-                setMaxHeight(window.innerHeight - rect.top)
-            }
-        }
 
-        window.addEventListener(
-            'resize',
+    const calculateAndSetMaxHeight = () => {
+        if (rootRef.current) {
+            const rect = rootRef.current.getBoundingClientRect()
+            setMaxHeight(window.innerHeight - rect.top)
+        }
+    }
+
+    useLayoutEffect(() => {
+        const events = ['orientationchange', 'resize']
+
+        events.forEach((event) => window.addEventListener(
+            event,
             calculateAndSetMaxHeight
-        )
+        ))
 
         calculateAndSetMaxHeight()
 
-        return () => window.removeEventListener(
-            'resize',
+        return () => events.forEach((event) => window.removeEventListener(
+            event,
             calculateAndSetMaxHeight
-        )
+        ))
     }, [rootRef])
+
+    useLayoutEffect(() => {
+        calculateAndSetMaxHeight()
+    }, [contextId])
 
     if (!features) {
         return null
@@ -128,7 +135,7 @@ const NearBySection = ({
                 VIEW.transition.flyTo({
                     latitude: feature.latitude,
                     longitude: feature.longitude,
-                    zoom
+                    zoom: FLY_TO_TRANSITION_ZOOM
                 })
             ])
         }
