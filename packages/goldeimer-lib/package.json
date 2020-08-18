@@ -1,0 +1,39 @@
+{
+    "name": "@goldeimer/lib",
+    "version": "0.1.3",
+    "description": "Goldeimer's common resources",
+    "keywords": [
+        "goldeimer"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer-web-apps/packages/goldeimer-lib#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer-web-apps/issues",
+        "email": "johannes@goldeimer.de"
+    },
+    "license": "BSD-2-Clause",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer-web-apps.git",
+        "directory": "packages/goldeimer-lib"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Pille <johannes@goldeimer.de>"
+    ],
+    "bin": {},
+    "files": [],
+    "main": "",
+    "module": "src/index.js",
+    "private": true,
+    "scripts": {
+        "build:dev": "webpack --env.BUILD_MODE=development --config webpack.config.js",
+        "build:prod": "webpack --env.BUILD_MODE=production --config webpack.config.js",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
+    }
+}

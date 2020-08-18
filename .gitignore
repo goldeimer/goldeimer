@@ -1,4 +1,11 @@
-node_modules
+# 3rd party sources
+**/node_modules/**/*
 
 # populated by webpack build
-merchant-map
+**/build/**/*
+
+# holds sensitive information
+**/.env*
+**/.env/**/*
+!**/.env.defaults
+!**/.env.example

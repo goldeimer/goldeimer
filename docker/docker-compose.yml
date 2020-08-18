@@ -118,7 +118,7 @@ services:
         restart: always
         working_dir: /var/www/html
         volumes:
-            - ./../merchant-map:/var/www/html
+            - ./../build/map/core:/var/www/html
         extra_hosts:
             - "map.goldeimer.de:127.0.0.1"
         hostname: map.goldeimer.de

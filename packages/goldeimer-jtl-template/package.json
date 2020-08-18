@@ -1,0 +1,38 @@
+{
+    "name": "@goldeimer/jtl-template",
+    "version": "0.0.1",
+    "description": "Goldeimer's JTL template",
+    "main": "",
+    "browser": "",
+    "keywords": [
+        "goldeimer",
+        "jtl",
+        "jtlshop",
+        "jtl-shop"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer-web-apps/packages/goldeimer-jtl-template#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer-web-apps/issues",
+        "email": "johannes@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer-web-apps.git",
+        "directory": "packages/goldeimer-jtl-template"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Malte <kubo?>",
+        "Manni <manou@goldeimer.de>",
+        "Pille <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "scripts": {
+        "build:dev": "webpack --env.BUILD_MODE=development --config webpack.config.js",
+        "build:prod": "webpack --env.BUILD_MODE=production --config webpack.config.js",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "webpack": "^4.43.0"
+    }
+}

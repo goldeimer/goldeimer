@@ -20,7 +20,7 @@
     "noreturnawait": true,
     "regexpu": true,
     "singleGroups": true,
-    "strict": false,
+    "strict": true,
     "trailingcomma": false,
     "undef": true,
     "unused": false,
@@ -45,7 +45,7 @@
     "shadow": false,
     "supernew": false,
     "validthis": false,
-    "withstmt": true,
+    "withstmt": false,
 
     "browser": true,
     "browserify": false,
