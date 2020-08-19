@@ -1,0 +1,48 @@
+
+
+<div class="app-section-wrap">
+
+
+<section class="app-section app-yellow-bg">
+    <div class="app-section-movingboard">
+        <div class="app-section-movingboard-container" id="Movingboard">
+            <div class="app-section-movingboard-section-1" id="Background">
+                <div class="trees-left" id="trees-left">
+                    <img src="../assets/img/trees-l.svg" alt="trees" style="width: 100%; height: 100%;">
+                </div>
+                <div class="trees-right" id="trees-right">
+                    <img src="../assets/img/trees-r.svg" alt="trees" style="width: 100%; height: 100%;">
+                </div>
+                <div class="app-section-content">
+                    <app-logosection></app-logosection>
+                    <p><b>{{textquestion}}</b></p>
+                    
+                    <h1>{{headline}}</h1>
+                    <p>Eine Packung Frischfaser-Klopapier verbraucht rund <b>1,5 Kilogramm Holz</b> und <b>25 Liter Wasser</b>. Der Zellstoff für das Papier kommt aus Skandinavien und Südamerika, wo der Plantagenanbau Urwäldflächen und Artenvielfalt dezimiert. Bis zu 11.000 Kilometer mit dem Frachter hat der Zellstoff in Frischfaserpapier somit hinter sich. Mit Recycling-Klopapier kann jeder von uns <b>26 Kilogramm Holz</b> und über <b>400 Liter Wasser</b> im Jahr retten. </p><app-people-counter></app-people-counter>
+                    <button (click)="givePromise();">Versprechen geben</button> <!-- Maybe this shouldn't be a button, but more something to swipe right, to give the promise. Like this: https://github.com/ebanx/swipe-button-->
+
+                </div>
+            </div>
+            <div class="app-section-movingboard-section-2">
+                <div class="app-section-content">
+                    <app-personal-counter></app-personal-counter>
+                    <h1>{{headline2}}</h1>
+                    <p>{{textmain2}}</p><b>{{textquestion2}}</b>
+                </div>
+            </div>
+            <div class="app-section-movingboard-section-3">
+                <div class="app-section-content">Hallo</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="app-section app-green-bg">
+    <div class="app-section-content">
+        <app-res-counter></app-res-counter>
+        <app-logosection></app-logosection>
+    </div>
+</section>
+</div>
+

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "keinebaeume": {
+      "hosting": {
+        "keinebaeume": [
+          "keinebaeume"
+        ]
+      }
+    }
+  }
+}
