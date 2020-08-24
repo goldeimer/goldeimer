@@ -34,7 +34,7 @@ export class ResCounterComponent {
     
     // Text
     peopleCounterDesc = 'gehaltene Versprechen retten'
-    waterCounterDesc = 'Liter Wasser und'
-    woodCounterDesc = 'Kilogramm Holz pro Jahr.'
+    waterCounterDesc = 'Wasser und'
+    woodCounterDesc = 'Holz pro Jahr.'
 }
 

@@ -6,8 +6,10 @@ import { Component } from '@angular/core';
 })
 export class PeopleCounterComponent {
 
+
   public peopleCounter = 152;
 
+  //You'll find this piece of code also in personal-counter.component & res-counter.component - "write everything just once!" J. Pille, 2020
   counterOptions = {
       
     duration: 5,

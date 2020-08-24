@@ -16,16 +16,28 @@ export class AppComponent{
   texxxxtmain = '2,2kg Holz werden für 1kg Zellstoff-Papier benötigt. Das wächst auf Plantagen, die für die Zerstörung von Urwäldern und die Reduzierung der Artenvielfalt mitverantwortlich sind. Anschließend legt der daraus gewonnene Zellstoff eine Reise von bis zu 11.000km zurück - aus Skandinavien und Südamerika - bevor er unter hohem Wasser- und Energieaufwand zu Papier wird. Das alles für fünf Sekunden Abwischen.';
   textquestion = 'Mein Versprechen an mich und die Umwelt:';
   buttonpromise = 'Versprechen geben';
-
-  headline2 = 'Du musst es auch so meinen!';
-  textmain2 = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
-  textquestion2 = 'Einfach Screenshot machen oder direkt den Link teilen!';
   buttonActive = false;
   
-  
-  // Use this var in res-counter, people-counter and personal-counter
+// Use this var in res-counter, people-counter and personal-counter
   public peopleCounter = 152;
-  
+
+// Campagn Goal, how many people we want to reach?
+  public campagnGoal = 10000;
+
+  // Counter changes
+  counterOptions = {
+      
+    duration: 5,
+    separator: '.',
+    decimal: ',',
+  };
+
+  counterOptionsFreezed = {
+      
+    duration: 0,
+    separator: '.',
+    decimal: ',',
+  };
   
 /* Pille, please implement this solution, if necessary, instead of viewportWidth-Solution in mousemove and scroll event.
 https://www.npmjs.com/package/ngx-device-detector
@@ -93,14 +105,17 @@ https://www.npmjs.com/package/ngx-device-detector
 
     const treesRight = document.getElementById('trees-right');
       treesRight.style.transition = "0.5s ease";
+      
 
     // Wenn gescrollt wird, dann Farbveränderung und Bäume reinholen  
     if (scrollHeight != 0){
 
-      treesLeft.style.bottom = "-40%";
+      treesLeft.style.bottom = "-10%";
       treesLeft.style.left = "-40%";
-      treesRight.style.bottom = "-40%";
+      treesRight.style.bottom = "-10%";
       treesRight.style.right = "-40%"; 
+      treesLeft.style.transform = "rotate(5deg)";
+      treesRight.style.transform = "rotate(-5deg)";
       backgroundElement.style.backgroundColor = "rgb(169,202,84)";
     } else {
         
@@ -108,6 +123,8 @@ https://www.npmjs.com/package/ngx-device-detector
       treesLeft.style.left = "-50%";
       treesRight.style.bottom = "-100%";
       treesRight.style.right = "-50%"; 
+      treesLeft.style.transform = "rotate(-5deg)";
+      treesRight.style.transform = "rotate(5deg)";
       backgroundElement.style.backgroundColor = "rgb(255,229,0)";
       }
     }
@@ -145,7 +162,65 @@ https://www.npmjs.com/package/ngx-device-detector
   }
 
 
+
+
+
+
+
+
+
+
+//PANEL 2
+
+  headline2 = 'Du musst es auch so meinen!';
+  textmain2 = '';
   
+  
+  
+  
+  
+  
+  // Counter, how many promises are still needed (10.000 goal)
+  public promiseCounterText() {
+
+    if (this.peopleCounter < this.campagnGoal) {
+      return 'Hilf uns dabei, weitere';
+    } else {
+      return 'Dieses Ziel haben wir erreicht! Wir wollen jedoch noch so viele Menschen wie möglich erreichen! Hilf uns dabei, weitere '
+    }
+  }
+
+  public promiseCounterNumber(number) {
+    
+    var promiseCounterNumber = this.campagnGoal - this.peopleCounter;
+
+    if (number == 1) {
+
+      if (this.peopleCounter < this.campagnGoal) {
+        return promiseCounterNumber;
+      } else {
+        return this.campagnGoal;
+      }
+    } else if (number == 2) {
+      if (this.peopleCounter < this.campagnGoal) {
+        return promiseCounterNumber *35;
+      } else {
+        return this.campagnGoal *35;
+      }
+    } else if (number == 3) {
+      if (this.peopleCounter < this.campagnGoal) {
+        return promiseCounterNumber *2.2;
+      } else {
+        return this.campagnGoal *2.2;
+      }
+    } else {
+      return '';
+    }
+    
+  }
+  
+  
+
 }
 
 

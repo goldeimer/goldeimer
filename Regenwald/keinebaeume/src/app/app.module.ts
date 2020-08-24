@@ -1,3 +1,4 @@
+import { SwipeButtonComponent } from './swipe-button-component/swipe-button.component';
 import { PersonalCounterComponent } from './personal-counter-component/personal-counter.component';
 import { ColorPanelComponent } from './color-panel-component/color-panel.component';
 import { ResCounterComponent } from './res-counter-component/res-counter.component';
@@ -23,7 +24,7 @@ import { CountUpModule } from 'ngx-countup';
     ResCounterComponent,
     ColorPanelComponent,
     PersonalCounterComponent,
-  
+    SwipeButtonComponent
     
 
   ],
