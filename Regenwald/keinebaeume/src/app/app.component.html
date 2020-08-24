@@ -7,6 +7,9 @@
     <div class="app-section-movingboard">
         <div class="app-section-movingboard-container" id="Movingboard">
             <div class="app-section-movingboard-section-1" id="Background">
+                <div class="trees-bg" id="trees-bg">
+                    <img src="../assets/img/trees-bg.svg" alt="treefog">
+                </div>
                 <div class="trees-left" id="trees-left">
                     <img src="../assets/img/trees-l.svg" alt="trees">
                 </div>
@@ -18,7 +21,7 @@
                     <p style="font-family: Museo-900; margin-bottom: 5px;">{{textquestion}}</p>
                     
                     <h1>{{headline}}</h1>
-                    <p>Eine Packung Frischfaser-Klopapier verbraucht rund <b>25&#8201;l</b> Wasser und <b>1,5&#8201;kg</b> Holz. Der Zellstoff für das Papier kommt aus Skandinavien und Südamerika, wo der Plantagenanbau Urwäldflächen und Artenvielfalt dezimiert. Bis zu <b>11.000&#8201;km</b> mit dem Containerschiff hat der Zellstoff in Frischfaserpapier hinter sich. Mit Recycling-Klopapier kann jeder von uns CO2-intensive Transportwege reduzieren, über <b>420&#8201;l</b> Wasser und <b>26&#8201;kg</b> Holz im Jahr retten. </p><app-people-counter></app-people-counter>
+                    <p>Eine Packung Frischfaser-Klopapier verbraucht rund <b>25&#8201;l</b> Wasser und <b>1,5&#8201;kg</b> Holz. Der Zellstoff für unser Papier kommt aus Skandinavien und Südamerika, wo der Plantagenanbau Urwäldflächen und Artenvielfalt dezimiert. Bis zu <b>11.000&#8201;km</b> mit dem Containerschiff legt der Zellstoff für unser Frischfaser-Klopapier zurück. Mit Recycling-Klopapier kann jeder von uns CO2-intensive Transportwege reduzieren und über <b>420&#8201;l</b> Wasser und <b>26&#8201;kg</b> Holz im Jahr retten. </p><app-people-counter></app-people-counter>
                     <button (click)="givePromise();">Versprechen geben</button> <!-- Maybe this shouldn't be a button, but more something to swipe right, to give the promise. Like this: https://github.com/ebanx/swipe-button-->
                     <app-swipe-button></app-swipe-button>
                 </div>
@@ -30,7 +33,7 @@
                     <p>{{textmain2}}</p>
                     
                     <p>Danke für dein Versprechen! Starkes Ding. Anders als bei einer Petition, ist der Erfolg dieser Aktion nicht vom Gehör der Politik abhängig. Du bestimmst an jedem Tag und mit jedem Klopapier-Kauf selbst, wie viel Wirkung dein Versprechen hat.</p>
-                    <p>Unser Ziel ist es, insgesamt <b [countUp]= campagnGoal [options]="counterOptionsFreezed">{{campagnGoal}}</b> Versprechen zu bekommen. {{promiseCounterText()}} <b [countUp]=promiseCounterNumber(1) [options]="counterOptions">0</b> </p>  
+                    <p>Unser Ziel: noch mindestens <b [countUp]=promiseCounterNumber(1) [options]="counterOptionsFreezed">0</b> Versprechen. Damit könnten wir weitere <b [countUp]=promiseCounterNumber(2) [options]="counterOptions">0</b><b>&#8201;l</b> Wasser und <b [countUp]=promiseCounterNumber(3) [options]="counterOptions">0</b><b>&#8201;kg</b> Holz pro Jahr retten. Erzähle auch deinen Freund*innen von dem Unterschied, den sie machen können!</p>  
                 </div>
             </div>
             <div class="app-section-movingboard-section-3">

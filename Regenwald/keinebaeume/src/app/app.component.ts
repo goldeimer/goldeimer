@@ -19,7 +19,7 @@ export class AppComponent{
   buttonActive = false;
   
 // Use this var in res-counter, people-counter and personal-counter
-  public peopleCounter = 152;
+  public peopleCounter = 3000;
 
 // Campagn Goal, how many people we want to reach?
   public campagnGoal = 10000;
@@ -62,6 +62,9 @@ https://www.npmjs.com/package/ngx-device-detector
       const treesRight = document.getElementById('trees-right');
         treesRight.style.transition = "0s";
 
+      const treesBg = document.getElementById('trees-bg');
+        treesBg.style.transition = "0s";
+
       //Viewport Farbänderung über komplettes Viewportfenster von (255,229,0) zu (169,202,84)
       var r = Math.round(255 - ((e.clientY * 86 / viewportHeight) *1));
       var g = Math.round(229 - ((e.clientY * 27 / viewportHeight) *1));
@@ -74,16 +77,19 @@ https://www.npmjs.com/package/ngx-device-detector
       //Baumposition verändern
       var treePosVert = -100 + (80*(e.clientY / viewportHeight));
       var treePosHor = -50 + (10*(e.clientY / viewportHeight));
-      var treesRot = -5 + (10*(e.clientY / viewportHeight));
-      
+      var treesRotLeft = -10 + (10*(e.clientY / viewportHeight));
+      var treesRotRight = 10 - (10*(e.clientY / viewportHeight));
+
       //Baumposition in Css überschreiben
       treesLeft.style.bottom = treePosVert+"%";
       treesLeft.style.left = treePosHor+"%";
-      treesLeft.style.transform = "rotate("+treesRot+"deg)";
+      treesLeft.style.transform = "rotate("+treesRotLeft+"deg)";
 
       treesRight.style.bottom = treePosVert+"%";
       treesRight.style.left = "-"+treePosHor+"%";
-      treesRight.style.transform = "rotate(-"+treesRot+"deg)";
+      treesRight.style.transform = "rotate("+treesRotRight+"deg)";
+
+      treesBg.style.bottom = treePosVert+"%";
     } 
   }
   
@@ -98,14 +104,16 @@ https://www.npmjs.com/package/ngx-device-detector
 
     //Transition hinzufügen
     const backgroundElement = document.getElementById('Background');
-    backgroundElement.style.transition = "0.5s ease";
+    backgroundElement.style.transition = "1s ease";
 
     const treesLeft = document.getElementById('trees-left');
-      treesLeft.style.transition = "0.5s ease";
+      treesLeft.style.transition = "1s ease";
 
     const treesRight = document.getElementById('trees-right');
-      treesRight.style.transition = "0.5s ease";
-      
+      treesRight.style.transition = "1s ease";
+    
+      const treesBg = document.getElementById('trees-bg');
+      treesBg.style.transition = "1s ease";
 
     // Wenn gescrollt wird, dann Farbveränderung und Bäume reinholen  
     if (scrollHeight != 0){
@@ -116,6 +124,8 @@ https://www.npmjs.com/package/ngx-device-detector
       treesRight.style.right = "-40%"; 
       treesLeft.style.transform = "rotate(5deg)";
       treesRight.style.transform = "rotate(-5deg)";
+      treesBg.style.bottom = "-10%";
+      
       backgroundElement.style.backgroundColor = "rgb(169,202,84)";
     } else {
         
@@ -125,6 +135,8 @@ https://www.npmjs.com/package/ngx-device-detector
       treesRight.style.right = "-50%"; 
       treesLeft.style.transform = "rotate(-5deg)";
       treesRight.style.transform = "rotate(5deg)";
+      treesBg.style.bottom = "-100%";
+
       backgroundElement.style.backgroundColor = "rgb(255,229,0)";
       }
     }
@@ -152,11 +164,16 @@ https://www.npmjs.com/package/ngx-device-detector
     
         const treesRight = document.getElementById('trees-right');
           treesRight.style.transition = "1s ease";
+
+          const treesBg = document.getElementById('trees-bg');
+          treesBg.style.transition = "1s ease";
     
           treesLeft.style.bottom = "-100%";
           treesLeft.style.left = "-50%";
           treesRight.style.bottom = "-100%";
           treesRight.style.right = "-50%"; 
+          treesBg.style.bottom = "-100%";
+
           backgroundElement.style.backgroundColor = "rgb(169,202,84)";
           
   }
@@ -173,8 +190,6 @@ https://www.npmjs.com/package/ngx-device-detector
 //PANEL 2
 
   headline2 = 'Du musst es auch so meinen!';
-  textmain2 = '';
-  
   
   
   
@@ -186,7 +201,7 @@ https://www.npmjs.com/package/ngx-device-detector
     if (this.peopleCounter < this.campagnGoal) {
       return 'Hilf uns dabei, weitere';
     } else {
-      return 'Dieses Ziel haben wir erreicht! Wir wollen jedoch noch so viele Menschen wie möglich erreichen! Hilf uns dabei, weitere '
+      return 'Dieses Ziel haben wir erreicht. Hilf uns dabei, weitere '
     }
   }
 
@@ -203,15 +218,15 @@ https://www.npmjs.com/package/ngx-device-detector
       }
     } else if (number == 2) {
       if (this.peopleCounter < this.campagnGoal) {
-        return promiseCounterNumber *35;
+        return promiseCounterNumber *35*12.1;
       } else {
-        return this.campagnGoal *35;
+        return this.campagnGoal *35*12.1;
       }
     } else if (number == 3) {
       if (this.peopleCounter < this.campagnGoal) {
-        return promiseCounterNumber *2.2;
+        return promiseCounterNumber *2.2*12.1;
       } else {
-        return this.campagnGoal *2.2;
+        return this.campagnGoal *2.2*12.1;
       }
     } else {
       return '';

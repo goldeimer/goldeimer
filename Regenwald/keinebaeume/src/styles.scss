@@ -227,6 +227,7 @@ button:active {
     left: -50%;
     bottom: -80%;
     transform: rotate(-5deg);
+    transform-origin: 100% 100%;
     
 }
 
@@ -238,6 +239,16 @@ button:active {
     right: -50%;
     bottom: -80%;
     transform: rotate(5deg);
+    transform-origin: 00% 100%;
+}
+
+.trees-bg {
+    position: absolute;
+    height: auto;
+    width: 100%;
+    z-index: 0;
+    right: 0;
+    bottom: -80%;
     
 }
 
