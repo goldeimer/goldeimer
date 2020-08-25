@@ -1,19 +1,17 @@
 {
-  "hosting": [
-    {
-      "target": "keinebaeume",
-      "public": "dist/keinebaeume",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
+    "hosting": [
         {
-          "source": "**",
-          "destination": "/index.html"
+            "target": "keinebaeume",
+            "public": "dist/keinebaeume",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ],
+            "rewrites": [{
+                "source": "**",
+                "destination": "/index.html"
+            }]
         }
-      ]
-    }
-  ]
+    ]
 }

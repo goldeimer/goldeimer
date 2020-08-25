@@ -1,0 +1,25 @@
+{
+    "name": "@goldeimer-config/browserlist-config",
+    "version": "0.0.1",
+    "description": "Goldeimer's browserlist configurations",
+    "main": "src/index.js",
+    "keywords": [
+        "goldeimer",
+        "browserlist"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer-web-apps/packages/goldeimer-config-browserlist#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer-web-apps/issues",
+        "email": "johannes@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer-web-apps.git",
+        "directory": "packages/goldeimer-config-eslint-plugin"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Pille <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause"
+}

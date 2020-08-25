@@ -1,6 +1,28 @@
 {
-  "name": "keinebaeume",
-  "version": "0.0.0",
+  "name": "@goldeimer/abenteuer-regenwald",
+  "version": "0.0.1",
+  "description": "Angular app for Goldeimer's 'keinebaeume' campaign in partnership with Abenteuer Regenwald",
+  "keywords": [
+      "goldeimer",
+      "keinebaeume",
+      "Abenteuer Regenwald"
+  ],
+  "homepage": "https://github.com/Goldeimer/goldeimer-web-apps/packages/goldeimer-abenteuer-regenwald-campaign#readme",
+  "bugs": {
+      "url": "https://github.com/Goldeimer/goldeimer-web-apps/issues",
+      "email": "johannes@goldeimer.de"
+  },
+  "license": "BSD-2-Clause",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Goldeimer/goldeimer-web-apps.git",
+      "directory": "packages/goldeimer-abenteuer-regenwald-campaign"
+  },
+  "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+  "contributors": [
+    "Manni <manou@goldeimer.de>",
+    "Pille <johannes@goldeimer.de>"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

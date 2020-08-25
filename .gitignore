@@ -1,11 +1,46 @@
-# 3rd party sources
+# ----- essential excludes --------------------------------------------------- #
+
+### 3rd party sources
 **/node_modules/**/*
 
-# populated by webpack build
-**/build/**/*
-
-# holds sensitive information
+### holds sensitive information
 **/.env*
 **/.env/**/*
 !**/.env.defaults
 !**/.env.example
+
+# ----- build ---------------------------------------------------------------- #
+
+### distribution output
+**/build/**/*
+**/dist/**/*
+
+### build artifacts
+**/npm-debug.log
+**/yarn-error.log
+
+# ----- IDE & system artifacts -------------------------------------------------------- #
+
+### firebase (cache)
+.firebase
+
+### IDE > miscellaneous
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+### IDE > VSCode
+.vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+.history/*
+
+### system
+.DS_Store
+Thumbs.db
