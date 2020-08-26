@@ -26,7 +26,11 @@
     "scripts": {
         "ng": "ng",
         "build": "ng build",
+        "build:dev": "yarn build",
+        "build:prod": "yarn build --prod",
         "build:webpack": "ng run keinebaeume:build-webpack",
+        "deploy:dev-build:target-prod": "yarn build:dev && ./deploy-production.sh",
+        "deploy:prod-build:target-prod": "yarn build:prod && ./deploy-production.sh",
         "e2e": "ng e2e",
         "lint": "ng lint",
         "start": "ng serve",

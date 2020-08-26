@@ -12,7 +12,9 @@
         "build:lib:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
         "build:map-core:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
         "build:map-core:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
-        "check-env": "node -e 'console.log(process.env)' | grep npm"
+        "check-env": "node -e 'console.log(process.env)' | grep npm",
+        "deploy:dev-build:keinebaeume:target-prod": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn deploy:dev-build:target-prod",
+        "deploy:prod-build:keinebaeume:target-prod": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn deploy:prod-build:target-prod"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",
