@@ -6,8 +6,8 @@
         "packages/*"
     ],
     "scripts": {
-        "build:keinebaeume:dev": "lerna exec --scope @goldeimer/abenteuer-regenwald -- yarn build:dev",
-        "build:keinebaeume:prod": "lerna exec --scope @goldeimer/abenteuer-regenwald -- yarn build:prod",
+        "build:keinebaeume": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn build",
+        "build:keinebaeume:webpack": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn build:webpack",
         "build:lib:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
         "build:lib:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
         "build:map-core:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
