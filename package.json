@@ -6,10 +6,12 @@
         "packages/*"
     ],
     "scripts": {
-        "build:dev:lib": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
-        "build:prod:lib": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
-        "build:dev:map-core": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
-        "build:prod:map-core": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
+        "build:keinebaeume:dev": "lerna exec --scope @goldeimer/abenteuer-regenwald -- yarn build:dev",
+        "build:keinebaeume:prod": "lerna exec --scope @goldeimer/abenteuer-regenwald -- yarn build:prod",
+        "build:lib:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
+        "build:lib:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
+        "build:map-core:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
+        "build:map-core:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
         "check-env": "node -e 'console.log(process.env)' | grep npm"
     },
     "devDependencies": {

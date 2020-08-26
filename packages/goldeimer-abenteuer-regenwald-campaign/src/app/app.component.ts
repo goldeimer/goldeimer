@@ -2,8 +2,6 @@
 import { Component, NgModule, HostListener} from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,9 +13,9 @@ export class AppComponent{
   headline = 'Keine Bäume für den Arsch!';
   texxxxtmain = '2,2kg Holz werden für 1kg Zellstoff-Papier benötigt. Das wächst auf Plantagen, die für die Zerstörung von Urwäldern und die Reduzierung der Artenvielfalt mitverantwortlich sind. Anschließend legt der daraus gewonnene Zellstoff eine Reise von bis zu 11.000km zurück - aus Skandinavien und Südamerika - bevor er unter hohem Wasser- und Energieaufwand zu Papier wird. Das alles für fünf Sekunden Abwischen.';
   textquestion = 'Mein Versprechen an mich und die Umwelt:';
-  buttonpromise = 'Versprechen geben';
+  buttonpromise = 'Versprechen geben';s
   buttonActive = false;
-  
+
 // Use this var in res-counter, people-counter and personal-counter
   public peopleCounter = 3000;
 
@@ -26,26 +24,26 @@ export class AppComponent{
 
   // Counter changes
   counterOptions = {
-      
+
     duration: 5,
     separator: '.',
     decimal: ',',
   };
 
   counterOptionsFreezed = {
-      
+
     duration: 0,
     separator: '.',
     decimal: ',',
   };
-  
+
 /* Pille, please implement this solution, if necessary, instead of viewportWidth-Solution in mousemove and scroll event.
 https://www.npmjs.com/package/ngx-device-detector
 */
 
-  @HostListener('document:mousemove', ['$event']) 
+  @HostListener('document:mousemove', ['$event'])
   onMouseMove(e) {
-    
+
     //Browserfenster ausmessen
     var viewportHeight = window.innerHeight;
     var viewportWidth = window.innerWidth;
@@ -55,10 +53,10 @@ https://www.npmjs.com/package/ngx-device-detector
       //Transitions wegnehmen für Effekt simultan zur Mausbewegung
       const backgroundElement = document.getElementById('Background');
       backgroundElement.style.transition = "0s";
-  
+
       const treesLeft = document.getElementById('trees-left');
         treesLeft.style.transition = "0s";
-  
+
       const treesRight = document.getElementById('trees-right');
         treesRight.style.transition = "0s";
 
@@ -70,7 +68,7 @@ https://www.npmjs.com/package/ngx-device-detector
       var g = Math.round(229 - ((e.clientY * 27 / viewportHeight) *1));
       var b = Math.round(0 + ((e.clientY * 84 / viewportHeight)/1));
       var rgb = "("+r+","+g+","+b+")";
-      
+
       //Farbänderung auf Element übertragen
       backgroundElement.style.backgroundColor = "rgb"+rgb;
 
@@ -90,12 +88,12 @@ https://www.npmjs.com/package/ngx-device-detector
       treesRight.style.transform = "rotate("+treesRotRight+"deg)";
 
       treesBg.style.bottom = treePosVert+"%";
-    } 
+    }
   }
-  
+
   @HostListener('window:scroll', ['$event']) // for window scroll events
   onScroll(f) {
-  
+
     //Scroll messen und auf Variable schreiben
     var scrollHeight = window.pageYOffset;
     var viewportWidth = window.innerWidth;
@@ -111,28 +109,28 @@ https://www.npmjs.com/package/ngx-device-detector
 
     const treesRight = document.getElementById('trees-right');
       treesRight.style.transition = "1s ease";
-    
+
       const treesBg = document.getElementById('trees-bg');
       treesBg.style.transition = "1s ease";
 
-    // Wenn gescrollt wird, dann Farbveränderung und Bäume reinholen  
+    // Wenn gescrollt wird, dann Farbveränderung und Bäume reinholen
     if (scrollHeight != 0){
 
       treesLeft.style.bottom = "-10%";
       treesLeft.style.left = "-40%";
       treesRight.style.bottom = "-10%";
-      treesRight.style.right = "-40%"; 
+      treesRight.style.right = "-40%";
       treesLeft.style.transform = "rotate(5deg)";
       treesRight.style.transform = "rotate(-5deg)";
       treesBg.style.bottom = "-10%";
-      
+
       backgroundElement.style.backgroundColor = "rgb(169,202,84)";
     } else {
-        
+
       treesLeft.style.bottom = "-100%";
       treesLeft.style.left = "-50%";
       treesRight.style.bottom = "-100%";
-      treesRight.style.right = "-50%"; 
+      treesRight.style.right = "-50%";
       treesLeft.style.transform = "rotate(-5deg)";
       treesRight.style.transform = "rotate(5deg)";
       treesBg.style.bottom = "-100%";
@@ -141,11 +139,11 @@ https://www.npmjs.com/package/ngx-device-detector
       }
     }
 
-    
+
     }
 
-    // Fires when button gets pressed. 
-    // peopleCounter should get updated in the database. 
+    // Fires when button gets pressed.
+    // peopleCounter should get updated in the database.
     // refresh peopleCounter in web.app
     // show some kind of subtile success-animation on the peopleCounter.
     // set cookie and disable button forever and ever 1000 years
@@ -156,26 +154,26 @@ https://www.npmjs.com/package/ngx-device-detector
         this.buttonActive = true;
         const MovingBoard = document.getElementById('Movingboard');
         const backgroundElement = document.getElementById('Background');
-        
+
         MovingBoard.style.left = "-100%";
-      
+
         const treesLeft = document.getElementById('trees-left');
           treesLeft.style.transition = "1s ease";
-    
+
         const treesRight = document.getElementById('trees-right');
           treesRight.style.transition = "1s ease";
 
           const treesBg = document.getElementById('trees-bg');
           treesBg.style.transition = "1s ease";
-    
+
           treesLeft.style.bottom = "-100%";
           treesLeft.style.left = "-50%";
           treesRight.style.bottom = "-100%";
-          treesRight.style.right = "-50%"; 
+          treesRight.style.right = "-50%";
           treesBg.style.bottom = "-100%";
 
           backgroundElement.style.backgroundColor = "rgb(169,202,84)";
-          
+
   }
 
 
@@ -190,11 +188,11 @@ https://www.npmjs.com/package/ngx-device-detector
 //PANEL 2
 
   headline2 = 'Du musst es auch so meinen!';
-  
-  
-  
-  
-  
+
+
+
+
+
   // Counter, how many promises are still needed (10.000 goal)
   public promiseCounterText() {
 
@@ -206,7 +204,7 @@ https://www.npmjs.com/package/ngx-device-detector
   }
 
   public promiseCounterNumber(number) {
-    
+
     var promiseCounterNumber = this.campagnGoal - this.peopleCounter;
 
     if (number == 1) {
@@ -231,11 +229,9 @@ https://www.npmjs.com/package/ngx-device-detector
     } else {
       return '';
     }
-    
+
   }
-  
-  
+
+
 
 }
-
-

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import url("//hello.myfonts.net/count/3c1b91");
-  
+
 @font-face {
   font-family: 'Museo-900';
   src: url('../src/assets/Fonts/Museo-900/font.woff2') format('woff2'), url('../src/assets/Fonts/Museo-900/font.woff') format('woff');
@@ -14,10 +14,6 @@
     src: url(assets/Fonts/Museo-500/font.ttf) format('truetype');
     font-weight: 500;
   }
-
-
-
-
 
   @font-face {
     font-family: 'Knewave';
@@ -52,7 +48,7 @@ $half-breakpoint-mobile: 300px;
 
 
 body {
-    
+
     padding: 0px;
     margin: 0px;
     width: 100%;
@@ -100,7 +96,7 @@ app-logosection {
     width: 50%;
     min-width: $half-breakpoint;
     overflow-x: hidden;
- 
+
 }
 
 button {
@@ -137,10 +133,10 @@ button:active {
     position: relative;
     left: 0;
     overflow: hidden;
-    
-    
-    
-    
+
+
+
+
 }
 
 //Container, der drei Panels enthält, die nebeneinander liegen
@@ -163,9 +159,9 @@ button:active {
     background-color: $pri-color;
     position: relative;
     width: 100%;
-    
-    
-    
+
+
+
 }
 
 .app-section-movingboard-section-2 {
@@ -228,7 +224,7 @@ button:active {
     bottom: -80%;
     transform: rotate(-5deg);
     transform-origin: 100% 100%;
-    
+
 }
 
 .trees-right {
@@ -249,14 +245,14 @@ button:active {
     z-index: 0;
     right: 0;
     bottom: -80%;
-    
+
 }
 
 // X Small devices (landscape phones, 576px and up)
 @media (max-width: 575px) {
-    
+
     .app-section-content {
-        
+
         justify-content: flex-start;
         align-items: center;
     }
@@ -276,13 +272,13 @@ button:active {
     .app-section {
 
         min-width: $half-breakpoint-mobile;
-       
+
     }
 }
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-    
+
     .app-section-content {
         padding: $small-space;
     }
@@ -294,13 +290,13 @@ button:active {
     .app-section {
 
         min-width: $half-breakpoint;
-       
+
     }
 }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-    
+
     .app-section-content {
         padding: $medium-space;
     }
@@ -312,13 +308,13 @@ button:active {
     .app-section {
 
         min-width: $half-breakpoint;
-       
+
     }
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-    
+
     .app-section-content {
         padding: $large-space
     }
@@ -330,13 +326,13 @@ button:active {
     .app-section {
 
         min-width: $half-breakpoint;
-       
+
     }
 }
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
-    
+
     .app-section-content {
         padding: $xlarge-space;
     }
@@ -348,7 +344,7 @@ button:active {
     .app-section {
 
         min-width: $half-breakpoint;
-       
+
     }
-    
+
 }
