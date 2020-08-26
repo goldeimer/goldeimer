@@ -25,14 +25,16 @@ function settingsPage()
 function settingsSection()
 {}
 
-function settingsFieldTreeCount()
+function settingsFieldPeopleCounter()
 {
-    $currentValue = getTreeCount();
+    $currentValue = getPeopleCount();
 
-    echo '<input type="number" name="'
-        . SETTING_TREE_COUNT_SLUG
+    echo '<input type="text" name="'
+        . SETTING_PEOPLE_COUNTER_SLUG
         . '" value="'
-        . isset( $currentValue ) ? esc_attr( $currentValue ) : ''
+        . isset( $currentValue )
+            ? esc_attr( $currentValue )
+            : SETTING_PEOPLE_COUNTER_DEFAULT_VALUE
         . '">';
 }
 
@@ -44,7 +46,7 @@ function adminMenuInit()
         'Abenteuer Regenwald',
         'Abenteuer Regenwald',
         'manage_options',
-        SETTINGS_PAGE_SLUG,
+        SETTING_PEOPLE_COUNTER_SLUG,
         'settingsPage'
     );
 }
@@ -53,7 +55,7 @@ function settingsInit()
 {
     register_setting(
         SETTINGS_GROUP,
-        SETTING_TREE_COUNT_SLUG,
+        SETTING_PEOPLE_COUNTER_SLUG,
         array(
             'type' => 'number',
             'sanitize_callback' => 'absint',
@@ -70,9 +72,9 @@ function settingsInit()
     );
 
     add_settings_field(
-        SETTING_TREE_COUNT_SLUG,
-        'Tree Count',
-        'settingsFieldTreeCount',
+        SETTING_PEOPLE_COUNTER_SLUG,
+        'People Counter',
+        'settingsFieldPeopleCounter',
         SETTINGS_PAGE_SLUG,
         SETTINGS_SECTION_ID
     );

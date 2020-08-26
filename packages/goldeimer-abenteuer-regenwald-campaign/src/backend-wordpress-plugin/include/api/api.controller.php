@@ -12,19 +12,19 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     {
         register_rest_route(
             API_NAMESPACE,
-            '/' . TREE_COUNT_RESOURCE_SLUG,
+            '/' . PEOPLE_COUNTER_RESOURCE_SLUG,
             [
                 [
                     'methods'             => WP_REST_Server::READABLE,
                     'callback'            => [ $this, 'getValue' ],
-                    'permission_callback' => [ $this, 'getValuePermissionsCheck' ],
+                    'permission_callback' => '__return_true',
                     'args'                => [],
                 ],
                 [
                     'methods'             => WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'updateValue' ],
-                    'permission_callback' => [ $this, 'updateValuePermissionsCheck' ],
-                    'args'                => $this->get_endpoint_args_for_item_schema( false ),
+                    'permission_callback' => '__return_true',
+                    'args'                => [],
                 ],
                 'schema' => 'schema'
             ]
@@ -32,7 +32,7 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
 
         // register_rest_route(
         //     API_NAMESPACE,
-        //     '.' . TREE_COUNT_RESOURCE_SLUG . '/schema',
+        //     '.' . PEOPLE_COUNTER_RESOURCE_SLUG . '/schema',
         //     [
         //         'methods'  => WP_REST_Server::READABLE,
         //         'callback' => array( $this, 'schema' ),
@@ -44,7 +44,7 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     {
         return [
             '$schema'              => 'http://json-schema.org/draft-04/schema#',
-            'title'                => TREE_COUNT_RESOURCE_SLUG,
+            'title'                => PEOPLE_COUNTER_RESOURCE_SLUG,
             'type'                 => 'object',
             'properties'           =>  [
                 'incrementBy' => [
@@ -65,17 +65,18 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     /// @return WP_Error|WP_REST_Response
     public function getValue( $request )
     {
+
         try {
             return new WP_REST_Response(
                 $this->prepareForHttpResponse(
-                    getTreeCount(),
+                    getPeopleCount(),
                     $request
                 ),
                 200
             );
         } catch (Exception $e) {
             return new WP_Error(
-                TREE_COUNT_RESOURCE_SLUG . '-read-error',
+                PEOPLE_COUNTER_RESOURCE_SLUG . '-read-error',
                 'Failed to retrieve value: ' . $e->getMessage()
             );
         }
@@ -89,14 +90,14 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     {
         try {
             return new WP_REST_Response(
-                setTreeCount(
+                setPeopleCount(
                     $this->prepareForDatabase( $request )
                 ),
                 200
             );
         } catch (Exception $e) {
             return new WP_Error(
-                TREE_COUNT_RESOURCE_SLUG . '-write-error',
+                PEOPLE_COUNTER_RESOURCE_SLUG . '-write-error',
                 'Failed to update value: ' . $e->getMessage()
             );
         }
@@ -110,15 +111,13 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     /// @return WP_Error|object $prepared_item
     protected function prepareForDatabase( $request )
     {
-        $requestBody = $this->get_json_params();
+        $requestBody = $request->get_json_params();
 
-        $incrementBy = !empty( $requestBody.incrementBy )
-            ? $requestBody.incrementBy
-            : TREE_COUNT_DEFAULT_INCREMENT;
+        $incrementBy = !empty( $requestBody['incrementBy'] )
+            ? $requestBody['incrementBy']
+            : PEOPLE_COUNTER_INCREMENT_BY;
 
-        return [
-            'value' => getTreeCount() + incrementBy
-        ];
+        return getPeopleCount() + $incrementBy;
     }
 
     /// Prepare the item for the HTTP REST response
@@ -138,22 +137,11 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
 
 /// ----- permissions ----------------------------------------------------------
 
-    protected function getValuePermissionsCheck( $request )
-    {
-        // TODO: Check API key of sorts.
-
-        return true;
-    }
-
     protected function updateValuePermissionsCheck( $request )
     {
-        // TODO:
-        // Check API key of sorts.
-        // Return early if invalid.
-
         return ! hasIpAddressRecentlyUpdatedValue(
             getIpAddressOfCurrentRequest(),
-            TREE_COUNT_RESOURCE_SLUG
+            PEOPLE_COUNTER_RESOURCE_SLUG
         );
     }
 }

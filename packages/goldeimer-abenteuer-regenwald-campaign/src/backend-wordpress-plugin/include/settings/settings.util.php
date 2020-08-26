@@ -2,18 +2,18 @@
 
 require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/settings/settings.constants.php';
 
-function getTreeCount()
+function getPeopleCount()
 {
     return get_option(
-        SETTING_TREE_COUNT_SLUG,
-        SETTING_TREE_COUNT_DEFAULT_VALUE
+        SETTING_PEOPLE_COUNTER_SLUG,
+        SETTING_PEOPLE_COUNTER_DEFAULT_VALUE
     );
 }
 
-function setTreeCount( $value )
+function setPeopleCount( $value )
 {
     return update_option(
-        SETTING_TREE_COUNT_SLUG,
+        SETTING_PEOPLE_COUNTER_SLUG,
         $value
     );
 }

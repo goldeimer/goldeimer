@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 
 import { Observable, throwError } from 'rxjs'
 import { catchError, retry } from 'rxjs/operators'
 
-const API_ENDPOINT = 'http://goldeimer.de/wp-json/goldeimer/v1/tree-count'
+const API_ENDPOINT = 'http://goldeimer.de/wp-json/goldeimer/v1/peoplecounter'
+
+const TMP_API_TOKEN = window.btoa(( 'goldeimer-api-client-user:cSpX yRYR 8W6p aMq1 YVrx XYqb'))
+
+const HEADERS = new HttpHeaders()
+    .set('Content-Type', 'application/json')
+    // .set('Access-Control-Allow-Origin', '*')
+    .set('Authorization', `Basic ${TMP_API_TOKEN}`)
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +19,18 @@ const API_ENDPOINT = 'http://goldeimer.de/wp-json/goldeimer/v1/tree-count'
 export class ApiService {
     constructor(private httpClient: HttpClient) {}
 
-    getTreeCount = () => this.httpClient.get(API_ENDPOINT).pipe(
+    getPeopleCounter = () => this.httpClient.get(API_ENDPOINT).pipe(
         retry(2),
+        catchError(this.handleError)
+    )
+
+    incrementPeopleCounter = (
+        incrementBy = 1
+    ) => this.httpClient.put(
+        API_ENDPOINT,
+        { incrementBy },
+        { headers: HEADERS }
+    ).pipe(
         catchError(this.handleError)
     )
 

@@ -1,145 +1,145 @@
 
-import { Component, NgModule, HostListener} from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { Component, NgModule, HostListener} from '@angular/core'
+import { DeviceDetectorService } from 'ngx-device-detector'
+
+import { ApiService } from './app.api.service'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent{
+export class AppComponent
+{
+    constructor(private apiService: ApiService) { }
 
-  textpromise = 'Menschen versprechen bereits:'
-  headline = 'Keine Bäume für den Arsch!';
-  texxxxtmain = '2,2kg Holz werden für 1kg Zellstoff-Papier benötigt. Das wächst auf Plantagen, die für die Zerstörung von Urwäldern und die Reduzierung der Artenvielfalt mitverantwortlich sind. Anschließend legt der daraus gewonnene Zellstoff eine Reise von bis zu 11.000km zurück - aus Skandinavien und Südamerika - bevor er unter hohem Wasser- und Energieaufwand zu Papier wird. Das alles für fünf Sekunden Abwischen.';
-  textquestion = 'Mein Versprechen an mich und die Umwelt:';
-  buttonpromise = 'Versprechen geben';
-  buttonActive = false;
+    textpromise = 'Menschen versprechen bereits:'
+    headline = 'Keine Bäume für den Arsch!';
+    texxxxtmain = '2,2kg Holz werden für 1kg Zellstoff-Papier benötigt. Das wächst auf Plantagen, die für die Zerstörung von Urwäldern und die Reduzierung der Artenvielfalt mitverantwortlich sind. Anschließend legt der daraus gewonnene Zellstoff eine Reise von bis zu 11.000km zurück - aus Skandinavien und Südamerika - bevor er unter hohem Wasser- und Energieaufwand zu Papier wird. Das alles für fünf Sekunden Abwischen.';
+    textquestion = 'Mein Versprechen an mich und die Umwelt:';
+    buttonpromise = 'Versprechen geben';
+    buttonActive = false;
 
-// Use this var in res-counter, people-counter and personal-counter
-  public peopleCounter = 3000;
-
-// Campagn Goal, how many people we want to reach?
-  public campagnGoal = 10000;
-
-  // Counter changes
-  counterOptions = {
-
-    duration: 5,
-    separator: '.',
-    decimal: ',',
-  };
-
-  counterOptionsFreezed = {
-
-    duration: 0,
-    separator: '.',
-    decimal: ',',
-  };
-
-/* Pille, please implement this solution, if necessary, instead of viewportWidth-Solution in mousemove and scroll event.
-https://www.npmjs.com/package/ngx-device-detector
-*/
-
-  @HostListener('document:mousemove', ['$event'])
-  onMouseMove(e) {
-
-    //Browserfenster ausmessen
-    var viewportHeight = window.innerHeight;
-    var viewportWidth = window.innerWidth;
-
-    if (viewportWidth >= 992 && this.buttonActive == false) {
-
-      //Transitions wegnehmen für Effekt simultan zur Mausbewegung
-      const backgroundElement = document.getElementById('Background');
-      backgroundElement.style.transition = "0s";
-
-      const treesLeft = document.getElementById('trees-left');
-        treesLeft.style.transition = "0s";
-
-      const treesRight = document.getElementById('trees-right');
-        treesRight.style.transition = "0s";
-
-      const treesBg = document.getElementById('trees-bg');
-        treesBg.style.transition = "0s";
-
-      //Viewport Farbänderung über komplettes Viewportfenster von (255,229,0) zu (169,202,84)
-      var r = Math.round(255 - ((e.clientY * 86 / viewportHeight) *1));
-      var g = Math.round(229 - ((e.clientY * 27 / viewportHeight) *1));
-      var b = Math.round(0 + ((e.clientY * 84 / viewportHeight)/1));
-      var rgb = "("+r+","+g+","+b+")";
-
-      //Farbänderung auf Element übertragen
-      backgroundElement.style.backgroundColor = "rgb"+rgb;
-
-      //Baumposition verändern
-      var treePosVert = -100 + (80*(e.clientY / viewportHeight));
-      var treePosHor = -50 + (10*(e.clientY / viewportHeight));
-      var treesRotLeft = -10 + (10*(e.clientY / viewportHeight));
-      var treesRotRight = 10 - (10*(e.clientY / viewportHeight));
-
-      //Baumposition in Css überschreiben
-      treesLeft.style.bottom = treePosVert+"%";
-      treesLeft.style.left = treePosHor+"%";
-      treesLeft.style.transform = "rotate("+treesRotLeft+"deg)";
-
-      treesRight.style.bottom = treePosVert+"%";
-      treesRight.style.left = "-"+treePosHor+"%";
-      treesRight.style.transform = "rotate("+treesRotRight+"deg)";
-
-      treesBg.style.bottom = treePosVert+"%";
-    }
-  }
-
-  @HostListener('window:scroll', ['$event']) // for window scroll events
-  onScroll(f) {
-
-    //Scroll messen und auf Variable schreiben
-    var scrollHeight = window.pageYOffset;
-    var viewportWidth = window.innerWidth;
-
-    if (viewportWidth < 992 && this.buttonActive == false) {
-
-    //Transition hinzufügen
-    const backgroundElement = document.getElementById('Background');
-    backgroundElement.style.transition = "1s ease";
-
-    const treesLeft = document.getElementById('trees-left');
-      treesLeft.style.transition = "1s ease";
-
-    const treesRight = document.getElementById('trees-right');
-      treesRight.style.transition = "1s ease";
-
-      const treesBg = document.getElementById('trees-bg');
-      treesBg.style.transition = "1s ease";
-
-    // Wenn gescrollt wird, dann Farbveränderung und Bäume reinholen
-    if (scrollHeight != 0){
-
-      treesLeft.style.bottom = "-10%";
-      treesLeft.style.left = "-40%";
-      treesRight.style.bottom = "-10%";
-      treesRight.style.right = "-40%";
-      treesLeft.style.transform = "rotate(5deg)";
-      treesRight.style.transform = "rotate(-5deg)";
-      treesBg.style.bottom = "-10%";
-
-      backgroundElement.style.backgroundColor = "rgb(169,202,84)";
-    } else {
-
-      treesLeft.style.bottom = "-100%";
-      treesLeft.style.left = "-50%";
-      treesRight.style.bottom = "-100%";
-      treesRight.style.right = "-50%";
-      treesLeft.style.transform = "rotate(-5deg)";
-      treesRight.style.transform = "rotate(5deg)";
-      treesBg.style.bottom = "-100%";
-
-      backgroundElement.style.backgroundColor = "rgb(255,229,0)";
-      }
+    private incrementBackendPeopleCounter = () => {
+        this.apiService.incrementPeopleCounter().subscribe((value) => {
+            console.log(
+                "PUT call successful value returned in body",
+                value
+            )
+        });
     }
 
+    public peopleCounter = 3000
 
+    public campaignGoal = 10000
+
+    counterOptions = {
+        duration: 5,
+        separator: '.',
+        decimal: ',',
+    }
+
+    counterOptionsFreezed = {
+        duration: 0,
+        separator: '.',
+        decimal: ',',
+    }
+
+    /// TODO: Implement alternative:
+    /// https://www.npmjs.com/package/ngx-device-detector
+
+    @HostListener('document:mousemove', ['$event'])
+    onMouseMove(event) {
+        var viewportHeight = window.innerHeight;
+        var viewportWidth = window.innerWidth;
+
+        if (viewportWidth >= 992 && this.buttonActive == false) {
+
+        //Transitions wegnehmen für Effekt simultan zur Mausbewegung
+        const backgroundElement = document.getElementById('Background');
+        backgroundElement.style.transition = "0s";
+
+        const treesLeft = document.getElementById('trees-left');
+            treesLeft.style.transition = "0s";
+
+        const treesRight = document.getElementById('trees-right');
+            treesRight.style.transition = "0s";
+
+        const treesBg = document.getElementById('trees-bg');
+            treesBg.style.transition = "0s";
+
+        //Viewport Farbänderung über komplettes Viewportfenster von (255,229,0) zu (169,202,84)
+        var r = Math.round(255 - ((event.clientY * 86 / viewportHeight) *1));
+        var g = Math.round(229 - ((event.clientY * 27 / viewportHeight) *1));
+        var b = Math.round(0 + ((event.clientY * 84 / viewportHeight)/1));
+        var rgb = "("+r+","+g+","+b+")";
+
+        //Farbänderung auf Element übertragen
+        backgroundElement.style.backgroundColor = "rgb"+rgb;
+
+        //Baumposition verändern
+        var treePosVert = -100 + (80*(event.clientY / viewportHeight));
+        var treePosHor = -50 + (10*(event.clientY / viewportHeight));
+        var treesRotLeft = -10 + (10*(event.clientY / viewportHeight));
+        var treesRotRight = 10 - (10*(event.clientY / viewportHeight));
+
+        //Baumposition in Css überschreiben
+        treesLeft.style.bottom = treePosVert+"%";
+        treesLeft.style.left = treePosHor+"%";
+        treesLeft.style.transform = "rotate("+treesRotLeft+"deg)";
+
+        treesRight.style.bottom = treePosVert+"%";
+        treesRight.style.left = "-"+treePosHor+"%";
+        treesRight.style.transform = "rotate("+treesRotRight+"deg)";
+
+        treesBg.style.bottom = treePosVert+"%";
+        }
+    }
+
+    @HostListener('window:scroll', ['$event'])
+    onScroll() {
+        var scrollHeight = window.pageYOffset;
+        var viewportWidth = window.innerWidth;
+
+        if (viewportWidth < 992 && this.buttonActive == false) {
+            const backgroundElement = document.getElementById('Background');
+            backgroundElement.style.transition = "1s ease";
+
+            const treesLeft = document.getElementById('trees-left');
+            treesLeft.style.transition = "1s ease";
+
+            const treesRight = document.getElementById('trees-right');
+            treesRight.style.transition = "1s ease";
+
+            const treesBg = document.getElementById('trees-bg');
+            treesBg.style.transition = "1s ease";
+
+            // Wenn gescrollt wird, dann Farbveränderung und Bäume reinholen
+            if (scrollHeight != 0)
+            {
+                treesLeft.style.bottom = "-10%";
+                treesLeft.style.left = "-40%";
+                treesRight.style.bottom = "-10%";
+                treesRight.style.right = "-40%";
+                treesLeft.style.transform = "rotate(5deg)";
+                treesRight.style.transform = "rotate(-5deg)";
+                treesBg.style.bottom = "-10%";
+
+                backgroundElement.style.backgroundColor = "rgb(169,202,84)";
+            }
+            else
+            {
+                treesLeft.style.bottom = "-100%";
+                treesLeft.style.left = "-50%";
+                treesRight.style.bottom = "-100%";
+                treesRight.style.right = "-50%";
+                treesLeft.style.transform = "rotate(-5deg)";
+                treesRight.style.transform = "rotate(5deg)";
+                treesBg.style.bottom = "-100%";
+
+                backgroundElement.style.backgroundColor = "rgb(255,229,0)";
+            }
+        }
     }
 
     // Fires when button gets pressed.
@@ -147,11 +147,10 @@ https://www.npmjs.com/package/ngx-device-detector
     // refresh peopleCounter in web.app
     // show some kind of subtile success-animation on the peopleCounter.
     // set cookie and disable button forever and ever 1000 years
+    public onParticipationIntent = () => {
+        this.incrementBackendPeopleCounter()
 
-
-      public givePromise() {
-
-        this.buttonActive = true;
+        this.buttonActive = true
         const MovingBoard = document.getElementById('Movingboard');
         const backgroundElement = document.getElementById('Background');
 
@@ -161,89 +160,79 @@ https://www.npmjs.com/package/ngx-device-detector
           treesLeft.style.transition = "1s ease";
 
         const treesRight = document.getElementById('trees-right');
-          treesRight.style.transition = "1s ease";
+        treesRight.style.transition = "1s ease";
 
-          const treesBg = document.getElementById('trees-bg');
-          treesBg.style.transition = "1s ease";
+        const treesBg = document.getElementById('trees-bg');
+        treesBg.style.transition = "1s ease";
 
-          treesLeft.style.bottom = "-100%";
-          treesLeft.style.left = "-50%";
-          treesRight.style.bottom = "-100%";
-          treesRight.style.right = "-50%";
-          treesBg.style.bottom = "-100%";
+        treesLeft.style.bottom = "-100%";
+        treesLeft.style.left = "-50%";
+        treesRight.style.bottom = "-100%";
+        treesRight.style.right = "-50%";
+        treesBg.style.bottom = "-100%";
 
-          backgroundElement.style.backgroundColor = "rgb(169,202,84)";
-
-  }
-
-  copyMessage(val: string){
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-
-    const copyButton = document.getElementById('copy-button');
-    copyButton.textContent = "Link kopiert";
-    copyButton.style.backgroundColor="#ffe500"
-  }
-
-
-
-
-//PANEL 2
-
-  headline2 = 'Du musst es auch so meinen!';
-
-
-
-
-
-  // Counter, how many promises are still needed (10.000 goal)
-  public promiseCounterText() {
-
-    if (this.peopleCounter < this.campagnGoal) {
-      return 'Hilf uns dabei, weitere';
-    } else {
-      return 'Dieses Ziel haben wir erreicht. Hilf uns dabei, weitere '
-    }
-  }
-
-  public promiseCounterNumber(number) {
-
-    var promiseCounterNumber = this.campagnGoal - this.peopleCounter;
-
-    if (number == 1) {
-
-      if (this.peopleCounter < this.campagnGoal) {
-        return promiseCounterNumber;
-      } else {
-        return this.campagnGoal;
-      }
-    } else if (number == 2) {
-      if (this.peopleCounter < this.campagnGoal) {
-        return promiseCounterNumber *35*12.1;
-      } else {
-        return this.campagnGoal *35*12.1;
-      }
-    } else if (number == 3) {
-      if (this.peopleCounter < this.campagnGoal) {
-        return promiseCounterNumber *2.2*12.1;
-      } else {
-        return this.campagnGoal *2.2*12.1;
-      }
-    } else {
-      return '';
+        backgroundElement.style.backgroundColor = "rgb(169,202,84)";
     }
 
-  }
+    copyMessage(val: string){
+        const selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = val;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
 
+        const copyButton = document.getElementById('copy-button');
+        copyButton.textContent = "Link kopiert";
+        copyButton.style.backgroundColor="#ffe500"
+    }
 
+/// ---- PANEL 2 ---------------------------------------------------------------
 
+    headline2 = 'Du musst es auch so meinen!';
+
+    // Counter, how many promises are still needed (10.000 goal)
+    public promiseCounterText() {
+
+        if (this.peopleCounter < this.campaignGoal) {
+        return 'Hilf uns dabei, weitere';
+        } else {
+        return 'Dieses Ziel haben wir erreicht. Hilf uns dabei, weitere '
+        }
+    }
+
+    public promiseCounterNumber(number) {
+
+        var promiseCounterNumber = this.campaignGoal - this.peopleCounter;
+
+        /// TODO:
+        /// Clean-up messy conditional-brnaching.
+        if (number == 1) {
+
+        if (this.peopleCounter < this.campaignGoal) {
+            return promiseCounterNumber;
+        } else {
+            return this.campaignGoal;
+        }
+        } else if (number == 2) {
+        if (this.peopleCounter < this.campaignGoal) {
+            return promiseCounterNumber *35*12.1;
+        } else {
+            return this.campaignGoal *35*12.1;
+        }
+        } else if (number == 3) {
+        if (this.peopleCounter < this.campaignGoal) {
+            return promiseCounterNumber *2.2*12.1;
+        } else {
+            return this.campaignGoal *2.2*12.1;
+        }
+        } else {
+        return '';
+        }
+    }
 }

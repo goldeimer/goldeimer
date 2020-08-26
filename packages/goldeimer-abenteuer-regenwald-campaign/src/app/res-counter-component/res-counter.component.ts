@@ -12,14 +12,13 @@ export class ResCounterComponent implements OnInit {
     peopleCounter: any = null
 
     ngOnInit() {
-        this.fetchCurrenPeopleCounterValue()
+        this.fetchBackendPeopleCounter()
     }
 
-    private fetchCurrenPeopleCounterValue = () => {
-        this.apiService.getTreeCount().subscribe((response) => {
-            console.log(response)
+    private fetchBackendPeopleCounter = () => {
+        this.apiService.getPeopleCounter().subscribe((response) => {
             this.loading = false
-            this.peopleCounter = response
+            this.peopleCounter = response['value'] || 0
         })
     }
 
