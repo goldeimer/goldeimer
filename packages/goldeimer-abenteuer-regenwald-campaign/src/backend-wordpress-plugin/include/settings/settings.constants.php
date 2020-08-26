@@ -1,9 +1,9 @@
 <?php
 
-const PAGE_SLUG = 'abenteuer-regenwald'
+const PAGE_SLUG = 'abenteuer-regenwald-campaign';
 
 const SETTINGS = [
-    'abenteuerRegenwald': [
+    'abenteuerRegenwaldCampaign' => [
         'slug' => PAGE_SLUG,
         'sections' => [
             'main' => [
@@ -17,4 +17,4 @@ const SETTINGS = [
             ]
         ]
     ]
-]
+];

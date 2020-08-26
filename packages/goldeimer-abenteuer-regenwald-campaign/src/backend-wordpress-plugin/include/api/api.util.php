@@ -1,6 +1,6 @@
 <?php
 
-const MIN_UPDATE_REQUEST_DELAY_PER_IP_IN_HOURS = 24 * 7
+const MIN_UPDATE_REQUEST_DELAY_PER_IP_IN_HOURS = 24 * 7;
 
 function getIpAddressOfCurrentRequest() {
     return isset($_SERVER['REMOTE_ADDR'])
@@ -13,7 +13,7 @@ function getRecentIpAddressesHavingUpdatedValue( $optionName )
     // TODO:
     // Stub.
     // Add a transient list.
-    return []
+    return [];
 }
 
 function hasIpAddressRecentlyUpdatedValue(
@@ -24,5 +24,5 @@ function hasIpAddressRecentlyUpdatedValue(
     return in_array(
         $ipAddress,
         getRecentIpAddressesHavingUpdatedValue($optionName)
-    )
+    );
 }

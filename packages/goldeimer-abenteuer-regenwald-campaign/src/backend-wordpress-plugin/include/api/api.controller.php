@@ -1,10 +1,10 @@
 <?php
 
-require_once GOLDEIMER_ABENTEUER_REGENWALD_ABSPATH.'/include/settings/settings.util.php';
+require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/settings/settings.util.php';
 
-require_once GOLDEIMER_ABENTEUER_REGENWALD_ABSPATH.'/include/api/api.constants.php';
-require_once GOLDEIMER_ABENTEUER_REGENWALD_ABSPATH.'/include/api/api.controller.php';
-require_once GOLDEIMER_ABENTEUER_REGENWALD_ABSPATH.'/include/api/api.util.php';
+require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/api/api.constants.php';
+require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/api/api.controller.php';
+require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/api/api.util.php';
 
 class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
 {
@@ -27,7 +27,7 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
                 ],
                 'schema' => 'schema'
             ]
-        )
+        );
 
         // register_rest_route(
         //     API_NAMESPACE,
@@ -72,10 +72,10 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
                 ),
                 200
             );
-        } catch {
+        } catch (Exception $e) {
             return new WP_Error(
                 TREE_COUNT_RESOURCE_SLUG . '-read-error',
-                'Failed to retrieve value.'
+                'Failed to retrieve value: ' . $e->getMessage()
             );
         }
     }
@@ -93,10 +93,10 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
                 ),
                 200
             );
-        } catch {
+        } catch (Exception $e) {
             return new WP_Error(
                 TREE_COUNT_RESOURCE_SLUG . '-write-error',
-                'Failed to update value.'
+                'Failed to update value: ' . $e->getMessage()
             );
         }
     }
@@ -109,15 +109,15 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     /// @return WP_Error|object $prepared_item
     protected function prepareForDatabase( $request )
     {
-        $requestBody = $this->get_json_params()
+        $requestBody = $this->get_json_params();
 
         $incrementBy = !empty( $requestBody.incrementBy )
             ? $requestBody.incrementBy
-            : TREE_COUNT_DEFAULT_INCREMENT
+            : TREE_COUNT_DEFAULT_INCREMENT;
 
         return [
             'value' => getTreeCount() + incrementBy
-        ]
+        ];
     }
 
     /// Prepare the item for the HTTP REST response
@@ -132,7 +132,7 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     {
         return [
             'value' => $value
-        ]
+        ];
     }
 
 /// ----- permissions ----------------------------------------------------------
@@ -140,7 +140,7 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     protected function getValuePermissionsCheck( $request )
     {
         // TODO: Check API key of sorts.
-        return true
+        return true;
     }
 
     protected function updateValuePermissionsCheck( $request )
@@ -152,6 +152,6 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
         return ! hasIpAddressRecentlyUpdatedValue(
             getIpAddressOfCurrentRequest(),
             TREE_COUNT_RESOURCE_SLUG
-        )
+        );
     }
 }
