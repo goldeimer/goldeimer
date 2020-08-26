@@ -1,40 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { ApiService } from '../app.api.service'
 
 @Component({
   selector: 'app-res-counter',
   templateUrl: './res-counter.component.html'
 })
-export class ResCounterComponent {
-    
+export class ResCounterComponent implements OnInit {
+    constructor(private apiService: ApiService) { }
+
+    loading: boolean = true
+    peopleCounter: any = null
+
+    ngOnInit() {
+        this.fetchCurrenPeopleCounterValue()
+    }
+
+    private fetchCurrenPeopleCounterValue = () => {
+        this.apiService.getTreeCount().subscribe((response) => {
+            console.log(response)
+            this.loading = false
+            this.peopleCounter = response
+        })
+    }
+
     // Average water- / wood- / tp- consumption in germany
-    waterCons = 35; 
+    waterCons = 35;
     woodCons = 2.2;
     toiletPaperCons = 12.1;
 
-    // Get this from app.component
-    public peopleCounter = 152;
-
     // ressource counter functions
     public waterCounter() {
-      return Math.round (this.peopleCounter * this.waterCons * this.toiletPaperCons);
+      return Math.round ((this.peopleCounter || 0) * this.waterCons * this.toiletPaperCons);
     }
 
     public woodCounter() {
-      return Math.round (this.peopleCounter * this.woodCons * this.toiletPaperCons);
-      
+      return Math.round ((this.peopleCounter || 0) * this.woodCons * this.toiletPaperCons);
     }
-    
+
     // Counter changes
     counterOptions = {
-      
+
       duration: 5,
       separator: '.',
       decimal: ',',
     };
-    
+
     // Text
     peopleCounterDesc = 'gehaltene Versprechen retten'
     waterCounterDesc = 'Wasser und'
     woodCounterDesc = 'Holz pro Jahr.'
 }
-

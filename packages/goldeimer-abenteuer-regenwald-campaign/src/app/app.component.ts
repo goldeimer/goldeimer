@@ -13,11 +13,8 @@ export class AppComponent{
   headline = 'Keine Bäume für den Arsch!';
   texxxxtmain = '2,2kg Holz werden für 1kg Zellstoff-Papier benötigt. Das wächst auf Plantagen, die für die Zerstörung von Urwäldern und die Reduzierung der Artenvielfalt mitverantwortlich sind. Anschließend legt der daraus gewonnene Zellstoff eine Reise von bis zu 11.000km zurück - aus Skandinavien und Südamerika - bevor er unter hohem Wasser- und Energieaufwand zu Papier wird. Das alles für fünf Sekunden Abwischen.';
   textquestion = 'Mein Versprechen an mich und die Umwelt:';
-  buttonpromise = 'Versprechen geben';s
+  buttonpromise = 'Versprechen geben';
   buttonActive = false;
-
-
-
 
 // Use this var in res-counter, people-counter and personal-counter
   public peopleCounter = 3000;
@@ -179,8 +176,6 @@ https://www.npmjs.com/package/ngx-device-detector
 
   }
 
-
-//Copy to Clipboard Button
   copyMessage(val: string){
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';

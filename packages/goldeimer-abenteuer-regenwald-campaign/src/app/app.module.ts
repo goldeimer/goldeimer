@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common'
+import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
@@ -33,10 +34,10 @@ import { LogoSectionComponent } from './logosection-component/logosection.compon
         AppRoutingModule,
         DeviceDetectorModule,
         CommonModule,
-        CountUpModule
-
+        CountUpModule,
+        HttpClientModule
     ],
     providers: []
 })
 
-export default class AppModule {}
+export class AppModule {}
