@@ -1,6 +1,10 @@
+const path = require('path')
+
+const { PROJECT_ROOT } = require('../../../abspath')
+
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
+    plugins: ['@typescript-eslint', 'tsc'],
     extends: [
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
@@ -15,7 +19,13 @@ module.exports = {
         '@typescript-eslint/no-useless-constructor': 'error',
         'import/extensions': ['error', 'never'],
         // TODO: Re-enable.
-        'import/prefer-default-export': ['off']
+        'import/prefer-default-export': ['off'],
+        'tsc/config': ['on', {
+            configFile: path.resolve(
+                PROJECT_ROOT,
+                'tsconfig.json'
+            )
+        }]
     },
     settings: {
         'import/parsers': {
