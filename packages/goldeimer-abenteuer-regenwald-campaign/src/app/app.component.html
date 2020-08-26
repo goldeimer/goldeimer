@@ -1,54 +1,71 @@
-
-
 <div class="app-section-wrap">
 
+    <section class="app-section app-yellow-bg">
+        <div class="app-section-movingboard">
+            <div class="app-section-movingboard-container" id="Movingboard">
+                <div class="app-section-movingboard-section-1" id="Background">
+                    <div class="trees-bg" id="trees-bg">
+                        <img src="../assets/img/trees-bg.svg" alt="treefog">
+                    </div>
+                    <div class="trees-left" id="trees-left">
+                        <img src="../assets/img/trees-l.svg" alt="trees">
+                    </div>
+                    <div class="trees-right" id="trees-right">
+                        <img src="../assets/img/trees-r.svg" alt="trees">
+                    </div>
+                    <div class="app-section-content">
+                        <app-logosection></app-logosection>
+                        <p style="font-family: Museo-900; margin-bottom: 5px;">{{textquestion}}</p>
 
-<section class="app-section app-yellow-bg">
-    <div class="app-section-movingboard">
-        <div class="app-section-movingboard-container" id="Movingboard">
-            <div class="app-section-movingboard-section-1" id="Background">
-                <div class="trees-bg" id="trees-bg">
-                    <img src="../assets/img/trees-bg.svg" alt="treefog">
+                        <h1>{{headline}}</h1>
+                        <p>Eine Packung Frischfaser-Klopapier verbraucht rund <bclass="app-no-textwrap">25&#8201;l</b> Wasser und <b class="app-no-textwrap">1,5&#8201;kg</b> Holz. Der Zellstoff für unser Papier kommt aus Skandinavien und Südamerika, wo der Plantagenanbau Urwäldflächen und Artenvielfalt dezimiert. Bis zu <b class="app-no-textwrap">11.000&#8201;km</b> mit dem Containerschiff legt der Zellstoff für unser Frischfaser-Klopapier zurück. Mit Recycling-Klopapier kann jeder von uns CO2-intensive Transportwege reduzieren und über <b class="app-no-textwrap">420&#8201;l</b> Wasser und <b class="app-no-textwrap">26&#8201;kg</b> Holz im Jahr einsparen.</p><app-people-counter></app-people-counter>
+                        <button (click)="givePromise();">Versprechen geben</button> <!-- Maybe this shouldn't be a button, but more something to swipe right, to give the promise. Like this: https://github.com/ebanx/swipe-button-->
+                        <app-swipe-button></app-swipe-button>
+                    </div>
                 </div>
-                <div class="trees-left" id="trees-left">
-                    <img src="../assets/img/trees-l.svg" alt="trees">
+                <div class="app-section-movingboard-section-2">
+                    <div class="app-section-content">
+                        <app-personal-counter></app-personal-counter>
+                        <h2>{{headline2}}</h2>
+
+                        <p>Danke für dein Versprechen! Starkes Ding. Anders als bei einer Petition, ist der Erfolg dieser Aktion nicht vom Gehör der Politik abhängig. Du bestimmst an jedem Tag und mit jedem Klopapier-Kauf selbst, wie viel Wirkung dein Versprechen hat.</p>
+                        <p>Unser Ziel: noch mindestens <b [countUp]=promiseCounterNumber(1) [options]="counterOptionsFreezed">0</b> Versprechen. Damit könnten wir weitere <span  class="app-no-textwrap"><b [countUp]=promiseCounterNumber(2) [options]="counterOptions">0</b><b>&#8201;l</b></span> Wasser und <span  class="app-no-textwrap"><b [countUp]=promiseCounterNumber(3) [options]="counterOptions">0</b><b>&#8201;kg</b></span> Holz pro Jahr retten. Erzähle auch deinen Freund*innen von dem Unterschied, den sie machen können! </p><p>@<b>Goldeimer</b> | @<b>Abenteuerregenwald</b> <br> #<b>keinebäumefürdenarsch</b></p>
+                        <button (click)="copyMessage('www.keinebaeume.org')" value="click to copy" id="copy-button">Link kopieren</button>
+                    </div>
                 </div>
-                <div class="trees-right" id="trees-right">
-                    <img src="../assets/img/trees-r.svg" alt="trees">
-                </div>
-                <div class="app-section-content">
-                    <app-logosection></app-logosection>
-                    <p style="font-family: Museo-900; margin-bottom: 5px;">{{textquestion}}</p>
-                    
-                    <h1>{{headline}}</h1>
-                    <p>Eine Packung Frischfaser-Klopapier verbraucht rund <b>25&#8201;l</b> Wasser und <b>1,5&#8201;kg</b> Holz. Der Zellstoff für unser Papier kommt aus Skandinavien und Südamerika, wo der Plantagenanbau Urwäldflächen und Artenvielfalt dezimiert. Bis zu <b>11.000&#8201;km</b> mit dem Containerschiff legt der Zellstoff für unser Frischfaser-Klopapier zurück. Mit Recycling-Klopapier kann jeder von uns CO2-intensive Transportwege reduzieren und über <b>420&#8201;l</b> Wasser und <b>26&#8201;kg</b> Holz im Jahr retten. </p><app-people-counter></app-people-counter>
-                    <button (click)="givePromise();">Versprechen geben</button> <!-- Maybe this shouldn't be a button, but more something to swipe right, to give the promise. Like this: https://github.com/ebanx/swipe-button-->
-                    <app-swipe-button></app-swipe-button>
+                <div class="app-section-movingboard-section-3">
+                    <div class="app-section-content">Hallo</div>
                 </div>
             </div>
-            <div class="app-section-movingboard-section-2">
-                <div class="app-section-content">
-                    <app-personal-counter></app-personal-counter>
-                    <h1>{{headline2}}</h1>
-                    <p>{{textmain2}}</p>
-                    
-                    <p>Danke für dein Versprechen! Starkes Ding. Anders als bei einer Petition, ist der Erfolg dieser Aktion nicht vom Gehör der Politik abhängig. Du bestimmst an jedem Tag und mit jedem Klopapier-Kauf selbst, wie viel Wirkung dein Versprechen hat.</p>
-                    <p>Unser Ziel: noch mindestens <b [countUp]=promiseCounterNumber(1) [options]="counterOptionsFreezed">0</b> Versprechen. Damit könnten wir weitere <b [countUp]=promiseCounterNumber(2) [options]="counterOptions">0</b><b>&#8201;l</b> Wasser und <b [countUp]=promiseCounterNumber(3) [options]="counterOptions">0</b><b>&#8201;kg</b> Holz pro Jahr retten. Erzähle auch deinen Freund*innen von dem Unterschied, den sie machen können!</p>  
-                </div>
-            </div>
-            <div class="app-section-movingboard-section-3">
-                <div class="app-section-content">Hallo</div>
-            </div>
+
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="app-section app-green-bg">
+        <div class="app-section-content">
+            <app-res-counter></app-res-counter>
+        </div>
+    </section>
 
-<section class="app-section app-green-bg">
-    <div class="app-section-content">
-        <app-res-counter></app-res-counter>
-        <app-logosection></app-logosection>
-    </div>
-</section>
+
+    <section class="app-section app-section-small app-imprint app-green-bg" >
+        <div class="app-section-content">
+            <app-logosection></app-logosection>
+            <p>Eine Aktion von<br><b>Goldeimer & Abenteuer Regenwald</b></p>
+            <p><a href="https://goldeimer.de/jtl/Impressum">Impressum</a></p>
+        </div>
+    </section>
+
+    <section class="app-section app-section-small app-imprint app-green-bg" >
+        <div class="app-section-content">
+            <app-logosection></app-logosection>
+        <p>
+            Eine Aktion von<br><b>Goldeimer & Abenteuer Regenwald</b>
+        </p>
+        <p>
+            <a href="https://goldeimer.de/jtl/Impressum">Impressum</a>
+        </p>
+        </div>
+    </section>
+
 </div>
-

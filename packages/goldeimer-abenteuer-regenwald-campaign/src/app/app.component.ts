@@ -16,6 +16,9 @@ export class AppComponent{
   buttonpromise = 'Versprechen geben';s
   buttonActive = false;
 
+
+
+
 // Use this var in res-counter, people-counter and personal-counter
   public peopleCounter = 3000;
 
@@ -177,10 +180,24 @@ https://www.npmjs.com/package/ngx-device-detector
   }
 
 
+//Copy to Clipboard Button
+  copyMessage(val: string){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
 
-
-
-
+    const copyButton = document.getElementById('copy-button');
+    copyButton.textContent = "Link kopiert";
+    copyButton.style.backgroundColor="#ffe500"
+  }
 
 
 
