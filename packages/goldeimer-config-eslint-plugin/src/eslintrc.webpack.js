@@ -9,6 +9,12 @@ module.exports = {
     settings: {
         'import/resolver': {
             webpack: {
+                extensions: [
+                    '.js',
+                    '.jsx',
+                    '.ts',
+                    '.tsx'
+                ]
                 // config: 'webpack.config.js'
             }
         }
