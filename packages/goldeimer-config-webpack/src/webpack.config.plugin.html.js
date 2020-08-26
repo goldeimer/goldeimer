@@ -2,11 +2,13 @@ const HtmlPlugin = require('html-webpack-plugin')
 
 module.exports = ({
     favicon,
+    filename = 'index.html',
     primaryColor,
     subject,
     title
 }) => new HtmlPlugin({
     favicon,
+    filename,
     title,
     meta: {
         viewport:

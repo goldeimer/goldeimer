@@ -55,10 +55,7 @@ module.exports = {
             allowEmptyValues: false,
             defaults: '.env.defaults',
             expand: true,
-            path: path.resolve(
-                PROJECT_ROOT,
-                './.env'
-            ),
+            path: PROJECT_ROOT,
             safe: true,
             systemvars: false,
             root: true,

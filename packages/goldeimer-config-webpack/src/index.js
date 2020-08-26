@@ -28,6 +28,7 @@ const outputAbspath = ({
 
 module.exports = {
     newCopyPlugin: require('./webpack.config.plugin.copy'),
+    newDefinePlugin: require('./webpack.config.plugin.define'),
     newHtmlPlugin: require('./webpack.config.plugin.html'),
     withBaseConfig: (
         packageConfig = {}
