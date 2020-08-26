@@ -29,19 +29,23 @@ const PRESET_ENV = ['@babel/preset-env', {
 }]
 
 module.exports = {
-    plugins: [[
-        '@babel/plugin-transform-runtime', {
-            absoluteRuntime: false,
-            bugfixes: true,
-            // - `preset-env` adds `corejs^3` to the configuration
-            // - the below setting affects the transform-runtime plugin itself, the
-            //   preset however remains entirely oblivious and couldn't care less
-            corejs: false,
-            helpers: true,
-            regenerator: true,
-            useESModules: true
-        }
-    ], '@babel/plugin-transform-unicode-regex'],
+    plugins: [
+        [
+            '@babel/plugin-transform-runtime', {
+                absoluteRuntime: false,
+                bugfixes: true,
+                // - `preset-env` adds `corejs^3` to the configuration
+                // - the below setting affects the transform-runtime plugin itself, the
+                //   preset however remains entirely oblivious and couldn't care less
+                corejs: false,
+                helpers: true,
+                regenerator: true,
+                useESModules: true
+            }
+        ],
+        '@babel/plugin-transform-unicode-regex',
+        '@babel/plugin-proposal-class-properties'
+    ],
     presets: [
         PRESET_ENV,
         '@babel/preset-react'
