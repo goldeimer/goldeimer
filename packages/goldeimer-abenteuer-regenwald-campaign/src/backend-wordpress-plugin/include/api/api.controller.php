@@ -8,7 +8,8 @@ require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/api/api.ut
 
 class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
 {
-    public function registerRoutes() {
+    public function registerRoutes()
+    {
         register_rest_route(
             API_NAMESPACE,
             '/' . TREE_COUNT_RESOURCE_SLUG,
@@ -140,6 +141,7 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     protected function getValuePermissionsCheck( $request )
     {
         // TODO: Check API key of sorts.
+
         return true;
     }
 

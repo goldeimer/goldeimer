@@ -5,15 +5,15 @@ require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/settings/s
 function getTreeCount()
 {
     return get_option(
-        SETTINGS.abenteuerRegenwaldCampaign.sections.main.fields.treeCount.slug,
-        SETTINGS.abenteuerRegenwaldCampaign.sections.main.fields.treeCount.defaultValue
+        SETTING_TREE_COUNT_SLUG,
+        SETTING_TREE_COUNT_DEFAULT_VALUE
     );
 }
 
 function setTreeCount( $value )
 {
     return update_option(
-        SETTINGS.abenteuerRegenwaldCampaign.sections.main.fields.treeCount.slug,
+        SETTING_TREE_COUNT_SLUG,
         $value
     );
 }

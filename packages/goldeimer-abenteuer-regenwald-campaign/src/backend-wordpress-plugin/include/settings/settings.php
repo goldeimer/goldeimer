@@ -7,20 +7,30 @@ require_once GOLDEIMER_ABENTEUER_REGENWALD_CAMPAIGN_ABSPATH.'/include/settings/s
 
 function settingsPage()
 {
-    echo '<h2>Abenteuer Regenwald Campaign</h2>';
+    ?>
+    <div class="wrap">
+        <h2>Abenteuer Regenwald Campaign</h2>
+        <form method="post" action="options.php">
+        <?php
+            settings_fields( SETTINGS_GROUP );
+            do_settings_sections( SETTINGS_PAGE_SLUG );
+            submit_button();
+        ?>
+        </form>
+    </div>
+    <?php
 }
 
+// void
 function settingsSection()
-{
-    echo '<p>Abenteuer Regenwald Campaign &gt; Settings</p>';
-}
+{}
 
 function settingsFieldTreeCount()
 {
     $currentValue = getTreeCount();
 
     echo '<input type="number" name="'
-        . SETTINGS.abenteuerRegenwaldCampaign.sections.main.fields.treeCount.slug
+        . SETTING_TREE_COUNT_SLUG
         . '" value="'
         . isset( $currentValue ) ? esc_attr( $currentValue ) : ''
         . '">';
@@ -28,11 +38,22 @@ function settingsFieldTreeCount()
 
 /// ----- (hooked) callbacks ---------------------------------------------------
 
+function adminMenuInit()
+{
+    add_options_page(
+        'Abenteuer Regenwald',
+        'Abenteuer Regenwald',
+        'manage_options',
+        SETTINGS_PAGE_SLUG,
+        'settingsPage'
+    );
+}
+
 function settingsInit()
 {
     register_setting(
-        SETTINGS.abenteuerRegenwaldCampaign.slug,
-        SETTINGS.abenteuerRegenwaldCampaign.sections.main.fields.treeCount.slug,
+        SETTINGS_GROUP,
+        SETTING_TREE_COUNT_SLUG,
         array(
             'type' => 'number',
             'sanitize_callback' => 'absint',
@@ -40,44 +61,33 @@ function settingsInit()
             'show_in_rest' => true
         )
     );
-}
-
-function adminMenuInit()
-{
-    settingsInit();
-
-    add_options_page(
-        'Abenteuer Regenwald',
-        'Abenteuer Regenwald',
-        'manage_options',
-        SETTINGS.abenteuerRegenwaldCampaign.slug,
-        'settingsPage'
-    );
 
     add_settings_section(
-        SETTINGS.abenteuerRegenwaldCampaign.sections.main.slug,
-        'Abenteuer Regenwald: Main Settings',
+        SETTINGS_SECTION_ID,
+        'Admin Setttings',
         'settingsSection',
-        SETTINGS.abenteuerRegenwaldCampaign.slug
+        SETTINGS_PAGE_SLUG
     );
 
     add_settings_field(
-        'goldeimer_settings_field_tree_count',
+        SETTING_TREE_COUNT_SLUG,
         'Tree Count',
         'settingsFieldTreeCount',
-        SETTINGS.abenteuerRegenwaldCampaign.slug,
-        SETTINGS.abenteuerRegenwaldCampaign.sections.main.slug
+        SETTINGS_PAGE_SLUG,
+        SETTINGS_SECTION_ID
     );
 }
 
 /// ----- hooking into WordPress -----------------------------------------------
 
-add_action(
-    'init',
-    'settingsInit'
-);
+if ( is_admin() ) {
+    add_action(
+        'admin_menu',
+        'adminMenuInit'
+    );
 
-add_action(
-    'admin_menu',
-    'adminMenuInit'
-);
+    add_action(
+        'admin_init',
+        'settingsInit'
+    );
+}
