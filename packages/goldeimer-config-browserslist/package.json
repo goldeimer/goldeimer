@@ -1,13 +1,13 @@
 {
-    "name": "@goldeimer-config/browserlist-config",
+    "name": "@goldeimer-config/browserslist-config",
     "version": "0.0.1",
-    "description": "Goldeimer's browserlist configurations",
+    "description": "Goldeimer's browserslist configurations",
     "main": "src/index.js",
     "keywords": [
         "goldeimer",
-        "browserlist"
+        "browserslist"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer-web-apps/packages/goldeimer-config-browserlist#readme",
+    "homepage": "https://github.com/Goldeimer/goldeimer-web-apps/packages/goldeimer-config-browserslist#readme",
     "bugs": {
         "url": "https://github.com/Goldeimer/goldeimer-web-apps/issues",
         "email": "johannes@goldeimer.de"
@@ -15,7 +15,7 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Goldeimer/goldeimer-web-apps.git",
-        "directory": "packages/goldeimer-config-eslint-plugin"
+        "directory": "packages/goldeimer-config-browserslist"
     },
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "contributors": [
