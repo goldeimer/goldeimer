@@ -90,8 +90,11 @@ class WpRestControllerAbenteuerRegenwald extends WP_REST_Controller
     {
         try {
             return new WP_REST_Response(
-                setPeopleCount(
-                    $this->prepareForDatabase( $request )
+                $this->prepareForHttpResponse(
+                    setPeopleCount(
+                        $this->prepareForDatabase( $request )
+                    ),
+                    $request
                 ),
                 200
             );

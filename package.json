@@ -1,20 +1,42 @@
 {
     "name": "goldeimer-web-apps",
     "version": "0.1.3",
+    "description": "Goldeimer gemeinnützige GmbHs web applications",
     "private": true,
     "workspaces": {
-        "packages": ["packages/*"]
+        "packages": [
+            "packages/*"
+        ],
+        "lib": [
+            "lib/**"
+        ]
     },
     "scripts": {
-        "build:keinebaeume": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn build",
-        "build:keinebaeume:webpack": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn build:webpack",
-        "build:lib:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
-        "build:lib:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
-        "build:map-core:dev": "lerna exec --scope @goldeimer/map-core -- yarn build:dev",
-        "build:map-core:prod": "lerna exec --scope @goldeimer/map-core -- yarn build:prod",
-        "check-env": "node -e 'console.log(process.env)' | grep npm",
-        "deploy:dev-build:keinebaeume:target-prod": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn deploy:dev-build:target-prod",
-        "deploy:prod-build:keinebaeume:target-prod": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn deploy:prod-build:target-prod"
+        "clean": "concurrently 'yarn clean:artifacts' 'yarn clean:packages 'yarn clean:root'",
+        "clean:artifacts": "lerna run clean --parallel",
+        "clean:packages": "lerna clean --yes",
+        "clean:root": "rimraf node_modules",
+        "util:process-env": "node -e 'console.log(process.env)' | grep npm",
+        "exec:keinebaeume": "lerna exec --scope @goldeimer/abenteuer-regenwald-campaign -- yarn",
+        "exec:map": "lerna exec --scope @goldeimer/map-core -- yarn",
+        "exec:parallel": "lerna exec --parallet --stream",
+        "lint": "eslint --cache --cache-location node_modules/.cache/eslint",
+        "lint:fix": "yarn lint --fix",
+        "lint:all": "yarn lint 'packages/*/src/**/*.{js,jsx,ts,tsx}*'",
+        "lint:all:fix": "yarn lint:all --fix",
+        "lint:staged": "lint-staged",
+        "test": "lerna run test --concurrency=1 --stream",
+        "test:quick": "lerna run test:quick --concurrency=1 --stream",
+        "test:coverage": "lerna run test:coverage --parallel",
+        "test:watch": "lerna run test:watch --parallel",
+        "build:keinebaeume": "yarn exec:keinebaeume build",
+        "build:keinebaeume:webpack": "yarn exec:keinebaeume build:webpack",
+        "build:lib:dev": "yarn exec:map build:dev",
+        "build:lib:prod": "yarn exec:map build:prod",
+        "build:map:dev": "yarn exec:map build:dev",
+        "build:map:prod": "yarn exec:map build:prod",
+        "deploy:dev-build:keinebaeume:target-prod": "yarn exec:keinebaeume deploy:dev-build:target-prod",
+        "deploy:prod-build:keinebaeume:target-prod": "yarn exec:keinebaeume deploy:prod-build:target-prod"
     },
     "devDependencies": {
         "@babel/core": "^7.10.2",
@@ -29,6 +51,7 @@
         "@goldeimer-config/eslint-plugin": "^0.0.1",
         "@goldeimer-config/webpack": "^0.0.1",
         "@google/clasp": "^2.3.0",
+        "@types/node": "^14.6.0",
         "@types/react": "^16.9.46",
         "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
         "gas-webpack-plugin": "^1.0.4",

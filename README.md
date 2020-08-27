@@ -1,14 +1,31 @@
-Goldeimer\'s Web Environment
-============================
+Goldeimer gemeinnützige GmbHs web applications (monorepo)
+=========================================================
 
--   [WordPress Theme](#wordpress-theme)
--   [JTL Shop Template](#jtl-shop-template)
--   [Merchant Map](#merchant-map)
--   [Building client-side assets (css, js)](#building-client-side-assets-css-js)
--   [Development Environment (docker)](#development-environment-docker)
-    -   [Database Dumps](#database-dumps)
-    -   [Static Production Content](#static-production-content)
-    -   [Secrets](#secrets)
+||
+|:--:|
+| [![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/) |
+| [![GitHub tag](https://img.shields.io/github/tag/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/tags/) |
+| [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/) |
+| [![BSD-2-clause license](https://img.shields.io/badge/License-BSD-blue.svg)](https://opensource.org/licenses/BSD-2-Clause) |
+| [![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/kennethreitz) |
+| [![goldeimer.de](https://img.shields.io/website?down_color=red&down_message=down&label=goldeimer.de&style=flat-square&up_color=blue&up_message=up&url=https%3A%2F%2Fgoldeimer.de) |
+
+Table of Contents
+-----------------
+
+- [Goldeimer gemeinnützige GmbHs web applications (monorepo)](#goldeimer-gemeinnützige-gmbhs-web-applications-monorepo)
+  - [Table of Contents](#table-of-contents)
+  - [WordPress Theme](#wordpress-theme)
+  - [JTL Shop Template](#jtl-shop-template)
+  - [Merchant Map](#merchant-map)
+    - [Dependencies](#dependencies)
+  - [Building client-side assets (css, js)](#building-client-side-assets-css-js)
+  - [Development Environment (docker)](#development-environment-docker)
+    - [Database Dumps](#database-dumps)
+    - [Static Production Content](#static-production-content)
+    - [Secrets](#secrets)
+  - [TODO](#todo)
+    - [Client](#client)
 
 WordPress Theme
 ---------------

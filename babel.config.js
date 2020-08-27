@@ -1,9 +1,10 @@
 /// @file babel.config
 ///
-/// @see [github | babel-preset-env/corejs3/built-in](corejs-built-ins)
-/// @see [browserslist | query composition](browserslist-query)
+/// @see [github: babel-preset-env/corejs3/built-in](corejs-built-ins)
+/// @see [browserslist: query composition](browserslist-query)
 
-// TODO: Set via env?
+// TODO:
+// Make dynamic / set via .env (e.g.)?
 const CORE_JS_VERSION = 3.6
 
 const PRESET_ENV = ['@babel/preset-env', {
@@ -35,8 +36,9 @@ module.exports = {
                 absoluteRuntime: false,
                 bugfixes: true,
                 // - `preset-env` adds `corejs^3` to the configuration
-                // - the below setting affects the transform-runtime plugin itself, the
-                //   preset however remains entirely oblivious and couldn't care less
+                // - the below setting disables corejs injection /
+                //   usage while transforming the runtime,
+                //   it does not affects other plugins / settings.
                 corejs: false,
                 helpers: true,
                 regenerator: true,

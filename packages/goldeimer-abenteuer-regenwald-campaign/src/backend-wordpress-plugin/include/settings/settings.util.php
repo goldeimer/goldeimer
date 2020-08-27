@@ -12,8 +12,12 @@ function getPeopleCount()
 
 function setPeopleCount( $value )
 {
-    return update_option(
+    if (update_option(
         SETTING_PEOPLE_COUNTER_SLUG,
         $value
-    );
+    )) {
+        return $value;
+    }
+
+    return 0;
 }

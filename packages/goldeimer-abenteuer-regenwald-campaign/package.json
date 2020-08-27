@@ -2,6 +2,8 @@
     "name": "@goldeimer/abenteuer-regenwald-campaign",
     "version": "0.0.1",
     "description": "Angular app for Goldeimer's 'keinebaeume' campaign in partnership with Abenteuer Regenwald",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "keywords": [
         "goldeimer",
         "keinebaeume",

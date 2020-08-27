@@ -9,8 +9,8 @@ import { CountUpModule } from 'ngx-countup'
 import { SwipeButtonComponent } from './swipe-button-component/swipe-button.component'
 import { PersonalCounterComponent } from './personal-counter-component/personal-counter.component'
 import { ColorPanelComponent } from './color-panel-component/color-panel.component'
-import { ResCounterComponent } from './res-counter-component/res-counter.component'
 import { PeopleCounterComponent } from './people-counter-component/people-counter.component'
+import { ResultDisplay } from './res-counter-component/res-counter.component'
 import { ImageComponent } from './image-component/image.component'
 
 import { AppRoutingModule } from './app-routing.module'
@@ -24,7 +24,7 @@ import { LogoSectionComponent } from './logosection-component/logosection.compon
         ImageComponent,
         LogoSectionComponent,
         PeopleCounterComponent,
-        ResCounterComponent,
+        ResultDisplay,
         ColorPanelComponent,
         PersonalCounterComponent,
         SwipeButtonComponent

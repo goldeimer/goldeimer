@@ -1,17 +1,40 @@
 
-import { Component, NgModule, HostListener} from '@angular/core'
-import { DeviceDetectorService } from 'ngx-device-detector'
+import {
+    Component,
+    HostListener,
+    OnInit
+} from '@angular/core'
 
 import { ApiService } from './app.api.service'
+
+const CAMPAIGN_GOAL = 10000
+
+interface ApiResponse {
+    value: number
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent
+export class AppComponent implements OnInit
 {
     constructor(private apiService: ApiService) { }
+
+    isLoading: boolean = true
+    givenPledgesCount: number = 0
+
+    ngOnInit() {
+        this.fetchGivenPledgesCount()
+    }
+
+    private fetchGivenPledgesCount = () => {
+        this.apiService.getGivenPledgesCount().subscribe((response: ApiResponse) => {
+            this.isLoading = false
+            this.givenPledgesCount = response.value
+        })
+    }
 
     textpromise = 'Menschen versprechen bereits:'
     headline = 'Keine Bäume für den Arsch!';
@@ -20,18 +43,11 @@ export class AppComponent
     buttonpromise = 'Versprechen geben';
     buttonActive = false;
 
-    private incrementBackendPeopleCounter = () => {
-        this.apiService.incrementPeopleCounter().subscribe((value) => {
-            console.log(
-                "PUT call successful value returned in body",
-                value
-            )
-        });
+    private requestIncrementGivenPledgesCount = () => {
+        this.apiService.incrementGivenPledgesCount().subscribe((response: ApiResponse) => {
+            this.givenPledgesCount = response.value
+        })
     }
-
-    public peopleCounter = 3000
-
-    public campaignGoal = 10000
 
     counterOptions = {
         duration: 5,
@@ -143,12 +159,12 @@ export class AppComponent
     }
 
     // Fires when button gets pressed.
-    // peopleCounter should get updated in the database.
-    // refresh peopleCounter in web.app
-    // show some kind of subtile success-animation on the peopleCounter.
+    // givenPledgesCount should get updated in the database.
+    // refresh givenPledgesCount in web.app
+    // show some kind of subtile success-animation on the givenPledgesCount.
     // set cookie and disable button forever and ever 1000 years
     public onParticipationIntent = () => {
-        this.incrementBackendPeopleCounter()
+        this.requestIncrementGivenPledgesCount()
 
         this.buttonActive = true
         const MovingBoard = document.getElementById('Movingboard');
@@ -199,7 +215,7 @@ export class AppComponent
     // Counter, how many promises are still needed (10.000 goal)
     public promiseCounterText() {
 
-        if (this.peopleCounter < this.campaignGoal) {
+        if (this.givenPledgesCount < CAMPAIGN_GOAL) {
         return 'Hilf uns dabei, weitere';
         } else {
         return 'Dieses Ziel haben wir erreicht. Hilf uns dabei, weitere '
@@ -208,28 +224,28 @@ export class AppComponent
 
     public promiseCounterNumber(number) {
 
-        var promiseCounterNumber = this.campaignGoal - this.peopleCounter;
+        var promiseCounterNumber = CAMPAIGN_GOAL - this.givenPledgesCount;
 
         /// TODO:
-        /// Clean-up messy conditional-brnaching.
+        /// Clean-up messy conditional-branching.
         if (number == 1) {
 
-        if (this.peopleCounter < this.campaignGoal) {
+        if (this.givenPledgesCount < CAMPAIGN_GOAL) {
             return promiseCounterNumber;
         } else {
-            return this.campaignGoal;
+            return CAMPAIGN_GOAL;
         }
         } else if (number == 2) {
-        if (this.peopleCounter < this.campaignGoal) {
+        if (this.givenPledgesCount < CAMPAIGN_GOAL) {
             return promiseCounterNumber *35*12.1;
         } else {
-            return this.campaignGoal *35*12.1;
+            return CAMPAIGN_GOAL *35*12.1;
         }
         } else if (number == 3) {
-        if (this.peopleCounter < this.campaignGoal) {
+        if (this.givenPledgesCount < CAMPAIGN_GOAL) {
             return promiseCounterNumber *2.2*12.1;
         } else {
-            return this.campaignGoal *2.2*12.1;
+            return CAMPAIGN_GOAL *2.2*12.1;
         }
         } else {
         return '';

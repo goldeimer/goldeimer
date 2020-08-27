@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 
-import { Observable, throwError } from 'rxjs'
+import { throwError } from 'rxjs'
 import { catchError, retry } from 'rxjs/operators'
 
 const API_ENDPOINT = 'http://goldeimer.de/wp-json/goldeimer/v1/peoplecounter'
@@ -19,12 +19,12 @@ const HEADERS = new HttpHeaders()
 export class ApiService {
     constructor(private httpClient: HttpClient) {}
 
-    getPeopleCounter = () => this.httpClient.get(API_ENDPOINT).pipe(
+    getGivenPledgesCount = () => this.httpClient.get(API_ENDPOINT).pipe(
         retry(2),
         catchError(this.handleError)
     )
 
-    incrementPeopleCounter = (
+    incrementGivenPledgesCount = (
         incrementBy = 1
     ) => this.httpClient.put(
         API_ENDPOINT,
