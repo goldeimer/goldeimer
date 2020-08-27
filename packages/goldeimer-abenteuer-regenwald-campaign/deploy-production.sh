@@ -6,7 +6,7 @@
 _packageSlug="abenteuer-regenwald-campaign"
 _packageAbspath="$(dirname "$(readlink -f "$0")")"
 
-_distributionDir="$_packageAbspath/dist"
+# _distributionDir="$_packageAbspath/dist"
 
 # expected to be configured in `~/.ssh/config`
 _sshHostName="goldeimer"
@@ -15,8 +15,9 @@ _remoteDestDirName=$_packageSlug
 _remoteRelPathClientApp="../$_remoteDestDirName/"
 _remoteRelPathWordPressPlugin="../goldeimer.de/goldeimer/wp-content/plugins/$_remoteDestDirName/"
 
-_remoteAddressClientApp="$_sshHostName:$_remoteRelPathClientApp"
-_remoteAddressWordPressPlugin="$_sshHostName:$_remoteRelPathWordPressPlugin"
+export _remoteAddressClientApp="$_sshHostName:$_remoteRelPathClientApp"
+export _remoteAddressWordPressPlugin="$_sshHostName:$_remoteRelPathWordPressPlugin"
+
 
 __onError()
 {
@@ -33,7 +34,9 @@ __onSuccess()
     exit 0
 }
 
-trap __onError ERR
+
+trap __onError INT HUP
+
 
 # TODO:
 # Keep ssh auth alive.
@@ -42,11 +45,21 @@ trap __onError ERR
 # artfiles...
 
 printf ">> %s\n" "Transferring built client app to 'goldeimer.de' production host"
+
 ssh "$_sshHostName" "mkdir -p $_remoteRelPathClientApp"
 scp -r "$_packageAbspath/dist/"* "$_remoteAddressClientApp"
 
+
+printf ">> %s\n" "Transferring http.d config to 'goldeimer.de' production host"
+
+ssh "$_sshHostName" "mkdir -p $_remoteRelPathClientApp"
+scp -r "$_packageAbspath/dist/"* "$_remoteAddressClientApp"
+
+
 printf ">> %s\n" "Transferring WordPress plugin to 'goldeimer.de' production host"
+
 ssh "$_sshHostName" "mkdir -p $_remoteRelPathWordPressPlugin"
 scp -r "$_packageAbspath/src/backend-wordpress-plugin/"* "$_remoteAddressWordPressPlugin"
+
 
 __onSuccess
