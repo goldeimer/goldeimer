@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { throwError } from 'rxjs'
 import { catchError, retry } from 'rxjs/operators'
 
-const API_ENDPOINT = 'http://goldeimer.de/wp-json/goldeimer/v1/peoplecounter'
+const API_ENDPOINT = 'https://goldeimer.de/wp-json/goldeimer/v1/peoplecounter'
 
 const TMP_API_TOKEN = window.btoa(( 'goldeimer-api-client-user:cSpX yRYR 8W6p aMq1 YVrx XYqb'))
 
