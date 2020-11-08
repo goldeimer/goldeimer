@@ -1,46 +1,64 @@
-# ----- essential excludes --------------------------------------------------- #
+# ----- util -------------------------------------------------------------------
 
-### 3rd party sources
-**/node_modules/**/*
+### utility pattern for on-the-spot dynamic use
+**/*.ignore.*
 
-### holds sensitive information
-**/.env*
-**/.env/**/*
-!**/.env.defaults
-!**/.env.example
+# ----- build ------------------------------------------------------------------
 
-# ----- build ---------------------------------------------------------------- #
-
-### distribution output
-**/build/**/*
-**/dist/**/*
+### build output
+**/build/**
+!etc/build/**
+**/dist/**
 
 ### build artifacts
 **/npm-debug.log
 **/yarn-error.log
 
-# ----- IDE & system artifacts -------------------------------------------------------- #
+# ----- essential excludes -----------------------------------------------------
 
-### firebase (cache)
-.firebase
+### 3rd party sources
+**/node_modules/
+**/php-composer-vendor/
+
+### sensitive information
+**/*.env*
+**/*.secret.*
+
+!**/.env.defaults
+!**/.env.example
+
+# ----- transient data ---------------------------------------------------------
+
+### caches
+**/.firebase
+**/.yarn-cache/
+
+### (potential) backups
+
+**/*.sql
+**/*.sqllite
+
+# ----- IDE & system artifacts -------------------------------------------------
 
 ### IDE > miscellaneous
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+**/.c9/**/*
+**/*.settings/**
+**/.classpath
+**/.idea
+**/*.launch
+**/.project
+**/*.sublime-workspace
 
 ### IDE > VSCode
-.vscode/*
-# !.vscode/settings.json
-# !.vscode/tasks.json
-# !.vscode/launch.json
-# !.vscode/extensions.json
-.history/*
+**/.history/**
+**/.vscode/**
+**/*.code-workspace
 
-### system
-.DS_Store
-Thumbs.db
+!**/.vscode/extensions.json
+!**/.vscode/launch.json
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+
+### operating system artifacts
+**/.DS_Store
+**/Thumbs.db
