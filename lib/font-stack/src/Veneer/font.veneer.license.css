@@ -1,0 +1,64 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3860440, 2020-01-27T11:14:52-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Veneer by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/regular/
+ *
+ * Webfont: VeneerExtras by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/extras/
+ *
+ * Webfont: VeneerExtras-Italic by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/extras-italic/
+ *
+ * Webfont: Veneer-Italic by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/italic/
+ *
+ * Webfont: VeneerThree by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/three/
+ *
+ * Webfont: VeneerThree-Italic by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/three-ital/
+ *
+ * Webfont: VeneerTwo by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/two/
+ *
+ * Webfont: VeneerTwo-Italic by Yellow Design Studio
+ * URL: https://www.myfonts.com/font/yellow-design/veneer/two-italic/
+ *
+ *
+ * Licensed pageviews: 500,000
+ *
+ * Webfonts copyright:
+ * Copyright (c) 2012 by Yellow Design Studio. All rights reserved.
+ *
+ * © 2020 MyFonts Inc
+ */
+
+ /**
+  * NOTE (Johannes)
+  *
+  * myfonts.com ships their fonts with the following remote import
+  * and preceding comment:
+  *
+  * > @import must be at top of file, otherwise CSS will not work
+  * @import url("//hello.myfonts.net/count/3ae7d8");
+  *
+  * The comment is *not true*.
+  * We serve the font locally and the css "will work".
+  *
+  * We paid for 500k pageviews and myfonts.com would like to count that.
+  * We're okay with that, we agreed to the license.
+  * What we're not okay with is the technical solution.
+  * The import is blocking page loads with an unnecessary HTTP request
+  * to a 3rd party endpoint. We will do this asynchronously instead.
+  *
+  * @see
+  * https://stackoverflow.com/questions/23045705/how-the-licensed-web-font-is-getting-rendered
+  */

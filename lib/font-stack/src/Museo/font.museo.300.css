@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Museo';
+    src: url('./font/font.museo.300.eot');
+    src: url('./font/font.museo.300.eot?#iefix') format('embedded-opentype'),
+        url('./font/font.museo.300.woff2') format('woff2'),
+        url('./font/font.museo.300.woff') format('woff'),
+        url('./font/font.museo.300.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}

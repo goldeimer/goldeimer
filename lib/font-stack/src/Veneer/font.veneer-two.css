@@ -1,0 +1,6 @@
+@import url('./font.veneer-two.italic.css');
+@import url('./font.veneer-two.normal.css');
+
+.veneer-two {
+    font-family: 'VeneerTwo'
+}

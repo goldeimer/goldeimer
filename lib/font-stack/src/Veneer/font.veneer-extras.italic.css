@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'VeneerExtras';
+    src: url('./font/font.veneer-extras.italic.eot');
+    src: url('./font/font.veneer-extras.italic.woff2') format('woff2'),
+        url('./font/font.veneer-extras.italic.woff') format('woff'),
+        url('./font/font.veneer-extras.italic.eot?#iefix') format('embedded-opentype'),
+        url('./font/font.veneer-extras.italic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
