@@ -1,0 +1,26 @@
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+    Options +FollowSymLinks
+
+    # disable file listing
+    IndexIgnore */*
+
+    RewriteEngine On
+
+    RewriteBase /
+
+    # ensure https
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*) https://%{HTTP_HOST}/$1 [R,L]
+
+    # rewrites to pass handling to client-side routing utility
+    # (react-router, Angular's `app-routing.module`, etc.)
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+    RewriteCond %{REQUEST_FILENAME} !\/$
+
+    # rewrite to root
+    RewriteRule ^(.*) /
+</IfModule>

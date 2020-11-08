@@ -1,0 +1,62 @@
+{
+    "name": "@goldeimer/react-components-d3-transition",
+    "version": "0.0.1",
+    "description": "Goldeimer's React components",
+    "keywords": [
+        "goldeimer",
+        "react",
+        "react-transition-group",
+        "d3-transition",
+        "transition"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/lib/react-components-d3-transition#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "engineering+bugs@goldeimer.de"
+    },
+    "license": "BSD-2-Clause",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "lib/react-components-d3-transition"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "private": false,
+    "scripts": {
+        "build": "yarn build:cjs && yarn build:esm && yarn build:umd && yarn build:umd:dev",
+        "build:dev": "webpack --mode development",
+        "build:prod": "webpack --mode production",
+        "build:esm": "yarn build:prod --env BUILD_TARGET=esm",
+        "build:esm:dev": "yarn build:dev --env BUILD_TARGET=esm",
+        "build:stable": "yarn build:prod --env BUILD_TARGET=stable",
+        "build:stable:dev": "yarn build:dev --env BUILD_TARGET=stable",
+        "build:umd": "yarn build:prod --env BUILD_TARGET=umd",
+        "build:umd:dev": "yarn build:dev --env BUILD_TARGET=umd",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@material-ui/core": "^4.11.0",
+        "d3-selection": "^2.0.0",
+        "d3-transition": "^2.0.0",
+        "react-transition-group": "^4.4.1"
+    },
+    "devDependencies": {
+        "@goldeimer/webpack-config": "^0.0.1"
+    },
+    "peerDependencies": {
+        "clsx": "^1.1.1",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.1"
+    },
+    "main": "dist/goldeimer.react-components-d3-transition.stable.js",
+    "module": "dist/esm/goldeimer.react-components-d3-transition.esm.js",
+    "files": [
+        "dist/umd"
+    ]
+}

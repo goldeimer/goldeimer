@@ -1,0 +1,15 @@
+name: goldeimer-compare-commits
+description: compares two commits and returns formatted results
+# inputs:
+#   base:
+#     description: base commit's sha
+#     required: true
+#   head:
+#     description: head commit's sha
+#     required: true
+outputs:
+  text:
+    description: commit infos as a multi-line string
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

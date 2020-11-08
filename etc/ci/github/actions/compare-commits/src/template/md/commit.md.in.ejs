@@ -1,0 +1,11 @@
+[**`<%= args.sha %>`**](<%= args.url %>)
+ <%= args.author.name %>, _<%= args.author.date %>_
+ <%= args.committer.name %>, _<%= args.committer.date %>_
+<% if (args.author.id !== args.committer.id) { %>
+ (author)
+ <%= args.committer.name %>, _<%= args.committer.date %>_ (committer)
+<% } %>
+
+```
+<%= args.message %>
+```

@@ -1,0 +1,4 @@
+<?php
+
+const API_VERSION = '1';
+const API_NAMESPACE = SLUG_ORGANIZATION . '/v' . API_VERSION;

@@ -1,0 +1,33 @@
+{
+    "name": "@goldeimer/google-apps-config",
+    "version": "0.0.1",
+    "description": "Goldeimer's google apps script configuration(s)",
+    "main": "dist/google-apps-config.js",
+    "keywords": [
+        "goldeimer",
+        "Goldeimer",
+        "gas",
+        "google-apps-script",
+        "apps-script",
+        "appsscript.json"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/deploy/google-apps-config#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/deploy/google-apps-config"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": false,
+    "dependencies": {
+        "eta": "^1.2.2"
+    }
+}

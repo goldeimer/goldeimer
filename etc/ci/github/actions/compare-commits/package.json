@@ -1,0 +1,46 @@
+{
+    "name": "@goldeimer/github-action-compare-commits",
+    "version": "0.0.1",
+    "description": "Goldeimer's github integration: 'compare-commits' action",
+    "main": "dist/compare-commits.js",
+    "keywords": [
+        "goldeimer",
+        "action",
+        "github",
+        "github-action"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/github/actions/compare-commits#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/github/actions/compare-commits"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": false,
+    "scripts": {
+        "build": "webpack --config webpack.config.js",
+        "webpack:version": "webpack --version",
+        "build:dev": "yarn build --dev",
+        "build:prod": "yarn build --prod",
+        "clean": "rimraf ./dist",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "@actions/core": "^1.2.5",
+        "@actions/github": "^4.0.0",
+        "@goldeimer/webpack-config": "^0.0.1",
+        "eta": "^1.2.2",
+        "javascript-time-ago": "^2.0.13",
+        "path": "^0.12.7"
+    }
+}

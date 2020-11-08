@@ -1,0 +1,44 @@
+{
+    "name": "@goldeimer/wordpress-theme2",
+    "version": "0.1.3",
+    "description": "Goldeimer's WordPress theme",
+    "files": ["dist/**/*"],
+    "keywords": [
+        "goldeimer",
+        "Goldeimer",
+        "wordpress",
+        "wordpress-theme"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/packages/website/wordpress-theme#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "engineering+bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "packages/website/wordpress-theme"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Manni <manou@goldeimer.de>",
+        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": true,
+    "scripts": {
+        "build:dev": "env BUILD_MODE=development webpack --config webpack.config.js",
+        "build:prod": "env BUILD_MODE=production webpack --config webpack.config.js",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "webpack": "^4.43.0"
+    },
+    "sideEffects": [
+        "*.css"
+    ]
+}

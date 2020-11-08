@@ -1,0 +1,17 @@
+{
+    "hosting": [
+        {
+            "target": "keinebaeume",
+            "public": "dist/keinebaeume",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ],
+            "rewrites": [{
+                "source": "**",
+                "destination": "/index.html"
+            }]
+        }
+    ]
+}

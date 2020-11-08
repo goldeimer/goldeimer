@@ -1,0 +1,28 @@
+{
+    "name": "@<%= args.org.scope.ltrim('@') %>/<%= args.pkg.slug %>",
+    "version": "<%= args.pkg.version %>",
+    "description": "<%= args.org.descriptionPrefix || args.org.shortName %><%= args.org.descriptionSeparator || ' ' %><%= args.pkg.description %>",
+    <%~ E.include('key-value-pairs', args.pkg.mainFields) %>
+    "keywords": <%= JSON.stringify([
+        args.org.slug,
+        ...args.pkg.keywords
+    ]) %>,
+    "homepage": "<%= args.repo.uri %>/<%= args.repo.pkgRelpath %>#readme",
+    "bugs": {
+        "url": "<%= args.org.bugs.url %>",
+        "email": "<%= args.org.bugs.email %>"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+<%= args.repo.uri %>.git",
+        "directory": "<%= args.repo.pkgRelpath %>"
+    },
+    "author": <%= JSON.stringify(args.pkg.author || args.org.author) %>,
+    "contributors": <%= JSON.stringify(args.pkg.contributors) %>,
+    "license": "<%= args.pkg.license || args.org.license %>",
+    "private": <%= args.pkg.private === false ? false : true %>,
+    <%~ E.include('key-value-pairs', args.pkg.allDependencies) %>
+    <%~ E.include('optional-key-value-pair', args.pkg.engines) %>
+    <%~ E.include('optional-key-value-pair', args.pkg.os) %>
+    <%~ E.include('optional-key-value-pair', args.pkg.cpu) %>
+}

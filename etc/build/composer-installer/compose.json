@@ -1,0 +1,13 @@
+{
+    "name": "goldeimer/composer-installer",
+    "type": "composer-plugin",
+    "license": "BSD",
+    "autoload": {
+        "psr-4": {
+            "Goldeimer\\Composer\\": "src/"
+        }
+    },
+    "require": {
+        "composer-plugin-api": "^1.1"
+    }
+}

@@ -1,0 +1,10 @@
+**New commits pushed to [`<%= args.repository.full_name %>`](args.repository.url)**
+
+[<%= args.pusher.name %>](<%= args.pusher.url %>) pushed changes to `<%= args.ref %>`:
+
+<% args.commits.forEach((commit) => { %>
+    <%~ E.include(
+        'partial.commit',
+        commit
+    ) %>
+<% }) %>

@@ -1,0 +1,30 @@
+{
+    "name": "@goldeimer/template-engine",
+    "version": "0.0.1",
+    "description": "Goldeimer's eta wrapper utility (fantastic little engine)",
+    "main": "dist/template-engine.js",
+    "keywords": [
+        "goldeimer",
+        "eta",
+        "template-engine"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/tools/template-engine#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/tools/template-engine"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": false,
+    "dependencies": {
+        "eta": "^1.2.2"
+    }
+}

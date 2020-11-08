@@ -1,0 +1,9 @@
+{
+    "name": "goldeimer/wordpress-util",
+    "description": "Goldeimer's WordPress utility library",
+    "autoload": {
+        "psr-4": {
+            "Goldeimer\\WordPress\\Util\\": "src/php"
+        }
+    }
+}

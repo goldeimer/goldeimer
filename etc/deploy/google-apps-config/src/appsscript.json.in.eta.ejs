@@ -1,0 +1,39 @@
+{
+    "addOns": {
+        "common": {
+            "homepageTrigger": {},
+            "layoutProperties": {},
+            "logoUrl": "<%= args.logoUrl %>",
+            "name": "<%= args.name %>",
+            "openLinkUrlPrefixes": [],
+            "universalActions": [],
+            "useLocaleFromApp": true
+        },
+        "calendar": {},
+        "drive": {},
+        "gmail": {}
+    },
+    "dependencies": {
+        "enabledAdvancedServices": [],
+        "libraries": []
+    },
+    "exceptionLogging": "<%= args.exceptionLogging %>",
+    "executionApi": {
+        "access": "<%= args.executionApi.access %>"
+    },
+    "oauthScopes": [
+        <% args.oauthScopes.forEach((scope) => { %>
+            "<%= scope %>",
+        <%  }).rtrim(',') %>
+    ],
+    "runtimeVersion": "V8",
+    "sheets": {
+        "macros": []
+    },
+    "timeZone": "<%= args.timeZone %>",
+    "urlFetchWhitelist": [],
+    "webapp": {
+        "access": "<%= args.webapp.access %>",
+        "executeAs": "<%= args.webapp.executeAs %>"
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "name": "@goldeimer/js-util",
+    "version": "0.0.1",
+    "description": "Goldeimer's JavaScript utility library",
+    "keywords": [
+        "goldeimer",
+        "utility"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/js-util#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "engineering+bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "lib/js-util"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Manou Otolski <manou@goldeimer.de>",
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": false,
+    "scripts": {
+        "build": "yarn build:cjs && yarn build:esm && yarn build:umd && yarn build:umd:dev",
+        "build:dev": "webpack --mode development",
+        "build:prod": "webpack --mode production",
+        "build:esm": "yarn build:prod --env BUILD_TARGET=esm",
+        "build:esm:dev": "yarn build:dev --env BUILD_TARGET=esm",
+        "build:stable": "yarn build:prod --env BUILD_TARGET=stable",
+        "build:stable:dev": "yarn build:dev --env BUILD_TARGET=stable",
+        "build:umd": "yarn build:prod --env BUILD_TARGET=umd",
+        "build:umd:dev": "yarn build:dev --env BUILD_TARGET=umd",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "dependencies": {
+        "axios": "^0.20.0",
+        "enum": "^3.0.4",
+        "nanoid-generate": "^1.0.0",
+        "papaparse": "^5.3.0"
+    },
+    "devDependencies": {
+        "@goldeimer/webpack-config": "^0.0.1"
+    },
+    "main": "dist/goldeimer.js-util.stable.js",
+    "module": "dist/esm/goldeimer.js-util.esm.js",
+    "files": [
+        "dist/umd"
+    ]
+}

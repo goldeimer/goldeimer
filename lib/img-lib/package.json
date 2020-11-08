@@ -1,0 +1,36 @@
+{
+    "name": "@goldeimer/lib-asset",
+    "version": "0.0.1",
+    "description": "Goldeimer's common libraries: Assorted static assets",
+    "keywords": [
+        "goldeimer"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/lib/lib-asset#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "bugs@goldeimer.de"
+    },
+    "license": "BSD-2-Clause",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "lib/lib-asset"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "contributors": [
+        "Manou Otolski <manou@goldeimer.de>",
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "main": "dist/goldeimer-lib-asset.js",
+    "module": "src/lib-asset.js",
+    "private": false,
+    "scripts": {
+        "build:dev": "webpack --env.BUILD_MODE=development --config webpack.config.js",
+        "build:prod": "webpack --env.BUILD_MODE=production --config webpack.config.js",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+    }
+}

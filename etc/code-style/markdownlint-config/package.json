@@ -1,0 +1,38 @@
+{
+    "name": "@goldeimer/markdownlint-config",
+    "version": "0.0.1",
+    "description": "Goldeimer's markdownlint configuration(s)",
+    "main": "dist/markdownlint-config.js",
+    "keywords": [
+        "goldeimer",
+        "Goldeimer",
+        "markdownlint",
+        "markdownlint.json",
+        "markdownlintrc",
+        "markdownlint.config",
+        "markdownlint-config"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/style/markdownlint-config#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/style/markdownlint-config"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": false,
+    "dependencies": {
+        "eta": "^1.2.2"
+    },
+    "peerDependencies": {
+        "markdownlint": "^0.21.1",
+        "markdownlint-cli2": "^0.0.10"
+    }
+}
