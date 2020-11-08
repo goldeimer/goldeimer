@@ -1,0 +1,37 @@
+{
+    "name": "@goldeimer/postcss-config",
+    "version": "0.0.1",
+    "description": "Goldeimer's postcss configuration(s)",
+    "keywords": [
+        "goldeimer",
+        "postcss",
+        "postcss-config"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/postcss-config#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "engineering+bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/build/postcss-config"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "dependencies": {
+        "postcss-calc": "^7.0.5",
+        "postcss-clearfix": "^2.0.1",
+        "postcss-easings": "^3.0.1",
+        "postcss-import": "^13.0.0",
+        "postcss-nested": "^5.0.1",
+        "postcss-preset-env": "^6.7.0"
+    },
+    "peerDependencies": {
+        "postcss": "^8.1.4"
+    },
+    "main": "postcss.config.js"
+}
