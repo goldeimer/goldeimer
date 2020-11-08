@@ -1,0 +1,46 @@
+{
+    "name": "goldeimer/goldeimer",
+    "replace": {
+        "goldeimer/wordpress-theme": "self.version",
+        "goldeimer/wordpress-util": "self.version"
+    },
+    "description": "Goldeimer's monorepo, PHP configuration",
+    "scripts": {
+        "monorepo": ".php-composer-vendor/bin/monorepo-builder",
+        "monorepo:merge": "composer monorepo merge",
+        "monorepo:release": "composer monorepo release",
+        "monorepo:release:patch": "composer monorepo:release patch",
+        "monorepo:release:patch:dry": ".php-composer-vendor/bin/monorepo-builder release patch --dry-run",
+        "monorepo:validate": "composer monorepo validate"
+    },
+    "autoload": {
+        "psr-4": {
+            "Goldeimer\\WordPressTheme\\": "packages/wordpress-theme/src/php",
+            "Goldeimer\\WordPressUtil\\": "lib/wordpress-util/src/php"
+        }
+    },
+    "require": {
+        "goldeimer/wordpress-util": "dev-release as 0.2.x-dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.3",
+        "symplify/monorepo-builder": "^8.3"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/goldeimer"
+        }
+    ],
+    "config": {
+        "vendor-dir": ".php-composer-vendor",
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-release": "0.1.3-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
