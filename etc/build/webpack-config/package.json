@@ -1,0 +1,66 @@
+{
+    "name": "@goldeimer/webpack-config",
+    "version": "0.0.1",
+    "description": "Goldeimer's (base) webpack configuration(s)",
+    "keywords": [
+        "goldeimer",
+        "webpack",
+        "webpack-config"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/webpack-config#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "engineering+bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/build/webpack-config"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "private": false,
+    "dependencies": {
+        "@goldeimer/babel-preset": "^0.0.1",
+        "astroturf": "^0.10.4",
+        "autoprefixer": "^10.0.1",
+        "babel-loader": "^8.1.0",
+        "bundle-stats-webpack-plugin": "^2.2.0",
+        "change-case": "^4.1.1",
+        "clean-webpack-plugin": "^3.0.0",
+        "copy-webpack-plugin": "^6.0.1",
+        "css-loader": "^5.0.0",
+        "css-minimizer-webpack-plugin": "^1.1.5",
+        "directory-named-webpack-plugin": "^4.0.1",
+        "dotenv-webpack": "^5.0.0",
+        "eslint-webpack-plugin": "^2.1.0",
+        "file-loader": "^6.0.0",
+        "fork-ts-checker-notifier-webpack-plugin": "^3.0.0",
+        "fork-ts-checker-webpack-plugin": "^5.0.14",
+        "html-webpack-plugin": "^4.3.0",
+        "image-webpack-loader": "^7.0.1",
+        "mini-css-extract-plugin": "^1.2.1",
+        "postcss": "^8.1.4",
+        "postcss-loader": "^4.0.4",
+        "stats-webpack-plugin": "^0.7.0",
+        "svg-inline-loader": "^0.8.2",
+        "svg-url-loader": "^6.0.0",
+        "terser": "^5.3.8",
+        "terser-webpack-plugin": "^5.0.3",
+        "thread-loader": "^3.0.1",
+        "ts-loader": "^8.0.2",
+        "webpack-assets-manifest": "^3.1.1",
+        "webpack-bundle-analyzer": "^3.8.0",
+        "webpack-manifest-plugin": "^2.2.0",
+        "webpack-merge": "^5.3.0",
+        "webpack-node-externals": "^2.5.2"
+    },
+    "peerDependencies": {
+        "webpack": "^5.3.2",
+        "webpack-cli": "^4.1.0"
+    },
+    "main": "webpack-config.js"
+}
