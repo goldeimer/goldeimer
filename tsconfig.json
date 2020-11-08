@@ -1,12 +1,11 @@
 {
-    "files": false,
     "exclude": [
         "**/build/",
         "**/dist/",
         "**/node_modules/",
         "**/*.spec.ts"
     ],
-    "references": false,
+    "references": [],
     "typeAcquisition": {
         "enable": true
     },
@@ -70,11 +69,11 @@
         "emitDeclarationOnly": false,
         "extendedDiagnostics": true,
         "forceConsistentCasingInFileNames": true,
-        "generateCpuProfile": false,
+        "generateCpuProfile": "",
         "importsNotUsedAsValues": "error",
         "listEmittedFiles": false,
         "listFiles": false,
-        "maxNodeModuleDepth": 50,
+        "maxNodeModuleJsDepth": 50,
         "noEmitHelpers": false,
         "noEmitOnError": false,
         "noImplicitUseStrict": false,
@@ -87,9 +86,8 @@
         "traceResolution": false,
         "useDefineForClassFields": false,
         "preserveWatchOutput": false,
-        "pretty": true,
-        "watchFile": "useFsEvents",
-        "watchDirectory": "useFsEvents",
-        "fallbackPolling": "dynamicPriority"
-    }
+        "pretty": true
+    },
+    "watchFile": "useFsEvents",
+    "fallbackPolling": "dynamicPriority"
 }
