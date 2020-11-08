@@ -1,0 +1,31 @@
+{
+    "name": "@goldeimer/browserslist-config",
+    "version": "0.0.1",
+    "description": "Goldeimer's (stable) browserslist configuration",
+    "keywords": [
+        "goldeimer",
+        "browserslist",
+        "browserslist-config"
+    ],
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/browserslist-config#readme",
+    "bugs": {
+        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "email": "engineering+bugs@goldeimer.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "directory": "etc/build/browserslist-config"
+    },
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "contributors": [
+        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "browserslist-config.js",
+    "files": [
+        "legacy.js",
+        "modern.js",
+        "stable.js"
+    ]
+}
