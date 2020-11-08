@@ -1,0 +1,14 @@
+{
+    "name": "goldeimer/wordpress-util",
+    "description": "Goldeimer's WordPress utility library",
+    "autoload": {
+        "psr-4": {
+            "Goldeimer\\WordPressUtil\\": "src/php"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-release": "0.1.3-dev"
+        }
+    }
+}
