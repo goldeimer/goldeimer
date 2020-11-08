@@ -2,9 +2,17 @@
     "bootstrap": {
         "npmClientArgs": ["--no-package-lock"]
     },
+    "command": {
+        "version": {
+            "allowBranch": "master",
+            "message": "chore(release): publish"
+        }
+    },
     "npmClient": "yarn",
     "packages": [
-        "packages/*"
+        "etc/**",
+        "lib/**",
+        "packages/**"
     ],
     "useWorkspaces": true,
     "version": "independent"
