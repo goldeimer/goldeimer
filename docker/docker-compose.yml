@@ -123,40 +123,40 @@ services:
             - "map.goldeimer.de:127.0.0.1"
         hostname: map.goldeimer.de
 
-    apache_mod_wsgi_django:
-        # TODO:
-        # Art artfiles, the current production host, we have to deploy to
-        # apache2 with `mod_wsgi` to get a Python wsgi application running.
-        # If we ever switch to a more professional cloud hosting solution,
-        # we'd like to `uwsgi_pass` from nginx w/o apache instead.
-        build: ./build/apache-mod-wsgi
-        container_name: apache_mod_wsgi_django
-        depends_on:
-            - db_api
-        restart: always
-        working_dir: /var/www/html
-        volumes:
-            - ./../api:/var/www/html
-            - ./run/log/apache2:/var/log/apache2
-        extra_hosts:
-            - "api.goldeimer.de:127.0.0.1"
-        hostname: api.goldeimer.de
-        secrets:
-            - secret_api_db_name
-            - secret_api_db_password
-            - secret_api_db_user
-        environment:
-            DJANGO_MANAGEPY_MIGRATE: "on"
-            DJANGO_MYSQL_DATABASE_FILE: /run/secrets/secret_api_db_name
-            DJANGO_MYSQL_PASSWORD_FILE: /run/secrets/secret_api_db_password
-            DJANGO_MYSQL_USER_FILE: /run/secrets/secret_api_db_user
-            PYTHONUNBUFFERED: 1
+    # apache_mod_wsgi_django:
+    #     # TODO:
+    #     # Art artfiles, the current production host, we have to deploy to
+    #     # apache2 with `mod_wsgi` to get a Python wsgi application running.
+    #     # If we ever switch to a more professional cloud hosting solution,
+    #     # we'd like to `uwsgi_pass` from nginx w/o apache instead.
+    #     build: ./build/apache-mod-wsgi
+    #     container_name: apache_mod_wsgi_django
+    #     depends_on:
+    #         - db_api
+    #     restart: always
+    #     working_dir: /var/www/html
+    #     volumes:
+    #         - ./../api:/var/www/html
+    #         - ./run/log/apache2:/var/log/apache2
+    #     extra_hosts:
+    #         - "api.goldeimer.de:127.0.0.1"
+    #     hostname: api.goldeimer.de
+    #     secrets:
+    #         - secret_api_db_name
+    #         - secret_api_db_password
+    #         - secret_api_db_user
+    #     environment:
+    #         DJANGO_MANAGEPY_MIGRATE: "on"
+    #         DJANGO_MYSQL_DATABASE_FILE: /run/secrets/secret_api_db_name
+    #         DJANGO_MYSQL_PASSWORD_FILE: /run/secrets/secret_api_db_password
+    #         DJANGO_MYSQL_USER_FILE: /run/secrets/secret_api_db_user
+    #         PYTHONUNBUFFERED: 1
 
     nginx:
         image: nginx
         container_name: nginx
         depends_on:
-            - apache_mod_wsgi_django
+            # - apache_mod_wsgi_django
             - php_apache_merchant_map
             - php_fpm_wp
         restart: always

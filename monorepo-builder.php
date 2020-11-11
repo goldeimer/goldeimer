@@ -17,15 +17,30 @@ use Symplify\MonorepoBuilder\ValueObject\Option;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set(Option::PACKAGE_DIRECTORIES, [
-        __DIR__ . '/etc',
-        __DIR__ . '/lib',
-        __DIR__ . '/packages'
-    ]);
+    $parameters->set(
+        Option::DATA_TO_REMOVE, [
+            'require' => [
+                'phpunit/phpunit' => '*',
+            ],
+            'minimum-stability' => 'dev',
+            'prefer-stable' => true,
+        ]
+    );
 
-    $parameters->set(Option::DIRECTORIES_TO_REPOSITORIES, [
-        __DIR__ . '/packages/*' => 'git@github.com:goldeimer/*.git',
-    ]);
+    $parameters->set(
+        Option::PACKAGE_DIRECTORIES, [
+            __DIR__ . '/etc',
+            __DIR__ . '/lib',
+            __DIR__ . '/packages'
+        ]
+    );
+
+    $parameters->set(
+        Option::DIRECTORIES_TO_REPOSITORIES, [
+            'lib/wordpress-util' => 'git@github.com:goldeimer/wordpress-util.git',
+            'packages/wordpress-theme' => 'git@github.com:goldeimer/wordpress-theme.git'
+        ]
+    );
 
     $services = $containerConfigurator->services();
 

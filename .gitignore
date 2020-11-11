@@ -18,7 +18,7 @@
 
 ### 3rd party sources
 **/node_modules/
-**/php-composer-vendor/
+**/vendor/
 
 ### sensitive information
 **/*.env*

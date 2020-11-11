@@ -1,19 +1,14 @@
-CHANGELOG
-=========
+# Changelog
 
-0.0.14
-------
+## Unreleased
 
-Changed
----
+### Added
 
-- Improve global state of project configuration and tooling integration
-- Switch to `yarn` as (default) `npmClient`
-
-Added
----
-
-- Add a package  the current campaign in cooperation with "Abenteuer Regenwald"
 - Integrate `lerna` as high-level monorepo manager
 - Rudimentarily integrate `angular` into the build workflow
 - Use `yarn` workspaces
+
+### Changed
+
+- A step on the way to improve global state of project configuration and tooling integration
+- Switch to `yarn` as (default) `npmClient`
