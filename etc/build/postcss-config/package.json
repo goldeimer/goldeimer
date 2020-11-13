@@ -23,8 +23,10 @@
     ],
     "license": "BSD-2-Clause",
     "dependencies": {
+        "cssnano": "^4.1.10",
         "postcss-calc": "^7.0.5",
         "postcss-clearfix": "^2.0.1",
+        "postcss-combine-media-query": "^1.0.1",
         "postcss-easings": "^3.0.1",
         "postcss-import": "^13.0.0",
         "postcss-nested": "^5.0.1",

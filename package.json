@@ -47,7 +47,6 @@
         "@goldeimer/babel-preset": "^0.0.1",
         "@goldeimer/browserslist-config": "^0.0.1",
         "@goldeimer/eslint-plugin": "^0.0.1",
-        "@goldeimer/markdownlint-config": "^0.0.1",
         "@goldeimer/postcss-config": "^0.0.1",
         "@google/clasp": "^2.3.0",
         "@material-ui/core": "^4.11.0",

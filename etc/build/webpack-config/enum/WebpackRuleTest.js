@@ -21,7 +21,7 @@ module.exports = {
     RASTER_IMAGE: /\.(gif|jpe?g|png)(\?v=\d+\.\d+\.\d+)?$/u,
     RUNTIME_TEMPLATE: /\.eta\.ejs$/u,
     SHELL_SCRIPT: /\.(ba|c|k|z)sh$/u,
-    STYLESHEET: /\.(sa|sc|le|c)ss$/u,
+    STYLESHEET: /\.s?(a|c)ss$/u,
     TEXTFILE: /\.(md|txt)$/u,
     TYPESCRIPT: /\.(ts|tsx)$/u,
     VECTOR_IMAGE: /\.svg(\?v=\d+\.\d+\.\d+)?$/u,

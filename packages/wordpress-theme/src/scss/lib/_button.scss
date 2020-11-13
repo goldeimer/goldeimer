@@ -1,0 +1,135 @@
+@use 'font';
+
+%button-base {
+    @include font.museo();
+
+    height: auto !important;
+
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-radius: 0px !important;
+
+    letter-spacing: 2px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+
+	cursor: pointer !important;
+
+    transition: 0.3s;
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+%button-background-none {
+    background-color: transparent !important;
+    background: none !important;
+}
+
+%button-background-dark {
+    background-color: #000 !important;
+}
+
+%button-background-light {
+    background-color: #fff !important;
+}
+
+%button-color-dark {
+    color: #000 !important;
+    border-color: #000 !important;
+
+    &:hover {
+        background-color: #000 !important;
+        color: #fff !important;
+    }
+}
+
+%button-color-light {
+    color: #fff !important;
+    border-color: #fff !important;
+
+    &:hover {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+}
+
+%button-disabled {
+    opacity: 0.2 !important;
+}
+
+%button-size-large {
+    padding: 15px 30px 13px !important;
+}
+
+%button-width-auto {
+    width: auto !important;
+}
+
+%button-width-wide {
+    width: 90%!important;
+}
+
+@mixin button(
+    $background: null,
+    $color: null,
+    $size: null,
+    $width: null,
+    $disabled: false
+) {
+    @extend %button-base;
+
+    @if $background == light {
+        @extend %button-background-light;
+    } @else if $background == dark {
+        @extend %button-background-dark;
+    } @else {
+        @extend %button-background-none;
+    }
+
+    @if $color == light {
+        @extend %button-color-light;
+    } @else if $color == dark {
+        @extend %button-color-dark;
+    }
+
+    @if $disabled {
+        @extend %button-disabled;
+    }
+
+    @if $size == large {
+        @extend %button-size-large;
+    }
+
+    @if $width == wide {
+        @extend %button-width-wide;
+    } @else {
+        @extend %button-width-auto;
+    }
+
+    @content;
+}
+
+@mixin elements(
+    $background: null,
+    $color: null,
+    $size: null,
+    $width: null,
+    $disabled: false
+) {
+    button,
+    .button,
+    input.button,
+    input[type=button],
+    input[type=submit] {
+        @include button(
+            $background,
+            $color,
+            $size,
+            $width,
+            $disabled
+        );
+    }
+}

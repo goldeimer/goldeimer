@@ -1,5 +1,3 @@
-const path = require('path')
-
 const { merge } = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -15,12 +13,14 @@ const chainedLoader = (name, options = {}) => ({
 module.exports = ({
     useCssModules = false,
     css = {},
-    postcss = {}
+    postcss = {},
+    sass = {}
 }) => ({
     module: {
         rules: [{
             test: STYLESHEET,
-            use: [{
+            use: [
+                {
                     loader: MiniCssExtractPlugin.loader,
                     options: {
                         modules: {
@@ -34,10 +34,11 @@ module.exports = ({
                 },
                 chainedLoader('css-loader', {
                     modules: useCssModules ? { auto: true } : false,
-                    importLoaders: 1,
+                    importLoaders: 2,
                     ...css
                 }),
-                chainedLoader('postcss-loader', postcss)
+                chainedLoader('postcss-loader', postcss),
+                chainedLoader('sass-loader', sass)
             ]
         }]
     },

@@ -2,7 +2,9 @@
 
 # NOTE: Prefer `lerna clean` if available
 
-_workingDirectory="${$1:-"$PWD"}"
+_workingDirectory="$(pwd)"
+
+echo "$_workingDirectory\n"
 
 __findAndRemove()
 {

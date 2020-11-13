@@ -1,0 +1,69 @@
+@use '../../lib/button';
+
+@include button.elements(
+    dark,
+    light,
+    large
+);
+
+.content-box-white {
+    @include button.elements(
+        null,
+        dark,
+        large
+    );
+}
+
+.button-bg-dark .avia-button,
+.button-dark-bg .avia-button {
+    @include button.button(
+        null,
+        light
+    );
+}
+
+.button-bg-light .avia-button,
+.button-light-bg .avia-button {
+    @include button.button(
+        null,
+        dark
+    );
+}
+
+.button:disabled,
+input.button:disabled,
+.button-disabled,
+input.button-disabled {
+    @extend %button-disabled;
+}
+
+.button-light-bg-full .avia-button {
+    @include button.button(
+        light,
+        dark,
+        null,
+        wide
+    );
+
+    margin-bottom: 20px;
+}
+
+.button-col-bg-full .avia-button {
+    @include button.button(
+        null,
+        null,
+        null,
+        wide
+    );
+
+    background-color: #008dc0 !important;
+    color: #fff !important;
+    border-color: #008dc0 !important;
+
+    margin-bottom: 20px;
+}
+
+.button-col-bg-full .avia-button:hover {
+    background-color: #fff!important;
+    color: #008dc0 !important;
+}
