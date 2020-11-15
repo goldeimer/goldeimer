@@ -1,69 +1,84 @@
 @use '../../lib/button';
 
 @include button.elements(
-    dark,
-    light,
-    large
+    #000,
+    #fff
 );
 
-.content-box-white {
+%button-wide-margin-base {
+    &:not(:first-child) {
+        margin-bottom: 10px;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 10px;
+    }
+}
+
+@mixin _buttonContainers(
+    $backgroundColor: #000,
+    $color: #fff,
+    $transparentBackgroundBeforeMouseOver: true
+) {
     @include button.elements(
-        null,
-        dark,
-        large
+        $backgroundColor,
+        $color,
+        $transparentBackgroundBeforeMouseOver
+    );
+
+    &-wide {
+        @include button.elements(
+            $backgroundColor,
+            $color,
+            $transparentBackgroundBeforeMouseOver,
+            75%
+        );
+
+        @extend %button-wide-margin-base;
+    }
+
+    &-full {
+        @include button.elements(
+            $backgroundColor,
+            $color,
+            $transparentBackgroundBeforeMouseOver,
+            90%
+        );
+
+        @extend %button-wide-margin-base;
+    }
+
+}
+
+.button-bg-dark,
+.button-dark-bg,
+.content-box-black {
+    @include _buttonContainers(
+        #000,
+        #fff
     );
 }
 
-.button-bg-dark .avia-button,
-.button-dark-bg .avia-button {
-    @include button.button(
-        null,
-        light
+.button-bg-light,
+.button-light-bg,
+.content-box-white {
+    @include _buttonContainers(
+        #fff,
+        #000
     );
 }
 
-.button-bg-light .avia-button,
-.button-light-bg .avia-button {
-    @include button.button(
-        null,
-        dark
+.content-box-yellow {
+    @include _buttonContainers(
+        #ffe500,
+        #000
     );
 }
 
-.button:disabled,
-input.button:disabled,
-.button-disabled,
-input.button-disabled {
-    @extend %button-disabled;
-}
-
-.button-light-bg-full .avia-button {
-    @include button.button(
-        light,
-        dark,
-        null,
-        wide
+.button-yellow {
+    @include _buttonContainers(
+        #ffe500,
+        #000,
+        false
     );
-
-    margin-bottom: 20px;
-}
-
-.button-col-bg-full .avia-button {
-    @include button.button(
-        null,
-        null,
-        null,
-        wide
-    );
-
-    background-color: #008dc0 !important;
-    color: #fff !important;
-    border-color: #008dc0 !important;
-
-    margin-bottom: 20px;
-}
-
-.button-col-bg-full .avia-button:hover {
-    background-color: #fff!important;
-    color: #008dc0 !important;
 }

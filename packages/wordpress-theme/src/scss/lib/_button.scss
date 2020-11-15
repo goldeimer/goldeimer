@@ -28,108 +28,71 @@
     background: none !important;
 }
 
-%button-background-dark {
-    background-color: #000 !important;
-}
-
-%button-background-light {
-    background-color: #fff !important;
-}
-
-%button-color-dark {
-    color: #000 !important;
-    border-color: #000 !important;
-
-    &:hover {
-        background-color: #000 !important;
-        color: #fff !important;
-    }
-}
-
-%button-color-light {
-    color: #fff !important;
-    border-color: #fff !important;
-
-    &:hover {
-        background-color: #fff !important;
-        color: #000 !important;
-    }
-}
-
 %button-disabled {
     opacity: 0.2 !important;
 }
 
-%button-size-large {
-    padding: 15px 30px 13px !important;
-}
-
-%button-width-auto {
-    width: auto !important;
-}
-
-%button-width-wide {
-    width: 90%!important;
-}
-
 @mixin button(
-    $background: null,
-    $color: null,
-    $size: null,
-    $width: null,
-    $disabled: false
+    $backgroundColor: #fff,
+    $color: #000,
+    $transparentBackgroundBeforeMouseOver: true,
+    $minWidth: null
 ) {
     @extend %button-base;
 
-    @if $background == light {
-        @extend %button-background-light;
-    } @else if $background == dark {
-        @extend %button-background-dark;
-    } @else {
+    @if $transparentBackgroundBeforeMouseOver {
         @extend %button-background-none;
-    }
-
-    @if $color == light {
-        @extend %button-color-light;
-    } @else if $color == dark {
-        @extend %button-color-dark;
-    }
-
-    @if $disabled {
-        @extend %button-disabled;
-    }
-
-    @if $size == large {
-        @extend %button-size-large;
-    }
-
-    @if $width == wide {
-        @extend %button-width-wide;
     } @else {
-        @extend %button-width-auto;
+        background-color: #{$backgroundColor} !important;
+    }
+
+    color: #{$color} !important;
+    border-color: #{$color} !important;
+
+    &:hover {
+        background-color: #{$color} !important;
+        color: #{$backgroundColor} !important;
+        opacity: 1 !important;
+    }
+
+    width: auto !important;
+
+    @if $minWidth {
+        min-width: #{$minWidth} !important;
+    }
+
+    &:disabled,
+    &.disabled {
+        @extend %button-disabled;
     }
 
     @content;
 }
 
 @mixin elements(
-    $background: null,
-    $color: null,
-    $size: null,
-    $width: null,
-    $disabled: false
+    $backgroundColor: #fff,
+    $color: #000,
+    $transparentBackgroundBeforeMouseOver: true,
+    $minWidth: null
 ) {
-    button,
+    /* parent theme's button class */
+    .avia-button,
     .button,
-    input.button,
+    button,
     input[type=button],
     input[type=submit] {
         @include button(
-            $background,
+            $backgroundColor,
             $color,
-            $size,
-            $width,
-            $disabled
+            $transparentBackgroundBeforeMouseOver,
+            $minWidth
         );
+    }
+
+    .button,
+    button,
+    input[type=button],
+    input[type=submit] {
+        padding: 15px 30px 13px !important;
     }
 }
