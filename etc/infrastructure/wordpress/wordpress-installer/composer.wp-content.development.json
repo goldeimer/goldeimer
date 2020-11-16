@@ -1,0 +1,34 @@
+{
+    "name"        : "goldeimer/wordpress-installer",
+    "description" : "",
+    "type"        : "project",
+    "repositories": [
+        {
+            "type": "composer",
+            "url" : "https://wpackagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/wordpress-theme"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/wordpress-util"
+        }
+    ],
+    "config"      : {
+        "vendor-dir": "wp-content/vendor"
+    },
+    "require"     : {
+        "goldeimer/goldeimer-wordpress-theme": "dev-master"
+    },
+    "extra"       : {
+        "installer-paths"      : {
+            "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "wp-content/themes/{$name}/": ["type:wordpress-theme"]
+        },
+        "wordpress-install-dir": "wp"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

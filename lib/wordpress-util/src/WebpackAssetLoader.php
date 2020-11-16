@@ -1,10 +1,10 @@
 <?php
 
-// declare(strict_types=1);
+declare(strict_types=1);
 
-namespace Goldeimer\WordPressUtil;
+namespace Goldeimer\WordPress\WpUtil;
 
-final class WebpackAssetLoader extends WebpackAssetLoaderImpl
+final class WebpackAssetLoader extends StaticWebpackAssetLoader
 {
     private $pkgAbspath = '';
     private $shouldEnqueue = '';
@@ -12,13 +12,12 @@ final class WebpackAssetLoader extends WebpackAssetLoaderImpl
     public function __construct(
         $pkgAbspath = null,
         $shouldEnqueue = true
-    )
-    {
+    ) {
         $this->pkgAbspath = $pkgAbspath;
         $this->shouldEnqueue = $shouldEnqueue;
     }
 
-    public function registerAssets($pkgAbspath = null)
+    public function register($pkgAbspath = null)
     {
         if ($pkgAbspath) {
             $this->pkgAbspath = $pkgAbspath;
@@ -30,9 +29,9 @@ final class WebpackAssetLoader extends WebpackAssetLoaderImpl
         );
     }
 
-    private function registerAssetsCallback()
+    public function registerAssetsCallback()
     {
-        self::_registerAssets(
+        self::registerAssets(
             $this->pkgAbspath,
             $this->shouldEnqueue
         );

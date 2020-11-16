@@ -1,13 +1,9 @@
 {
-    "name": "goldeimer/wordpress-theme",
+    "name": "goldeimer/goldeimer-wordpress-theme",
     "type": "wordpress-theme",
     "description": "Goldeimer's WordPress theme",
-    "autoload": {
-        "psr-4": {
-            "Goldeimer\\WordPressTheme\\": "src/php"
-        }
-    },
     "require": {
+        "composer/installers": "^1.8",
         "goldeimer/wordpress-util": "^0.2"
     },
     "minimum-stability": "dev",

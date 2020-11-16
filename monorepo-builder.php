@@ -23,7 +23,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'phpunit/phpunit' => '*',
             ],
             'minimum-stability' => 'dev',
-            'prefer-stable' => true,
+            'prefer-stable' => true
         ]
     );
 
@@ -37,8 +37,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $parameters->set(
         Option::DIRECTORIES_TO_REPOSITORIES, [
-            'lib/wordpress-util' => 'git@github.com:goldeimer/wordpress-util.git',
-            'packages/wordpress-theme' => 'git@github.com:goldeimer/wordpress-theme.git'
+            'etc/infrastructure/wordpress/wordpress-installer'
+                => 'git@github.com:goldeimer/wordpress-installer.git',
+            'lib/wordpress-util'
+                => 'git@github.com:goldeimer/wordpress-util.git',
+            'packages/wordpress-theme'
+                => 'git@github.com:goldeimer/wordpress-theme.git'
         ]
     );
 

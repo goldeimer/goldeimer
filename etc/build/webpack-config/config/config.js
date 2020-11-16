@@ -28,6 +28,7 @@ module.exports = {
         isLibrary,
         mode = WebpackMode.PRODUCTION,
         nodeExternalsEnabled = false,
+        outputPath,
         pkgInfo,
         publicPath,
         treatPeerDepsAsExternals = true
@@ -57,6 +58,7 @@ module.exports = {
             context,
             isLibrary,
             mode,
+            outputPath,
             pkgInfo,
             publicPath
         }),
@@ -64,7 +66,8 @@ module.exports = {
         recordsPath: config.recordsPath({
             buildTarget,
             context,
-            mode
+            mode,
+            outputPath
         }),
         resolve: config.resolve(),
         target: config.target(buildTarget),

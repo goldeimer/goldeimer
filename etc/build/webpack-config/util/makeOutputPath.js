@@ -4,10 +4,11 @@ const BuildTarget = require('../enum/BuildTarget')
 
 module.exports = ({
     buildTarget = BuildTarget.STABLE,
-    context
+    context,
+    outputPath
 }) => path.resolve(...[
     context,
-    'dist',
+    outputPath,
     ...(buildTarget === BuildTarget.STABLE
         ? []
         : [buildTarget])

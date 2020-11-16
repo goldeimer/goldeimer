@@ -5,7 +5,7 @@ const {
 
 const isProductionMode = require('../util/isProductionMode')
 const isUmdBuild = require('../util/isUmdBuild')
-const outputPath = require('../util/outputPath')
+const makeOutputPath = require('../util/makeOutputPath')
 
 const BuildTarget = require('../enum/BuildTarget')
 
@@ -13,10 +13,10 @@ const libraryConfig = ({
     buildTarget,
     pkgInfo: { name, scope }
 }) => {
-    const _name = `${scope ? `${scope}-` : ''}${name}`
+    const scopedName = `${scope ? `${scope}-` : ''}${name}`
 
-    const nameParamCase = paramCase(_name)
-    const namePascalCase = pascalCase(_name)
+    const nameParamCase = paramCase(scopedName)
+    const namePascalCase = pascalCase(scopedName)
 
     switch (buildTarget) {
     case BuildTarget.UMD:
@@ -36,11 +36,11 @@ const libraryConfig = ({
             library: nameParamCase,
             libraryTarget: 'commonjs2'
         }
-    }
-
-    return {
-        library: nameParamCase,
-        libraryTarget: 'commonjs2'
+    default:
+        return {
+            library: nameParamCase,
+            libraryTarget: 'commonjs2'
+        }
     }
 }
 
@@ -48,35 +48,44 @@ const filenames = ({
     buildTarget,
     isLibrary,
     mode,
-    pkgInfo
+    pkgInfo: { scope }
 }) => {
-    const _isProductionMode = isProductionMode(mode)
-    const _isUmdBuild = isUmdBuild(buildTarget)
+    const productionMode = isProductionMode(mode)
+    const umdBuild = isUmdBuild(buildTarget)
 
     const subdir = isLibrary
         ? ''
-        : 'static/js/'
+        : 'js/'
 
-    const hashSuffix = _isProductionMode && !_isUmdBuild ? '.[contenthash]' : ''
-    const minSuffix = _isProductionMode && _isUmdBuild ? '.min' : ''
-    const modeSuffix = _isUmdBuild ? `.${mode}` : ''
-    const scopePrefix = pkgInfo.scope ? `${pkgInfo.scope}.` : ''
+    const hashSuffix = productionMode && !umdBuild ? '.[contenthash]' : ''
+    const minSuffix = productionMode && umdBuild ? '.min' : ''
+    const modeSuffix = umdBuild ? `.${mode}` : ''
+    const scopePrefix = scope ? `${scope}.` : ''
 
     const commonSuffix = `.${buildTarget}${modeSuffix}${minSuffix}`
 
     return {
         chunkFilename: `${subdir}chunks/${scopePrefix}[name]${commonSuffix}${hashSuffix}.js`,
-        filename:  `${subdir}${scopePrefix}[name]${commonSuffix}.js`,
+        filename: `${subdir}${scopePrefix}[name]${commonSuffix}.js`
     }
 }
+
+const formatPublicPath = ({
+    pkgInfo: { name },
+    publicPath
+}) => publicPath.replace(
+    /\[name\]/u,
+    name
+)
 
 module.exports = ({
     buildTarget,
     context,
     isLibrary = false,
     mode,
+    outputPath,
     pkgInfo,
-    publicPath,
+    publicPath
 }) => ({
     ...filenames({
         buildTarget,
@@ -88,9 +97,13 @@ module.exports = ({
         buildTarget,
         pkgInfo
     }),
-    path: outputPath({
+    path: makeOutputPath({
         buildTarget,
-        context
+        context,
+        outputPath
     }),
-    publicPath
+    publicPath: formatPublicPath({
+        pkgInfo,
+        publicPath
+    })
 })

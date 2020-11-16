@@ -25,11 +25,7 @@ module.exports = ({
                     options: {
                         modules: {
                             namedExport: true
-                        },
-                        // publicPath: (resourcePath, context) => `${path.relative(
-                        //     path.dirname(resourcePath),
-                        //     context
-                        // )}/`
+                        }
                     }
                 },
                 chainedLoader('css-loader', {
@@ -44,8 +40,8 @@ module.exports = ({
     },
     plugins: [
         new MiniCssExtractPlugin({
-            chunkFilename: 'static/css/[name].css',
-            filename: 'static/css/[name].css'
+            chunkFilename: 'css/[name].css',
+            filename: 'css/[name].css'
         })
     ]
 })

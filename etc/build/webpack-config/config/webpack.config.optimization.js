@@ -1,4 +1,4 @@
-const os = require('os');
+const os = require('os')
 const { merge } = require('webpack-merge')
 
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
@@ -10,9 +10,11 @@ const isUmdBuild = require('../util/isUmdBuild')
 
 const PARALLEL_THREAD_COUNT = os.cpus().length - 1
 
-const getIdAlgorithm = (_isDevelopmentMode) => _isDevelopmentMode
-    ? 'named'
-    : 'deterministic'
+const getIdAlgorithm = (_isDevelopmentMode) => (
+    _isDevelopmentMode
+        ? 'named'
+        : 'deterministic'
+)
 
 const getIdAlgorithms = (_isDevelopmentMode) => {
     const idAlgorithm = getIdAlgorithm(_isDevelopmentMode)
@@ -39,8 +41,8 @@ const minimizer = () => ([
     new CssMinimizerPlugin({
         minimizerOptions: {
             preset: ['default', {
-                discardComments: { removeAll: true },
-            }],
+                discardComments: { removeAll: true }
+            }]
         },
         parallel: PARALLEL_THREAD_COUNT,
         sourceMap: { inline: false }
@@ -76,7 +78,7 @@ module.exports = ({
     isLibrary,
     mode
 }) => {
-    const _isUmdBuild = isUmdBuild(buildTarget)
+    const umdBuild = isUmdBuild(buildTarget)
 
     return merge(
         paramBasedOptimization({
@@ -85,9 +87,9 @@ module.exports = ({
             isLibrary
         }), {
             minimizer: minimizer(),
-            runtimeChunk: !_isUmdBuild,
+            runtimeChunk: !umdBuild,
             splitChunks: {
-                automaticNameDelimiter: '-',
+                automaticNameDelimiter: '.',
                 chunks: 'all',
                 enforceSizeThreshold: 1e6,
                 maxAsyncRequests: 30,
@@ -97,7 +99,7 @@ module.exports = ({
                 maxSize: 3e6,
                 minChunks: 1,
                 minSize: 1e5,
-                ...(_isUmdBuild
+                ...(umdBuild
                     ? {
                         cacheGroups: { default: false }
                     }

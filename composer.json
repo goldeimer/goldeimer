@@ -1,23 +1,53 @@
 {
     "name": "goldeimer/goldeimer",
+    "extra": {
+        "installer-paths": {
+            "wp-content/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ],
+            "wp-content/themes/{$name}/": [
+                "type:wordpress-theme"
+            ]
+        },
+        "wordpress-install-dir": "wp"
+    },
+    "description": "Goldeimer's monorepo, PHP configuration",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/wordpress-theme"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/wordpress-util"
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "Goldeimer\\WordPressTheme\\": "packages/wordpress-theme/src/php",
-            "Goldeimer\\WordPressUtil\\": "lib/wordpress-util/src/php"
+            "Goldeimer\\WordPress\\WpUtil\\": "lib/wordpress-util/src"
         }
     },
     "replace": {
+        "goldeimer/goldeimer-wordpress-theme": "self.version",
+        "goldeimer/wordpress-installer": "self.version",
         "goldeimer/wordpress-theme": "self.version",
         "goldeimer/wordpress-util": "self.version"
     },
-    "description": "Goldeimer's monorepo, PHP configuration",
     "scripts": {
         "monorepo": "vendor/bin/monorepo-builder",
         "monorepo:merge": "vendor/bin/monorepo-builder merge",
         "monorepo:release": "vendor/bin/monorepo-builder release",
         "monorepo:release:patch": "vendor/bin/monorepo-builder release patch",
         "monorepo:release:patch:dry": "vendor/bin/monorepo-builder release patch --dry-run",
+        "monorepo:split": "vendor/bin/monorepo-builder split",
         "monorepo:validate": "vendor/bin/monorepo-builder validate"
+    },
+    "require": {
+        "composer/installers": "^1.8"
     },
     "require-dev": {
         "symplify/monorepo-builder": "^8.3"

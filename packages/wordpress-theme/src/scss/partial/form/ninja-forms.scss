@@ -74,10 +74,11 @@
     }
 
     .nf-field-element {
-        @include button.elements(
-            null,
-            light,
-            large
+        @include button.elementsAndStyle(
+            #fff,
+            #000,
+            true,
+            false
         );
     }
 }

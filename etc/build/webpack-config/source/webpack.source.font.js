@@ -6,7 +6,7 @@ module.exports = () => ({
             test: FONT,
             type: 'asset/resource',
             generator: {
-                filename: 'static/font/[contenthash][ext][query]'
+                filename: 'font/[contenthash][ext][query]'
             }
         }]
     }

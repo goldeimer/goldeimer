@@ -9,6 +9,7 @@
 **/build/**
 !etc/build/**
 **/dist/**
+**/packages/**/static
 
 ### build artifacts
 **/npm-debug.log

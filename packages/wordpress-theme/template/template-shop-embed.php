@@ -3,7 +3,7 @@
 Template Name: Shop Embed - no content
 */
 
-namespace Goldeimer\WordPressTheme;
+namespace Goldeimer\WordPress\WpTheme;
 
 if (! defined('ABSPATH'))
 {

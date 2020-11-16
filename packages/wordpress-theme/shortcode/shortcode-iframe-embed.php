@@ -1,7 +1,7 @@
 <?php
 /// @shortcode [goldeimer-iframe-embed]
 
-namespace Goldeimer\WordPressTheme;
+namespace Goldeimer\WordPress\WpTheme;
 
 function shortcodeIframeEmbed($attributes)
 {

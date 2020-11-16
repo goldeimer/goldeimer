@@ -43,6 +43,8 @@
         "html-webpack-plugin": "^4.3.0",
         "image-webpack-loader": "^7.0.1",
         "mini-css-extract-plugin": "^1.2.1",
+        "os": "^0.1.1",
+        "path": "^0.12.7",
         "postcss": "^8.1.4",
         "postcss-loader": "^4.0.4",
         "sass": "^1.29.0",
@@ -65,7 +67,10 @@
         "webpack-cli": "^4.1.0"
     },
     "workspaces": {
-        "nohoist": ["postcss", "postcss/**"]
+        "nohoist": [
+            "postcss",
+            "postcss/**"
+        ]
     },
     "main": "webpack-config.js"
 }

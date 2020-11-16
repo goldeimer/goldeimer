@@ -4,7 +4,7 @@
     "description": "Goldeimer's WordPress utility library",
     "autoload": {
         "psr-4": {
-            "Goldeimer\\WordPressUtil\\": "src"
+            "Goldeimer\\WordPress\\WpUtil\\": "src"
         }
     },
     "minimum-stability": "dev",

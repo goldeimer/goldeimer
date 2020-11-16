@@ -31,8 +31,14 @@ module.exports = {
         // Causes massive pain during development if set to 'error'
         // (w/ eslint-loader and webpack-watcher).
         'no-unused-vars': ['warn'],
+        'operator-linebreak': ['error', 'before'],
         semi: ['error', 'never', {
             beforeStatementContinuationChars: 'always'
+        }],
+        'space-before-function-paren': ['error', {
+            anonymous: 'always',
+            named: 'never',
+            asyncArrow: 'always'
         }],
         'spaced-comment': ['error', 'always', {
             block: {

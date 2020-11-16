@@ -1,12 +1,12 @@
 {
-    "name": "@goldeimer/wordpress-theme",
+    "name": "@goldeimer/goldeimer-wordpress-theme",
     "version": "0.0.1",
     "description": "Goldeimer's WordPress theme",
     "keywords": [
         "goldeimer",
         "wordpress"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/packages/wordpress-theme#readme",
+    "homepage": "https://github.com/Goldeimer/goldeimer/packages/wordpress-theme/client#readme",
     "bugs": {
         "url": "https://github.com/Goldeimer/goldeimer/issues",
         "email": "engineering+bugs@goldeimer.de"
@@ -35,8 +35,5 @@
         "@goldeimer/font-stack": "^0.0.1",
         "@goldeimer/webpack-config": "^0.0.1"
     },
-    "browserslist": "extends @goldeimer/browserslist-config",
-    "files": [
-        "dist/**/*"
-    ]
+    "browserslist": "extends @goldeimer/browserslist-config"
 }

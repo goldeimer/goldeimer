@@ -61,6 +61,8 @@ __syncDir "wp-content/plugins" "wp-content"
 
 __syncDir "wp-content/themes/enfold" "wp-content/themes"
 __syncDir "wp-content/themes/enfold-child" "wp-content/themes"
+__syncDir "wp-content/themes/goldeimer" "wp-content/themes"
+__syncDir "wp-content/themes/goldeimer-wordpress-theme" "wp-content/themes"
 
 __syncDir "wp-content/uploads/dynamic_avia" "wp-content/uploads"
 __syncNumericDir "wp-content/uploads" "wp-content"

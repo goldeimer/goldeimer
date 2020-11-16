@@ -32,11 +32,10 @@
     opacity: 0.2 !important;
 }
 
-@mixin button(
+@mixin style(
     $backgroundColor: #fff,
     $color: #000,
-    $transparentBackgroundBeforeMouseOver: true,
-    $minWidth: null
+    $transparentBackgroundBeforeMouseOver: true
 ) {
     @extend %button-base;
 
@@ -45,6 +44,8 @@
     } @else {
         background-color: #{$backgroundColor} !important;
     }
+
+    width: auto !important;
 
     color: #{$color} !important;
     border-color: #{$color} !important;
@@ -55,12 +56,6 @@
         opacity: 1 !important;
     }
 
-    width: auto !important;
-
-    @if $minWidth {
-        min-width: #{$minWidth} !important;
-    }
-
     &:disabled,
     &.disabled {
         @extend %button-disabled;
@@ -69,30 +64,40 @@
     @content;
 }
 
-@mixin elements(
+@mixin elements($withParentThemeClass: false) {
+    @if $withParentThemeClass {
+        .avia-button,
+        .button,
+        button,
+        input[type=button],
+        input[type=submit] {
+            @content;
+        }
+    } @else {
+        .button,
+        button,
+        input[type=button],
+        input[type=submit] {
+            @content;
+        }
+    }
+}
+
+@mixin elementsAndStyle(
     $backgroundColor: #fff,
     $color: #000,
     $transparentBackgroundBeforeMouseOver: true,
-    $minWidth: null
+    $withParentThemeClass: false
 ) {
-    /* parent theme's button class */
-    .avia-button,
-    .button,
-    button,
-    input[type=button],
-    input[type=submit] {
-        @include button(
+    @include elements($withParentThemeClass) {
+        @include style(
             $backgroundColor,
             $color,
-            $transparentBackgroundBeforeMouseOver,
-            $minWidth
+            $transparentBackgroundBeforeMouseOver
         );
     }
 
-    .button,
-    button,
-    input[type=button],
-    input[type=submit] {
+    @include elements() {
         padding: 15px 30px 13px !important;
     }
 }

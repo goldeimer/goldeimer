@@ -1,11 +1,11 @@
 const path = require('path')
 
-const outputPath = require('../util/outputPath')
+const makeOutputPath = require('../util/makeOutputPath')
 
 module.exports = ({
     mode,
     ...args
 }) => path.join(
-    outputPath(args),
+    makeOutputPath(args),
     `artifacts/records.${mode}.json`
 )
