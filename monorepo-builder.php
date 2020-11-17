@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\AddTagToChangelogReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\PushNextDevReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\PushTagReleaseWorker;
@@ -11,14 +10,14 @@ use Symplify\MonorepoBuilder\Release\ReleaseWorker\SetCurrentMutualDependenciesR
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\SetNextMutualDependenciesReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\TagVersionReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\UpdateBranchAliasReleaseWorker;
-
 use Symplify\MonorepoBuilder\ValueObject\Option;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
     $parameters->set(
-        Option::DATA_TO_REMOVE, [
+        Option::DATA_TO_REMOVE,
+        [
             'require' => [
                 'phpunit/phpunit' => '*',
             ],
@@ -28,7 +27,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     );
 
     $parameters->set(
-        Option::PACKAGE_DIRECTORIES, [
+        Option::PACKAGE_DIRECTORIES,
+        [
             __DIR__ . '/etc',
             __DIR__ . '/lib',
             __DIR__ . '/packages'
@@ -36,13 +36,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     );
 
     $parameters->set(
-        Option::DIRECTORIES_TO_REPOSITORIES, [
-            'etc/infrastructure/wordpress/wordpress-installer'
-                => 'git@github.com:goldeimer/wordpress-installer.git',
-            'lib/wordpress-util'
-                => 'git@github.com:goldeimer/wordpress-util.git',
-            'packages/wordpress-theme'
-                => 'git@github.com:goldeimer/wordpress-theme.git'
+        Option::DIRECTORIES_TO_REPOSITORIES,
+        [
+            'etc/infrastructure/wordpress/wp-install'
+                => 'git@github.com:goldeimer/wp-install.git',
+            'lib/wp-util'
+                => 'git@github.com:goldeimer/wp-util.git',
+            'packages/wp-theme-goldeimer'
+                => 'git@github.com:goldeimer/wp-theme-goldeimer.git'
         ]
     );
 

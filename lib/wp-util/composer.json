@@ -1,5 +1,5 @@
 {
-    "name": "goldeimer/wordpress-util",
+    "name": "goldeimer/wp-util",
     "type": "library",
     "description": "Goldeimer's WordPress utility library",
     "autoload": {

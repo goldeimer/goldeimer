@@ -9,7 +9,7 @@ _destDir=$_abspath
 
 _repositoryUrl='{
     "type": "vcs",
-    "url" : "https://github.com/goldeimer/wordpress-installer.git"
+    "url" : "https://github.com/goldeimer/wp-install.git"
 }'
 
 __usage()
@@ -56,7 +56,7 @@ while [ "$1" != "" ]; do
 done
 
 COMPOSER="$_composerJson" composer create-project \
-                                   goldeimer/wordpress-installer \
+                                   goldeimer/wp-install \
                                    "$_destDir" \
                                    dev-master \
                                    --repository-url="$_repositoryUrl" \

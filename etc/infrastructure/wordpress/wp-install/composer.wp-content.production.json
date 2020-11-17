@@ -1,5 +1,5 @@
 {
-    "name"        : "goldeimer/wordpress-installer",
+    "name"        : "goldeimer/wp-install",
     "description" : "",
     "type"        : "project",
     "repositories": [
@@ -9,18 +9,22 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/goldeimer/wordpress-theme"
+            "url": "https://github.com/goldeimer/wp-theme"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/goldeimer/wordpress-util"
+            "url": "https://github.com/goldeimer/wp-toilet-paper-calculator"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/wp-util"
         }
     ],
     "config"      : {
         "vendor-dir": "wp-content/vendor"
     },
     "require"     : {
-        "goldeimer/goldeimer-wordpress-theme": "dev-master"
+        "goldeimer/wp-theme-goldeimer": "^0.1"
     },
     "extra"       : {
         "installer-paths"      : {
@@ -28,7 +32,5 @@
             "wp-content/themes/{$name}/": ["type:wordpress-theme"]
         },
         "wordpress-install-dir": "wp"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }

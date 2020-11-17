@@ -1,16 +1,5 @@
 {
     "name": "goldeimer/goldeimer",
-    "extra": {
-        "installer-paths": {
-            "wp-content/plugins/{$name}/": [
-                "type:wordpress-plugin"
-            ],
-            "wp-content/themes/{$name}/": [
-                "type:wordpress-theme"
-            ]
-        },
-        "wordpress-install-dir": "wp"
-    },
     "description": "Goldeimer's monorepo, PHP configuration",
     "repositories": [
         {
@@ -19,22 +8,27 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/goldeimer/wordpress-theme"
+            "url": "https://github.com/goldeimer/wp-theme-goldeimer"
         },
         {
             "type": "vcs",
-            "url": "https://github.com/goldeimer/wordpress-util"
+            "url": "https://github.com/goldeimer/wp-toilet-paper-calculator"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/goldeimer/wp-util"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Goldeimer\\WordPress\\WpUtil\\": "lib/wordpress-util/src"
+            "Goldeimer\\WordPress\\WpUtil\\": "lib/wp-util/src"
         }
     },
     "replace": {
-        "goldeimer/goldeimer-wordpress-theme": "self.version",
-        "goldeimer/wordpress-installer": "self.version",
-        "goldeimer/wordpress-util": "self.version"
+        "goldeimer/wp-install": "self.version",
+        "goldeimer/wp-theme-goldeimer": "self.version",
+        "goldeimer/wp-toilet-paper-calculator": "self.version",
+        "goldeimer/wp-util": "self.version"
     },
     "scripts": {
         "monorepo": "vendor/bin/monorepo-builder",
@@ -55,6 +49,17 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "installer-paths": {
+            "wp-content/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ],
+            "wp-content/themes/{$name}/": [
+                "type:wordpress-theme"
+            ]
+        },
+        "wordpress-install-dir": "wp"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
