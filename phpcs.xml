@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="Goldeimer">
+    <description>Goldeimer's PHPCS ruleset</description>
+    <!--
+        TODO:
+        Does it make sense to include the PEAR standard before any PSRx?
+
+        <rule ref="PEAR">
+            <exclude name="Generic.Commenting.DocComment.Missing"/>
+            <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
+            <exclude name="PEAR.Commenting.ClassComment.Missing"/>
+            <exclude name="PEAR.Commenting.FileComment.Missing"/>
+            <exclude name="PEAR.Commenting.FunctionComment.Missing"/>
+            <exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/>
+            <exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/>
+            <exclude name="PEAR.WhiteSpace.ScopeIndent"/>
+        </rule>
+    -->
+    <rule ref="PSR1">
+    </rule>
+    <rule ref="PSR2">
+    </rule>
+    <rule ref="PSR12">
+    </rule>
+</ruleset>
