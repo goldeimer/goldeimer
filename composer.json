@@ -21,10 +21,12 @@
     ],
     "autoload": {
         "psr-4": {
+            "Goldeimer\\PhpUtil\\": "lib/php-util/src",
             "Goldeimer\\WordPress\\WpUtil\\": "lib/wp-util/src"
         }
     },
     "replace": {
+        "goldeimer/php-util": "self.version",
         "goldeimer/wp-install": "self.version",
         "goldeimer/wp-theme-goldeimer": "self.version",
         "goldeimer/wp-toilet-paper-calculator": "self.version",
@@ -40,7 +42,8 @@
         "monorepo:validate": "vendor/bin/monorepo-builder validate"
     },
     "require": {
-        "composer/installers": "^1.8"
+        "composer/installers": "^1.8",
+        "myclabs/php-enum": "^1.7"
     },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",

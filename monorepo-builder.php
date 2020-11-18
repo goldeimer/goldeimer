@@ -40,8 +40,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         [
             'etc/infrastructure/wordpress/wp-install'
                 => 'git@github.com:goldeimer/wp-install.git',
+            'lib/php-util'
+                => 'git@github.com:goldeimer/php-util.git',
             'lib/wp-util'
                 => 'git@github.com:goldeimer/wp-util.git',
+            // 'packages/toilet-paper-calculator'
+            //     => 'git@github.com:goldeimer/wp-toilet-paper-calculator.git',
             'packages/wp-theme-goldeimer'
                 => 'git@github.com:goldeimer/wp-theme-goldeimer.git'
         ]
