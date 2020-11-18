@@ -125,12 +125,12 @@ class WebpackConfigBuilder {
         this.runMode = runMode
     }
 
-    stats(enabled = true) {
-        this.statsEnabled = Boolean(enabled)
+    setTreatPeerDepsAsExternals(enabled = true) {
+        this.treatPeerDepsAsExternals = Boolean(enabled)
     }
 
-    treatPeerDepsAsExternals(enabled = true) {
-        this.treatPeerDepsAsExternals = Boolean(enabled)
+    stats(enabled = true) {
+        this.statsEnabled = Boolean(enabled)
     }
 
     webpackConfig(options) {
