@@ -90,10 +90,6 @@ class WebpackConfigBuilder {
         this.userPlugins.push(plugin.html(options))
     }
 
-    isLibrary(is = true) {
-        this.isLibrary = Boolean(is)
-    }
-
     loadSource(sourceType) {
         this.sourceTypeLoaders[sourceType] = SourceType.getLoaderConfig({
             context: this.context,
@@ -113,6 +109,10 @@ class WebpackConfigBuilder {
         this.nodeExternalsEnabled = Boolean(enabled)
     }
 
+    setIsLibrary(is = true) {
+        this.isLibrary = Boolean(is)
+    }
+
     setOutputPath(_path = 'dist') {
         this.outputPath = _path
     }
@@ -121,7 +121,7 @@ class WebpackConfigBuilder {
         this.publicPath = _path
     }
 
-    runMode(runMode) {
+    setRunMode(runMode) {
         this.runMode = runMode
     }
 

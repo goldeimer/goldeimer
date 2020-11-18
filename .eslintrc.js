@@ -11,7 +11,9 @@ module.exports = {
     settings: {
         'import/resolver': {
             'eslint-import-resolver-lerna': {
-                packages: path.resolve(__dirname, 'etc/build')
+                packages: [
+                    path.resolve(__dirname, 'etc/build')
+                ]
             }
         }
     }

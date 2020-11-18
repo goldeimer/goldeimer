@@ -55,10 +55,10 @@
 **/.vscode/**
 **/*.code-workspace
 
-!**/.vscode/extensions.json
-!**/.vscode/launch.json
-!**/.vscode/settings.json
-!**/.vscode/tasks.json
+# !**/.vscode/extensions.json
+# !**/.vscode/launch.json
+# !**/.vscode/settings.json
+# !**/.vscode/tasks.json
 
 ### operating system artifacts
 **/.DS_Store
