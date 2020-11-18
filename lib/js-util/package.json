@@ -1,32 +1,27 @@
 {
-    "name": "@goldeimer/mui-theme",
+    "name": "@goldeimer/js-util",
     "version": "0.0.1",
-    "description": "Goldeimer's common libraries: mui-theme",
+    "description": "Goldeimer's JavaScript utility library",
     "keywords": [
-        "goldeimer"
+        "goldeimer",
+        "utility"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/lib/mui-theme#readme",
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/js-util#readme",
     "bugs": {
         "url": "https://github.com/Goldeimer/goldeimer/issues",
         "email": "engineering+bugs@goldeimer.de"
     },
-    "license": "BSD-2-Clause",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Goldeimer/goldeimer.git",
-        "directory": "lib/mui-theme"
+        "directory": "lib/js-util"
     },
-    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "contributors": [
+        "Manou Otolski <manou@goldeimer.de>",
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
-    "browserslist": "extends @goldeimer/browserslist-config",
-    "main": "dist/goldeimer.mui-theme.stable.js",
-    "module": "dist/esm/goldeimer.mui-theme.esm.js",
-    "files": [
-        "dist/umd"
-    ],
-    "private": false,
+    "license": "BSD-2-Clause",
     "scripts": {
         "build": "yarn build:cjs && yarn build:esm && yarn build:umd && yarn build:umd:dev",
         "build:dev": "webpack --mode development",
@@ -42,12 +37,20 @@
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@goldeimer/js-util": "^0.0.1"
+        "axios": "^0.20.0",
+        "enum": "^3.0.4",
+        "nanoid-generate": "^1.0.0",
+        "papaparse": "^5.3.0",
+        "typechecker": "^7.17.0"
     },
     "devDependencies": {
         "@goldeimer/webpack-config": "^0.0.1"
     },
-    "peerDependencies": {
-        "@material-ui/core": "^4.11.0"
-    }
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "private": false,
+    "main": "dist/goldeimer.js-util.stable.js",
+    "module": "dist/esm/goldeimer.js-util.esm.js",
+    "files": [
+        "dist/umd"
+    ]
 }
