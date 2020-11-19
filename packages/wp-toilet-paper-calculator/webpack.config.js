@@ -7,6 +7,7 @@ const builder = newWebpackConfigBuilder(__dirname)
 
 builder.loadSource(SourceType.JAVASCRIPT)
 
-builder.setIsLibrary()
+builder.setOutputPath('static')
+builder.setPublicPath('/wp-content/plugins/[name]/static/')
 
 module.exports = (...args) => builder.build(...args)

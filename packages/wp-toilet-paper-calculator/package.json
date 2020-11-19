@@ -10,23 +10,13 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
-        "@goldeimer/mui-theme": "^0.0.1",
-        "@goldeimer/react-components": "^0.0.1",
-        "@material-ui/core": "^4.11.0",
-        "prop-types": "^15.7.2",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "styled-components": "^5.2.1"
+        "@goldeimer/toilet-paper-calculator": "^0.0.1"
     },
-    "description": "Goldeimer's \"Toilet Paper Calculator\"",
+    "description": "Goldeimer's \"Toilet Paper Calculator\" as a WordPress plugin",
     "devDependencies": {
         "@goldeimer/webpack-config": "^0.0.1"
     },
-    "files": [
-        "dist/",
-        "package.json"
-    ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/packages/toilet-paper-calculator#readme",
+    "homepage": "https://github.com/Goldeimer/goldeimer/packages/wp-toilet-paper-calculator#readme",
     "keywords": [
         "goldeimer",
         "toilet-paper-calculator",
@@ -34,25 +24,17 @@
         "kackulator"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer.toilet-paper-calculator.stable.js",
-    "module": "dist/esm/goldeimer.toilet-paper-calculator.esm.js",
-    "name": "@goldeimer/toilet-paper-calculator",
-    "private": false,
+    "name": "@goldeimer/wp-toilet-paper-calculator",
+    "private": true,
     "repository": {
         "directory": "packages/wordpress/toilet-paper-calculator",
         "type": "git",
         "url": "git+https://github.com/Goldeimer/goldeimer.git"
     },
     "scripts": {
-        "build": "yarn build:stable && yarn build:esm && yarn build:umd && yarn build:umd:dev",
+        "build": "yarn build:prod",
         "build:dev": "webpack --mode development",
-        "build:esm": "yarn build:prod --env BUILD_TARGET=esm",
-        "build:esm:dev": "yarn build:dev --env BUILD_TARGET=esm",
         "build:prod": "webpack --mode production",
-        "build:stable": "yarn build:prod --env BUILD_TARGET=stable",
-        "build:stable:dev": "yarn build:dev --env BUILD_TARGET=stable",
-        "build:umd": "yarn build:prod --env BUILD_TARGET=umd",
-        "build:umd:dev": "yarn build:dev --env BUILD_TARGET=umd",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"

@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Toilet Paper Calculator
+Plugin Name: Goldeimer Toilet Paper Calculator
 Plugin URI: https://github.com/goldeimer/wp-toilet-paper-calculator#README
 Description: Goldeimer's toilet paper calculator WordPress plugin
 Version: 0.1
