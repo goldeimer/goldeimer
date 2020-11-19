@@ -8,15 +8,15 @@ const modeDependentPlugins = (env) => {
         return []
     }
 
-    const _isLibrary = isLibrary(env)
+    const library = isLibrary(env)
     return [
         '@babel/plugin-transform-react-constant-elements',
         'babel-plugin-transform-dev-warning',
         [
             'babel-plugin-transform-react-remove-prop-types', {
-                mode: _isLibrary ? 'unsafe-wrap' : 'remove',
-                removeImport: !_isLibrary
-            },
+                mode: library ? 'unsafe-wrap' : 'remove',
+                removeImport: !library
+            }
         ]
     ]
 }

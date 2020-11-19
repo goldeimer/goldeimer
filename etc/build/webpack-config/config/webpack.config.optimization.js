@@ -1,5 +1,4 @@
 const os = require('os')
-const { merge } = require('webpack-merge')
 
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -8,16 +7,14 @@ const isDevelopmentMode = require('../util/isDevelopmentMode')
 const isEsmBuild = require('../util/isEsmBuild')
 const isUmdBuild = require('../util/isUmdBuild')
 
-const PARALLEL_THREAD_COUNT = os.cpus().length - 1
-
-const getIdAlgorithm = (_isDevelopmentMode) => (
-    _isDevelopmentMode
+const getIdAlgorithm = (devMode) => (
+    devMode
         ? 'named'
         : 'deterministic'
 )
 
-const getIdAlgorithms = (_isDevelopmentMode) => {
-    const idAlgorithm = getIdAlgorithm(_isDevelopmentMode)
+const getIdAlgorithms = (devMode) => {
+    const idAlgorithm = getIdAlgorithm(devMode)
 
     return {
         chunkIds: idAlgorithm,
@@ -25,52 +22,27 @@ const getIdAlgorithms = (_isDevelopmentMode) => {
     }
 }
 
-const minimize = ({
-    _isDevelopmentMode,
-    _isEsmBuild,
-    isLibrary
-}) => (
-    !_isDevelopmentMode
-    && (
-        !_isEsmBuild
-        || !isLibrary
-    )
-)
+const minimizer = ({ esmBuild = false }) => {
+    const parallelThreads = os.cpus().length - 1
 
-const minimizer = () => ([
-    new CssMinimizerPlugin({
-        minimizerOptions: {
-            preset: ['default', {
-                discardComments: { removeAll: true }
-            }]
-        },
-        parallel: PARALLEL_THREAD_COUNT,
-        sourceMap: { inline: false }
-    }),
-    new TerserPlugin({
-        parallel: PARALLEL_THREAD_COUNT
-    })
-])
-
-const paramBasedOptimization = ({
-    _isDevelopmentMode,
-    ...args
-}) => {
-    if (_isDevelopmentMode) {
-        return getIdAlgorithms(_isDevelopmentMode)
-    }
-
-    return {
-        ...getIdAlgorithms(_isDevelopmentMode),
-        mangleWasmImports: true,
-        minimize: minimize({
-            ...args,
-            _isDevelopmentMode
+    return [
+        new CssMinimizerPlugin({
+            minimizerOptions: {
+                preset: ['default', {
+                    discardComments: { removeAll: true }
+                }]
+            },
+            parallel: parallelThreads,
+            sourceMap: { inline: false }
         }),
-        splitChunks: {
-            name: false
-        }
-    }
+        new TerserPlugin({
+            parallel: parallelThreads,
+            terserOptions: {
+                ecma: esmBuild ? 2015 : 5,
+                module: esmBuild
+            }
+        })
+    ]
 }
 
 module.exports = ({
@@ -78,35 +50,30 @@ module.exports = ({
     isLibrary,
     mode
 }) => {
+    const devMode = isDevelopmentMode(mode)
+    const esmBuild = isEsmBuild(buildTarget)
     const umdBuild = isUmdBuild(buildTarget)
 
-    return merge(
-        paramBasedOptimization({
-            _isDevelopmentMode: isDevelopmentMode(mode),
-            _isEsmBuild: isEsmBuild(buildTarget),
-            isLibrary
-        }), {
-            minimizer: minimizer(),
-            runtimeChunk: !umdBuild,
-            splitChunks: {
-                automaticNameDelimiter: '.',
-                chunks: 'all',
-                enforceSizeThreshold: 1e6,
-                maxAsyncRequests: 30,
-                maxAsyncSize: 2e6,
-                maxInitialRequests: 30,
-                maxInitialSize: 1e6,
-                maxSize: 3e6,
-                minChunks: 1,
-                minSize: 1e5,
-                ...(umdBuild
-                    ? {
-                        cacheGroups: { default: false }
-                    }
-                    : {}
-                )
-            },
-            usedExports: true
-        }
-    )
+    return {
+        ...getIdAlgorithms(devMode),
+        mangleWasmImports: !devMode,
+        minimize: !devMode,
+        minimizer: minimizer({ esmBuild }),
+        runtimeChunk: !umdBuild,
+        splitChunks: {
+            automaticNameDelimiter: '.',
+            chunks: 'all',
+            enforceSizeThreshold: 1e6,
+            maxAsyncRequests: 30,
+            maxAsyncSize: 2e6,
+            maxInitialRequests: 30,
+            maxInitialSize: 1e6,
+            maxSize: 3e6,
+            minChunks: 1,
+            minSize: 1e5,
+            ...(devMode ? {} : { name: false }),
+            ...(umdBuild ? { cacheGroups: { default: false } } : {})
+        },
+        usedExports: true
+    }
 }

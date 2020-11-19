@@ -11,6 +11,7 @@ const BuildTarget = require('../enum/BuildTarget')
 
 const libraryConfig = ({
     buildTarget,
+    isLibrary,
     pkgInfo: { name, scope }
 }) => {
     const scopedName = `${scope ? `${scope}-` : ''}${name}`
@@ -31,11 +32,14 @@ const libraryConfig = ({
             umdNamedDefine: true
         }
 
-    case BuildTarget.LEGACY:
+    case BuildTarget.ESM:
         return {
             library: nameParamCase,
-            libraryTarget: 'commonjs2'
+            libraryTarget: 'module',
+            module: true
         }
+
+    case BuildTarget.LEGACY:
     default:
         return {
             library: nameParamCase,
@@ -95,8 +99,16 @@ module.exports = ({
     }),
     ...libraryConfig({
         buildTarget,
+        isLibrary,
         pkgInfo
     }),
+    // TODO(Johannes):
+    // Preferably, `output.iife` would be set to `!isLibrary`.
+    // Especially in the context of ESM builds.
+    // However, non-iife-wrapped code makes Terser throw on minification:
+    // `'return' outside of function`.
+    // @see https://github.com/webpack-contrib/terser-webpack-plugin/issues/281
+    iife: true,
     path: makeOutputPath({
         buildTarget,
         context,

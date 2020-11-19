@@ -1,6 +1,7 @@
-module.exports = () => ({
-    asset: true,
+const BuildTarget = require('../enum/BuildTarget')
+
+module.exports = (buildTarget) => ({
     asyncWebAssembly: true,
-    outputModule: false,
+    outputModule: buildTarget === BuildTarget.ESM,
     topLevelAwait: true
 })
