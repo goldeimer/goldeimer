@@ -14,6 +14,10 @@ const libraryConfig = ({
     isLibrary,
     pkgInfo: { name, scope }
 }) => {
+    if (!isLibrary) {
+        return {}
+    }
+
     const scopedName = `${scope ? `${scope}-` : ''}${name}`
 
     const nameParamCase = paramCase(scopedName)
