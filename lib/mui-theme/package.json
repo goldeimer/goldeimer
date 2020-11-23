@@ -1,53 +1,54 @@
 {
-    "name": "@goldeimer/mui-theme",
-    "version": "0.0.1",
-    "description": "Goldeimer's common libraries: mui-theme",
-    "keywords": [
-        "goldeimer"
-    ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/lib/mui-theme#readme",
-    "bugs": {
-        "url": "https://github.com/Goldeimer/goldeimer/issues",
-        "email": "engineering+bugs@goldeimer.de"
-    },
-    "license": "BSD-2-Clause",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git",
-        "directory": "lib/mui-theme"
-    },
     "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "browser": "dist/goldeimer-mui-theme.umd.js",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/Goldeimer/goldeimer/issues"
+    },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
-    "browserslist": "extends @goldeimer/browserslist-config",
-    "main": "dist/goldeimer.mui-theme.stable.js",
-    "module": "dist/esm/goldeimer.mui-theme.esm.js",
+    "dependencies": {
+        "@babel/runtime": "^7.12.5",
+        "@goldeimer/js-util": "^0.0.1"
+    },
+    "description": "Goldeimer's material-ui theme library",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "^0.0.1"
+    },
     "files": [
         "dist/umd"
     ],
-    "private": false,
-    "scripts": {
-        "build": "yarn build:cjs && yarn build:esm && yarn build:umd && yarn build:umd:dev",
-        "build:dev": "webpack --mode development",
-        "build:prod": "webpack --mode production",
-        "build:esm": "yarn build:prod --env BUILD_TARGET=esm",
-        "build:esm:dev": "yarn build:dev --env BUILD_TARGET=esm",
-        "build:stable": "yarn build:prod --env BUILD_TARGET=stable",
-        "build:stable:dev": "yarn build:dev --env BUILD_TARGET=stable",
-        "build:umd": "yarn build:prod --env BUILD_TARGET=umd",
-        "build:umd:dev": "yarn build:dev --env BUILD_TARGET=umd",
-        "lint": "eslint src --ext .js --ext .jsx",
-        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
-    },
-    "dependencies": {
-        "@goldeimer/js-util": "^0.0.1"
-    },
-    "devDependencies": {
-        "@goldeimer/webpack-config": "^0.0.1"
-    },
+    "homepage": "https://github.com/Goldeimer/goldeimer/lib/mui-theme#readme",
+    "keywords": [
+        "goldeimer",
+        "material-ui"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "dist/goldeimer-mui-theme.cjs.js",
+    "module": "dist/goldeimer-mui-theme.esm.js",
+    "name": "@goldeimer/mui-theme",
     "peerDependencies": {
         "@material-ui/core": "^4.11.0"
-    }
+    },
+    "private": false,
+    "repository": {
+        "directory": "lib/mui-theme",
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "rollup -c rollup.config.js",
+        "build:cjs": "yarn build --configTarget cjs",
+        "build:esm": "yarn build --configTarget esm",
+        "build:umd": "yarn build --configTarget umd",
+        "build:test-tree-shaking": "yarn build:esm && yarn test-tree-shaking",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "prepublishOnly": "yarn test-tree-shaking",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "test-tree-shaking": "agadoo"
+    },
+    "version": "0.0.1"
 }
