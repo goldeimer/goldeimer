@@ -1,6 +1,5 @@
 const isDevelopmentBuild = require('./util/isDevelopmentBuild')
 const isUmdBuild = require('./util/isUmdBuild')
-const isLegacyBuild = require('./util/isLegacyBuild')
 const isLibrary = require('./util/isLibrary')
 
 const modeDependentPlugins = (env) => {
@@ -28,7 +27,7 @@ const transformRuntime = (env) => ([
         corejs: false,
         helpers: true,
         regenerator: true,
-        useESModules: !isLegacyBuild(env) && !isUmdBuild(env)
+        useESModules: !isUmdBuild(env)
     }
 ])
 
@@ -39,7 +38,5 @@ module.exports = (env) => ([
     ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
     '@babel/plugin-transform-unicode-regex',
     ...modeDependentPlugins(env),
-    // IE 11
-    ...(isLegacyBuild(env) ? ['@babel/plugin-transform-object-assign'] : []),
     transformRuntime(env)
 ])

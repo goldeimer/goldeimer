@@ -6,16 +6,16 @@
 const plugins = require('./babel.plugins')
 const presets = require('./babel.presets')
 
-let _env = 'production'
+let env = 'production'
 
 module.exports = (api) => {
-    _env = process.env.BABEL_ENV || process.env.NODE_ENV || _env
+    env = process.env.BABEL_ENV || process.env.NODE_ENV || env
 
-    api.cache.using(() => _env)
+    api.cache.using(() => env)
 
     return {
-        plugins: plugins(_env),
-        presets: presets(_env),
+        plugins: plugins(env),
+        presets: presets(env),
         env: {
             test: {
                 sourceMaps: 'both'

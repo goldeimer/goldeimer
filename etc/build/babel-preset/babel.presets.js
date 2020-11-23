@@ -1,13 +1,4 @@
-const isLegacyBuild = require('./util/isLegacyBuild')
 const isLibrary = require('./util/isLibrary')
-
-const buildTargetDependentConfig = (env) => {
-    if (isLegacyBuild(env)) {
-        return { modules: 'commonjs' }
-    }
-
-    return { modules: false }
-}
 
 const libraryDependentConfig = (env) => {
     if (isLibrary(env)) {
@@ -25,8 +16,9 @@ const presetEnv = (env) => (['@babel/preset-env', {
     browserslistEnv: env,
     debug: process.env.GE_BUILD_VERBOSE === 'true',
     loose: true,
+    // facilitate tree-shaking
+    modules: false,
     shippedProposals: true,
-    ...buildTargetDependentConfig(env),
     ...libraryDependentConfig(env)
 }])
 
