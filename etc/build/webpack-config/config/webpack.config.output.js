@@ -1,4 +1,7 @@
-const { BuildTarget } = require('@goldeimer/build-util')
+const {
+    isUmdBuild,
+    BuildTarget
+} = require('@goldeimer/build-util')
 
 const {
     paramCase,
@@ -6,7 +9,6 @@ const {
 } = require('change-case')
 
 const isProductionMode = require('../util/isProductionMode')
-const isUmdBuild = require('../util/isUmdBuild')
 const makeOutputPath = require('../util/makeOutputPath')
 
 const libraryConfig = ({

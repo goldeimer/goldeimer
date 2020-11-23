@@ -8,59 +8,13 @@ const {
     BuildTarget
 } = require('@goldeimer/build-util')
 
-const cjsConfig = ({ info }) => ({
-    output: {
-        file: info.main,
-        format: 'cjs'
-    }
-})
-
-const esmConfig = ({ info }) => ({
-    output: {
-        file: info.module,
-        format: 'es'
-    }
-})
-
-const umdConfig = ({ info }) => ({
-    output: {
-        file: info.browser,
-        format: 'umd',
-        name: info.names.scopedName
-    }
-})
-
-const targetConfig = ({
-    info,
-    target
-}) => {
-    switch (target) {
-    case BuildTarget.ESM:
-        return esmConfig({ info })
-
-    case BuildTarget.UMD:
-        return umdConfig({ info })
-
-    default:
-        return cjsConfig({ info })
-    }
-}
+const external = require('./rollup-config.external')
+const targetConfig = require('./rollup-config.target')
 
 const baseConfig = ({
     info,
-    isLibrary,
-    treatPeerDepsAsExternals
+    isLibrary = true
 }) => ({
-    external: (id) => (
-        (isLibrary && id.includes('@babel/runtime'))
-        || (
-            treatPeerDepsAsExternals && (
-                info.dependencyList.peerDependencies.findIndex(
-                    (peerDependency) => id.includes(peerDependency)
-                ) !== -1
-            )
-        )
-    ),
     input: `src/${info.names.name}.js`,
     plugins: [
         babel({
@@ -75,9 +29,10 @@ const baseConfig = ({
 })
 
 const config = (pkg) => ({
+    configDependenciesAreExternal: dependenciesAreExternal,
     configIsLibrary: isLibrary = true,
-    configTarget,
-    configTreatPeerDepsAsExternals: treatPeerDepsAsExternals = true
+    configPeerDependenciesAreExternal: peerDependenciesAreExternal,
+    configTarget
 }) => {
     const info = pkgInfo(pkg)
 
@@ -86,14 +41,20 @@ const config = (pkg) => ({
 
     const baseCfg = baseConfig({
         info,
-        isLibrary,
-        treatPeerDepsAsExternals
+        isLibrary
     })
 
     const assembleConfigs = (target) => ({
         ...baseCfg,
         ...targetConfig({
             info,
+            target
+        }),
+        external: external({
+            dependenciesAreExternal,
+            info,
+            isLibrary,
+            peerDependenciesAreExternal,
             target
         })
     })

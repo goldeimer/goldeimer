@@ -15,6 +15,9 @@ const pkgInfo = (pkg) => {
         ...pkg,
         names,
         dependencyList: {
+            dependencies: pkg.dependencies
+                ? Object.keys(pkg.dependencies)
+                : [],
             peerDependencies: pkg.peerDependencies
                 ? Object.keys(pkg.peerDependencies)
                 : []

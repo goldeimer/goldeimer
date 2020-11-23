@@ -1,8 +1,10 @@
 const webpack = require('webpack')
 
-const { BuildTarget } = require('@goldeimer/build-util')
+const {
+    isUmdBuild,
+    BuildTarget
+} = require('@goldeimer/build-util')
 
-const isUmdBuild = require('../util/isUmdBuild')
 const WebpackMode = require('../enum/WebpackMode')
 
 const config = {

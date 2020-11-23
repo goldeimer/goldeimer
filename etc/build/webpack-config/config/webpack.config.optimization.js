@@ -3,9 +3,10 @@ const os = require('os')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
+const { isUmdBuild } = require('@goldeimer/build-util')
+
 const isDevelopmentMode = require('../util/isDevelopmentMode')
 const isEsmBuild = require('../util/isEsmBuild')
-const isUmdBuild = require('../util/isUmdBuild')
 
 const getIdAlgorithm = (devMode) => (
     devMode
