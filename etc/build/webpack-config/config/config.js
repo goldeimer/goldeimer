@@ -1,7 +1,8 @@
 const webpack = require('webpack')
 
+const { BuildTarget } = require('@goldeimer/build-util')
+
 const isUmdBuild = require('../util/isUmdBuild')
-const BuildTarget = require('../enum/BuildTarget')
 const WebpackMode = require('../enum/WebpackMode')
 
 const config = {
@@ -33,14 +34,14 @@ module.exports = {
         publicPath,
         treatPeerDepsAsExternals = true
     }) => ({
-        name: pkgInfo.scopedName,
+        name: pkgInfo.names.scopedName,
         devtool: config.devtool(mode),
         entry: config.entry({
             context,
             entries,
             pkgInfo
         }),
-        experiments: config.experiments(),
+        experiments: config.experiments({ buildTarget }),
         externals: config.externals({
             externals,
             externalsWhitelist,

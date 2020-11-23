@@ -9,14 +9,18 @@ const makeFields = (
 })
 
 const getFields = (target) => {
-    if (['browserslist', 'web'].includes(target)) {
+    if ([
+        'browserslist',
+        'web',
+        'webworker'
+    ].includes(target)) {
         return makeFields(
             ['browser'],
-            ['browser', 'main', 'module']
+            ['browser', 'module', 'main']
         )
     }
 
-    return makeFields([], ['main', 'module'])
+    return makeFields([], ['module', 'main'])
 }
 
 module.exports = ({
@@ -26,7 +30,12 @@ module.exports = ({
     cacheWithContext: false,
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     fallback: {
-        stream: require.resolve('stream-browserify')
+        crypto: require.resolve('crypto-browserify'),
+        http: require.resolve('stream-http'),
+        https: require.resolve('https-browserify'),
+        stream: require.resolve('stream-browserify'),
+        tty: require.resolve('tty-browserify'),
+        zlib: require.resolve('browserify-zlib')
     },
     modules: ['node_modules'],
     plugins: [new DirectoryNamedPlugin()],

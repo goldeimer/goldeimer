@@ -1,6 +1,3 @@
-const BuildTarget = require('../enum/BuildTarget')
+const isUmdBuild = require('./isUmdBuild')
 
-module.exports = (buildTarget) => ![
-    BuildTarget.LEGACY,
-    BuildTarget.UMD
-].includes(buildTarget)
+module.exports = (buildTarget) => isUmdBuild(buildTarget)

@@ -1,6 +1,6 @@
-const BuildTarget = require('../enum/BuildTarget')
+const { BuildTarget } = require('@goldeimer/build-util')
 
-module.exports = (buildTarget) => ({
+module.exports = ({ buildTarget }) => ({
     asyncWebAssembly: true,
     outputModule: buildTarget === BuildTarget.ESM,
     topLevelAwait: true

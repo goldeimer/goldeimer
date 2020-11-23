@@ -59,10 +59,10 @@ module.exports = ({
         mangleWasmImports: !devMode,
         minimize: !devMode,
         minimizer: minimizer({ esmBuild }),
-        runtimeChunk: !umdBuild,
+        runtimeChunk: !isLibrary,
         splitChunks: {
             automaticNameDelimiter: '.',
-            chunks: 'all',
+            chunks: 'initial',
             enforceSizeThreshold: 1e6,
             maxAsyncRequests: 30,
             maxAsyncSize: 2e6,
@@ -72,7 +72,13 @@ module.exports = ({
             minChunks: 1,
             minSize: 1e5,
             ...(devMode ? {} : { name: false }),
-            ...(umdBuild ? { cacheGroups: { default: false } } : {})
+            ...(umdBuild
+                ? {
+                    cacheGroups: {
+                        default: false
+                    }
+                }
+                : {})
         },
         usedExports: true
     }

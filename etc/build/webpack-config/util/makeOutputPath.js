@@ -1,6 +1,6 @@
-const path = require('path')
+const { BuildTarget } = require('@goldeimer/build-util')
 
-const BuildTarget = require('../enum/BuildTarget')
+const path = require('path')
 
 module.exports = ({
     buildTarget = BuildTarget.STABLE,

@@ -1,14 +1,17 @@
+const {
+    BuildTarget,
+    pkgInfo
+} = require('@goldeimer/build-util')
+
 const path = require('path')
 const { merge } = require('webpack-merge')
 
-const BuildTarget = require('../enum/BuildTarget')
 const RunMode = require('../enum/RunMode')
 const SourceType = require('../enum/SourceType')
 
 const config = require('../config/config')
 const makeDefaultEntry = require('../util/defaultEntry')
 const plugin = require('../plugin/plugin')
-const pkgInfo = require('../util/pkgInfo')
 
 class WebpackConfigBuilder {
     constructor(

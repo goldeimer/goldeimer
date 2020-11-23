@@ -1,3 +1,3 @@
-const BuildTarget = require('../enum/BuildTarget')
+const { BuildTarget } = require('@goldeimer/build-util')
 
 module.exports = (buildTarget) => buildTarget === BuildTarget.ESM

@@ -1,0 +1,26 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/Goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's (base) webpack configuration(s)",
+    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/build-util#readme",
+    "keywords": [
+        "goldeimer",
+        "build"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "build-util.js",
+    "name": "@goldeimer/build-util",
+    "private": false,
+    "repository": {
+        "directory": "etc/build/build-util",
+        "type": "git",
+        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

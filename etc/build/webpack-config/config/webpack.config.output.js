@@ -1,3 +1,5 @@
+const { BuildTarget } = require('@goldeimer/build-util')
+
 const {
     paramCase,
     pascalCase
@@ -7,18 +9,14 @@ const isProductionMode = require('../util/isProductionMode')
 const isUmdBuild = require('../util/isUmdBuild')
 const makeOutputPath = require('../util/makeOutputPath')
 
-const BuildTarget = require('../enum/BuildTarget')
-
 const libraryConfig = ({
     buildTarget,
     isLibrary,
-    pkgInfo: { name, scope }
+    pkgInfo: { names: { scopedName } }
 }) => {
     if (!isLibrary) {
         return {}
     }
-
-    const scopedName = `${scope ? `${scope}-` : ''}${name}`
 
     const nameParamCase = paramCase(scopedName)
     const namePascalCase = pascalCase(scopedName)
@@ -38,7 +36,6 @@ const libraryConfig = ({
 
     case BuildTarget.ESM:
         return {
-            library: nameParamCase,
             libraryTarget: 'module',
             module: true
         }
@@ -46,7 +43,6 @@ const libraryConfig = ({
     case BuildTarget.LEGACY:
     default:
         return {
-            library: nameParamCase,
             libraryTarget: 'commonjs2'
         }
     }
@@ -56,7 +52,7 @@ const filenames = ({
     buildTarget,
     isLibrary,
     mode,
-    pkgInfo: { scope }
+    pkgInfo: { names: { scope } }
 }) => {
     const productionMode = isProductionMode(mode)
     const umdBuild = isUmdBuild(buildTarget)
@@ -79,7 +75,7 @@ const filenames = ({
 }
 
 const formatPublicPath = ({
-    pkgInfo: { name },
+    pkgInfo: { names: { name } },
     publicPath
 }) => publicPath.replace(
     /\[name\]/u,
@@ -106,13 +102,6 @@ module.exports = ({
         isLibrary,
         pkgInfo
     }),
-    // TODO(Johannes):
-    // Preferably, `output.iife` would be set to `!isLibrary`.
-    // Especially in the context of ESM builds.
-    // However, non-iife-wrapped code makes Terser throw on minification:
-    // `'return' outside of function`.
-    // @see https://github.com/webpack-contrib/terser-webpack-plugin/issues/281
-    iife: true,
     path: makeOutputPath({
         buildTarget,
         context,

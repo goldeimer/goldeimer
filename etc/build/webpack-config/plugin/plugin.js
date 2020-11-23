@@ -21,7 +21,7 @@ const initStatsPlugins = ({
         options: pluginOptions.stats || {}
     }),
     plugin.bundleAnalyzer({
-        mode: mode,
+        mode,
         options: pluginOptions.bundleAnalyzer || {}
     }),
     // plugin.bundleStats({

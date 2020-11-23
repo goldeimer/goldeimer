@@ -1,12 +1,9 @@
-const BuildTarget = require('../enum/BuildTarget')
+const { BuildTarget } = require('@goldeimer/build-util')
 
 module.exports = (buildTarget) => {
     switch (buildTarget) {
     case BuildTarget.ESM:
         return 'es6'
-
-    case BuildTarget.LEGACY:
-        return 'es5'
 
     case BuildTarget.STABLE:
     case BuildTarget.UMD:

@@ -4,8 +4,8 @@ module.exports = ({
     context,
     pkgInfo
 }) => ([
-    pkgInfo.name,
+    pkgInfo.names.name,
     {
-        import: path.resolve(context, 'src', `${pkgInfo.name}.js`)
+        import: path.resolve(context, 'src', `${pkgInfo.names.name}.js`)
     }
 ])

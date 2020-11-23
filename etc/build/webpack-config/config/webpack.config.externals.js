@@ -5,7 +5,7 @@ const peerDependencies = (
     treatPeerDepsAsExternals
 ) => (
     treatPeerDepsAsExternals
-        ? pkgInfo.peerDependencies.map((packageName) => (
+        ? pkgInfo.dependencyList.peerDependencies.map((packageName) => (
             new RegExp(`^${packageName}(/.*)?$`, 'u')
         ))
         : []
