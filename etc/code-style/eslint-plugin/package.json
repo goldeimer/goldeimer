@@ -28,6 +28,7 @@
     "license": "BSD-2-Clause",
     "private": false,
     "dependencies": {
+        "@5rabbits/eslint-import-resolver-directory-named": "^0.1.1",
         "@babel/eslint-parser": "^7.11.5",
         "@goldeimer/babel-preset": "^0.0.1",
         "@typescript-eslint/eslint-plugin": "^4.6.0",

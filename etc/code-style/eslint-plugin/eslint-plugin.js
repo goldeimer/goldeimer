@@ -3,6 +3,7 @@ const core = require('./eslintrc.core')
 // const ejs = require('./eslintrc.ejs')
 const googleappsscript = require('./eslintrc.googleappsscript')
 const react = require('./eslintrc.react')
+const rollup = require('./eslintrc.rollup')
 // const typescript = require('./eslintrc.typescript')
 const webpack = require('./eslintrc.webpack')
 
@@ -17,6 +18,7 @@ module.exports = {
                 // plugin:@goldeimer/ejs',
                 'plugin:@goldeimer/googleappsscript',
                 'plugin:@goldeimer/react',
+                'plugin:@goldeimer/rollup',
                 // 'plugin:@goldeimer/typescript',
                 'plugin:@goldeimer/webpack'
             ]
@@ -26,6 +28,7 @@ module.exports = {
         // ejs,
         googleappsscript,
         react,
+        rollup,
         // typescript,
         webpack
     }

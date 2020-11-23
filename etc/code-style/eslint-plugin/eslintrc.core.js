@@ -43,7 +43,7 @@ module.exports = {
         'spaced-comment': ['error', 'always', {
             block: {
                 markers: ['!'],
-                exceptions: ['*'],
+                exceptions: ['*', '@__PURE__'],
                 balanced: true
             },
             line: {
