@@ -12,8 +12,21 @@ const plugins = ({ isLibrary }) => ([
         exclude: 'node_modules/**',
         presets: ['@goldeimer']
     }),
-    namedDirectory(),
-    nodeResolve(),
+    namedDirectory({
+        matchers: [
+            '<dir>/<dir>.js',
+            '<dir>/<dir>.jsx'
+        ]
+    }),
+    nodeResolve({
+        extensions: ['.mjs', '.js', '.jsx', '.json'],
+        // TODO(Johannes):
+        // Should be false.
+        // rollup-plugin-node-polyfills does not ship a shim for `stream`.
+        // Consider adding `stream-browserify` as a dependency (e.g.)
+        // (affects: @goldeimer/react-components)
+        preferBuiltins: true
+    }),
     commonjs(),
     json(),
     nodePolyfills()

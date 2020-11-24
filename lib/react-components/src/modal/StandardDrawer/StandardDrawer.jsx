@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 
+import { detectIos } from '@goldeimer/js-util'
 import { useDialog } from '@goldeimer/react-util'
-import { isIos } from '@goldeimer/js-util'
 
 import StandardDialog from '../StandardDialog'
 import StandardDialogTitle from '../StandardDialogTitle'
@@ -26,7 +26,7 @@ const StandardDrawer = ({
     return (
         <SwipeableDrawer
             anchor="left"
-            disableDiscovery={isIos()}
+            disableDiscovery={detectIos()}
             open={isOpen}
             onClose={handleClose}
             onOpen={handleOpen}

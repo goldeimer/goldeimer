@@ -8,7 +8,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import Switch from '@material-ui/core/Switch'
 
-import { isIos } from '@goldeimer/js-util'
+import { detectIos } from '@goldeimer/js-util'
 
 import IosSwitch from '../../button/IosSwitch'
 
@@ -37,7 +37,7 @@ const ToggleSwitchListItem = ({
         'aria-labelledby': nodeId
     }
 
-    const SwitchComponent = isIos() ? IosSwitch : Switch
+    const SwitchComponent = detectIos() ? IosSwitch : Switch
 
     return (
         <ListItem
