@@ -1,14 +1,10 @@
-const { babel } = require('@rollup/plugin-babel')
-const commonjs = require('@rollup/plugin-commonjs')
-const { nodeResolve } = require('@rollup/plugin-node-resolve')
-const namedDirectory = require('rollup-plugin-named-directory')
-
 const {
     pkgInfo,
     BuildTarget
 } = require('@goldeimer/build-util')
 
 const external = require('./rollup-config.external')
+const plugins = require('./rollup-config.plugins')
 const targetConfig = require('./rollup-config.target')
 
 const baseConfig = ({
@@ -16,16 +12,7 @@ const baseConfig = ({
     isLibrary = true
 }) => ({
     input: `src/${info.names.name}.js`,
-    plugins: [
-        babel({
-            babelHelpers: isLibrary ? 'runtime' : 'bundled',
-            exclude: 'node_modules/**',
-            presets: ['@goldeimer']
-        }),
-        namedDirectory(),
-        nodeResolve(),
-        commonjs()
-    ]
+    plugins: plugins({ isLibrary })
 })
 
 const config = (pkg) => ({
