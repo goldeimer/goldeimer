@@ -5,7 +5,7 @@ module.exports = (buildTarget) => {
     case BuildTarget.ESM:
         return 'es6'
 
-    case BuildTarget.STABLE:
+    case BuildTarget.CJS:
     case BuildTarget.UMD:
         return 'browserslist'
 

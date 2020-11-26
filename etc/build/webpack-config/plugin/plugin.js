@@ -30,6 +30,10 @@ const initStatsPlugins = ({
     // })
 ])
 
+// TODO(Johannes):
+// Consider webpack-babel-multi-target-plugin,
+// to decrease bundle size for modern environments
+// (i.e. those that understand <script type="module">).
 const initPlugins = ({
     mode = WebpackMode.PRODUCTION,
     nodeExternals = false,

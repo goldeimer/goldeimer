@@ -10,7 +10,6 @@ const makeFields = (
 
 const getFields = (target) => {
     if ([
-        'browserslist',
         'web',
         'webworker'
     ].includes(target)) {
@@ -31,8 +30,10 @@ module.exports = ({
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     fallback: {
         crypto: require.resolve('crypto-browserify'),
+        fs: false,
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
+        net: false,
         stream: require.resolve('stream-browserify'),
         tty: require.resolve('tty-browserify'),
         zlib: require.resolve('browserify-zlib')

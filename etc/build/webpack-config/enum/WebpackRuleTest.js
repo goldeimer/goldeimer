@@ -15,7 +15,7 @@ const NODE_MODULES_DIR_NAME = escapeRegex('/node_modules/')
 module.exports = {
     FONT: /\.(eot|otf|pbf|ttf|woff|woff2)$/u,
     NODE_MODULES: new RegExp(NODE_MODULES_DIR_NAME, 'u'),
-    JAVASCRIPT: /\.(js|jsx)$/u,
+    JAVASCRIPT: /\.(mjs|js|jsx)$/u,
     JSON: /\.(json)$/u,
     JS_STYLESHEET: /\.jss$/u,
     RASTER_IMAGE: /\.(gif|jpe?g|png)(\?v=\d+\.\d+\.\d+)?$/u,

@@ -1,6 +1,6 @@
 const {
     BuildTarget,
-    pkgInfo
+    readPkgInfo
 } = require('@goldeimer/build-util')
 
 const path = require('path')
@@ -16,7 +16,7 @@ const plugin = require('../plugin/plugin')
 class WebpackConfigBuilder {
     constructor(
         context, {
-            buildTarget = BuildTarget.STABLE,
+            buildTarget = BuildTarget.CJS,
             isLibrary = false,
             nodeExternalsEnabled = false,
             outputPath = 'dist',
@@ -37,7 +37,7 @@ class WebpackConfigBuilder {
             )
         }
 
-        this.pkgInfo = pkgInfo(this.context)
+        this.pkgInfo = readPkgInfo(this.context)
 
         this.buildTarget = buildTarget
         this.isLibrary = isLibrary

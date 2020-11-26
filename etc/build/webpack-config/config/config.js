@@ -23,7 +23,7 @@ const config = {
 module.exports = {
     ...config,
     baseConfig: ({
-        buildTarget = BuildTarget.STABLE,
+        buildTarget = BuildTarget.CJS,
         context,
         entries = [],
         externals = [],
@@ -73,6 +73,10 @@ module.exports = {
             outputPath
         }),
         resolve: config.resolve(),
+        stats: {
+            errors: true,
+            errorDetails: true
+        },
         target: config.target(buildTarget),
         plugins: isUmdBuild(buildTarget)
             ? [new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 })]

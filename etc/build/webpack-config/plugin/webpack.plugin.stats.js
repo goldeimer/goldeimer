@@ -19,14 +19,15 @@ const statsConfig = ({
     depth: true,
     entrypoints: true,
     env: true,
+    errors: true,
     errorDetails: true,
     errorStack: true,
     excludeAssets: [],
     excludeModules: [],
     hash: true,
+    maxModules: 20,
     // @ type boolean|string
     //        'info': 'none' | 'error' | 'warn' | 'info'  | 'log' | 'verbose'
-    maxModules: 20,
     logging: 'log',
     modules: true,
     modulesSort: '!size',

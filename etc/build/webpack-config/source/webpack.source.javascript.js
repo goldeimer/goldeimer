@@ -1,4 +1,10 @@
 const { merge } = require('webpack-merge')
+
+// TODO(Johannes):
+// Linting errors make the build fail with error code 2 (expected),
+// but do not generate console output telling the user
+// what caused the error (unexpected).
+//
 // const ESLintPlugin = require('eslint-webpack-plugin')
 
 const { JAVASCRIPT, NODE_MODULES } = require('../enum/WebpackRuleTest')
@@ -45,6 +51,8 @@ module.exports = (options = {}) => {
         plugins: [
             // new ESLintPlugin(
             //     merge(options.eslintPlugin || {}, {
+            //         emitError: true,
+            //         emitWarning: true,
             //         fix: true,
             //         failOnError: true,
             //         failOnWarning: false

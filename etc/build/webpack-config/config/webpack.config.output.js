@@ -42,7 +42,6 @@ const libraryConfig = ({
             module: true
         }
 
-    case BuildTarget.LEGACY:
     default:
         return {
             libraryTarget: 'commonjs2'
@@ -66,7 +65,7 @@ const filenames = ({
     const hashSuffix = productionMode && !umdBuild ? '.[contenthash]' : ''
     const minSuffix = productionMode && umdBuild ? '.min' : ''
     const modeSuffix = umdBuild ? `.${mode}` : ''
-    const scopePrefix = scope ? `${scope}.` : ''
+    const scopePrefix = scope ? `${scope}-` : ''
 
     const commonSuffix = `.${buildTarget}${modeSuffix}${minSuffix}`
 

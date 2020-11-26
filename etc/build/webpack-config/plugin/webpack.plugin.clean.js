@@ -6,7 +6,10 @@ module.exports = () => new CleanPlugin({
     ],
     cleanOnceBeforeBuildPatterns: [
         '**/*',
-        '!**/bundle-analyzer.*.html',
+        '!artifacts',
+        '!artifacts/*',
+        '!**/artifacts',
+        '!**/artifacts/*',
         '!esm',
         '!esm/*',
         '!legacy',
