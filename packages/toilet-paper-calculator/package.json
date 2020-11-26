@@ -1,4 +1,7 @@
 {
+    "name": "@goldeimer/toilet-paper-calculator",
+    "main": "dist/goldeimer-toilet-paper-calculator.cjs.js",
+    "module": "dist/goldeimer-toilet-paper-calculator.esm.js",
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
@@ -10,6 +13,7 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
+        "@babel/runtime": "^7.12.5",
         "@goldeimer/mui-theme": "^0.0.1",
         "@goldeimer/react-components": "^0.0.1",
         "@material-ui/core": "^4.11.0",
@@ -20,12 +24,8 @@
     },
     "description": "Goldeimer's \"Toilet Paper Calculator\"",
     "devDependencies": {
-        "@goldeimer/webpack-config": "^0.0.1"
+        "@goldeimer/rollup-config": "^0.0.1"
     },
-    "files": [
-        "dist/",
-        "package.json"
-    ],
     "homepage": "https://github.com/Goldeimer/goldeimer/packages/toilet-paper-calculator#readme",
     "keywords": [
         "goldeimer",
@@ -34,9 +34,6 @@
         "kackulator"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer.toilet-paper-calculator.stable.js",
-    "module": "dist/esm/goldeimer.toilet-paper-calculator.esm.js",
-    "name": "@goldeimer/toilet-paper-calculator",
     "private": false,
     "repository": {
         "directory": "packages/wordpress/toilet-paper-calculator",
@@ -44,18 +41,17 @@
         "url": "git+https://github.com/Goldeimer/goldeimer.git"
     },
     "scripts": {
-        "build": "yarn build:stable && yarn build:esm && yarn build:umd && yarn build:umd:dev",
-        "build:dev": "webpack --mode development",
-        "build:esm": "yarn build:prod --env BUILD_TARGET=esm",
-        "build:esm:dev": "yarn build:dev --env BUILD_TARGET=esm",
-        "build:prod": "webpack --mode production",
-        "build:stable": "yarn build:prod --env BUILD_TARGET=stable",
-        "build:stable:dev": "yarn build:dev --env BUILD_TARGET=stable",
-        "build:umd": "yarn build:prod --env BUILD_TARGET=umd",
-        "build:umd:dev": "yarn build:dev --env BUILD_TARGET=umd",
+        "build": "rollup -c rollup.config.js",
+        "build:cjs": "yarn build --configTarget cjs",
+        "build:esm": "yarn build --configTarget esm",
+        "build:umd": "yarn build --configTarget umd",
+        "build:test-tree-shaking": "yarn build:esm && yarn test-tree-shaking",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+        "prepublishOnly": "yarn test-tree-shaking",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "test-tree-shaking": "agadoo"
     },
+    "sideEffects": false,
     "version": "0.0.1"
 }

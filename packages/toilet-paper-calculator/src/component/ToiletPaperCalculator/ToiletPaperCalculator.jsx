@@ -10,7 +10,7 @@ import {
     InputIntegerPlusMinus,
     InputSelect,
     LegacyFormField,
-    LegacyFormSections
+    LegacyFormSection
 } from '@goldeimer/react-components'
 
 import ToiletPaperCalculatorResult from '../ToiletPaperCalculatorResult'
@@ -102,7 +102,7 @@ const findBestFittingSubscription = (
     return subscriptions.slice(-1)[0]
 }
 
-const Form = styled.form`
+const Form = /*@__PURE__*/ styled.form`
     margin: 0 auto;
     width: 100%;
     color: #444;
@@ -195,7 +195,7 @@ const ToiletPaperCalculator = () => {
     return (
         <ThemeProvider theme={MuiThemeGoldeimer}>
             <Form formName="shitcalcForm">
-                <LegacyFormSections
+                <LegacyFormSection
                     title="Haushalt"
                 >
                     <LegacyFormField label="Personen im Haushalt">
@@ -206,8 +206,8 @@ const ToiletPaperCalculator = () => {
                             value={personsInHousehold}
                         />
                     </LegacyFormField>
-                </LegacyFormSections>
-                <LegacyFormSections
+                </LegacyFormSection>
+                <LegacyFormSection
                     title="Großes Geschäft"
                 >
                     <LegacyFormField label="Große Geschäfte am Tag pro Person">
@@ -234,8 +234,8 @@ const ToiletPaperCalculator = () => {
                             value={piecesPerWipe}
                         />
                     </LegacyFormField>
-                </LegacyFormSections>
-                <LegacyFormSections
+                </LegacyFormSection>
+                <LegacyFormSection
                     title="Kleines Geschäft"
                 >
                     <LegacyFormField label="Kleine Geschäfte am Tag pro Person">
@@ -254,8 +254,8 @@ const ToiletPaperCalculator = () => {
                             value={piecesPerPiss}
                         />
                     </LegacyFormField>
-                </LegacyFormSections>
-                <LegacyFormSections
+                </LegacyFormSection>
+                <LegacyFormSection
                     title="Zeitraum"
                 >
                     <LegacyFormField label={
@@ -280,7 +280,7 @@ const ToiletPaperCalculator = () => {
                             value={periodInMonths}
                         />
                     </LegacyFormField>
-                </LegacyFormSections>
+                </LegacyFormSection>
             </Form>
             <ToiletPaperCalculatorResult
                 bestFittingSubscription={bestFittingSubscription}

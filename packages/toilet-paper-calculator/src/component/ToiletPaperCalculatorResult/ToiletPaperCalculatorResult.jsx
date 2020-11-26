@@ -4,14 +4,14 @@ import styled from 'styled-components'
 
 import { RESOURCES_SAVED_PER_ROLL } from '../../toilet-paper-calculator-config'
 
-const WrapDiv = styled.div`
+const WrapDiv = /*@__PURE__*/ styled.div`
     margin-top: 40px;
     padding: 30px;
     background-color: #ffe300;
     text-align: center;
 `
 
-const MainDiv = styled.div`
+const MainDiv = /*@__PURE__*/ styled.div`
     font-size: 2em;
     line-height: 1.8em;
     color: #000000;
@@ -19,12 +19,12 @@ const MainDiv = styled.div`
     text-align: center;
 `
 
-const MainSpan = styled.div`
+const MainSpan = /*@__PURE__*/ styled.div`
     display: block;
     font-size: 2em;
 `
 
-const BaseP = styled.p`
+const BaseP = /*@__PURE__*/ styled.p`
     margin-top: 20px;
     font-family: "Museo", sans serif !important;
     font-weight: 700 !important;
@@ -32,15 +32,15 @@ const BaseP = styled.p`
     text-align: center;
 `
 
-const FootnoteP = styled(BaseP)`
+const FootnoteP = /*@__PURE__*/ styled(BaseP)`
     font-size: 12px !important;
 `
 
-const SubscriptionP = styled(BaseP)`
+const SubscriptionP = /*@__PURE__*/ styled(BaseP)`
     font-size: 17px !important;
 `
 
-const SubscriptionA = styled.a`
+const SubscriptionA = /*@__PURE__*/ styled.a`
     display: inline-block;
 
     height: auto !important;
