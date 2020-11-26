@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
-import { isFunction } from 'typechecker'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -64,7 +63,7 @@ const SelectionList = ({
                             onClick={() => {
                                 const selectedValue = handleSelect(index)
 
-                                if (isFunction(onItemClick)) {
+                                if (onItemClick) {
                                     onItemClick(selectedValue)
                                 }
                             }}

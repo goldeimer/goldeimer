@@ -8,8 +8,8 @@
 import React, { memo } from 'react'
 import { SnackbarProvider } from 'notistack'
 
-import StateRoot from '../../root/StateRoot'
-import ThemeRoot from '../../root/ThemeRoot'
+import StateRoot from '../StateRoot'
+import ThemeRoot from '../ThemeRoot'
 
 // The component directly following the store should always be memoized,
 // so as to not repeatedly receive faux new props on global state updates.

@@ -1,6 +1,8 @@
 {
+    "name": "@goldeimer/react-components",
+    "main": "dist/goldeimer-react-components.cjs.js",
+    "module": "dist/goldeimer-react-components.esm.js",
     "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
-    "browser": "dist/goldeimer-react-components.umd.js",
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
@@ -19,8 +21,7 @@
         "clsx": "^1.1.1",
         "notistack": "^1.0.0",
         "redux-persist": "^6.0.0",
-        "styled-components": "^5.2.1",
-        "typechecker": "^7.17.0"
+        "styled-components": "^5.2.1"
     },
     "description": "Goldeimer's React components",
     "devDependencies": {
@@ -33,9 +34,6 @@
         "components"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer-react-components.cjs.js",
-    "module": "dist/goldeimer-react-components.esm.js",
-    "name": "@goldeimer/react-components",
     "peerDependencies": {
         "prop-types": "^15.7.2",
         "react": "^17.0.1",
@@ -60,5 +58,6 @@
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
         "test-tree-shaking": "agadoo"
     },
+    "sideEffects": false,
     "version": "0.0.1"
 }
