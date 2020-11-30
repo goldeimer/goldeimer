@@ -9,6 +9,7 @@ const plugin = {
     html: require('./webpack.plugin.html'),
     manifest: require('./webpack.plugin.manifest'),
     progress: require('./webpack.plugin.progress'),
+    provide: require('./webpack.plugin.provide'),
     stats: require('./webpack.plugin.stats')
 }
 
@@ -23,7 +24,7 @@ const initStatsPlugins = ({
     plugin.bundleAnalyzer({
         mode,
         options: pluginOptions.bundleAnalyzer || {}
-    }),
+    })
     // plugin.bundleStats({
     //     mode: mode,
     //     options: pluginOptions.bundleStats || {}
@@ -44,6 +45,7 @@ const initPlugins = ({
     plugins: [
         plugin.progress(),
         plugin.clean(),
+        plugin.provide(),
         plugin.define(pluginOptions.define || {}),
         ...userPlugins,
         ...(statsEnabled

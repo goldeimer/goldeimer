@@ -1,13 +1,7 @@
-const { DefinePlugin } = require('webpack')
+const { EnvironmentPlugin } = require('webpack')
 
-module.exports = (definitions = {}) => new DefinePlugin(
-    Object.fromEntries(
-        Object.entries({
-            PACKAGE_VERSION: process.env.npm_package_version,
-            ...definitions
-        }).map(([key, definition]) => ([
-            key,
-            JSON.stringify(definition)
-        ]))
-    )
-)
+module.exports = (definitions = {}) => new EnvironmentPlugin({
+    BABEL_ENV: '',
+    NODE_ENV: 'production',
+    ...definitions
+})
