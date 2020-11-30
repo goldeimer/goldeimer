@@ -23,7 +23,7 @@
         "goldeimer"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer.react-util.cjs.js",
+    "main": "dist/goldeimer.react-util.esm.js",
     "module": "dist/goldeimer.react-util.esm.js",
     "name": "@goldeimer/react-util",
     "peerDependencies": {

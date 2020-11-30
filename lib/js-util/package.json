@@ -29,7 +29,7 @@
         "utility"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer-js-util.cjs.js",
+    "main": "dist/goldeimer-js-util.esm.js",
     "module": "dist/goldeimer-js-util.esm.js",
     "name": "@goldeimer/js-util",
     "private": false,

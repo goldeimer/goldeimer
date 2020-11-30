@@ -1,6 +1,6 @@
 {
     "name": "@goldeimer/react-components",
-    "main": "dist/goldeimer-react-components.cjs.js",
+    "main": "dist/goldeimer-react-components.esm.js",
     "module": "dist/goldeimer-react-components.esm.js",
     "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
     "browserslist": "extends @goldeimer/browserslist-config",

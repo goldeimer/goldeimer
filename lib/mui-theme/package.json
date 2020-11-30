@@ -26,7 +26,7 @@
         "material-ui"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer-mui-theme.cjs.js",
+    "main": "dist/goldeimer-mui-theme.esm.js",
     "module": "dist/goldeimer-mui-theme.esm.js",
     "name": "@goldeimer/mui-theme",
     "peerDependencies": {

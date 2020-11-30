@@ -1,6 +1,6 @@
 {
     "name": "@goldeimer/toilet-paper-calculator",
-    "main": "dist/goldeimer-toilet-paper-calculator.cjs.js",
+    "main": "dist/goldeimer-toilet-paper-calculator.esm.js",
     "module": "dist/goldeimer-toilet-paper-calculator.esm.js",
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "browserslist": "extends @goldeimer/browserslist-config",
