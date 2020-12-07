@@ -4,6 +4,7 @@
 # TODO:
 # Replace w/ lerna:exec [...]
 yarn workspace @goldeimer/wp-theme-goldeimer build:prod &&
+yarn workspace @goldeimer/wp-toilet-paper-calculator build:prod &&
 
 git add --force packages/**/static &&
 git commit -m "package(php): add most recent static files" &&

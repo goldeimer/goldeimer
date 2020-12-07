@@ -26,6 +26,7 @@
     "autoload": {
         "psr-4": {
             "Goldeimer\\PhpUtil\\": "lib/php-util/src",
+            "Goldeimer\\WordPress\\WpTheme\\": "packages/wp-theme-goldeimer/include",
             "Goldeimer\\WordPress\\WpUtil\\": "lib/wp-util/src"
         }
     },
