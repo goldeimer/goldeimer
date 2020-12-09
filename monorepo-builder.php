@@ -16,6 +16,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
     $parameters->set(
+        Option::DATA_TO_APPEND,
+        [
+            'license' => 'BSD-2-Clause'
+        ]
+    );
+
+    $parameters->set(
         Option::DATA_TO_REMOVE,
         [
             'require' => [
@@ -37,18 +44,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $parameters->set(
         Option::DIRECTORIES_TO_REPOSITORIES,
-        [
-            'etc/infrastructure/wordpress/wp-install'
-                => 'git@github.com:goldeimer/wp-install.git',
-            'lib/php-util'
-                => 'git@github.com:goldeimer/php-util.git',
-            'lib/wp-util'
-                => 'git@github.com:goldeimer/wp-util.git',
-            'packages/wp-toilet-paper-calculator'
-                => 'git@github.com:goldeimer/wp-toilet-paper-calculator.git',
-            'packages/wp-theme-goldeimer'
-                => 'git@github.com:goldeimer/wp-theme-goldeimer.git'
-        ]
+        json_decode(
+            file_get_contents(__DIR__, '/composer-repos.json'),
+            true
+        )
     );
 
     $services = $containerConfigurator->services();

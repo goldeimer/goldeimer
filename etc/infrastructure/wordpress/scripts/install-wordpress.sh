@@ -14,13 +14,13 @@ _repositoryUrl='{
 
 __usage()
 {
-    printf "%s\n%s\n\n%s\n%s\n%s\n%s\n" \
+    printf "%s\n\n%s\n\n\t%s\n\t%s\n\t%s\n\t%s\n" \
         "Usage:" \
-        "./$0 [options]" \
-        "\t-h --help" \
-        "\t-c --composer-json" \
-        "\t-d --destination-path" \
-        "\t-m --mode"
+        "$0 [options]" \
+        "-h --help" \
+        "-c --composer-json" \
+        "-d --destination-path" \
+        "-m --mode"
 }
 
 __exitUsage()

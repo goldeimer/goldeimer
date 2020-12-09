@@ -1,6 +1,37 @@
 {
-    "name": "goldeimer/goldeimer",
+    "autoload": {
+        "psr-4": {
+            "Goldeimer\\PhpUtil\\": "lib/php-util/src",
+            "Goldeimer\\WordPress\\WpTheme\\": "packages/wp-theme-goldeimer/include",
+            "Goldeimer\\WordPress\\WpUtil\\": "lib/wp-util/src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
     "description": "Goldeimer's monorepo, PHP configuration",
+    "extra": {
+        "installer-paths": {
+            "wp-content/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ],
+            "wp-content/themes/{$name}/": [
+                "type:wordpress-theme"
+            ]
+        },
+        "wordpress-install-dir": "wp"
+    },
+    "license": "BSD-2-Clause",
+    "minimum-stability": "dev",
+    "name": "goldeimer/goldeimer",
+    "prefer-stable": true,
+    "replace": {
+        "goldeimer/php-util": "self.version",
+        "goldeimer/wp-install": "self.version",
+        "goldeimer/wp-theme-goldeimer": "self.version",
+        "goldeimer/wp-toilet-paper-calculator": "self.version",
+        "goldeimer/wp-util": "self.version"
+    },
     "repositories": [
         {
             "type": "composer",
@@ -23,29 +54,6 @@
             "url": "https://github.com/goldeimer/wp-util"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Goldeimer\\PhpUtil\\": "lib/php-util/src",
-            "Goldeimer\\WordPress\\WpTheme\\": "packages/wp-theme-goldeimer/include",
-            "Goldeimer\\WordPress\\WpUtil\\": "lib/wp-util/src"
-        }
-    },
-    "replace": {
-        "goldeimer/php-util": "self.version",
-        "goldeimer/wp-install": "self.version",
-        "goldeimer/wp-theme-goldeimer": "self.version",
-        "goldeimer/wp-toilet-paper-calculator": "self.version",
-        "goldeimer/wp-util": "self.version"
-    },
-    "scripts": {
-        "monorepo": "vendor/bin/monorepo-builder",
-        "monorepo:merge": "vendor/bin/monorepo-builder merge",
-        "monorepo:release": "vendor/bin/monorepo-builder release",
-        "monorepo:release:patch": "vendor/bin/monorepo-builder release patch",
-        "monorepo:release:patch:dry": "vendor/bin/monorepo-builder release patch --dry-run",
-        "monorepo:split": "vendor/bin/monorepo-builder split",
-        "monorepo:validate": "vendor/bin/monorepo-builder validate"
-    },
     "require": {
         "composer/installers": "^1.8",
         "myclabs/php-enum": "^1.7"
@@ -55,20 +63,13 @@
         "squizlabs/php_codesniffer": "^3.5",
         "symplify/monorepo-builder": "^8.3"
     },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "installer-paths": {
-            "wp-content/plugins/{$name}/": [
-                "type:wordpress-plugin"
-            ],
-            "wp-content/themes/{$name}/": [
-                "type:wordpress-theme"
-            ]
-        },
-        "wordpress-install-dir": "wp"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "scripts": {
+        "monorepo": "vendor/bin/monorepo-builder",
+        "monorepo:merge": "vendor/bin/monorepo-builder merge",
+        "monorepo:release": "vendor/bin/monorepo-builder release",
+        "monorepo:release:patch": "vendor/bin/monorepo-builder release patch",
+        "monorepo:release:patch:dry": "vendor/bin/monorepo-builder release patch --dry-run",
+        "monorepo:split": "vendor/bin/monorepo-builder split",
+        "monorepo:validate": "vendor/bin/monorepo-builder validate"
+    }
 }
