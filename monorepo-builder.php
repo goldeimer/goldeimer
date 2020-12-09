@@ -45,7 +45,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(
         Option::DIRECTORIES_TO_REPOSITORIES,
         json_decode(
-            file_get_contents(__DIR__, '/composer-repos.json'),
+            file_get_contents(__DIR__ . '/composer-repos.json'),
             true
         )
     );
