@@ -18,7 +18,7 @@ module.exports = (options = {}) => ({
                         classPrefix: true,
                         idPrefix: true
                     }
-                }, require('webpack.source.img.loader')(options)]
+                }, require('./webpack.source.img.loader')(options)]
             },
             {
                 issuer: STYLESHEET,
@@ -27,10 +27,9 @@ module.exports = (options = {}) => ({
                     options: {
                         iesafe: true,
                         limit: 8192,
-                        name: OUTPUT_NAME,
                         outputPath: 'static'
                     }
-                }, require('webpack.source.img.loader')(options)]
+                }, require('./webpack.source.img.loader')(options)]
             }]
         }]
     }
