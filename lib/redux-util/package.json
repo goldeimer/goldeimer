@@ -47,13 +47,13 @@
         "build": "rollup -c rollup.config.js",
         "build:cjs": "yarn build --configTarget cjs",
         "build:esm": "yarn build --configTarget esm",
-        "build:test-tree-shaking": "yarn build:esm && yarn test-tree-shaking",
+        "build:shake": "yarn build:esm && yarn shake",
         "build:umd": "yarn build --configTarget umd",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "prepublishOnly": "yarn test-tree-shaking",
+        "prepublishOnly": "yarn shake",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
-        "test-tree-shaking": "agadoo"
+        "shake": "agadoo"
     },
     "sideEffects": ["*/functions/middleware.js"],
     "version": "0.0.1"

@@ -19,6 +19,9 @@
         "@material-ui/icons": "^4.9.1",
         "@material-ui/lab": "^4.0.0-alpha.56",
         "clsx": "^1.1.1",
+        "d3-collection": "^1.0.7",
+        "d3-selection": "^2.0.0",
+        "d3-shape": "^2.0.0",
         "notistack": "^1.0.0",
         "redux-persist": "^6.0.0",
         "styled-components": "^5.2.1"
@@ -51,12 +54,12 @@
         "build:cjs": "yarn build --configTarget cjs",
         "build:esm": "yarn build --configTarget esm",
         "build:umd": "yarn build --configTarget umd",
-        "build:test-tree-shaking": "yarn build:esm && yarn test-tree-shaking",
+        "build:shake": "yarn build:esm && yarn shake",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "prepublishOnly": "yarn test-tree-shaking",
+        "prepublishOnly": "yarn shake",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
-        "test-tree-shaking": "agadoo"
+        "shake": "agadoo"
     },
     "sideEffects": false,
     "version": "0.0.1"

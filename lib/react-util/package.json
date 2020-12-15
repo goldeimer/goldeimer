@@ -27,8 +27,16 @@
     "module": "dist/goldeimer.react-util.esm.js",
     "name": "@goldeimer/react-util",
     "peerDependencies": {
+        "@material-ui/core": "^4.11.0",
         "prop-types": "^15.7.2",
         "react": "^17.0.1"
+
+    },
+    "peerDependenciesMeta": {
+        "@material-ui/core": {
+            "optional": true
+        }
+
     },
     "private": false,
     "repository": {
@@ -41,12 +49,12 @@
         "build:cjs": "yarn build --configTarget cjs",
         "build:esm": "yarn build --configTarget esm",
         "build:umd": "yarn build --configTarget umd",
-        "build:test-tree-shaking": "yarn build:esm && yarn test-tree-shaking",
+        "build:shake": "yarn build:esm && yarn shake",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "prepublishOnly": "yarn test-tree-shaking",
-        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
-        "test-tree-shaking": "agadoo"
+        "prepublishOnly": "yarn shake",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
     },
     "sideEffects": false,
     "version": "0.0.1"
