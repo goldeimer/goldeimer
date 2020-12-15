@@ -3,36 +3,43 @@
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/goldeimer/goldeimer/issues"
+        "url": "https://github.com/Goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
-        "@babel/runtime": "^7.12.5",
-        "@goldeimer/js-util": "^0.0.1",
-        "use-memo-one": "^1.1.1"
+        "@manaflair/redux-batch": "^1.0.0",
+        "@reduxjs/toolkit": "^1.4.0",
+        "localforage": "^1.9.0",
+        "redux-immutable-state-invariant": "^2.1.0",
+        "redux-logger": "^3.0.6",
+        "redux-persist": "^6.0.0",
+        "redux-thunk": "^2.3.0"
     },
-    "description": "Goldeimer's React utilities",
+    "description": "Goldeimer's (react-)redux integration",
     "devDependencies": {
-        "@goldeimer/rollup-config": "^0.0.1",
-        "defer-to-connect": "^2.0.0"
+        "@goldeimer/rollup-config": "^0.0.1"
     },
-    "homepage": "https://github.com/goldeimer/goldeimer/lib/react-util#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/react-redux-util#readme",
     "keywords": [
-        "goldeimer"
+        "goldeimer",
+        "redux",
+        "react-redux",
+        "utilities"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer.react-util.esm.js",
-    "module": "dist/goldeimer.react-util.esm.js",
-    "name": "@goldeimer/react-util",
+    "main": "dist/goldeimer-redux-util.cjs.js",
+    "module": "dist/goldeimer-redux-util.esm.js",
+    "name": "@goldeimer/redux-util",
     "peerDependencies": {
-        "prop-types": "^15.7.2",
-        "react": "^17.0.1"
+        "react": "^17.0.1",
+        "react-redux": "^7.2.1",
+        "redux": "^4.0.5"
     },
     "private": false,
     "repository": {
-        "directory": "lib/react-util",
+        "directory": "lib/redux-util",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
@@ -40,14 +47,14 @@
         "build": "rollup -c rollup.config.js",
         "build:cjs": "yarn build --configTarget cjs",
         "build:esm": "yarn build --configTarget esm",
-        "build:umd": "yarn build --configTarget umd",
         "build:test-tree-shaking": "yarn build:esm && yarn test-tree-shaking",
+        "build:umd": "yarn build --configTarget umd",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
         "prepublishOnly": "yarn test-tree-shaking",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
         "test-tree-shaking": "agadoo"
     },
-    "sideEffects": false,
+    "sideEffects": ["*/functions/middleware.js"],
     "version": "0.0.1"
 }
