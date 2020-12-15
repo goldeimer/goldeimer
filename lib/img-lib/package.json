@@ -1,0 +1,34 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Manou Otolski <manou@goldeimer.de>",
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's recurring image assets",
+    "files": [
+        "**/*.png",
+        "**/*.svg"
+    ],
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/img-util#readme",
+    "keywords": [
+        "goldeimer",
+        "map"
+    ],
+    "license": "CC-BY-NC-SA-4.0",
+    "name": "@goldeimer/img-lib",
+    "private": true,
+    "repository": {
+        "directory": "lib/img-util",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "version": "0.0.1"
+}
