@@ -11,24 +11,32 @@
     ],
     "description": "Goldeimer's recurring image assets",
     "files": [
+        "**/*.gif",
+        "**/*.jpg",
         "**/*.png",
         "**/*.svg"
     ],
-    "homepage": "https://github.com/goldeimer/goldeimer/lib/img-util#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/img-asset-lib#readme",
     "keywords": [
         "goldeimer",
         "map"
     ],
     "license": "CC-BY-NC-SA-4.0",
-    "name": "@goldeimer/img-lib",
+    "name": "@goldeimer/img-asset-lib",
     "private": true,
     "repository": {
-        "directory": "lib/img-util",
+        "directory": "lib/img-asset-lib",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
     },
+    "sideEffects": [
+        "**/*.gif",
+        "**/*.jpg",
+        "**/*.png",
+        "**/*.svg"
+    ],
     "version": "0.0.1"
 }

@@ -23,7 +23,7 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "browserslist": "extends @goldeimer/browserslist-config",
-    "private": false,
+    "private": true,
     "scripts": {
         "build": "yarn build:prod",
         "build:dev": "webpack --mode development",
