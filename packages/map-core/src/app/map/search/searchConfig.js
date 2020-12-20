@@ -1,0 +1,10 @@
+/// TODO(Johannes):
+/// Retrieve settings from server-side backend via an API call.
+
+const MIN_ACTIONABLE_QUERY_LENGTH = 3
+const ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH = 8
+
+export {
+    ADDITIONAL_THROTTLE_THRESHOLD_QUERY_LENGTH,
+    MIN_ACTIONABLE_QUERY_LENGTH
+}
