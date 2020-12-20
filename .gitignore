@@ -22,6 +22,8 @@
 **/vendor/
 
 ### sensitive information
+**/*.tfstate
+.gitsecret/keys/random_seed
 **/*.env*
 **/*.secret.*
 
