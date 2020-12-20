@@ -178,7 +178,13 @@ class WebpackConfigBuilder {
         )
 
         if (env.BUILD_VERBOSE) {
-            console.info(pkgConfig)
+            console.info(
+                JSON.stringify(
+                    pkgConfig,
+                    null,
+                    4
+                )
+            )
         }
 
         return pkgConfig

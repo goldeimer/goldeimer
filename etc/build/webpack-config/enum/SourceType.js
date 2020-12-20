@@ -9,13 +9,27 @@ const SourceType = {
 }
 
 const Configs = {
-    [SourceType.FONT]: () => require('../source/webpack.source.font'),
-    [SourceType.JAVASCRIPT]: () => require('../source/webpack.source.javascript'),
-    [SourceType.RASTER_IMAGE]: () => require('../source/webpack.source.img.raster'),
-    [SourceType.STYLESHEET]: () => require('../source/webpack.source.stylesheet'),
-    [SourceType.TEXT]: () => require('../source/webpack.source.text'),
-    [SourceType.TYPESCRIPT]: () => require('../source/webpack.source.typescript'),
-    [SourceType.VECTOR_IMAGE]: () => require('../source/webpack.source.img.vector')
+    [SourceType.FONT]: () => (
+        require('../source/webpack.source.font')
+    ),
+    [SourceType.JAVASCRIPT]: () => (
+        require('../source/webpack.source.javascript')
+    ),
+    [SourceType.RASTER_IMAGE]: () => (
+        require('../source/webpack.source.img-raster')
+    ),
+    [SourceType.STYLESHEET]: () => (
+        require('../source/webpack.source.stylesheet')
+    ),
+    [SourceType.TEXT]: () => (
+        require('../source/webpack.source.text')
+    ),
+    [SourceType.TYPESCRIPT]: () => (
+        require('../source/webpack.source.typescript')
+    ),
+    [SourceType.VECTOR_IMAGE]: () => (
+        require('../source/webpack.source.img-vector')
+    )
 }
 
 const getLoaderConfig = ({

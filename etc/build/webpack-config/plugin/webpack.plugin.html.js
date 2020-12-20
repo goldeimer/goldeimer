@@ -1,15 +1,13 @@
 const HtmlPlugin = require('html-webpack-plugin')
 
 module.exports = ({
-    options: {
-        favicon,
-        filename = 'index.html',
-        subject,
-        themeColor,
-        title,
-        ...options
-    }
-} = {}) => new HtmlPlugin({
+    favicon,
+    filename = 'index.html',
+    subject,
+    themeColor,
+    title,
+    ...options
+}) => new HtmlPlugin({
     scriptLoading: 'defer',
     favicon,
     filename,
@@ -26,5 +24,5 @@ module.exports = ({
         robots: 'index,follow',
         subject,
         ...(options.meta || {})
-    },
+    }
 })

@@ -4,8 +4,7 @@ module.exports = (options = {}) => ({
     module: {
         rules: [{
             test: RASTER_IMAGE,
-            type: 'asset/resource',
-            use: [require('./webpack.source.img.loader')(options)]
+            type: 'asset/resource'
         }]
     }
 })

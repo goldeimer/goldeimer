@@ -7,7 +7,7 @@
 /// configuration directive.
 
 const escapeRegex = (string) => (
-    string.replace(/[-\/\\^$*+?.()|[\]{}]/gu, '\\$&')
+    string.replace(/[-/\\^$*+?.()|[\]{}]/gu, '\\$&')
 )
 
 const NODE_MODULES_DIR_NAME = escapeRegex('/node_modules/')

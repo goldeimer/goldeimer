@@ -7,6 +7,7 @@ const plugin = {
     copy: require('./webpack.plugin.copy'),
     define: require('./webpack.plugin.define'),
     html: require('./webpack.plugin.html'),
+    imageMinimizer: require('./webpack.plugin.image-minimizer'),
     manifest: require('./webpack.plugin.manifest'),
     progress: require('./webpack.plugin.progress'),
     provide: require('./webpack.plugin.provide'),
@@ -54,6 +55,7 @@ const initPlugins = ({
                 pluginOptions
             })
             : []),
+        plugin.imageMinimizer(),
         plugin.manifest()
     ]
 })
