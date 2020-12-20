@@ -20,7 +20,7 @@
     },
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "contributors": [
-        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+        "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "license": "BSD-2-Clause",
     "private": false,

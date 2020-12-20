@@ -1,4 +1,7 @@
 module.exports = {
     parser: '@babel/eslint-parser',
-    parserOptions: {}
+    parserOptions: {
+        presets: ['@goldeimer/babel-preset'],
+        requireConfigFile: false
+    }
 }
