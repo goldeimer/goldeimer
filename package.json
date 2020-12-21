@@ -48,8 +48,8 @@
         "@goldeimer/browserslist-config": "^0.0.1",
         "@goldeimer/eslint-plugin": "^0.0.1",
         "@goldeimer/postcss-config": "^0.0.1",
+        "@goldeimer/webpack-config": "^0.0.1",
         "@google/clasp": "^2.3.0",
-        "@material-ui/core": "^4.11.0",
         "@octokit/core": "^3.2.1",
         "@types/node": "^14.6.0",
         "@types/react": "^16.9.46",
@@ -72,7 +72,8 @@
         "webpack": "^5.3.2",
         "webpack-cli": "^4.1.0"
     },
-    "dependencies": {
-        "@goldeimer/webpack-config": "^0.0.1"
+    "resolutions": {
+        "**/axios": "^0.21.0",
+        "**/follow-redirects": "^1.13.1"
     }
 }

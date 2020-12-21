@@ -10,7 +10,7 @@
     ],
     "dependencies": {
         "@manaflair/redux-batch": "^1.0.0",
-        "@reduxjs/toolkit": "^1.4.0",
+        "@reduxjs/toolkit": "^1.5.0",
         "localforage": "^1.9.0",
         "redux-immutable-state-invariant": "^2.1.0",
         "redux-logger": "^3.0.6",
@@ -55,6 +55,8 @@
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
         "shake": "agadoo"
     },
-    "sideEffects": ["*/functions/middleware.js"],
+    "sideEffects": [
+        "*/functions/middleware.js"
+    ],
     "version": "0.0.1"
 }
