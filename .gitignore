@@ -7,7 +7,6 @@
 
 ### build output
 **/build/**
-!etc/build/**
 **/dist/**
 **/packages/**/static
 
@@ -22,13 +21,25 @@
 **/vendor/
 
 ### sensitive information
-**/*.tfstate
-.gitsecret/keys/random_seed
-**/*.env*
-**/*.secret.*
 
+## miscellaneous
+
+**/*.env*
+**/*secret*
 !**/.env.defaults
 !**/.env.example
+
+## terraform
+
+**/.terraform/*
+**/*.tfstate
+**/*.tfstate.*
+*.tfvars
+
+## git-secret
+
+.gitsecret/keys/random_seed
+!**/*.secret
 
 # ----- transient data ---------------------------------------------------------
 
