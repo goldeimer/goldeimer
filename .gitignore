@@ -25,9 +25,11 @@
 ## miscellaneous
 
 **/*.env*
-**/*secret*
 !**/.env.defaults
 !**/.env.example
+
+**/*secret.*
+**/*secrets.*
 
 ## terraform
 
