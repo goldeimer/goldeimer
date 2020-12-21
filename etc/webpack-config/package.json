@@ -2,7 +2,7 @@
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
@@ -16,15 +16,15 @@
         "bundle-stats-webpack-plugin": "^2.2.0",
         "change-case": "^4.1.1",
         "clean-webpack-plugin": "^3.0.0",
-        "copy-webpack-plugin": "^6.0.1",
+        "copy-webpack-plugin": "^7.0.0",
         "crypto-browserify": "^3.12.0",
         "css-loader": "^5.0.0",
         "css-minimizer-webpack-plugin": "^1.1.5",
         "directory-named-webpack-plugin": "^4.0.1",
-        "dotenv-webpack": "^5.0.0",
+        "dotenv-webpack": "^6.0.0",
         "eslint-webpack-plugin": "^2.1.0",
         "fork-ts-checker-notifier-webpack-plugin": "^3.0.0",
-        "fork-ts-checker-webpack-plugin": "^5.0.14",
+        "fork-ts-checker-webpack-plugin": "^6.0.8",
         "html-webpack-plugin": "^4.3.0",
         "https-browserify": "^1.0.0",
         "image-minimizer-webpack-plugin": "^2.0.0",
@@ -52,14 +52,14 @@
         "thread-loader": "^3.0.1",
         "ts-loader": "^8.0.2",
         "tty-browserify": "^0.0.1",
-        "webpack-assets-manifest": "^3.1.1",
-        "webpack-bundle-analyzer": "^3.8.0",
+        "webpack-assets-manifest": "^5.0.0",
+        "webpack-bundle-analyzer": "^4.3.0",
         "webpack-merge": "^5.3.0",
         "webpack-node-externals": "^2.5.2",
         "zlib-browserify": "^0.0.3"
     },
     "description": "Goldeimer's (base) webpack configuration(s)",
-    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/webpack-config#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/webpack-config#readme",
     "keywords": [
         "goldeimer",
         "webpack",
@@ -76,7 +76,7 @@
     "repository": {
         "directory": "etc/build/webpack-config",
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "version": "0.0.1"
 }

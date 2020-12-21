@@ -8,14 +8,14 @@
         "babel-preset",
         "babelrc"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/babel-preset#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/babel-preset#readme",
     "bugs": {
-        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "url": "https://github.com/goldeimer/goldeimer/issues",
         "email": "engineering+bugs@goldeimer.de"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git",
         "directory": "etc/build/babel-preset"
     },
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",

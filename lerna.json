@@ -1,14 +1,44 @@
 {
-    "bootstrap": {
-        "npmClientArgs": ["--no-package-lock"]
-    },
     "command": {
+        "bootstrap": {
+            "strict": true
+        },
+        "create": {
+            "homepage": "https://github.com/goldeimer/goldeimer",
+            "license": "BSD-2-Clause"
+        },
+        "exec": {
+            "profileLocation": "logs/lerna/profile/",
+            "stream": true
+        },
+        "import": {
+            "preserveCommit": true
+        },
+        "publish": {
+            "allowBranch": "master",
+            "conventionalCommits": true,
+            "message": "chore(release): publish",
+            "preid": "next",
+            "signGitCommit": true,
+            "signGitTag": true
+        },
+        "run": {
+            "profileLocation": "logs/lerna/profile/",
+            "stream": true
+        },
         "version": {
             "allowBranch": "master",
-            "message": "chore(release): publish"
+            "conventionalCommits": true,
+            "message": "chore(release): publish",
+            "preid": "next",
+            "signGitCommit": true,
+            "signGitTag": true
         }
     },
     "npmClient": "yarn",
+    "npmClientArgs": [
+        "--no-package-lock"
+    ],
     "packages": [
         "etc/**",
         "lib/**",

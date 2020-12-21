@@ -4,7 +4,7 @@
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
@@ -20,7 +20,7 @@
     "files": [
         "dist/umd"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/lib/mui-theme#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/mui-theme#readme",
     "keywords": [
         "goldeimer",
         "material-ui"
@@ -36,7 +36,7 @@
     "repository": {
         "directory": "lib/mui-theme",
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
         "build": "rollup -c rollup.config.js",

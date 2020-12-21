@@ -2,7 +2,7 @@
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
@@ -11,14 +11,14 @@
         "@goldeimer/babel-preset": "^0.0.1",
         "@goldeimer/build-util": "^0.0.1",
         "@rollup/plugin-babel": "^5.2.1",
-        "@rollup/plugin-commonjs": "^16.0.0",
+        "@rollup/plugin-commonjs": "^17.0.0",
         "@rollup/plugin-json": "^4.1.0",
-        "@rollup/plugin-node-resolve": "^10.0.0",
+        "@rollup/plugin-node-resolve": "^11.0.1",
         "rollup-plugin-named-directory": "^1.0.0",
         "rollup-plugin-node-polyfills": "^0.2.1"
     },
     "description": "Goldeimer's (base) rollup configuration(s)",
-    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/rollup-config#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/rollup-config#readme",
     "keywords": [
         "goldeimer",
         "build"
@@ -30,7 +30,7 @@
     "repository": {
         "directory": "etc/build/rollup-config",
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "version": "0.0.1"
 }

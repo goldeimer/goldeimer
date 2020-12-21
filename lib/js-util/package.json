@@ -4,7 +4,7 @@
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Manou Otolski <manou@goldeimer.de>",
@@ -24,7 +24,7 @@
     "files": [
         "dist/umd"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/js-util#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/js-util#readme",
     "keywords": [
         "goldeimer",
         "utility"
@@ -37,7 +37,7 @@
     "repository": {
         "directory": "lib/js-util",
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
         "build": "rollup -c rollup.config.js",

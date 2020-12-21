@@ -6,7 +6,7 @@
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
@@ -32,7 +32,7 @@
     "devDependencies": {
         "@goldeimer/rollup-config": "^0.0.1"
     },
-    "homepage": "https://github.com/Goldeimer/goldeimer/lib/react-components#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/react-components#readme",
     "keywords": [
         "goldeimer",
         "react",
@@ -49,7 +49,7 @@
     "repository": {
         "directory": "lib/react-components",
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
         "build": "rollup -c rollup.config.js",

@@ -3,7 +3,7 @@
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"

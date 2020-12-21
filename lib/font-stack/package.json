@@ -1,29 +1,42 @@
 {
-    "name": "@goldeimer/font-stack",
-    "version": "0.0.1",
-    "description": "Goldeimer's font stack library",
-    "keywords": [
-        "goldeimer",
-        "fonts",
-        "typography"
-    ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/lib/font-stack#readme",
-    "bugs": {
-        "url": "https://github.com/Goldeimer/goldeimer/issues",
-        "email": "engineering+bugs@goldeimer.de"
-    },
-    "license": "BSD-2-Clause",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git",
-        "directory": "lib/font-stack"
-    },
     "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
-    "browserslist": "extends @goldeimer/browserslist-config",
+    "dependencies": {
+        "@goldeimer/postcss-config": "^0.0.1"
+    },
+    "description": "Goldeimer's font stack library",
+    "devDependencies": {
+        "@goldeimer/webpack-config": "^0.0.1"
+    },
+    "files": [
+        "**/*.css",
+        "**/*.eot",
+        "**/*.ttf",
+        "**/*.woff",
+        "**/*.woff2"
+    ],
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/font-stack#readme",
+    "keywords": [
+        "fonts",
+        "goldeimer",
+        "typography"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "src/font-stack.css",
+    "name": "@goldeimer/font-stack",
     "private": true,
+    "repository": {
+        "directory": "lib/font-stack",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
     "scripts": {
         "build": "yarn build:prod",
         "build:dev": "webpack --mode development",
@@ -32,21 +45,12 @@
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
     },
-    "dependencies": {
-        "@goldeimer/postcss-config": "^0.0.1"
-    },
-    "devDependencies": {
-        "@goldeimer/webpack-config": "^0.0.1"
-    },
-    "main": "src/font-stack.css",
-    "files": [
-        "src/**/*.css"
-    ],
     "sideEffects": [
         "*.css",
         "./src/**/*.eot",
         "./src/**/*.ttf",
         "./src/**/*.woff",
         "./src/**/*.woff2"
-    ]
+    ],
+    "version": "0.0.1"
 }

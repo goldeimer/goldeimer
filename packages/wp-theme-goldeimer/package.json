@@ -6,14 +6,14 @@
         "goldeimer",
         "wordpress"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/packages/wordpress-theme/client#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/packages/wordpress-theme/client#readme",
     "bugs": {
-        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "url": "https://github.com/goldeimer/goldeimer/issues",
         "email": "engineering+bugs@goldeimer.de"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git",
         "directory": "packages/wordpress-theme"
     },
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",

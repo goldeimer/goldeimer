@@ -3,7 +3,7 @@
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
-        "url": "https://github.com/Goldeimer/goldeimer/issues"
+        "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "contributors": [
         "Manou Otolski <manou@goldeimer.de>",
@@ -16,7 +16,7 @@
     "devDependencies": {
         "@goldeimer/webpack-config": "^0.0.1"
     },
-    "homepage": "https://github.com/Goldeimer/goldeimer/packages/wp-toilet-paper-calculator#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/packages/wp-toilet-paper-calculator#readme",
     "keywords": [
         "goldeimer",
         "toilet-paper-calculator",
@@ -29,7 +29,7 @@
     "repository": {
         "directory": "packages/wordpress/toilet-paper-calculator",
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git"
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
         "build": "yarn build:prod",

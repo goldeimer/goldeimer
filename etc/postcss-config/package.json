@@ -7,14 +7,14 @@
         "postcss",
         "postcss-config"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/etc/build/postcss-config#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/postcss-config#readme",
     "bugs": {
-        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "url": "https://github.com/goldeimer/goldeimer/issues",
         "email": "engineering+bugs@goldeimer.de"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git",
         "directory": "etc/build/postcss-config"
     },
     "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
@@ -28,7 +28,7 @@
         "postcss-clearfix": "^2.0.1",
         "postcss-combine-media-query": "^1.0.1",
         "postcss-easings": "^3.0.1",
-        "postcss-import": "^13.0.0",
+        "postcss-import": "^14.0.0",
         "postcss-nested": "^5.0.1",
         "postcss-preset-env": "^6.7.0"
     },

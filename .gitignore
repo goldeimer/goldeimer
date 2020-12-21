@@ -10,7 +10,8 @@
 **/dist/**
 **/packages/**/static
 
-### build artifacts
+### package manager logs
+**/lerna-debug.log
 **/npm-debug.log
 **/yarn-error.log
 

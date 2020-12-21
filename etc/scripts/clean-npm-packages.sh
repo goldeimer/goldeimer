@@ -1,10 +1,8 @@
 #!/usr/bin/sh
 
-# NOTE: Prefer `lerna clean` if available
+# NOTE: Prefer `yarn clean` / `lerna clean`
 
 _workingDirectory="$(pwd)"
-
-echo "$_workingDirectory\n"
 
 __findAndRemove()
 {

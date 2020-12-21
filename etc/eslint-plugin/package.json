@@ -11,19 +11,19 @@
         "eslintplugin",
         "eslint-plugin"
     ],
-    "homepage": "https://github.com/Goldeimer/goldeimer/etc/eslint-plugin#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/eslint-plugin#readme",
     "bugs": {
-        "url": "https://github.com/Goldeimer/goldeimer/issues",
+        "url": "https://github.com/goldeimer/goldeimer/issues",
         "email": "engineering+bugs@goldeimer.de"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Goldeimer/goldeimer.git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git",
         "directory": "etc/eslint-plugin"
     },
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
     "contributors": [
-        "Johannes Pilkahn @pille1910 <johannes@goldeimer.de>"
+        "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "license": "BSD-2-Clause",
     "private": false,
@@ -48,7 +48,6 @@
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-react": "^7.20.0",
         "eslint-plugin-react-hooks": "^4.2.0",
-        "eslint-plugin-standard": "^4.0.1",
         "eslint-plugin-tsc": "^2.0.0",
         "path": "^0.12.7",
         "terser": "^5.3.8"
