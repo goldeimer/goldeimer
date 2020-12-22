@@ -20,9 +20,9 @@ module.exports = (options = {}) => {
                 exclude: NODE_MODULES,
                 use: [{
                     // run transpilation in multiple threads
-                    //     loader: require.resolve('thread-loader'),
-                    //     options: options.threadLoader || {}
-                    // }, {
+                    loader: require.resolve('thread-loader'),
+                    options: options.threadLoader || {}
+                }, {
                     // transpile JS
                     loader: require.resolve('babel-loader'),
                     options: merge(options.babelLoader || {}, {

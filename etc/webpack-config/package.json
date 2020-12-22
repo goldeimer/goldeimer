@@ -13,6 +13,7 @@
         "astroturf": "^0.10.4",
         "autoprefixer": "^10.0.1",
         "babel-loader": "^8.1.0",
+        "buffer": "^6.0.3",
         "bundle-stats-webpack-plugin": "^2.2.0",
         "change-case": "^4.1.1",
         "clean-webpack-plugin": "^3.0.0",

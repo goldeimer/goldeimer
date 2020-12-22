@@ -70,6 +70,7 @@ const filenames = ({
     const commonSuffix = `.${buildTarget}${modeSuffix}${minSuffix}`
 
     return {
+        assetModuleFilename: `asset/${scopePrefix}[name].[contenthash][ext]`,
         chunkFilename: `${subdir}chunks/${scopePrefix}[name]${commonSuffix}${hashSuffix}.js`,
         filename: `${subdir}${scopePrefix}[name]${commonSuffix}.js`
     }

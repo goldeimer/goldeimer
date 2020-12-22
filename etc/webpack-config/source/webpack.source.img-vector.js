@@ -1,6 +1,10 @@
 const svgToMiniDataURI = require('mini-svg-data-uri')
 
-const dataUrl = (content) => svgToMiniDataURI(content.toString())
+const dataUrl = (content) => svgToMiniDataURI(
+    typeof content !== 'string'
+        ? content.toString()
+        : content
+)
 
 const {
     JAVASCRIPT,
@@ -13,7 +17,7 @@ const makePrefix = ({
     digestAlgorithm = 'base36',
     hashAlgorithm = 'sha1',
     length = 7
-} = {}) => `${!prefix || !prefix.length
+} = {}) => `${prefix && prefix.length
     ? `${prefix}-`
     : ''}[${hashAlgorithm}:contenthash:${digestAlgorithm}:${length}]`
 
@@ -33,11 +37,12 @@ module.exports = (options = {}) => ({
                     }
                 }]
             }, {
+                generator: {
+                    dataUrl,
+                    filename: 'img/[contenthash][ext]'
+                },
                 issuer: STYLESHEET,
                 type: 'asset',
-                generator: {
-                    dataUrl
-                },
                 parser: {
                     dataUrlCondition: {
                         maxSize: 8192

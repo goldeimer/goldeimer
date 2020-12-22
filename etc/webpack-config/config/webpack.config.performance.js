@@ -6,9 +6,10 @@ module.exports = (mode) => {
     }
 
     return {
-        // assetFilter: (assetFileName) => someTest(assetFileName),
+        assetFilter: (assetFileName) => !assetFileName.match(/(.*\.)?stats(\..*)?\.json$/u),
         hints: 'warning',
-        // TODO: tighter size constraints
+        // TODO(Johannes):
+        // tighter size constraints?
         maxAssetSize: 5e6,
         maxEntrypointSize: 3e6
     }
