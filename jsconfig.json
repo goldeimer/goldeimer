@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        "module": "commonjs",
+        "target": "es2017"
+    },
+    "exclude": [
+        "docker/**/*",
+        "**/dist/**/*",
+        "node_modules",
+        "**/node_modules/**/*"
+    ]
+}
