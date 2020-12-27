@@ -47,7 +47,13 @@ const config = (pkg) => ({
     })
 
     if (configTarget === undefined) {
-        return Object.values(BuildTarget).map(
+        return Object.values(BuildTarget).filter(
+            // Disable UMD builds for now,
+            // as they aren't very maturely implemented.
+            // TODO(Johannes):
+            // Remove or improve.
+            (target) => target !== BuildTarget.UMD
+        ).map(
             (target) => assembleConfigs(target)
         )
     }
