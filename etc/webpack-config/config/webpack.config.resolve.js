@@ -22,13 +22,20 @@ const getFields = (target) => {
         )
     }
 
-    return makeFields([], ['module', 'main'], ['module', 'main'])
+    return makeFields(
+        [],
+        ['module', 'main'],
+        ['module', 'main']
+    )
 }
 
 module.exports = ({
     target = 'browserslist'
 } = {}) => ({
     ...getFields(target),
+    alias: {
+        inherits: 'inherits/inherits_browser.js'
+    },
     cacheWithContext: false,
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     fallback: {
