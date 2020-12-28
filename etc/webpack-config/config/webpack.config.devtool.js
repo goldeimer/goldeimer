@@ -1,11 +1,15 @@
 const isDevelopmentMode = require('../util/isDevelopmentMode')
 
-module.exports = (mode) => {
+module.exports = ({
+    mode,
+    sourceMap
+}) => {
+    if (sourceMap !== undefined) {
+        return sourceMap
+    }
+
     if (isDevelopmentMode(mode)) {
-        // TODO(Johannes): Pass as argument.
-        // uncomment to get readable transpilation output
-        return false
-        // return 'eval-cheap-module-source-map'
+        return 'eval-cheap-module-source-map'
     }
 
     return 'source-map'

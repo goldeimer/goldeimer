@@ -34,10 +34,11 @@ module.exports = {
         outputPath,
         pkgInfo,
         publicPath,
+        sourceMap,
         treatPeerDepsAsExternals = true
     }) => ({
         name: pkgInfo.names.scopedName,
-        devtool: config.devtool(mode),
+        devtool: config.devtool({ mode, sourceMap }),
         entry: config.entry({
             context,
             entries,
