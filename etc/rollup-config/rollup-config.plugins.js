@@ -6,20 +6,26 @@ const { nodeResolve } = require('@rollup/plugin-node-resolve')
 const namedDirectory = require('rollup-plugin-named-directory')
 const nodePolyfills = require('rollup-plugin-node-polyfills')
 
+const extensions = ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx']
+
+const extensions2Matchers = (exts = []) => exts.map(
+    (ext) => `<dir>/<dir>${ext}`
+)
+
 const plugins = ({ isLibrary }) => ([
+    typescript(),
     babel({
         babelHelpers: isLibrary ? 'runtime' : 'bundled',
         exclude: 'node_modules/**',
+        extensions,
+        // include: ['src/**/*'],
         presets: ['@goldeimer']
     }),
     namedDirectory({
-        matchers: [
-            '<dir>/<dir>.js',
-            '<dir>/<dir>.jsx'
-        ]
+        matchers: extensions2Matchers(extensions)
     }),
     nodeResolve({
-        extensions: ['.mjs', '.js', '.jsx', '.json'],
+        extensions,
         // TODO(Johannes):
         // Should be false.
         // rollup-plugin-node-polyfills does not ship a shim for `stream`.

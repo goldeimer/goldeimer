@@ -8,14 +8,18 @@ const plugins = require('./rollup-config.plugins')
 const targetConfig = require('./rollup-config.target')
 
 const baseConfig = ({
+    ext = 'js',
     info,
     isLibrary = true
 }) => ({
-    input: `src/${info.names.name}.js`,
+    input: `src/${info.names.name}.${ext}`,
     plugins: plugins({ isLibrary })
 })
 
-const config = (pkg) => ({
+const config = (
+    pkg,
+    ext = 'js'
+) => ({
     configDependenciesAreExternal: dependenciesAreExternal,
     configIsLibrary: isLibrary = true,
     configPeerDependenciesAreExternal: peerDependenciesAreExternal,
@@ -27,6 +31,7 @@ const config = (pkg) => ({
     process.env.NODE_ENV = 'production'
 
     const baseCfg = baseConfig({
+        ext,
         info,
         isLibrary
     })

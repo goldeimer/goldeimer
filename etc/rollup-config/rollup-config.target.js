@@ -3,14 +3,16 @@ const { BuildTarget } = require('@goldeimer/build-util')
 const cjsConfig = ({ info }) => ({
     output: {
         file: info.main,
-        format: 'cjs'
+        format: 'cjs',
+        sourcemap: true
     }
 })
 
 const esmConfig = ({ info }) => ({
     output: {
         file: info.module,
-        format: 'es'
+        format: 'es',
+        sourcemap: true
     }
 })
 
@@ -18,7 +20,8 @@ const umdConfig = ({ info }) => ({
     output: {
         file: info.browser,
         format: 'umd',
-        name: info.names.scopedName
+        name: info.names.scopedName,
+        sourcemap: true
     }
 })
 
