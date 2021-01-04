@@ -1,17 +1,18 @@
+const extensions = ['.ts', '.tsx']
+
 module.exports = {
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint', 'tsc'],
     extends: [
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
+        'airbnb-typescript',
         'plugin:import/typescript'
     ],
     rules: {
         indent: ['off'],
         '@typescript-eslint/indent': ['error', 4],
-        'no-unused-expressions': 'off',
-        '@typescript-eslint/no-unused-expressions': 'warn',
-        'no-useless-constructor': 'off',
+        '@typescript-eslint/no-unused-expressions': 'error',
         '@typescript-eslint/no-useless-constructor': 'error',
         'tsc/config': ['error', {
             configFile: path.resolve(
@@ -22,15 +23,12 @@ module.exports = {
     },
     settings: {
         'import/parsers': {
-            '@typescript-eslint/parser': ['.ts', '.tsx']
+            '@typescript-eslint/parser': extensions
         },
         'import/resolver': {
             typescript: {
                 alwaysTryTypes: true,
-                extensions: [
-                    '.ts',
-                    '.tsx'
-                ],
+                extensions,
                 project: [
                     'etc/*/tsconfig.json',
                     'lib/*/tsconfig.json',
