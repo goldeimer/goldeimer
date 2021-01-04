@@ -14,7 +14,7 @@ const libraryDependentConfig = (env) => {
 const presetEnv = (env) => (['@babel/preset-env', {
     bugfixes: true,
     browserslistEnv: env,
-    debug: process.env.GE_BUILD_VERBOSE === 'true',
+    debug: process.env.BUILD_VERBOSE === 'true',
     loose: true,
     // facilitate tree-shaking
     modules: false,
@@ -22,12 +22,8 @@ const presetEnv = (env) => (['@babel/preset-env', {
     ...libraryDependentConfig(env)
 }])
 
-const presetReact = [
-    '@babel/preset-react',
-    '@babel/preset-typescript'
-]
-
 module.exports = (env) => ([
     presetEnv(env),
-    ...presetReact
+    '@babel/preset-react',
+    '@babel/preset-typescript'
 ])
