@@ -48,6 +48,7 @@
 
 ### caches
 **/.firebase
+**/.rollup.cache/
 **/.yarn-cache/
 
 ### (potential) backups

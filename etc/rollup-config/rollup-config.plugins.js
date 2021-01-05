@@ -2,6 +2,7 @@ const { babel } = require('@rollup/plugin-babel')
 const commonjs = require('@rollup/plugin-commonjs')
 const json = require('@rollup/plugin-json')
 const { nodeResolve } = require('@rollup/plugin-node-resolve')
+const typescript = require('@rollup/plugin-typescript')
 
 const namedDirectory = require('rollup-plugin-named-directory')
 const nodePolyfills = require('rollup-plugin-node-polyfills')

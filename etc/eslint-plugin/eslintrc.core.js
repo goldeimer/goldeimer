@@ -17,6 +17,12 @@ module.exports = {
         'arrow-parens': ['error', 'always'],
         'global-require': ['off'],
         indent: ['error', 4],
+        'import/extensions': ['error', 'always', {
+            js: 'never',
+            jsx: 'never',
+            ts: 'never',
+            tsx: 'never'
+        }],
         'max-len': ['warn', {
             code: 80,
             ignoreComments: false,
