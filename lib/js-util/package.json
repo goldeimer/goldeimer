@@ -14,8 +14,17 @@
         "@material-ui/core": "^4.11.0",
         "axios": "^0.21.0",
         "change-case": "^4.1.2",
+        "is-lower-case": "^2.0.2",
+        "is-upper-case": "^2.0.2",
+        "lower-case": "^2.0.2",
+        "lower-case-first": "^2.0.2",
         "nanoid-generate": "^1.0.0",
-        "papaparse": "^5.3.0"
+        "papaparse": "^5.3.0",
+        "sponge-case": "^1.0.1",
+        "swap-case": "^2.0.2",
+        "title-case": "^3.0.3",
+        "upper-case": "^2.0.2",
+        "upper-case-first": "^2.0.2"
     },
     "description": "Goldeimer's JavaScript utility library",
     "devDependencies": {
