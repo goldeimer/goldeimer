@@ -1,6 +1,6 @@
 {
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
-    "browser": "dist/goldeimer-enum-lib.umd.js",
+    "browser": "dist/goldeimer-enum-util.umd.js",
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
@@ -9,29 +9,32 @@
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
-    "dependencies": {},
+    "dependencies": {
+        "@goldeimer/ts-util": "^0.0.1",
+        "ts-enum-util": "^4.0.2"
+    },
     "description": "Goldeimer's core enums and enum utilities",
     "devDependencies": {
         "@goldeimer/rollup-config": "^0.0.1",
         "typescript": "^4.1.5"
     },
-    "homepage": "https://github.com/goldeimer/goldeimer/lib/enum-lib#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/enum-util#readme",
     "keywords": [
         "goldeimer",
         "utility"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer-enum-lib.cjs.js",
-    "module": "dist/goldeimer-enum-lib.esm.js",
-    "name": "@goldeimer/enum-lib",
+    "main": "dist/goldeimer-enum-util.cjs.js",
+    "module": "dist/goldeimer-enum-util.esm.js",
+    "name": "@goldeimer/enum-util",
     "private": false,
     "repository": {
-        "directory": "lib/enum-lib",
+        "directory": "lib/enum-util",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
-        "build": "yarn build:js",
+        "build": "yarn build:types && yarn build:js",
         "build:js": "rollup -c rollup.config.js",
         "build:cjs": "yarn build:js --configTarget cjs",
         "build:esm": "yarn build:js --configTarget esm",
@@ -40,13 +43,13 @@
         "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "prepublishOnly": "yarn shake",
+        "prepublishOnly": "exit 0 || yarn shake",
         "shake": "agadoo",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
         "type-check": "tsc --noEmit",
         "type-check:watch": "yarn type-check -- --watch"
     },
     "sideEffects": false,
-    "types": "dist/types/enum-lib.d.ts",
+    "types": "dist/types/enum-util.d.ts",
     "version": "0.0.1"
 }
