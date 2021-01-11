@@ -7,7 +7,8 @@ const typescript = require('@rollup/plugin-typescript')
 const namedDirectory = require('rollup-plugin-named-directory')
 const nodePolyfills = require('rollup-plugin-node-polyfills')
 
-const extensions = ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx']
+const extensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx']
+const nodeExtensions = ['.json', ...extensions]
 
 const extensions2Matchers = (exts = []) => exts.map(
     (ext) => `<dir>/<dir>${ext}`
@@ -15,9 +16,13 @@ const extensions2Matchers = (exts = []) => exts.map(
 
 const plugins = ({ isLibrary }) => ([
     typescript(),
+    json(),
     babel({
         babelHelpers: isLibrary ? 'runtime' : 'bundled',
-        exclude: 'node_modules/**',
+        exclude: [
+            'node_modules/**',
+            '**/*.json'
+        ],
         extensions,
         // include: ['src/**/*'],
         presets: ['@goldeimer']
@@ -26,7 +31,7 @@ const plugins = ({ isLibrary }) => ([
         matchers: extensions2Matchers(extensions)
     }),
     nodeResolve({
-        extensions,
+        nodeExtensions,
         // TODO(Johannes):
         // Should be false.
         // rollup-plugin-node-polyfills does not ship a shim for `stream`.
@@ -35,7 +40,6 @@ const plugins = ({ isLibrary }) => ([
         preferBuiltins: true
     }),
     commonjs(),
-    json(),
     nodePolyfills()
 ])
 
