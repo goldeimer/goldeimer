@@ -23,6 +23,7 @@ module.exports = {
             ts: 'never',
             tsx: 'never'
         }],
+        'import/prefer-default-export': ['error', 'never'],
         'max-len': ['warn', {
             code: 80,
             ignoreComments: false,
