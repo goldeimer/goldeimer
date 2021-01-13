@@ -45,17 +45,22 @@
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
     "scripts": {
-        "build": "rollup -c rollup.config.js",
+        "build": "yarn build:types && yarn build:js",
         "build:cjs": "yarn build --configTarget cjs",
         "build:esm": "yarn build --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
         "build:umd": "yarn build --configTarget umd",
         "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
         "prepublishOnly": "yarn shake",
         "shake": "agadoo",
-        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch"
     },
     "sideEffects": false,
+    "types": "dist/types/react-util.d.ts",
     "version": "0.0.1"
 }
