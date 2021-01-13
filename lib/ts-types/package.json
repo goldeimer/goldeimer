@@ -1,6 +1,6 @@
 {
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
-    "browser": "dist/goldeimer-ts-util.umd.js",
+    "browser": "dist/goldeimer-ts-types.umd.js",
     "browserslist": "extends @goldeimer/browserslist-config",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
@@ -12,23 +12,23 @@
     "dependencies": {
         "ts-enum-util": "^4.0.2"
     },
-    "description": "Goldeimer's Typescript helper library",
+    "description": "Goldeimer's Typescript utility types",
     "devDependencies": {
         "@goldeimer/rollup-config": "^0.0.1",
         "typescript": "^4.1.5"
     },
-    "homepage": "https://github.com/goldeimer/goldeimer/lib/ts-util#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/ts-types#readme",
     "keywords": [
         "goldeimer",
         "utility"
     ],
     "license": "BSD-2-Clause",
-    "main": "dist/goldeimer-ts-util.cjs.js",
-    "module": "dist/goldeimer-ts-util.esm.js",
-    "name": "@goldeimer/ts-util",
+    "main": "dist/goldeimer-ts-types.cjs.js",
+    "module": "dist/goldeimer-ts-types.esm.js",
+    "name": "@goldeimer/ts-types",
     "private": false,
     "repository": {
-        "directory": "lib/ts-util",
+        "directory": "lib/ts-types",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
@@ -49,6 +49,6 @@
         "type-check:watch": "yarn type-check -- --watch"
     },
     "sideEffects": false,
-    "types": "dist/types/ts-util.d.ts",
+    "types": "dist/types/ts-types.d.ts",
     "version": "0.0.1"
 }

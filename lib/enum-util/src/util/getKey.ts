@@ -1,6 +1,6 @@
 import { $enum } from 'ts-enum-util'
 
-import type { Nullable } from '@goldeimer/ts-util'
+import type { Nullable } from '@goldeimer/ts-types'
 
 import type { EnumInstance } from '../types'
 

@@ -10,7 +10,7 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
-        "@goldeimer/ts-util": "^0.0.1",
+        "@goldeimer/ts-types": "^0.0.1",
         "ts-enum-util": "^4.0.2"
     },
     "description": "Goldeimer's core enums and enum utilities",

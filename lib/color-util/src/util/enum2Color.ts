@@ -6,7 +6,7 @@ import {
 
 import type {
     Nullable,
-} from '@goldeimer/ts-util'
+} from '@goldeimer/ts-types'
 
 import type {
     PaletteKey
