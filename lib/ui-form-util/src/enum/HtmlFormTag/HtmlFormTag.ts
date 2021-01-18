@@ -1,6 +1,7 @@
-export enum HtmlFormTagName {
+export enum HtmlFormTag {
     Checkbox,
     Input,
     Radio,
+    Select,
     Textarea
 }

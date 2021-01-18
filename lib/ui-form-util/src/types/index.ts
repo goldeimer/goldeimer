@@ -1,1 +1,3 @@
-export * from './HtmlFormElement'
+export type { IFormElement } from './FormElement'
+
+export * from './FormElement'

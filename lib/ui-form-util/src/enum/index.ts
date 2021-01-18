@@ -1,2 +1,2 @@
-export * from './HtmlFormTagName'
+export * from './HtmlFormTag'
 export * from './HtmlInputType'
