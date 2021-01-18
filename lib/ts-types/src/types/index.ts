@@ -5,5 +5,7 @@ export type {
     ITransformFn
 } from './IMappingFn'
 
+export * from './ConstrainedKeyOf'
+export * from './Constructor'
 export * from './Nullable'
-export * from './StringKeyOf'
+export * from './SimplifyType'
