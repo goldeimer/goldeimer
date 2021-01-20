@@ -1,7 +1,7 @@
-import { lowerCaseKey } from '@goldeimer/enum-util'
+import { getLowerCaseKey } from '@goldeimer/enum-util'
 
 import { PaletteKey } from '../enum'
 
 export const palettePath = (
     value: PaletteKey
-): string => `palette.${lowerCaseKey(PaletteKey, value)}.main`
+): string => `palette.${getLowerCaseKey(PaletteKey, value)}.main`
