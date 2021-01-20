@@ -1,16 +1,17 @@
 import { $enum } from 'ts-enum-util'
 
-import type { Nullable } from '@goldeimer/ts-types'
+import type {
+    EnumInstance
+} from '../types'
 
-import type { EnumInstance } from '../types'
+const DefaultKey = "UnknownValue"
 
 export const getKey = <
-    T,
-    V extends Nullable<number>
+    EnumType
 >(
-    enumObj: EnumInstance<T>,
-    value: V,
-): string => $enum(enumObj).getKeyOrDefault(
-    value,
-    'error_undefined_enum_value'
+    enumObj: EnumInstance<EnumType>,
+    value?: number | null,
+    defaultKey: string = DefaultKey
+): string => (
+    $enum(enumObj).getKeyOrDefault(value, defaultKey)
 )

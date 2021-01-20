@@ -1,3 +1,3 @@
 export * from './EnumInstance'
-export * from './EnumValue'
-export * from './GenericEnumValue'
+export * from './EnumMapper'
+export * from './UnderlyingEnumType'
