@@ -53,11 +53,11 @@ const tsconfig = {
 try {
     writeFileSync(
         path.resolve('tsconfig.json'),
-        JSON.stringify(
+        `${JSON.stringify(
             tsconfig,
             null,
             4
-        )
+        )}\n`
     )
 } catch (err) {
     console.error(err)

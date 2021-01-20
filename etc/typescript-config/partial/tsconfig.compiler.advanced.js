@@ -20,7 +20,7 @@ export default {
     noLib: false,
     noResolve: false,
     noStrictGenericChecks: false,
-    preserveConstEnums: false,
+    preserveConstEnums: true,
     resolveJsonModule: true,
     skipLibCheck: true,
     stripInternal: false,
