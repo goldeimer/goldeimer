@@ -7,13 +7,23 @@
 
 ### build output
 **/build/**
+!etc/build/**
 **/dist/**
 **/packages/**/static
 
+### yarn (w/ zero-installs)
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 ### package manager logs
-**/lerna-debug.log
-**/npm-debug.log
-**/yarn-error.log
+**/lerna-*.log
+**/npm-*.log
+**/yarn-*.log
 
 # ----- essential excludes -----------------------------------------------------
 
@@ -49,7 +59,6 @@
 ### caches
 **/.firebase
 **/.rollup.cache/
-**/.yarn-cache/
 
 ### (potential) backups
 
