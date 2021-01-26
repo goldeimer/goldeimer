@@ -23,7 +23,6 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "license": "BSD-2-Clause",
-    "private": false,
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.12",
         "@babel/plugin-proposal-object-rest-spread": "^7.12",
