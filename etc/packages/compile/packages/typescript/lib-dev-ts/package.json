@@ -7,34 +7,29 @@
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
-    "description": "Goldeimer's TypeScript configuration(s)",
-    "files": [
-        "tsconfig.json"
-    ],
-    "homepage": "https://github.com/goldeimer/goldeimer/etc/typescript-config#readme",
+    "dependencies": {
+        "@goldeimer/tsconfig": "workspace:*",
+        "tslib": "*",
+        "typescript": "4.1"
+    },
+    "description": "Meta-package for Goldeimer's Typescript-related packages and their dependencies",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/typescript/lib-dev-ts#readme",
     "keywords": [
-        "build",
+        "compile",
         "goldeimer",
-        "tsc",
         "tsconfig",
         "typescript"
     ],
     "license": "BSD-2-Clause",
-    "main": "tsconfig.json",
-    "module": "tsconfig.json",
-    "name": "@goldeimer/typescript-config",
-    "private": false,
+    "name": "@goldeimer/lib-dev-ts",
+    "peerDependencies": {
+        "path": "^0.12.7"
+    },
     "repository": {
-        "directory": "etc/typescript-config",
+        "directory": "etc/build/typescript/lib-dev-ts",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
-    "scripts": {
-        "build": "./build.js"
-    },
     "type": "module",
-    "version": "0.0.1",
-    "dependencies": {
-        "path": "^0.12.7"
-    }
+    "version": "0.0.1"
 }
