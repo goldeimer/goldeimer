@@ -15,7 +15,7 @@ module.exports = {
     /// ----- customized linting rules -----------------------------------------
     rules: {
         'arrow-parens': ['error', 'always'],
-        'global-require': ['off'],
+        'global-require': 'off',
         indent: ['error', 4],
         'import/extensions': ['error', 'always', {
             js: 'never',
@@ -30,7 +30,7 @@ module.exports = {
             ignoreTemplateLiterals: true,
             ignoreUrls: true
         }],
-        'no-nested-ternary': ['off'],
+        'no-nested-ternary': 'off',
         'no-param-reassign': ['error', {
             ignorePropertyModificationsFor: ['node', 'state'],
             props: true
@@ -39,9 +39,6 @@ module.exports = {
         // (w/ eslint-loader and webpack-watcher).
         'no-unused-vars': ['warn'],
         'operator-linebreak': ['error', 'before'],
-        semi: ['error', 'never', {
-            beforeStatementContinuationChars: 'always'
-        }],
         'space-before-function-paren': ['error', {
             anonymous: 'always',
             named: 'never',
@@ -57,6 +54,12 @@ module.exports = {
                 markers: ['/'],
                 exceptions: ['-', '+']
             }
-        }]
+        }],
+        /// ----- replace by corresponding @babel/<rule-name> ------------------
+        'new-cap': 'off',
+        'no-invalid-this': 'off',
+        'no-unused-expressions': 'off',
+        'object-curly-spacing': 'off',
+        semi: 'off'
     }
 }
