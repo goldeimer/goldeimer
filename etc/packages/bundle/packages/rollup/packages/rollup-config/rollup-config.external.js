@@ -1,6 +1,6 @@
 const {
     isUmdBuild
-} = require('@goldeimer/build-util')
+} = require('@goldeimer/compile-util')
 
 const external = ({
     dependenciesAreExternal = undefined,

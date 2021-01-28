@@ -1,7 +1,7 @@
 const {
     pkgInfo,
     BuildTarget
-} = require('@goldeimer/build-util')
+} = require('@goldeimer/compile-util')
 
 const external = require('./rollup-config.external')
 const plugins = require('./rollup-config.plugins')
