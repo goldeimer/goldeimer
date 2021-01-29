@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { STYLESHEET } = require('../enum/WebpackRuleTest')
 
 const chainedLoader = (name, options = {}) => ({
-    loader: name,
+    loader: require.resolve(name),
     options: merge(options, { sourceMap: true })
 })
 

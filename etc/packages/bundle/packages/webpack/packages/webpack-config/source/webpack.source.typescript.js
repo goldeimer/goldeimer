@@ -18,13 +18,13 @@ module.exports = ({
         rules: [{
             test: TYPESCRIPT,
             exclude: NODE_MODULES,
-            use: [{
-                loader: 'ts-loader',
+            use: require.resolve([{
+                loader: require.resolve('ts-loader'),
                 options: merge(loader, {
                     configFile,
                     transpileOnly: true
                 })
-            }]
+            }])
         }]
     },
     plugins: [

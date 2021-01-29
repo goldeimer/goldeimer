@@ -1,0 +1,96 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/babel-preset": "workspace:*",
+        "@goldeimer/compile-util": "workspace:*",
+        "astroturf": "^0.10.4",
+        "autoprefixer": "^10.0",
+        "babel-loader": "^8.1",
+        "browserify-zlib": "^0.2",
+        "buffer": "^6.0",
+        "bundle-stats-webpack-plugin": "^2.6.0",
+        "change-case": "^4.1",
+        "clean-webpack-plugin": "^3.0",
+        "copy-webpack-plugin": "^7.0",
+        "crypto-browserify": "^3.12",
+        "css-loader": "^5.0",
+        "css-minimizer-webpack-plugin": "^1.1",
+        "directory-named-webpack-plugin": "^4.0",
+        "dotenv-webpack": "^6.0",
+        "eslint-webpack-plugin": "^2.1",
+        "fork-ts-checker-webpack-plugin": "^6.0",
+        "gas-webpack-plugin": "^1.2",
+        "html-webpack-inline-source-plugin": "^0.0.10",
+        "html-webpack-plugin": "^5.2",
+        "https-browserify": "^1.0",
+        "image-minimizer-webpack-plugin": "^2.0",
+        "imagemin-gifsicle": "^7.0",
+        "imagemin-mozjpeg": "^9.0",
+        "imagemin-optipng": "^8.0",
+        "imagemin-pngquant": "^9.0",
+        "imagemin-svgo": "^8.0",
+        "imagemin-webp": "^6.0",
+        "install": "^0.13.0",
+        "mini-css-extract-plugin": "^1.2",
+        "mini-svg-data-uri": "^1.2",
+        "os": "^0.1.1",
+        "postcss-loader": "^5.0",
+        "process": "^0.11.10",
+        "query-string": "^6.14.1",
+        "sass": "^1.29",
+        "sass-loader": "^11.0",
+        "stats-webpack-plugin": "^0.7.0",
+        "stream-browserify": "^3.0",
+        "stream-http": "^3.0",
+        "svg-inline-loader": "^0.8.2",
+        "terser-webpack-plugin": "^5.0",
+        "thread-loader": "^3.0",
+        "ts-loader": "^8.0",
+        "tty-browserify": "^0.0.1",
+        "webpack-assets-manifest": "^5.0",
+        "webpack-bundle-analyzer": "^4.3",
+        "webpack-node-externals": "^2.5"
+    },
+    "description": "Goldeimer's shared webpack configuration(s)",
+    "exports": {
+        ".": {
+            "import": "./webpack-config.js",
+            "require": "./webpack-config.js"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/webpack/webpack-config#readme",
+    "keywords": [
+        "goldeimer",
+        "goldeimer-config",
+        "config",
+        "webpack",
+        "webpack-config"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "webpack-config.js",
+    "name": "@goldeimer/webpack-config",
+    "peerDependencies": {
+        "@babel/core": "^7.12",
+        "eslint": "^7.0",
+        "path": "^0.12.7",
+        "postcss": "^8.1",
+        "terser": "^5.3",
+        "typescript": "^4.1",
+        "webpack": "^5.3",
+        "webpack-cli": "^4.1",
+        "webpack-merge": "^5.3"
+    },
+    "repository": {
+        "directory": "etc/build/webpack/webpack-config",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

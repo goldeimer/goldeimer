@@ -1,7 +1,7 @@
 const {
     isUmdBuild,
     BuildTarget
-} = require('@goldeimer/build-util')
+} = require('@goldeimer/compile-util')
 
 const {
     paramCase,
@@ -14,8 +14,13 @@ const makeOutputPath = require('../util/makeOutputPath')
 const libraryConfig = ({
     buildTarget,
     isLibrary,
+    libraryTarget,
     pkgInfo: { names: { scopedName } }
 }) => {
+    if (libraryTarget) {
+        return libraryTarget
+    }
+
     if (!isLibrary) {
         return {}
     }
@@ -88,6 +93,7 @@ module.exports = ({
     buildTarget,
     context,
     isLibrary = false,
+    libraryTarget,
     mode,
     outputPath,
     pkgInfo,
@@ -102,6 +108,7 @@ module.exports = ({
     ...libraryConfig({
         buildTarget,
         isLibrary,
+        libraryTarget,
         pkgInfo
     }),
     path: makeOutputPath({

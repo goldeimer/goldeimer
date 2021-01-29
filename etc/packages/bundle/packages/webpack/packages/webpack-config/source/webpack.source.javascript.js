@@ -18,34 +18,36 @@ module.exports = (options = {}) => {
             rules: [{
                 test: JAVASCRIPT,
                 exclude: NODE_MODULES,
-                use: [{
-                    // run transpilation in multiple threads
-                    loader: require.resolve('thread-loader'),
-                    options: options.threadLoader || {}
-                }, {
-                    // transpile JS
-                    loader: require.resolve('babel-loader'),
-                    options: merge(options.babelLoader || {}, {
-                        cacheDirectory: true,
-                        compact: true,
-                        extends: (
-                            babelLoaderOptions.extends
-                            || babelLoaderOptions.configFile
-                            || resolveBabelConfigFile(
-                                options.context,
-                                options.mode
-                            )
-                        ),
-                        presets: ['@goldeimer'],
-                        rootMode: 'upward'
-                    })
-                }]
+                use: [
+                    {
+                        // run transpilation in multiple threads
+                        loader: require.resolve('thread-loader'),
+                        options: options.threadLoader || {}
+                    }, {
+                        // transpile JS
+                        loader: require.resolve('babel-loader'),
+                        options: merge(options.babelLoader || {}, {
+                            cacheDirectory: true,
+                            compact: true,
+                            extends: (
+                                babelLoaderOptions.extends
+                                || babelLoaderOptions.configFile
+                                || resolveBabelConfigFile(
+                                    options.context,
+                                    options.mode
+                                )
+                            ),
+                            presets: ['@goldeimer'],
+                            rootMode: 'upward'
+                        })
+                    }
+                ]
                 // TODO: Measure perf impact in production.
                 // *Might* have mitigated a layout glitch
                 // on both main vendor's phones.
                 // Also might not be the most light-weight solution.
                 // Definitely very runtime-centric.
-                // 'astroturf/loader']
+                // require.resolve('astroturf/loader')]
             }]
         },
         plugins: [

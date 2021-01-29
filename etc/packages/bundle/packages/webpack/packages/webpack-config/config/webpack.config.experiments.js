@@ -1,4 +1,4 @@
-const { BuildTarget } = require('@goldeimer/build-util')
+const { BuildTarget } = require('@goldeimer/compile-util')
 
 module.exports = ({ buildTarget }) => ({
     asyncWebAssembly: true,

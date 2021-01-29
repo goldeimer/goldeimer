@@ -1,7 +1,7 @@
 const {
     BuildTarget,
     readPkgInfo
-} = require('@goldeimer/build-util')
+} = require('@goldeimer/compile-util')
 
 const path = require('path')
 const { merge } = require('webpack-merge')
@@ -18,6 +18,7 @@ class WebpackConfigBuilder {
         context, {
             buildTarget = BuildTarget.CJS,
             isLibrary = false,
+            libraryTarget = undefined,
             nodeExternalsEnabled = false,
             outputPath = 'dist',
             pluginOptions = {},
@@ -40,7 +41,8 @@ class WebpackConfigBuilder {
         this.pkgInfo = readPkgInfo(this.context)
 
         this.buildTarget = buildTarget
-        this.isLibrary = isLibrary
+        this.isLibrary = isLibrary || Boolean(libraryTarget)
+        this.libraryTarget = libraryTarget
         this.nodeExternalsEnabled = nodeExternalsEnabled
         this.outputPath = outputPath
         this.pluginOptions = pluginOptions
@@ -116,6 +118,10 @@ class WebpackConfigBuilder {
         this.isLibrary = Boolean(is)
     }
 
+    setLibraryTarget(libraryTarget) {
+        this.libraryTarget = libraryTarget
+    }
+
     setOutputPath(_path = 'dist') {
         this.outputPath = _path
     }
@@ -159,6 +165,7 @@ class WebpackConfigBuilder {
                 externals: this.externals,
                 externalsWhitelist: this.externalsWhitelist,
                 isLibrary: this.isLibrary,
+                libraryTarget: this.libraryTarget,
                 mode: this.mode,
                 nodeExternalsEnabled: this.nodeExternalsEnabled,
                 outputPath: this.outputPath,

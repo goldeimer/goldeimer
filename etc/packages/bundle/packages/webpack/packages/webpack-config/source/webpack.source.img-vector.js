@@ -30,7 +30,7 @@ module.exports = (options = {}) => ({
             oneOf: [{
                 issuer: JAVASCRIPT,
                 use: [{
-                    loader: 'svg-inline-loader',
+                    loader: require.resolve('svg-inline-loader'),
                     options: {
                         classPrefix: PREFIX,
                         idPrefix: PREFIX

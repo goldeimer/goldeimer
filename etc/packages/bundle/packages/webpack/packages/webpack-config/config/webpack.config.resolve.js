@@ -50,7 +50,10 @@ module.exports = ({
         tty: require.resolve('tty-browserify'),
         zlib: require.resolve('browserify-zlib')
     },
-    modules: ['node_modules'],
+    modules: [
+        // TODO(Johannes): Make conditional (pnp).
+        // 'node_modules'
+    ],
     plugins: [new DirectoryNamedPlugin()],
     symlinks: false
 })

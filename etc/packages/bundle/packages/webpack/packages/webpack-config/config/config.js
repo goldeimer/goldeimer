@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const {
     isUmdBuild,
     BuildTarget
-} = require('@goldeimer/build-util')
+} = require('@goldeimer/compile-util')
 
 const WebpackMode = require('../enum/WebpackMode')
 
@@ -29,6 +29,7 @@ module.exports = {
         externals = [],
         externalsWhitelist = [],
         isLibrary,
+        libraryTarget,
         mode = WebpackMode.PRODUCTION,
         nodeExternalsEnabled = false,
         outputPath,
@@ -61,6 +62,7 @@ module.exports = {
             buildTarget,
             context,
             isLibrary,
+            libraryTarget,
             mode,
             outputPath,
             pkgInfo,
