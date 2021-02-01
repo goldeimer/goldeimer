@@ -1,0 +1,7 @@
+{
+    "name": "@goldeimer/worktree-etc",
+    "private": true,
+    "workspaces": [
+        "**"
+    ]
+}
