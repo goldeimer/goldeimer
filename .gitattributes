@@ -9,7 +9,8 @@
 .gitignore export-ignore
 .jshintignore export-ignore
 .jshintrc export-ignore
-.yarnrc export-ignore
+.pnp.js export-ignore
+.yarnrc.yml export-ignore
 appscript.json export-ignore
 babel.config.json export-ignore
 lerna.json export-ignore

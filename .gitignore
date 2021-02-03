@@ -1,24 +1,23 @@
 # ----- util -------------------------------------------------------------------
-
-### utility pattern for on-the-spot dynamic use
-**/*.ignore.*
-
 # ----- build ------------------------------------------------------------------
 
 ### build output
 **/build/**
-!etc/build/**
 **/dist/**
 **/packages/**/static
 
-### yarn (w/ zero-installs)
+### yarn (base)
+# @see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+### yarn (w/ zero-installs)
+# @see https://yarnpkg.com/features/zero-installs
+!.yarn/cache
+!.yarn/pnp.data.json
 
 ### package manager logs
 **/lerna-*.log
@@ -67,6 +66,11 @@
 
 # ----- IDE & system artifacts -------------------------------------------------
 
+### IDE > VSCode
+**/.history/**
+**/.vscode/**
+**/*.code-workspace
+
 ### IDE > miscellaneous
 **/.c9/**/*
 **/*.settings/**
@@ -76,11 +80,6 @@
 **/.project
 **/*.sublime-workspace
 
-### IDE > VSCode
-**/.history/**
-**/.vscode/**
-**/*.code-workspace
-
 # !**/.vscode/extensions.json
 # !**/.vscode/launch.json
 # !**/.vscode/settings.json
@@ -89,3 +88,8 @@
 ### operating system artifacts
 **/.DS_Store
 **/Thumbs.db
+
+# ----- util -------------------------------------------------------------------
+
+### utility pattern for on-the-spot dynamic use
+**/*.ignore.*
