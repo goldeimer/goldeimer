@@ -6,10 +6,12 @@ module.exports = {
     },
     plugins: ['@babel'],
     rules: {
-        "@babel/new-cap": "error",
-        "@babel/no-invalid-this": "error",
-        "@babel/no-unused-expressions": "error",
-        "@babel/object-curly-spacing": "error",
-        "@babel/semi": "error"
+        '@babel/new-cap': 'error',
+        '@babel/no-invalid-this': 'error',
+        '@babel/no-unused-expressions': 'error',
+        '@babel/object-curly-spacing': 'error',
+        '@babel/semi': ['error', 'never', {
+            beforeStatementContinuationChars: 'always'
+        }]
     }
 }

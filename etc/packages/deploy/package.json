@@ -1,5 +1,5 @@
 {
-    "name": "@goldeimer/worktree-dev-bundle",
+    "name": "@goldeimer/worktree-dev-deploy",
     "private": true,
     "workspaces": [
         "**"

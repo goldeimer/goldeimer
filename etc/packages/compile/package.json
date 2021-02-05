@@ -1,5 +1,5 @@
 {
-    "name": "@goldeimer/worktree-compile",
+    "name": "@goldeimer/worktree-dev-compile",
     "private": true,
     "workspaces": [
         "**"

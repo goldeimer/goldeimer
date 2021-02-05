@@ -1,6 +1,6 @@
 export default ({ transpiler }) => ({
     allowJs: true,
-    checkJs: false,
+    checkJs: true,
     composite: false,
     declaration: false,
     declarationMap: false,

@@ -1,5 +1,5 @@
 {
-    "name": "@goldeimer/worktree-lint",
+    "name": "@goldeimer/worktree-dev-lint",
     "private": true,
     "workspaces": [
         "**"
