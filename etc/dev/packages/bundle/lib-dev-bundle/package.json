@@ -1,0 +1,40 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/lib-dev-rollup": "workspace:*",
+        "@goldeimer/lib-dev-webpack": "workspace:*"
+    },
+    "description": "Meta-package for Goldeimer's build tooling",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/bundle/lib-dev-bundle#readme",
+    "keywords": [
+        "goldeimer",
+        "meta-package",
+        "bundle",
+        "rollup",
+        "webpack"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/lib-dev-bundle",
+    "peerDependencies": {
+        "@babel/core": "^7.12",
+        "eslint": "^7.0",
+        "path": "^0.12.7",
+        "postcss": "^8.1",
+        "terser": "^5.3",
+        "tslib": "*",
+        "typescript": "4.1"
+    },
+    "repository": {
+        "directory": "etc/bundle/lib-dev-bundle",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

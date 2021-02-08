@@ -1,0 +1,33 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's utility library for shared logic between build systems",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/compile-util#readme",
+    "keywords": [
+        "babel",
+        "build",
+        "comile",
+        "config",
+        "goldeimer",
+        "goldeimer/build",
+        "goldeimer/compile",
+        "goldeimer/config",
+        "ts",
+        "typescript"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "compile-util.js",
+    "name": "@goldeimer/compile-util",
+    "repository": {
+        "directory": "etc/build/compile-util",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

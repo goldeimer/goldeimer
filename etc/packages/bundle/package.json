@@ -1,7 +1,0 @@
-{
-    "name": "@goldeimer/worktree-dev-bundle",
-    "private": true,
-    "workspaces": [
-        "**"
-    ]
-}

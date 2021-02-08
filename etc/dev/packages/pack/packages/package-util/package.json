@@ -1,0 +1,43 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/lib-dev-compile": "workspace:*",
+        "json-schema-to-typescript": "^10.0"
+    },
+    "description": "Goldeimer's package maintenance utility",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/goldeimer.package-util.esm.js",
+            "require": "./dist/cjs/goldeimer.package-util.cjs.js"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/pkg/package-util#readme",
+    "keywords": [
+        "goldeimer",
+        "monorepo",
+        "packaging"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/package-util",
+    "peerDependencies": {
+        "type-fest": "0.21.0",
+        "webpack-merge": "^5.3.0"
+    },
+    "repository": {
+        "directory": "etc/pkg/package-util",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build:schema": "json2ts -i src/schema/ -o dist/types/",
+        "fetch:schema": "wget https://json.schemastore.org/package"
+    },
+    "version": "0.0.1"
+}

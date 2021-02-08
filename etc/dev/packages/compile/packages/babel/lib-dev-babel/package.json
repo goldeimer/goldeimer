@@ -1,0 +1,32 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@babel/core": "^7.12",
+        "@goldeimer/babel-preset": "workspace:*"
+    },
+    "description": "Meta-package for Goldeimer's babel-related packages & their dependencies",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/lib-dev-babel#readme",
+    "keywords": [
+        "goldeimer",
+        "babel",
+        "babel-preset",
+        "babelrc",
+        "config",
+        "meta-package"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/lib-dev-babel",
+    "repository": {
+        "directory": "etc/babel/lib-dev-babel",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

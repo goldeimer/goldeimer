@@ -1,7 +1,0 @@
-{
-    "name": "@goldeimer/worktree-dev-ts",
-    "private": true,
-    "workspaces": [
-        "**"
-    ]
-}

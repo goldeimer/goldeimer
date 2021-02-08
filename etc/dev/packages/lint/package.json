@@ -1,0 +1,7 @@
+{
+    "name": "@goldeimer/worktree-dev-lint",
+    "private": true,
+    "workspaces": [
+        "**"
+    ]
+}
