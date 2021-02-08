@@ -1621,17 +1621,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/google-lib-sheets@workspace:*, @goldeimer/google-lib-sheets@workspace:lib/packages/google-apps/googlesheets-util":
+"@goldeimer/google-lib-sheets@workspace:*, @goldeimer/google-lib-sheets@workspace:lib/packages/google/google-apps/googlesheets-util":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/google-lib-sheets@workspace:lib/packages/google-apps/googlesheets-util"
+  resolution: "@goldeimer/google-lib-sheets@workspace:lib/packages/google/google-apps/googlesheets-util"
   dependencies:
     "@goldeimer/js-util": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@goldeimer/google-sheets-client@workspace:lib/packages/google-apps/google-sheets-client":
+"@goldeimer/google-sheets-client@workspace:lib/packages/google/google-apps/google-sheets-client":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/google-sheets-client@workspace:lib/packages/google-apps/google-sheets-client"
+  resolution: "@goldeimer/google-sheets-client@workspace:lib/packages/google/google-apps/google-sheets-client"
   dependencies:
     "@goldeimer/data-util": "workspace:*"
     "@goldeimer/enum-util": "workspace:*"
@@ -2073,9 +2073,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/ts-types@workspace:*, @goldeimer/ts-types@workspace:lib/packages/typescript/ts-types":
+"@goldeimer/ts-types@workspace:*, @goldeimer/ts-types@workspace:lib/packages/types/ts-types":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/ts-types@workspace:lib/packages/typescript/ts-types"
+  resolution: "@goldeimer/ts-types@workspace:lib/packages/types/ts-types"
   dependencies:
     "@goldeimer/lib-dev": "workspace:*"
     "@sindresorhus/is": ^4.0
