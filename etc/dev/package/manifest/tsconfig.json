@@ -1,5 +1,5 @@
 {
-    "extends": "@goldeimer/tsconfig",
+    "extends": "@goldeimer/compile/tsconfig",
     "exclude": [
         "dist/",
         "**/*.spec.ts",
@@ -10,6 +10,11 @@
     ],
     "tsBuildInfoFile": "dist/.tsbuildinfo",
     "compilerOptions": {
-        "rootDir": "./src"
+        "rootDir": "./src",
+        "typeRoots": [
+            "@types",
+            "node_modules/@types",
+            "./node_modules/@types"
+        ]
     }
 }
