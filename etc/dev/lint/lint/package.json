@@ -1,0 +1,36 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/eslint-plugin": "workspace:*",
+        "eslint": "^7.12",
+        "markdownlint": "^0.23",
+        "markdownlint-cli2": "^0.0.14"
+    },
+    "description": "Meta-package for Goldeimer's ESLint-related packages & dependencies",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/eslint/lib-lint#readme",
+    "keywords": [
+        "goldeimer",
+        "eslint",
+        "eslintrc",
+        "eslint-config",
+        "eslint-plugin"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/lint",
+    "peerDependencies": {
+        "@babel/core": "^7.12"
+    },
+    "repository": {
+        "directory": "etc/eslint/lib-lint",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

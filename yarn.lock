@@ -1601,12 +1601,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/font-stack@workspace:*, @goldeimer/font-stack@workspace:lib/packages/asset/font-stack":
+"@goldeimer/font-asset@workspace:*, @goldeimer/font-asset@workspace:lib/packages/asset/font-asset":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/font-stack@workspace:lib/packages/asset/font-stack"
+  resolution: "@goldeimer/font-asset@workspace:lib/packages/asset/font-asset"
   dependencies:
     "@goldeimer/lib-dev": "workspace:*"
-    "@goldeimer/postcss-config": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -1653,9 +1652,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/img-assets@workspace:*, @goldeimer/img-assets@workspace:lib/packages/asset/img-assets":
+"@goldeimer/img-asset@workspace:*, @goldeimer/img-asset@workspace:lib/packages/asset/img-asset":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/img-assets@workspace:lib/packages/asset/img-assets"
+  resolution: "@goldeimer/img-asset@workspace:lib/packages/asset/img-asset"
   languageName: unknown
   linkType: soft
 
@@ -1700,24 +1699,27 @@ __metadata:
 "@goldeimer/lib-asset@workspace:*, @goldeimer/lib-asset@workspace:lib/packages/asset/lib-asset":
   version: 0.0.0-use.local
   resolution: "@goldeimer/lib-asset@workspace:lib/packages/asset/lib-asset"
+  dependencies:
+    "@goldeimer/font-asset": "workspace:*"
+    "@goldeimer/img-asset": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-babel@workspace:*, @goldeimer/lib-dev-babel@workspace:etc/dev/packages/compile/packages/babel/lib-dev-babel":
+"@goldeimer/lib-babel@workspace:*, @goldeimer/lib-babel@workspace:etc/dev/packages/compile/packages/babel/lib-babel":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-babel@workspace:etc/dev/packages/compile/packages/babel/lib-dev-babel"
+  resolution: "@goldeimer/lib-babel@workspace:etc/dev/packages/compile/packages/babel/lib-babel"
   dependencies:
     "@babel/core": ^7.12
     "@goldeimer/babel-preset": "workspace:*"
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-bundle@workspace:*, @goldeimer/lib-dev-bundle@workspace:etc/dev/packages/bundle/lib-dev-bundle":
+"@goldeimer/lib-bundle@workspace:*, @goldeimer/lib-bundle@workspace:etc/dev/packages/bundle/lib-bundle":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-bundle@workspace:etc/dev/packages/bundle/lib-dev-bundle"
+  resolution: "@goldeimer/lib-bundle@workspace:etc/dev/packages/bundle/lib-bundle"
   dependencies:
-    "@goldeimer/lib-dev-rollup": "workspace:*"
-    "@goldeimer/lib-dev-webpack": "workspace:*"
+    "@goldeimer/lib-rollup": "workspace:*"
+    "@goldeimer/lib-webpack": "workspace:*"
   peerDependencies:
     "@babel/core": ^7.12
     eslint: ^7.0
@@ -1729,14 +1731,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-compile@workspace:*, @goldeimer/lib-dev-compile@workspace:etc/dev/packages/compile/lib-dev-compile":
+"@goldeimer/lib-compile@workspace:*, @goldeimer/lib-compile@workspace:etc/dev/packages/compile/lib-compile":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-compile@workspace:etc/dev/packages/compile/lib-dev-compile"
+  resolution: "@goldeimer/lib-compile@workspace:etc/dev/packages/compile/lib-compile"
   dependencies:
     "@goldeimer/browserslist-config": "workspace:*"
     "@goldeimer/compile-util": "workspace:*"
-    "@goldeimer/lib-dev-babel": "workspace:*"
-    "@goldeimer/lib-dev-ts": "workspace:*"
+    "@goldeimer/lib-babel": "workspace:*"
+    "@goldeimer/lib-ts": "workspace:*"
     "@goldeimer/postcss-config": "workspace:*"
   peerDependencies:
     eslint: ^7.0
@@ -1748,9 +1750,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-lint@workspace:*, @goldeimer/lib-dev-lint@workspace:etc/dev/packages/lint/lib-dev-lint":
+"@goldeimer/lib-dev@workspace:*, @goldeimer/lib-dev@workspace:etc/dev/lib-dev":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-lint@workspace:etc/dev/packages/lint/lib-dev-lint"
+  resolution: "@goldeimer/lib-dev@workspace:etc/dev/lib-dev"
+  dependencies:
+    "@babel/core": ^7.12
+    "@goldeimer/lib-bundle": "workspace:*"
+    "@goldeimer/lib-compile": "workspace:*"
+    "@goldeimer/lib-lint": "workspace:*"
+    "@goldeimer/lib-pipeline": "workspace:*"
+    eslint: ^7.0
+    path: ^0.12.7
+    postcss: ^8.1
+    terser: ^5.3.8
+    typescript: 4.1
+  languageName: unknown
+  linkType: soft
+
+"@goldeimer/lib-lint@workspace:*, @goldeimer/lib-lint@workspace:etc/dev/packages/lint/lib-lint":
+  version: 0.0.0-use.local
+  resolution: "@goldeimer/lib-lint@workspace:etc/dev/packages/lint/lib-lint"
   dependencies:
     "@goldeimer/eslint-plugin": "workspace:*"
     eslint: ^7.12
@@ -1761,9 +1780,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-rollup@workspace:*, @goldeimer/lib-dev-rollup@workspace:etc/dev/packages/bundle/packages/rollup/lib-dev-rollup":
+"@goldeimer/lib-package@workspace:etc/dev/packages/pack/lib-package":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-rollup@workspace:etc/dev/packages/bundle/packages/rollup/lib-dev-rollup"
+  resolution: "@goldeimer/lib-package@workspace:etc/dev/packages/pack/lib-package"
+  dependencies:
+    "@goldeimer/package-util": "workspace:*"
+  peerDependencies:
+    type-fest: 0.21.0
+    webpack-merge: ^5.3.0
+  languageName: unknown
+  linkType: soft
+
+"@goldeimer/lib-pipeline@workspace:*, @goldeimer/lib-pipeline@workspace:etc/dev/packages/pipeline/lib-pipeline":
+  version: 0.0.0-use.local
+  resolution: "@goldeimer/lib-pipeline@workspace:etc/dev/packages/pipeline/lib-pipeline"
+  languageName: unknown
+  linkType: soft
+
+"@goldeimer/lib-rollup@workspace:*, @goldeimer/lib-rollup@workspace:etc/dev/packages/bundle/packages/rollup/lib-rollup":
+  version: 0.0.0-use.local
+  resolution: "@goldeimer/lib-rollup@workspace:etc/dev/packages/bundle/packages/rollup/lib-rollup"
   dependencies:
     "@goldeimer/rollup-config": "workspace:*"
     rollup: ^2.30
@@ -1774,9 +1810,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-ts@workspace:*, @goldeimer/lib-dev-ts@workspace:etc/dev/packages/compile/packages/typescript/lib-dev-ts":
+"@goldeimer/lib-test@workspace:etc/dev/packages/test/lib-test":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-ts@workspace:etc/dev/packages/compile/packages/typescript/lib-dev-ts"
+  resolution: "@goldeimer/lib-test@workspace:etc/dev/packages/test/lib-test"
+  peerDependencies:
+    type-fest: 0.21.0
+    webpack-merge: ^5.3.0
+  languageName: unknown
+  linkType: soft
+
+"@goldeimer/lib-ts@workspace:*, @goldeimer/lib-ts@workspace:etc/dev/packages/compile/packages/typescript/lib-ts":
+  version: 0.0.0-use.local
+  resolution: "@goldeimer/lib-ts@workspace:etc/dev/packages/compile/packages/typescript/lib-ts"
   dependencies:
     "@goldeimer/tsconfig": "workspace:*"
     tslib: "*"
@@ -1786,9 +1831,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@goldeimer/lib-dev-webpack@workspace:*, @goldeimer/lib-dev-webpack@workspace:etc/dev/packages/bundle/packages/webpack/lib-webpack":
+"@goldeimer/lib-webpack@workspace:*, @goldeimer/lib-webpack@workspace:etc/dev/packages/bundle/packages/webpack/lib-webpack":
   version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev-webpack@workspace:etc/dev/packages/bundle/packages/webpack/lib-webpack"
+  resolution: "@goldeimer/lib-webpack@workspace:etc/dev/packages/bundle/packages/webpack/lib-webpack"
   dependencies:
     "@goldeimer/webpack-config": "workspace:*"
     webpack: ^5.3
@@ -1801,33 +1846,6 @@ __metadata:
     postcss: ^8.1
     terser: ^5.3.8
     typescript: 4.1
-  languageName: unknown
-  linkType: soft
-
-"@goldeimer/lib-dev@workspace:*, @goldeimer/lib-dev@workspace:etc/dev/lib-dev":
-  version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-dev@workspace:etc/dev/lib-dev"
-  dependencies:
-    "@babel/core": ^7.12
-    "@goldeimer/lib-dev-bundle": "workspace:*"
-    "@goldeimer/lib-dev-compile": "workspace:*"
-    "@goldeimer/lib-dev-lint": "workspace:*"
-    eslint: ^7.0
-    path: ^0.12.7
-    postcss: ^8.1
-    terser: ^5.3.8
-    typescript: 4.1
-  languageName: unknown
-  linkType: soft
-
-"@goldeimer/lib-package@workspace:etc/dev/packages/pack/lib-package":
-  version: 0.0.0-use.local
-  resolution: "@goldeimer/lib-package@workspace:etc/dev/packages/pack/lib-package"
-  dependencies:
-    "@goldeimer/package-util": "workspace:*"
-  peerDependencies:
-    type-fest: 0.21.0
-    webpack-merge: ^5.3.0
   languageName: unknown
   linkType: soft
 
@@ -1867,8 +1885,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@goldeimer/map-core@workspace:packages/map-core"
   dependencies:
-    "@goldeimer/font-stack": "workspace:*"
-    "@goldeimer/img-assets": "workspace:*"
+    "@goldeimer/font-asset": "workspace:*"
+    "@goldeimer/img-asset": "workspace:*"
     "@goldeimer/js-util": "workspace:*"
     "@goldeimer/react-components": "workspace:*"
     "@goldeimer/react-util": "workspace:*"
@@ -1938,7 +1956,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@goldeimer/package-util@workspace:etc/dev/packages/pack/packages/package-util"
   dependencies:
-    "@goldeimer/lib-dev-compile": "workspace:*"
+    "@goldeimer/lib-compile": "workspace:*"
     json-schema-to-typescript: ^10.0
   peerDependencies:
     type-fest: 0.21.0
@@ -1988,6 +2006,14 @@ __metadata:
     react: ^17.0.1
     react-redux: ^7.2.2
     react-router-dom: ^5.2.0
+  languageName: unknown
+  linkType: soft
+
+"@goldeimer/react-external@workspace:lib/packages/react/react-external":
+  version: 0.0.0-use.local
+  resolution: "@goldeimer/react-external@workspace:lib/packages/react/react-external"
+  dependencies:
+    "@goldeimer/lib-dev": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -2070,6 +2096,14 @@ __metadata:
     react: ^17.0.1
     react-dom: ^17.0.1
     styled-components: ^5.2.1
+  languageName: unknown
+  linkType: soft
+
+"@goldeimer/ts-transformer@workspace:etc/dev/packages/compile/packages/typescript/packages/ts-transformer":
+  version: 0.0.0-use.local
+  resolution: "@goldeimer/ts-transformer@workspace:etc/dev/packages/compile/packages/typescript/packages/ts-transformer"
+  dependencies:
+    ttypescript: ^1.5.12
   languageName: unknown
   linkType: soft
 
@@ -2240,7 +2274,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@goldeimer/wp-theme-goldeimer@workspace:packages/wp-theme-goldeimer"
   dependencies:
-    "@goldeimer/font-stack": "workspace:*"
+    "@goldeimer/font-asset": "workspace:*"
     "@goldeimer/lib-dev": "workspace:*"
   languageName: unknown
   linkType: soft
@@ -16114,7 +16148,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.10.1, resolve@^1.11.1, resolve@^1.13.1, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.9.0":
+"resolve@>=1.9.0, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.10.1, resolve@^1.11.1, resolve@^1.13.1, resolve@^1.14.2, resolve@^1.17.0, resolve@^1.18.1, resolve@^1.19.0, resolve@^1.9.0":
   version: 1.20.0
   resolution: "resolve@npm:1.20.0"
   dependencies:
@@ -16124,7 +16158,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.6#builtin<compat/resolve>, resolve@patch:resolve@^1.1.7#builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#builtin<compat/resolve>, resolve@patch:resolve@^1.11.1#builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#builtin<compat/resolve>":
+"resolve@patch:resolve@>=1.9.0#builtin<compat/resolve>, resolve@patch:resolve@^1.1.6#builtin<compat/resolve>, resolve@patch:resolve@^1.1.7#builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#builtin<compat/resolve>, resolve@patch:resolve@^1.11.1#builtin<compat/resolve>, resolve@patch:resolve@^1.13.1#builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#builtin<compat/resolve>, resolve@patch:resolve@^1.17.0#builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#builtin<compat/resolve>, resolve@patch:resolve@^1.19.0#builtin<compat/resolve>, resolve@patch:resolve@^1.9.0#builtin<compat/resolve>":
   version: 1.20.0
   resolution: "resolve@patch:resolve@npm%3A1.20.0#builtin<compat/resolve>::version=1.20.0&hash=3388aa"
   dependencies:
@@ -17911,6 +17945,21 @@ fsevents@~2.3.1:
   version: 0.0.1
   resolution: "tty-browserify@npm:0.0.1"
   checksum: 397de97534c831e136fb32170a7a7b5a21438e98751fdff5c49d0d0c889b14642da102919259f23560b8584cd918a20f1116a4caf0a9fe80414c5f8d6fb70637
+  languageName: node
+  linkType: hard
+
+"ttypescript@npm:^1.5.12":
+  version: 1.5.12
+  resolution: "ttypescript@npm:1.5.12"
+  dependencies:
+    resolve: ">=1.9.0"
+  peerDependencies:
+    ts-node: ">=8.0.2"
+    typescript: ">=3.2.2"
+  bin:
+    ttsc: bin/tsc
+    ttsserver: bin/tsserver
+  checksum: bd9fc416ac6f534ab50411b4be73d0465f24de4e53542fc54f0fd671fac5a18464196122f94a97a90ae13c70c76a9a70570eca9e7c8d86f6b4b9670430495558
   languageName: node
   linkType: hard
 

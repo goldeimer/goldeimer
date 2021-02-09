@@ -1,0 +1,7 @@
+{
+    "name": "@goldeimer/worktree-deploy",
+    "private": true,
+    "workspaces": [
+        "**"
+    ]
+}

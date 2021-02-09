@@ -1,0 +1,45 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/babel": "workspace:*",
+        "@goldeimer/browserslist-config": "workspace:*",
+        "@goldeimer/compile-util": "workspace:*",
+        "@goldeimer/postcss-config": "workspace:*",
+        "@goldeimer/ts": "workspace:*"
+    },
+    "description": "Meta-package for Goldeimer's compilation tool chain",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/compile/lib-compile#readme",
+    "keywords": [
+        "goldeimer",
+        "meta-package",
+        "build",
+        "build-essential",
+        "postcss",
+        "rollup",
+        "typescript",
+        "webpack"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/compile",
+    "peerDependencies": {
+        "eslint": "^7.0",
+        "path": "^0.12.7",
+        "postcss": "^8.1",
+        "rollup": "^2.30",
+        "terser": "^5.3.8",
+        "typescript": "4.1"
+    },
+    "repository": {
+        "directory": "etc/compile/lib-compile",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

@@ -1,0 +1,28 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's xo integration",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/xo-config#readme",
+    "keywords": [
+        "goldeimer",
+        "lint"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "xo-config.js",
+    "name": "@goldeimer/xo-config",
+    "repository": {
+        "directory": "etc/xo-config",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1",
+    "dependencies": {
+        "xo": "^0.38.2"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "@goldeimer/worktree-compile",
+    "private": true,
+    "workspaces": [
+        "**"
+    ]
+}
