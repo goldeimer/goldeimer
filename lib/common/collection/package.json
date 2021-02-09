@@ -1,0 +1,89 @@
+{
+    "author": {
+        "email": "post@goldeimer.de",
+        "name": "Goldeimer gemeinnützige GmbH",
+        "url": "https://www.goldeimer.de"
+    },
+    "browser": "./dist/umd/goldeimer.collection.umd.js",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [{
+        "email": "johannes@goldeimer.de",
+        "name": "Johannes Pilkahn",
+        "url": "https://github.com/jpilkahn"
+    }],
+    "dependencies": {
+        "sort-keys-recursive": "^2.1.1",
+        "tslib": "*",
+        "webpack-merge": "^5.7.3"
+    },
+    "description": "Meta-package for Goldeimer's ESLint-related packages & dependencies",
+    "devDependencies": {
+        "@babel/core": "^7.13",
+        "@goldeimer/babel-preset": "workspace:*",
+        "@goldeimer/rollup-config": "workspace:*",
+        "@goldeimer/tsconfig": "workspace:*",
+        "@types/babel__core": "^7",
+        "@types/concurrently": "^6",
+        "concurrently": "^6.0.0",
+        "rollup": "^2.41.2",
+        "tslib": "*",
+        "typescript": "^4.1.5"
+    },
+    "exports": {
+        ".": {
+            "browser": "./dist/umd/goldeimer.collection.umd.js",
+            "default": "./dist/umd/goldeimer.collection.umd.js",
+            "import": "./dist/esm/goldeimer.collection.esm.mjs",
+            "node": {
+                "import": "./dist/node/esm/goldeimer.collection.node.esm.mjs",
+                "require": "./dist/node/cjs/goldeimer.collection.node.cjs.cjs"
+            },
+            "require": "./dist/cjs/goldeimer.collection.cjs.cjs"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/common/collection#readme",
+    "keywords": [
+        "goldeimer",
+        "goldeimer"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "./dist/cjs/goldeimer.collection.cjs.cjs",
+    "module": "./dist/esm/goldeimer.collection.esm.mjs",
+    "name": "@goldeimer/collection",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npmjs.org"
+    },
+    "repository": {
+        "directory": "lib/common/collection",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "concurrently 'yarn build:types' 'yarn build:js'",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
+        "build:shake": "yarn build:esm && yarn validate:shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "build:umd": "yarn build:js --configTarget umd",
+        "explain": "tsc --explainFiles",
+        "lint": "eslint src --ext .cjs --ext .js --ext .jsx --ext .mjs --ext .ts --ext .tsx",
+        "lint:fix": "yarn lint --fix",
+        "test": "env NODE_ENV=test echo \"[error] no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch",
+        "validate": "concurrently 'yarn validate:pnp' 'yarn validate:shake'",
+        "validate:pnp": "yarn dlx @yarnpkg/doctor",
+        "validate:publish": "yarn validate",
+        "validate:shake": "agadoo"
+    },
+    "sideEffects": false,
+    "type": "module",
+    "types": "./dist/types/collection.d.ts",
+    "version": "0.0.1"
+}
