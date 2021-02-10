@@ -4,6 +4,7 @@
         "name": "Goldeimer gemeinnützige GmbH",
         "url": "https://www.goldeimer.de"
     },
+    "browser": "./dist/umd/goldeimer.file-system.umd.js",
     "bugs": {
         "email": "engineering+bugs@goldeimer.de",
         "url": "https://github.com/goldeimer/goldeimer/issues"
@@ -16,42 +17,45 @@
         }
     ],
     "dependencies": {
-        "@goldeimer/collection": "workspace:*",
-        "@goldeimer/file-system": "workspace:*",
-        "tslib": "*",
-        "type-fest": "^0.21.2"
+        "tslib": "*"
     },
-    "description": "Goldeimer's package maintenance utility",
     "devDependencies": {
-        "@babel/core": "^7.13.10",
-        "@babel/runtime": "^7.13.10",
+        "@babel/core": "^7.13",
         "@goldeimer/babel-preset": "workspace:*",
-        "@goldeimer/compile": "workspace:*",
         "@goldeimer/rollup-config": "workspace:*",
+        "@goldeimer/tsconfig": "workspace:*",
         "@types/babel__core": "^7",
         "@types/concurrently": "^6",
         "@types/node": "^14.14.34",
         "concurrently": "^6.0.0",
-        "rollup": "^2.30",
-        "typescript": "~4.1"
+        "rollup": "^2.41.2",
+        "typescript": "^4.1.5"
     },
     "exports": {
         ".": {
-            "import": "./dist/esm/goldeimer.manifest.esm.js",
-            "require": "./dist/cjs/goldeimer.manifest.cjs.js"
+            "import": "./dist/esm/goldeimer.file-system.esm.mjs",
+            "require": "./dist/cjs/goldeimer.file-system.cjs.cjs",
+            "node": {
+                "import": "./dist/node/esm/goldeimer.file-system.node.esm.mjs",
+                "require": "./dist/node/cjs/goldeimer.file-system.node.cjs.cjs"
+            },
+            "default": "./dist/umd/goldeimer.file-system.umd.js"
         }
     },
-    "homepage": "https://github.com/goldeimer/goldeimer/etc/pkg/manifest#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/common/file-system#readme",
     "keywords": [
-        "goldeimer",
-        "monorepo",
-        "packaging"
+        "goldeimer"
     ],
     "license": "BSD-2-Clause",
-    "main": "./dist/cjs/goldeimer.manifest.cjs.js",
-    "name": "@goldeimer/manifest",
+    "main": "./dist/cjs/goldeimer.file-system.cjs.cjs",
+    "module": "./dist/esm/goldeimer.file-system.esm.mjs",
+    "name": "@goldeimer/file-system",
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://npmjs.org"
+    },
     "repository": {
-        "directory": "etc/pkg/manifest",
+        "directory": "lib/common/file-system",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
@@ -74,6 +78,8 @@
         "validate:publish": "yarn validate",
         "validate:shake": "agadoo"
     },
-    "types": "dist/types/manifest.d.ts",
+    "sideEffects": false,
+    "type": "module",
+    "types": "./dist/types/file-system.d.ts",
     "version": "0.0.1"
 }

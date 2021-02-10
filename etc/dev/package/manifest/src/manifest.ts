@@ -2,7 +2,7 @@
 
 import { merge, sort } from '@goldeimer/collection'
 
-import { baseDirname, file } from './util/file-system'
+import { baseDirname, file } from '@goldeimer/file-system'
 import type { PackageId } from './_import-stubs'
 
 import {
@@ -74,7 +74,8 @@ export const updateManifest = (path: string) => {
                         path
                     ),
                     dependenciesCommon
-                )
+                ),
+                { ignoreObjectAtKeys: ['exports'] }
             ),
             null,
             4

@@ -1,5 +1,13 @@
 declare module 'sort-keys-recursive' {
-    declare function sort(input: unknown[] | object): unknown[] | object
+    type SortOptions = {
+        ignoreArrayAtKeys: number[],
+        ignoreObjectAtKeys: string[]
+    }
+
+    declare function sort(
+        something: unknown[] | object,
+        options: SortOptions
+    ): unknown[] | object
 
     declare namespace sort {
         declare function array(arr: unknown[]): unknown[]

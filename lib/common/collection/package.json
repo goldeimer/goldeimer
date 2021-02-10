@@ -9,11 +9,13 @@
         "email": "engineering+bugs@goldeimer.de",
         "url": "https://github.com/goldeimer/goldeimer/issues"
     },
-    "contributors": [{
-        "email": "johannes@goldeimer.de",
-        "name": "Johannes Pilkahn",
-        "url": "https://github.com/jpilkahn"
-    }],
+    "contributors": [
+        {
+            "email": "johannes@goldeimer.de",
+            "name": "Johannes Pilkahn",
+            "url": "https://github.com/jpilkahn"
+        }
+    ],
     "dependencies": {
         "sort-keys-recursive": "^2.1.1",
         "tslib": "*",
@@ -34,18 +36,18 @@
     },
     "exports": {
         ".": {
-            "browser": "./dist/umd/goldeimer.collection.umd.js",
-            "default": "./dist/umd/goldeimer.collection.umd.js",
             "import": "./dist/esm/goldeimer.collection.esm.mjs",
+            "require": "./dist/cjs/goldeimer.collection.cjs.cjs",
             "node": {
                 "import": "./dist/node/esm/goldeimer.collection.node.esm.mjs",
                 "require": "./dist/node/cjs/goldeimer.collection.node.cjs.cjs"
             },
-            "require": "./dist/cjs/goldeimer.collection.cjs.cjs"
+            "default": "./dist/umd/goldeimer.collection.umd.js"
         }
     },
     "homepage": "https://github.com/goldeimer/goldeimer/lib/common/collection#readme",
     "keywords": [
+        "goldeimer",
         "goldeimer",
         "goldeimer"
     ],

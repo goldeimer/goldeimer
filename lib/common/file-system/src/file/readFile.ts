@@ -3,7 +3,7 @@
 import { existsSync, readFileSync } from 'fs'
 import { basename, dirname } from 'path'
 
-import { error, warning, ExitCode } from '../../log'
+import { error, warning, ExitCode } from '../log'
 
 export type Default<T> = {
     message: 'Falling back to default values.'
