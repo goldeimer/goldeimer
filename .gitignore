@@ -1,95 +1,187 @@
-# ----- util -------------------------------------------------------------------
-# ----- build ------------------------------------------------------------------
+# @package `goldeimer/goldeimer`
+#
+# @file `.gitignore`
+#
+# monorepo root: git excludes file
 
-### build output
+
+# ===== 0. utility =============================================================
+
+# Utility ignore patterns for on-the-spot dynamic use.
+# @see A.1 (1)
+
+**/ignore/
+**/*.ignore.*
+**/*.ignore
+
+**/stash/
+**/*.stash.*
+**/*.stash
+
+
+# ===== 1. bundle, compile, package, deploy ====================================
+
+# ----- build output -----------------------------------------------------------
+
 **/build/**
 **/dist/**
 **/packages/**/static
+*.mo
+*.pyc
 
-### yarn (base)
-# @see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
-.yarn/*
+# ----- dependencies (third-party code) ----------------------------------------
+
+**/bower_components/
+**/node_modules/
+**/vendor/
+
+# ----- terraform --------------------------------------------------------------
+
+# terraform
+**/.terraform/*
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfvars
+
+# ----- tooling artifacts ------------------------------------------------------
+
+**/lerna-*.log
+**/npm-*.log
+**/yarn-*.log
+
+# ----- yarn > base config -----------------------------------------------------
+
+.yarn/**
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-### yarn (w/ zero-installs)
-# @see https://yarnpkg.com/features/zero-installs
+
+# ----- yarn > zero-installs (pnp) ---------------------------------------------
+
+!.cache/yarn
 !.yarn/cache
 !.yarn/pnp.data.json
 
-### package manager logs
-**/lerna-*.log
-**/npm-*.log
-**/yarn-*.log
+# @see [yarn 2 doc: "gitignore"][yarn/doc/gitignore]
+# @see [yarn 2 doc: "zero-installs"][yarn/doc/zero-installs]
 
-# ----- essential excludes -----------------------------------------------------
 
-### 3rd party sources
-**/node_modules/
-**/vendor/
+# ===== 2. transient data ======================================================
 
-### sensitive information
+# ----- db dumps / query results -----------------------------------------------
 
-## miscellaneous
+**/*.csv
+**/*.db
+**/*.dump
+**/*.sql
+**/*.sqllite
+
+# ----- dev user artifacts -----------------------------------------------------
+
+**/*.diff
+**/*.patch
+**/*.wip.*
+
+# ----- (non-persistent) caches ------------------------------------------------
+
+**/.firebase
+**/.rollup.cache
+
+
+# ===== 3. editor ==============================================================
+
+# ----- vscode -----------------------------------------------------------------
+
+**/.history/
+**/.vscode/**
+!**/.vscode/*.code-workspace
+!**/.vscode/extensions.json
+!**/.vscode/launch.json
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/README.md
+
+# ----- other IDEs -------------------------------------------------------------
+
+**/*.settings/
+**/*.kdev4/
+**/.c9/
+**/.classpath
+**/.idea
+**/.project
+**/*.kate-swp
+**/*.launch
+**/*.sublime-workspace
+
+
+# ===== 4. service & system artifacts =============================================
+
+# ----- OS artifacts -----------------------------------------------------------
+
+**/.DS_Store
+**/Thumbs.db
+*.swp
+*.*~
+
+# ----- third-party service artifacts ------------------------------------------
+
+.dcignore
+
+
+# ===== 5. security ============================================================
+
+# NOTE: If uncertain why you'd make a change here, hold it with MC Hammer.
+# (Can't touch this.)
+
+# ----- dotenv -----------------------------------------------------------------
 
 **/*.env*
 !**/.env.defaults
 !**/.env.example
 
-**/*secret.*
-**/*secrets.*
-
-## terraform
-
-**/.terraform/*
-**/*.tfstate
-**/*.tfstate.*
-*.tfvars
-
-## git-secret
+# ----- git-secret -------------------------------------------------------------
 
 .gitsecret/keys/random_seed
 !**/*.secret
 
-# ----- transient data ---------------------------------------------------------
+# ----- (common) private keys --------------------------------------------------
 
-### caches
-**/.firebase
-**/.rollup.cache/
+*gpg*
+*id_rsa*
+*id_ecdsa*
+*id_ed25519*
+*private*
+*privkey*
+*.asc
+*.key
+!*public.*
+!*.pub
 
-### (potential) backups
+# This category *should* be a superfluous mention, ideally.
+# @see A.1 (2)
 
-**/*.sql
-**/*.sqllite
+# ----- utility ----------------------------------------------------------------
 
-# ----- IDE & system artifacts -------------------------------------------------
+**/*secret.*
+**/*secrets.*
 
-### IDE > VSCode
-**/.history/**
-**/.vscode/**
-**/*.code-workspace
 
-### IDE > miscellaneous
-**/.c9/**/*
-**/*.settings/**
-**/.classpath
-**/.idea
-**/*.launch
-**/.project
-**/*.sublime-workspace
+# ===== A.1 Notes ==============================================================
 
-# !**/.vscode/extensions.json
-# !**/.vscode/launch.json
-# !**/.vscode/settings.json
-# !**/.vscode/tasks.json
+# (1) Section 0 holds Utility ignore patterns for on-the-spot dynamic use.
+# Deliberatedly placed at the head of the file as the 'zeroest' category,
+# such that more fine-grained rules are not unknowingly negated by these
+# patterns afterwards.
 
-### operating system artifacts
-**/.DS_Store
-**/Thumbs.db
+# (2) This category *should* be a superfluous mention, ideally.
+# At the same time, mankind also *should* massively care about climate change.
+# Let's at least treat data security with a bit more serioussnes than man is
+# treating the soon reached `> 400ppm` carbondioxide in the atmosphere.
 
-# ----- util -------------------------------------------------------------------
 
-### utility pattern for on-the-spot dynamic use
-**/*.ignore.*
+# ===== A.2 References =========================================================
+
+# [yarn/doc/gitignore]: https://yarnpkg.com/getting=started/qa#which=files=should=be=gitignored
+# [yarn/doc/zero-installs]: https://yarnpkg.com/features/zero=installs

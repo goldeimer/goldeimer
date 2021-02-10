@@ -1,0 +1,127 @@
+{
+    "[ini]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.rulers": [],
+        "editor.suggest.insertMode": "replace"
+    },
+    "[json]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.rulers": [],
+        "editor.suggest.insertMode": "replace"
+    },
+    "[jsonc]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.rulers": [],
+        "editor.suggest.insertMode": "replace"
+    },
+    "[markdown]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.renderWhitespace": "all",
+        "editor.rulers": [],
+        "editor.wordWrap": "on",
+        "files.trimTrailingWhitespace": false
+    },
+    "[plaintext]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.wordWrap": "on"
+    },
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace",
+        "editor.tabSize": 2
+    },
+    "breadcrumbs.symbolSortOrder": "type",
+    "css.completion.completePropertyWithSemicolon": true,
+    "css.completion.triggerPropertyValueCompletion": true,
+    "diffEditor.codeLens": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.maxComputationTime": 10e4,
+    "diffEditor.renderIndicators": true,
+    "diffEditor.renderSideBySide": true,
+    "diffEditor.wordWrap": "inherit",
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.codeLens": true,
+    "editor.colorDecorators": true,
+    "editor.columnSelection": false,
+    "editor.comments.ignoreEmptyLines": true,
+    "editor.comments.insertSpace": true,
+    "editor.copyWithSyntaxHighlighting": true,
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.find.autoFindInSelection": "multiline",
+    "editor.fontFamily": "'Source Code Pro', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.hover.delay": 150,
+    "editor.parameterHints.cycle": true,
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": false
+    },
+    "editor.rulers": [80],
+    "editor.showDeprecated": true,
+    "editor.showUnused": true,
+    "editor.wordWrapColumn": 80,
+    "editor.wrappingIndent": "indent",
+    "editor.tabSize": 4,
+    "editor.unusualLineTerminators": "prompt",
+    "eslint.nodePath": ".yarn/sdks",
+    "files.eol": "\n",
+    "files.encoding": "utf8",
+    "files.exclude": {
+        "**/*.kdev4": true,
+        "**/.git/**": true,
+        "**/bower_components/**": true,
+        "**/node_modules/**": true,
+        "**/vendor/**": true,
+        ".history/**": true
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "git.autofetch": "all",
+    "git.enableCommitSigning": true,
+    "github.preferedMergeMethod": "rebase",
+    "html.format.endWithNewline": true,
+    "html.format.maxPreserveNewLines": 1,
+    "html.format.wrapLineLength": 80,
+    "javascript.suggest.completeFunctionCalls": true,
+    "javascript.suggest.completeJSDocs": true,
+    "javascript.suggest.enabled": true,
+    "javascript.suggest.includeAutomaticOptionalChainCompletions": true,
+    "javascript.updateImportsOnFileMove.enabled": "prompt",
+    "npm.autoDetect": "on",
+    "npm.enableRunFromFolder": true,
+    "npm.exclude": "**/(({*{-,_,.},}sync{,ed}*)|docker|.diff|run)/**",
+    "npm.packageManager": "yarn",
+    "npm.runSilent": false,
+    "markdown.preview.fontFamily": "MuseoSans, Museo, Helvetica, sans-serif",
+    "search.exclude": {
+        "**/*cache*/**": true,
+        "**/.pnp.js": true,
+        "**/.yarn/**": true,
+        "**/.vscode/**": true,
+        "**/docker/**": true,
+        "**/*{-,_,.,}sync{,ed}/**": true,
+        "{composer,yarn}.lock": true,
+        "{package-lock,shrinkwrap}.json": true
+    },
+    "typescript.suggest.completeFunctionCalls": true,
+    "typescript.suggest.completeJSDocs": true,
+    "typescript.suggest.enabled": true,
+    "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
+    "typescript.updateImportsOnFileMove.enabled": "prompt"
+}

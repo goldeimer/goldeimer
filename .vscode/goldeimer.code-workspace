@@ -1,0 +1,126 @@
+{
+    "folders": [
+        {
+            "path": ".."
+        }
+    ],
+    "settings": {
+        "breadcrumbs.enabled": true,
+        "comment-divider.length": 80,
+        "commentAnchors.epic.provideAutoCompletion": true,
+        "commentAnchors.tags.provideAutoCompletion": true,
+        "debug.javascript.autoAttachFilter": "smart",
+        "debug.javascript.autoAttachSmartPattern": [
+            "${workspaceFolder}/**",
+            "!**/node_modules/**",
+            "**/$KNOWN_TOOLS$/**",
+            "!**/.cache/**",
+            "!**/run/**",
+            "**/*{-,_,.,}sync{,ed}/**"
+        ],
+        "debug.javascript.automaticallyTunnelRemoteServer": true,
+        "debug.javascript.breakOnConditionalError": false,
+        "debug.javascript.codelens.npmScripts": "top",
+        "debug.javascript.debugByLinkOptions": "on",
+        "debug.javascript.defaultRuntimeExecutable": {
+            "pwa-node": "node"
+        },
+        "debug.javascript.pickAndAttachOptions": {},
+        "debug.javascript.resourceRequestOptions": {},
+        "debug.javascript.suggestPrettyPrinting": true,
+        "debug.javascript.terminalOptions": {},
+        "debug.javascript.unmapMissingSources": false,
+        "debug.javascript.usePreview": true,
+        "emmet.includeLanguages": {
+            "ejs": "html",
+            "eta": "html"
+        },
+        "emmet.showExpandedAbbreviation": "always",
+        "explorer.autoReveal": true,
+        "githubIssues.ignoreCompletionTrigger": [
+            "django-html",
+            "markdown",
+            "python"
+        ],
+        "githubIssues.ignoreUserCompletionTrigger": [
+            "clojure",
+            "coffeescript",
+            "javascript",
+            "javascriptreact",
+            "jsx",
+            "python",
+            "typescript",
+            "typescriptreact",
+            "vue",
+            "vue-html"
+        ],
+        "githubIssues.issueCompletions.enabled": true,
+        "githubIssues.userCompletions.enabled": true,
+        "html-css-class-completion.enableEmmetSupport": true,
+        "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
+        "intelephense.completion.insertUseDeclaration": true,
+        "javascript.referencesCodeLens.enabled": true,,
+        "markyMarkdown.statisticStatusBarItem": "Words",
+        "material-icon-theme.files.associations": {
+            "*.eta": "ejs"
+        },
+        "material-ui-snippets.showNotesOnStartup": false,
+        "merge-conflict.autoNavigateNextConflict.enabled": true,
+        "merge-conflict.codeLens.enabled": true,
+        "merge-conflict.decorators.enabled": true,
+        "merge-conflict.diffViewPosition": "Current",
+        "npm.scriptExplorerAction": "open",
+        "npm.fetchOnlinePackageInfo": true,
+        "npm-intellisense.importDeclarationType": "const",
+        "npm-intellisense.importES6": true,
+        "npm-intellisense.importLinebreak": "\n",
+        "npm-intellisense.importQuotes": "'",
+        "npm-intellisense.packageSubfoldersIntellisense": true,
+        "npm-intellisense.recursivePackageJsonLookup": true,
+        "npm-intellisense.scanDevDependencies": true,
+        "npm-intellisense.showBuildInLibs": true,
+        "path-intellisense.absolutePathToWorkspace": true,
+        "path-intellisense.extensionOnImport": false,
+        "references.preferredLocation": "peek",
+        "scss.dev.serverPort": -1,
+        "scss.implicitlyLabel": "[!] (implicitly)",
+        "scss.scanImportedFiles": true,
+        "scss.scannerExclude": [
+            "**/*cache*/**",
+            "**/docker/**",
+            "**/*{-,_,.,}sync{,ed}/**",
+            "**/.yarn/**",
+            "**/.pnp.js",
+            "{composer,yarn}.lock",
+            "{package-lock,shrinkwrap}.json"
+        ],
+        "scss.showErrors": true,
+        "scss.suggestFunctions": true,
+        "scss.suggestFunctionsInStringContextAfterSymbols": " (+-*%",
+        "scss.suggestMixins": true,
+        "scss.suggestVariables": true,
+        "telemetry.enableCrashReporter": false,
+        "telemetry.enableTelemetry": false,
+        "terminal.integrated.env.osx": {},
+        "terminal.integrated.env.linux": {},
+        "terminal.integrated.env.windows": {},
+        "testing.enableCodeLens": true,
+        "testing.enableProblemDiagnostics": false,
+        "todo-tree.general.tags": [
+            "@todo",
+            "\\todo",
+            "BUG",
+            "HACK",
+            "FIXME",
+            "TODO",
+            "[ ]",
+            "[x]"
+        ],
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "typescript.implementationsCodeLens.enabled": true,
+        "typescript.referencesCodeLens.enabled": true,
+        "typescript.tsdk": ".yarn/sdks/typescript/lib",
+        "typescript.tsserver.maxTsServerMemory": 8192,
+        "typescript.updateImportsOnFileMove.enabled": "prompt"
+    }
+}
