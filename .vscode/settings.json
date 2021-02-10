@@ -66,15 +66,18 @@
     "editor.formatOnSave": false,
     "editor.formatOnType": false,
     "editor.hover.delay": 150,
+    "editor.minimap.enabled": true,
     "editor.parameterHints.cycle": true,
     "editor.quickSuggestions": {
         "other": true,
         "comments": true,
         "strings": false
     },
+    "editor.renderWhitespace": "boundary",
     "editor.rulers": [80],
     "editor.showDeprecated": true,
     "editor.showUnused": true,
+    "editor.smoothScrolling": true,
     "editor.wordWrapColumn": 80,
     "editor.wrappingIndent": "indent",
     "editor.tabSize": 4,
@@ -91,6 +94,8 @@
         ".history/**": true
     },
     "files.insertFinalNewline": true,
+    "files.saveConflictResolution": "askUser",
+    "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true,
     "git.autofetch": "all",
     "git.enableCommitSigning": true,

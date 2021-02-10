@@ -59,7 +59,7 @@
         "html-css-class-completion.enableEmmetSupport": true,
         "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
         "intelephense.completion.insertUseDeclaration": true,
-        "javascript.referencesCodeLens.enabled": true,,
+        "javascript.referencesCodeLens.enabled": true,
         "markyMarkdown.statisticStatusBarItem": "Words",
         "material-icon-theme.files.associations": {
             "*.eta": "ejs"
