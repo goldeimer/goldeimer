@@ -1,12 +1,7 @@
+import type { Path } from '../path'
+
 import { readFile } from './readFile'
 import { writeFile } from './writeFile'
-
-export type Path = string
-
-// export interface IFile<C> {
-//     content: C,
-//     save(): IFile<C>
-// }
 
 export type C = string  // dummy
 export class File {

@@ -17,7 +17,13 @@
         }
     ],
     "dependencies": {
-        "tslib": "*"
+        "@goldeimer/collection": "workspace:*",
+        "@goldeimer/enum": "workspace:*",
+        "@goldeimer/type-util": "workspace:*",
+        "fs-extra": "^9.1.0",
+        "klaw": "^3.0.0",
+        "tslib": "*",
+        "walk-back": "^5.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.13",
@@ -26,6 +32,8 @@
         "@goldeimer/tsconfig": "workspace:*",
         "@types/babel__core": "^7",
         "@types/concurrently": "^6",
+        "@types/fs-extra": "^9",
+        "@types/klaw": "^3",
         "@types/node": "^14.14.34",
         "concurrently": "^6.0.0",
         "rollup": "^2.41.2",
