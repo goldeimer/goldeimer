@@ -10,6 +10,8 @@
         "url": "https://github.com/goldeimer/goldeimer/issues"
     },
     "dependencies": {
+        "@goldeimer/string": "workspace:*",
+        "@goldeimer/url": "workspace:*",
         "tslib": "*"
     },
     "devDependencies": {
