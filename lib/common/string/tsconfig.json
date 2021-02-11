@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "./src",
+        "typeRoots": [
+            "@types",
+            "@types/node",
+            "node_modules/@types"
+        ]
+    },
+    "extends": "@goldeimer/tsconfig",
+    "exclude": [
+        "dist/",
+        "**/*.spec.ts",
+        "**/*.spec.tsx"
+    ],
+    "include": [
+        "src/**/*"
+    ],
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+}
