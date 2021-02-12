@@ -13,9 +13,9 @@
  * @typeParam ThenT - type to resolve to on the condition having been met
  * @typeParam ElseT - type to resolve to on the condition not having held
  */
- export type Extends<
- T,
- PredicateT,
- ThenT = true,
- ElseT = false
+export type Extends<
+    T,
+    PredicateT,
+    ThenT = true,
+    ElseT = false
 > = T extends PredicateT ? ThenT : ElseT

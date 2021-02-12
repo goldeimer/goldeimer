@@ -68,5 +68,33 @@ export namespace DOC {
          * @internal
          */
         export type LOGICAL_OPERATION<A, B> = [A, B]
+
+        export namespace PASS_THROUGH {
+            /**
+             * @typeParam T - Subject which must fulfill the predicate to be eligible
+             * @typeParam PredicateT - Type the subject must extend to be eligible
+             *
+             * @label TYPE_PARAM_PASS_THROUGH_BASE
+             * @internal
+             */
+            export type BASE = 0
+
+            /**
+             * @typeParam ElseT - Resolution type on unfulfilled condition
+             *
+             * @label TYPE_PARAM_PASS_THROUGH_ELSE
+             * @internal
+             */
+             export type ELSE = 0
+
+             /**
+              * {@inheritDoc BASE}
+              * {@inheritDoc ELSE}
+              *
+              * @label TYPE_PARAM_PASS_THROUGH_WITH_ELSE
+              * @internal
+              */
+              export type WITH_ELSE = 0
+        } //namespace PASS_THROUGH
     } // namespace TYPE_PARAM
 } // namespace DOC

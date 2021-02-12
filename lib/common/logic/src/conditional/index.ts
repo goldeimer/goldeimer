@@ -1,4 +1,4 @@
 export * from './extends'
+export * from './eval'
 export * from './if'
-export * from './is-boolean-constant'
-export * from './type-equality'
+export * from './pass-through'

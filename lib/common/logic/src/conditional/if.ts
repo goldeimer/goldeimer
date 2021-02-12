@@ -1,7 +1,7 @@
 import type { Booleans } from '../boolean'
 
 import type { Extends } from './extends'
-import type { IsFalse, IsTrue } from './is-boolean-constant'
+import type { IsFalse, IsTrue } from './eval/is-boolean-constant'
 
 /**
  * Conditional Type
