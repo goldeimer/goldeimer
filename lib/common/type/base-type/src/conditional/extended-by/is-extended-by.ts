@@ -1,4 +1,4 @@
-import type { Boolish, ExpressionOf } from '../../boolean'
+import type { ExpressionOf, Falsy, Truthy } from '../../boolean'
 
 import type { IfExtendedBy } from './if-extended-by'
 
@@ -11,6 +11,6 @@ import type { IfExtendedBy } from './if-extended-by'
 export type IsExtendedBy<
     Predicate,
     T,
-    TrueType extends Boolish = ExpressionOf<true>,
-    FalseType extends Boolish = ExpressionOf<false>
+    TrueType extends Truthy = ExpressionOf<true>,
+    FalseType extends Falsy = ExpressionOf<false>
 > = IfExtendedBy<Predicate, T, TrueType, FalseType>

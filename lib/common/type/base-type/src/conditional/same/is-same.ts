@@ -1,4 +1,4 @@
-import type { Boolish, ExpressionOf } from '../../boolean'
+import type { ExpressionOf, Falsy, Truthy } from '../../boolean'
 
 import type { IfSame } from './if-same'
 
@@ -11,6 +11,6 @@ import type { IfSame } from './if-same'
 export type IsSame<
     Predicate,
     T,
-    TrueType extends Boolish = ExpressionOf<true>,
-    FalseType extends Boolish = ExpressionOf<false>
+    TrueType extends Truthy = ExpressionOf<true>,
+    FalseType extends Falsy = ExpressionOf<false>
 > = IfSame<Predicate, T, TrueType, FalseType>

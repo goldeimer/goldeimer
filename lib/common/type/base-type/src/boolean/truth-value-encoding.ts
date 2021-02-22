@@ -7,7 +7,7 @@ export enum TruthValueEncoding {
 }
 
 export namespace TruthValueEncoding {
-    export type Default = TruthValueEncoding.Number
+    export type Default = TruthValueEncoding.Boolean
 
     export type Numeric = (
         | TruthValueEncoding.Number

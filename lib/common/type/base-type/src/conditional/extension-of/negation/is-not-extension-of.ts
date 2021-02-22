@@ -1,4 +1,4 @@
-import type { Boolish, ExpressionOf } from '../../../boolean'
+import type { ExpressionOf, Falsy, Truthy } from '../../../boolean'
 
 import type { IfNotExtensionOf } from './if-not-extension-of'
 
@@ -11,6 +11,6 @@ import type { IfNotExtensionOf } from './if-not-extension-of'
 export type IsNotExtensionOf<
     Predicate,
     T,
-    TrueType extends Boolish = ExpressionOf<true>,
-    FalseType extends Boolish = ExpressionOf<false>
+    TrueType extends Truthy = ExpressionOf<true>,
+    FalseType extends Falsy = ExpressionOf<false>
 > = IfNotExtensionOf<Predicate, T, TrueType, FalseType>

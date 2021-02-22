@@ -23,4 +23,4 @@ export type Truthiness = OneOrMany<Truthy>
   *
   * Either a single `Boolish`, or a non-empty tuple of `Boolish`.
   */
-export type Boolishes = OneOrMany<Boolish>
+export type Boolishness = OneOrMany<Boolish>
