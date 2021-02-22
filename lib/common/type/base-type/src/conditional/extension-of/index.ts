@@ -1,0 +1,5 @@
+export * from './extension-of-or'
+export * from './extension-of'
+export * from './if-extension-of'
+export * from './is-extension-of'
+export * from './negation'

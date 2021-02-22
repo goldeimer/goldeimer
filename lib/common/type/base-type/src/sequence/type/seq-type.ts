@@ -1,7 +1,7 @@
-import { AnySeq } from './any-seq'
+import type { Seq } from './seq'
 
 /**
- * **Sequence** `Seq`\
+ * **Sequence** \
  * Generic Array or Tuple (Alias) Type
  *
  * - may hold any contents (as per default type argument - sequence type is
@@ -19,13 +19,6 @@ import { AnySeq } from './any-seq'
  * @remarks
  * The recurring use-case is to expressively constrain the type parameters of
  * other generics to some array-like data structure.
- *
- * @example
- * ```typescript
- * type DerivedExplicit<T extends Seq<[named: string, number, boolean?]> = // ...
- * type DerivedGeneric<T extends Seq<string[]> = // ...
- * type DerivedVariadic<T extends Seq<[named: string, number, ...number]> = // ...
- * ```
  *
  * All of the above could just as well have been typed in exactly the same
  * fashion without the `Seq<...>` wrapper. Really, if at all, by itself the type
@@ -46,4 +39,4 @@ import { AnySeq } from './any-seq'
  *
  * {@inheritDoc @goldeimer/doc-snippet!Remarks.RestParam#SuitabilityImplied}
  */
-export type SeqType<S = AnySeq> = S extends AnySeq ? S : never
+export type SeqType<S extends unknown> = S extends Seq ? S : never
