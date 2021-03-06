@@ -9,17 +9,18 @@
     ],
     "dependencies": {
         "@babel/core": "^7.12",
-        "@goldeimer/bundle": "workspace:*",
-        "@goldeimer/compile": "workspace:*",
-        "@goldeimer/lint": "workspace:*",
-        "@goldeimer/pipeline": "workspace:*",
         "eslint": "^7.0",
         "path": "^0.12.7",
         "postcss": "^8.1",
+        "rollup": "^2.30",
         "terser": "^5.3.8",
-        "typescript": "4.1"
+        "tslib": "*",
+        "typescript": "~4.1"
     },
     "description": "Meta-package combining Goldeimer's development utilities",
+    "exports": {
+        ".": "./src/dev.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/lib-dev#readme",
     "keywords": [
         "goldeimer",
@@ -33,5 +34,6 @@
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

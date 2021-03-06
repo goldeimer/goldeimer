@@ -1,0 +1,38 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/img-asset": "workspace:*",
+        "is-progressive": "^3.0.0"
+    },
+    "description": "Goldeimer's recurring image assets",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/img#readme",
+    "keywords": [
+        "goldeimer"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/img",
+    "private": true,
+    "repository": {
+        "directory": "lib/img",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "sideEffects": [
+        "**/*.gif",
+        "**/*.jpg",
+        "**/*.png",
+        "**/*.svg"
+    ],
+    "version": "0.0.1"
+}

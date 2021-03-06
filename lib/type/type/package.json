@@ -1,0 +1,63 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "browser": "dist/goldeimer-ts-types.umd.js",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@sindresorhus/is": "^4.0",
+        "@typed/logic": "^6.5",
+        "@typed/math": "^6.4",
+        "fp-ts": "^2.9",
+        "fx-ts": "^1.4",
+        "ts-enum-util": "^4.0",
+        "type-fest": "^0.21.0",
+        "typescript-conditional-types": "1.0.0"
+    },
+    "description": "Goldeimer's Typescript utility types",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "workspace:*",
+        "typescript": "^4.1.5"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/ts-types#readme",
+    "keywords": [
+        "goldeimer",
+        "utility"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "dist/goldeimer-ts-types.cjs.js",
+    "module": "dist/goldeimer-ts-types.esm.js",
+    "name": "@goldeimer/ts-types",
+    "repository": {
+        "directory": "lib/ts-types",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "yarn build:types && yarn build:js",
+        "build:js": "rollup -c rollup.config.js",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:umd": "yarn build:js --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "exit 0 || yarn shake",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch"
+    },
+    "sideEffects": false,
+    "types": "dist/types/ts-types.d.ts",
+    "version": "0.0.1",
+    "peerDependencies": {
+        "tslib": "*"
+    }
+}

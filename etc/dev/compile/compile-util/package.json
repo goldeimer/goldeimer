@@ -8,6 +8,9 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "description": "Goldeimer's utility library for shared logic between build systems",
+    "exports": {
+        ".": "./src/compile-util.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/build/compile-util#readme",
     "keywords": [
         "babel",
@@ -22,12 +25,14 @@
         "typescript"
     ],
     "license": "BSD-2-Clause",
-    "main": "compile-util.js",
+    "main": "./src/compile-util.js",
+    "module": "./src/compile-util.js",
     "name": "@goldeimer/compile-util",
     "repository": {
         "directory": "etc/build/compile-util",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

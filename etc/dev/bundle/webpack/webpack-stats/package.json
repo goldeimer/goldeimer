@@ -1,0 +1,45 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "circular-dependency-plugin": "^5.2.2",
+        "size-plugin": "^3.0.0",
+        "webpack-bundle-tracker": "^1.0.0-alpha.1",
+        "webpack-stats-plugin": "^1.0.3"
+    },
+    "description": "Goldeimer's TypeScript configuration(s)",
+    "devDependencies": {
+        "@types/circular-dependency-plugin": "^5"
+    },
+    "exports": {
+        ".": "./src/webpack-stats.js"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/webpack-stats#readme",
+    "keywords": [
+        "build",
+        "goldeimer",
+        "tsc",
+        "transformer",
+        "typescript-transformer",
+        "typescript"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/webpack-stats",
+    "peerDependencies": {
+        "webpack": "^5.24.3"
+    },
+    "repository": {
+        "directory": "etc/build/webpack-stats",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {},
+    "type": "module",
+    "version": "0.0.1"
+}

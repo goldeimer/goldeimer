@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "@goldeimer/collection": "workspace:*",
+        "@goldeimer/conditional": "workspace:*"
+    },
+    "name": "@goldeimer/lambda",
+    "version": "0.0.1"
+}

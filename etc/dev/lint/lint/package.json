@@ -14,6 +14,9 @@
         "markdownlint-cli2": "^0.0.14"
     },
     "description": "Meta-package for Goldeimer's ESLint-related packages & dependencies",
+    "exports": {
+        ".": "./src/lint.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/eslint/lib-lint#readme",
     "keywords": [
         "goldeimer",

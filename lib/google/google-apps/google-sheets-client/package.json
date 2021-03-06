@@ -1,0 +1,42 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/data-util": "workspace:*",
+        "@goldeimer/enum-util": "workspace:*",
+        "@goldeimer/google-lib-sheets": "workspace:*",
+        "@material-ui/core": "^4.9.11",
+        "@material-ui/icons": "^4.9.1",
+        "@material-ui/lab": "^4.0.0-alpha.52",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
+    "description": "Google sheets client app",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/google-sheets-client#readme",
+    "keywords": [
+        "goldeimer",
+        "google-apps",
+        "google-sheets",
+        "map"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/google-sheets-client",
+    "repository": {
+        "directory": "lib/google-sheets-client",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "version": "0.0.1"
+}

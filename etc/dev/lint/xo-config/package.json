@@ -7,7 +7,13 @@
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
+    "dependencies": {
+        "xo": "^0.38.2"
+    },
     "description": "Goldeimer's xo integration",
+    "exports": {
+        ".": "./src/xo-config.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/xo-config#readme",
     "keywords": [
         "goldeimer",
@@ -21,8 +27,6 @@
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
-    "version": "0.0.1",
-    "dependencies": {
-        "xo": "^0.38.2"
-    }
+    "type": "module",
+    "version": "0.0.1"
 }

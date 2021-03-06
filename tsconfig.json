@@ -1,3 +1,3 @@
 {
-    "extends": "@goldeimer/tsconfig"
+    "extends": "@goldeimer/dev/tsconfig"
 }

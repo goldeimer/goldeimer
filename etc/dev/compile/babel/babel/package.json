@@ -12,6 +12,9 @@
         "@goldeimer/babel-preset": "workspace:*"
     },
     "description": "Meta-package for Goldeimer's babel-related packages & their dependencies",
+    "exports": {
+        ".": "./src/babel.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/build/lib-babel#readme",
     "keywords": [
         "goldeimer",
@@ -28,5 +31,6 @@
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

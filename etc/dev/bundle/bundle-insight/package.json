@@ -1,0 +1,37 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "auxpack": "^1.0.10",
+        "madge": "^4.0.0"
+    },
+    "description": "Goldeimer's TypeScript configuration(s)",
+    "exports": {
+        ".": "./src/bundle-insight.js"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/bundle-insight#readme",
+    "keywords": [
+        "build",
+        "goldeimer",
+        "tsc",
+        "transformer",
+        "typescript-transformer",
+        "typescript"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/bundle-insight",
+    "repository": {
+        "directory": "etc/build/bundle-insight",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {},
+    "type": "module",
+    "version": "0.0.1"
+}

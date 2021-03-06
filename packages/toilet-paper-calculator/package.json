@@ -14,8 +14,8 @@
     ],
     "dependencies": {
         "@babel/runtime": "^7.12.5",
-        "@goldeimer/mui-theme": "^0.0.1",
-        "@goldeimer/react-components": "^0.0.1",
+        "@goldeimer/mui-theme": "workspace:*",
+        "@goldeimer/react-components": "workspace:*",
         "@material-ui/core": "^4.11.0",
         "prop-types": "^15.7.2",
         "react": "^17.0.1",
@@ -24,7 +24,7 @@
     },
     "description": "Goldeimer's \"Toilet Paper Calculator\"",
     "devDependencies": {
-        "@goldeimer/rollup-config": "^0.0.1"
+        "@goldeimer/rollup-config": "workspace:*"
     },
     "homepage": "https://github.com/goldeimer/goldeimer/packages/toilet-paper-calculator#readme",
     "keywords": [
@@ -34,7 +34,6 @@
         "kackulator"
     ],
     "license": "BSD-2-Clause",
-    "private": false,
     "repository": {
         "directory": "packages/wordpress/toilet-paper-calculator",
         "type": "git",
@@ -48,7 +47,7 @@
         "build:shake": "yarn build:esm && yarn shake",
         "lint": "eslint src --ext .js --ext .jsx",
         "lint:fix": "eslint src --fix --ext .js --ext .jsx",
-        "prepublishOnly": "yarn shake",
+        "validate:publish": "yarn shake",
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
         "shake": "agadoo"
     },

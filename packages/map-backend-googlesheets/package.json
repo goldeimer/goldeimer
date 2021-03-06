@@ -1,0 +1,47 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@material-ui/core": "^4.9.11",
+        "@material-ui/icons": "^4.9.1",
+        "@material-ui/lab": "^4.0.0-alpha.52",
+        "enum": "^3.0.4",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-helmet": "^6.0.0"
+    },
+    "description": "Google sheets backend for Goldeimer's map app",
+    "homepage": "https://github.com/goldeimer/goldeimer/packages/map-backend-googlesheets#readme",
+    "keywords": [
+        "goldeimer",
+        "google-sheets",
+        "map"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/map-backend-googlesheets",
+    "repository": {
+        "directory": "packages/map-backend-googlesheets",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build:dev": "env BUILD_MODE=development webpack --config webpack.config.js",
+        "build:prod": "env BUILD_MODE=production webpack --config webpack.config.js",
+        "clasp:init": "rm -f .clasp.json && clasp create --type sheets --title $publisherRef --rootDir ./dist/gsheets",
+        "clasp:login": "clasp login",
+        "clasp:logs": "clasp logs",
+        "clasp:set-script-id": "clasp setting scriptId",
+        "deploy": "npm run build:prod && clasp push",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "version": "0.0.1"
+}

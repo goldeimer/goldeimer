@@ -32,8 +32,8 @@
         "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
-        "@goldeimer/font-stack": "^0.0.1",
-        "@goldeimer/webpack-config": "^0.0.1"
+        "@goldeimer/rollup-config": "workspace:*",
+        "@goldeimer/font-asset": "workspace:*"
     },
     "browserslist": "extends @goldeimer/browserslist-config"
 }

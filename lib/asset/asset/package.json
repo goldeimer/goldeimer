@@ -1,0 +1,30 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/font-asset": "workspace:*",
+        "@goldeimer/img-asset": "workspace:*"
+    },
+    "description": "Meta-package combining Goldeimer's development utilities",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/lib/lib-asset#readme",
+    "keywords": [
+        "goldeimer",
+        "meta-package",
+        "tooling"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/asset",
+    "private": true,
+    "repository": {
+        "directory": "etc/lib/lib-asset",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

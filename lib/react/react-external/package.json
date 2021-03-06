@@ -1,0 +1,47 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Re-exports of Goldeimer's react dependencies",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "workspace:*"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/react-external#readme",
+    "keywords": [
+        "goldeimer"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "dist/goldeimer.react-external.cjs.js",
+    "module": "dist/goldeimer.react-external.esm.js",
+    "name": "@goldeimer/react-external",
+    "repository": {
+        "directory": "lib/react-external",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "yarn build:types && yarn build:js",
+        "build:cjs": "yarn build --configTarget cjs",
+        "build:esm": "yarn build --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
+        "build:umd": "yarn build --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "yarn shake",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch"
+    },
+    "sideEffects": false,
+    "types": "dist/types/react-external.d.ts",
+    "version": "0.0.1"
+}

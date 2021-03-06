@@ -10,11 +10,11 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
-        "@goldeimer/toilet-paper-calculator": "^0.0.1"
+        "@goldeimer/toilet-paper-calculator": "workspace:*"
     },
     "description": "Goldeimer's \"Toilet Paper Calculator\" as a WordPress plugin",
     "devDependencies": {
-        "@goldeimer/webpack-config": "^0.0.1"
+        "@goldeimer/rollup-config": "workspace:*"
     },
     "homepage": "https://github.com/goldeimer/goldeimer/packages/wp-toilet-paper-calculator#readme",
     "keywords": [

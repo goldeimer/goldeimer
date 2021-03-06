@@ -1,0 +1,39 @@
+{
+    "addOns": {
+        "common": {
+            "homepageTrigger": {},
+            "layoutProperties": {},
+            "logoUrl": "https://map.goldeimer.de/static/img/icons/brands/goldeimer.icon.png",
+            "name": "@APP_NAME@",
+            "openLinkUrlPrefixes": [],
+            "universalActions": [],
+            "useLocaleFromApp": true
+        },
+        "calendar": {},
+        "drive": {},
+        "gmail": {}
+    },
+    "dependencies": {
+        "enabledAdvancedServices": [],
+        "libraries": []
+    },
+    "exceptionLogging": "STACKDRIVER",
+    "executionApi": {
+        "access": "ANYONE"
+    },
+    "oauthScopes": [
+        "https://www.googleapis.com/auth/script.container.ui",
+        "https://www.googleapis.com/auth/spreadsheets.currentonly",
+        "https://www.googleapis.com/auth/userinfo.email"
+    ],
+    "runtimeVersion": "V8",
+    "sheets": {
+        "macros": []
+    },
+    "timeZone": "UTC",
+    "urlFetchWhitelist": [],
+    "webapp": {
+        "access": "ANYONE",
+        "executeAs": "USER_ACCESSING"
+    }
+}

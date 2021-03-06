@@ -1,0 +1,49 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "browser": "dist/goldeimer-ui-form-util.umd.js",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's UI form library",
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/ui-form-util#readme",
+    "keywords": [
+        "goldeimer",
+        "utility"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "dist/goldeimer-ui-form-util.cjs.js",
+    "module": "dist/goldeimer-ui-form-util.esm.js",
+    "name": "@goldeimer/ui-form-util",
+    "repository": {
+        "directory": "lib/ui-form-util",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "yarn build:clean",
+        "build:all": "yarn build:types && yarn build:js",
+        "build:js": "rollup -c rollup.config.js",
+        "build:clean": "yarn clean && yarn build:all",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:umd": "yarn build:js --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "clean": "rimraf ./dist",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "exit 0 || yarn shake",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch"
+    },
+    "sideEffects": false,
+    "types": "dist/types/ui-form-util.d.ts",
+    "version": "0.0.1"
+}

@@ -4,7 +4,7 @@ import 'regenerator-runtime/runtime'
 import React from 'react'
 import { render } from 'react-dom'
 
-import '@goldeimer/font-stack'
+import '@goldeimer/font-asset'
 
 import App from './app/App'
 

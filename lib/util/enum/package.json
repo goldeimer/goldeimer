@@ -1,0 +1,54 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "browser": "dist/goldeimer-enum-util.umd.js",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/ts-types": "workspace:*",
+        "ts-enum-util": "^4.0.2"
+    },
+    "description": "Goldeimer's core enums and enum utilities",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "workspace:*",
+        "typescript": "^4.1.5"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/enum-util#readme",
+    "keywords": [
+        "goldeimer",
+        "utility"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "dist/goldeimer-enum-util.cjs.js",
+    "module": "dist/goldeimer-enum-util.esm.js",
+    "name": "@goldeimer/enum-util",
+    "repository": {
+        "directory": "lib/enum-util",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "yarn build:types && yarn build:js",
+        "build:js": "rollup -c rollup.config.js",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:umd": "yarn build:js --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "exit 0 || yarn shake",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch"
+    },
+    "sideEffects": false,
+    "types": "dist/types/enum-util.d.ts",
+    "version": "0.0.1"
+}

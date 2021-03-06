@@ -1,3 +1,3 @@
-import '@goldeimer/font-stack'
+import '@goldeimer/font-asset'
 
 import './scss/index.scss'

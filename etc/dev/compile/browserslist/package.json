@@ -13,16 +13,16 @@
         "modern.js",
         "stable.js"
     ],
-    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/browserslist-config#readme",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/browserslist#readme",
     "keywords": [
         "goldeimer",
         "browserslist"
     ],
     "license": "BSD-2-Clause",
-    "main": "browserslist-config.js",
-    "name": "@goldeimer/browserslist-config",
+    "main": "browserslist.js",
+    "name": "@goldeimer/browserslist",
     "repository": {
-        "directory": "etc/compile/browserslist/browserslist-config",
+        "directory": "etc/compile/browserslist/browserslist",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },

@@ -1,0 +1,50 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's shared font asset(s)",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "workspace:*"
+    },
+    "files": [
+        "**/*.css",
+        "**/*.eot",
+        "**/*.ttf",
+        "**/*.woff",
+        "**/*.woff2"
+    ],
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/font-asset#readme",
+    "keywords": [
+        "fonts",
+        "goldeimer",
+        "typography"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "src/font-asset.css",
+    "name": "@goldeimer/font-asset",
+    "private": true,
+    "repository": {
+        "directory": "lib/font-asset",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1"
+    },
+    "sideEffects": [
+        "*.css",
+        "./src/**/*.eot",
+        "./src/**/*.ttf",
+        "./src/**/*.woff",
+        "./src/**/*.woff2"
+    ],
+    "version": "0.0.1"
+}
