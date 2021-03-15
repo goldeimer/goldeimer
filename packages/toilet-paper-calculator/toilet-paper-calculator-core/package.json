@@ -1,0 +1,56 @@
+{
+    "name": "@goldeimer/toilet-paper-calculator",
+    "main": "dist/goldeimer-toilet-paper-calculator.esm.js",
+    "module": "dist/goldeimer-toilet-paper-calculator.esm.js",
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Manou Otolski <manou@goldeimer.de>",
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@babel/runtime": "^7.12.5",
+        "@goldeimer/mui-theme": "workspace:*",
+        "@goldeimer/react-components": "workspace:*",
+        "@material-ui/core": "^4.11.0",
+        "prop-types": "^15.7.2",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "styled-components": "^5.2.1"
+    },
+    "description": "Goldeimer's \"Toilet Paper Calculator\"",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "workspace:*"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/packages/toilet-paper-calculator#readme",
+    "keywords": [
+        "goldeimer",
+        "toilet-paper-calculator",
+        "klopapier-rechner",
+        "kackulator"
+    ],
+    "license": "BSD-2-Clause",
+    "repository": {
+        "directory": "packages/wordpress/toilet-paper-calculator",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "rollup -c rollup.config.js",
+        "build:cjs": "yarn build --configTarget cjs",
+        "build:esm": "yarn build --configTarget esm",
+        "build:umd": "yarn build --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "yarn shake",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "shake": "agadoo"
+    },
+    "sideEffects": false,
+    "version": "0.0.1"
+}

@@ -1,0 +1,39 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "agadoo": "^2.0.0",
+        "dependency-cruiser": "^9.23.2",
+        "jscpd": "^3.3.25",
+        "license-checker": "^25.0.1"
+    },
+    "description": "Goldeimer's package maintenance utility",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/goldeimer.package-integrity.esm.js",
+            "require": "./dist/cjs/goldeimer.package-integrity.cjs.js"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/pkg/package-integrity#readme",
+    "keywords": [
+        "goldeimer",
+        "monorepo",
+        "packaging",
+        "npm"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/package-integrity",
+    "repository": {
+        "directory": "etc/pkg/package-integrity",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {},
+    "version": "0.0.1"
+}

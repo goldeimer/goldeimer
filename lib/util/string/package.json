@@ -1,0 +1,34 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "speakingurl": "^14.0.1"
+    },
+    "description": "Meta-package for Goldeimer's ESLint-related packages & dependencies",
+    "exports": {
+        ".": "./src/string.js"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/eslint/string#readme",
+    "keywords": [
+        "goldeimer",
+        "eslint",
+        "eslintrc",
+        "eslint-config",
+        "eslint-plugin"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/string",
+    "repository": {
+        "directory": "etc/eslint/string",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "type": "module",
+    "version": "0.0.1"
+}

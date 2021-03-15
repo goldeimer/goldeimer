@@ -1,0 +1,42 @@
+{
+    "dependencies": {
+        "@babel/core": "^7.12",
+        "@goldeimer/babel-preset": "workspace:*",
+        "@typed/either": "^8.3.0",
+        "conditional-type-checks": "^1.0.5",
+        "tslib": "*",
+        "typescript": "~4.1",
+        "typescript-conditional-types": "^1.0.0"
+    },
+    "devDependencies": {
+        "@goldeimer/rollup-config": "^0.0.1",
+        "@goldeimer/tsconfig": "^0.0.1",
+        "@types/babel__core": "^7",
+        "rollup": "^2.30"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/conditional.esm.mjs",
+            "require": "./dist/conditional.cjs.js"
+        }
+    },
+    "name": "@goldeimer/conditional",
+    "scripts": {
+        "build": "yarn build:types && yarn build:js",
+        "build:cjs": "yarn build --configTarget cjs",
+        "build:esm": "yarn build --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
+        "build:umd": "yarn build --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "yarn shake",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch"
+    },
+    "type": "module",
+    "version": "0.0.1"
+}

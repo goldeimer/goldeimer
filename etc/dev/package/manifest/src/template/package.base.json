@@ -1,0 +1,50 @@
+{
+    "author": {
+        "name": "Goldeimer gemeinnützige GmbH",
+        "email": "post@goldeimer.de",
+        "url": "https://www.goldeimer.de"
+    },
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "exports": {
+        ".": {
+            "browser": "./dist/package-slug.umd.js",
+            "import": "./dist/package-slug.esm.mjs",
+            "require": "./dist/package-slug.cjs.cjs"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer#readme",
+    "keywords": ["goldeimer"],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/package-slug",
+    "repository": {
+        "directory": "packages/package-slug",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "concurrently 'yarn build:types' 'yarn build:js'",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
+        "build:shake": "yarn build:esm && yarn validate:shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "build:umd": "yarn build:js --configTarget umd",
+        "explain": "tsc --explainFiles",
+        "lint": "eslint src --ext .cjs --ext .js --ext .jsx --ext .mjs --ext .ts --ext .tsx",
+        "lint:fix": "yarn lint --fix",
+        "test": "env NODE_ENV=test echo \"[error] no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch",
+        "validate": "concurrently 'yarn validate:pnp' 'yarn validate:shake'",
+        "validate:pnp": "yarn dlx @yarnpkg/doctor",
+        "validate:publish": "yarn validate",
+        "validate:shake": "agadoo"
+    },
+    "sideEffects": false,
+    "type": "module",
+    "types": "./dist/types/package-slug.d.ts",
+    "version": "0.0.1"
+}

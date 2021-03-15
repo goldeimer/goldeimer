@@ -35,5 +35,8 @@
     "peerDependencies": {
         "postcss": "^8.1"
     },
-    "main": "postcss.config.js"
+    "main": "postcss.config.js",
+    "devDependencies": {
+        "@types/node": "^14.6"
+    }
 }

@@ -1,0 +1,40 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/font-asset": "workspace:*",
+        "@goldeimer/img-asset": "workspace:*",
+        "@typed/validation": "^3.4.4",
+        "superstruct": "^0.14.2",
+        "validator": "^13.5.2",
+        "zod": "beta"
+    },
+    "description": "Meta-package combining Goldeimer's development utilities",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/lib/validate#readme",
+    "keywords": [
+        "goldeimer",
+        "meta-package",
+        "tooling"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/validate",
+    "private": true,
+    "repository": {
+        "directory": "etc/lib/validate",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1",
+    "devDependencies": {
+        "@types/validator": "^13"
+    },
+    "peerDependencies": {
+        "tslib": "*"
+    }
+}

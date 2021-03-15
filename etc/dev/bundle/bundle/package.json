@@ -8,10 +8,14 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
+        "@goldeimer/bundle-insight": "workspace:*",
         "@goldeimer/rollup": "workspace:*",
         "@goldeimer/webpack": "workspace:*"
     },
     "description": "Meta-package for Goldeimer's build tooling",
+    "exports": {
+        ".": "./src/bundle.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/bundle/lib-bundle#readme",
     "keywords": [
         "goldeimer",
@@ -29,12 +33,13 @@
         "postcss": "^8.1",
         "terser": "^5.3",
         "tslib": "*",
-        "typescript": "4.1"
+        "typescript": "~4.1"
     },
     "repository": {
         "directory": "etc/bundle/lib-bundle",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

@@ -1,0 +1,25 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Meta package for Goldeimer's package tooling",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/pkg/test#readme",
+    "keywords": [
+        "goldeimer",
+        "monorepo",
+        "packaging"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/test",
+    "repository": {
+        "directory": "etc/pkg/test",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1"
+}

@@ -1,0 +1,42 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "ttypescript": "^1.5.12"
+    },
+    "description": "Goldeimer's TypeScript configuration(s)",
+    "exports": {
+        ".": "./src/ts-transformer.js"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/ts-transformer#readme",
+    "keywords": [
+        "build",
+        "goldeimer",
+        "tsc",
+        "transformer",
+        "typescript-transformer",
+        "typescript"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/ts-transformer2",
+    "peerDependencies": {
+        "ts-node": "*",
+        "typescript": "~4.1"
+    },
+    "repository": {
+        "directory": "etc/build/ts-transformer",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "./build.js"
+    },
+    "type": "module",
+    "version": "0.0.1"
+}

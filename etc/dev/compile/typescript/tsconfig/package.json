@@ -8,8 +8,23 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "description": "Goldeimer's TypeScript configuration(s)",
+    "devDependencies": {
+        "@babel/core": "^7.12",
+        "@goldeimer/rollup-config": "workspace:*",
+        "@goldeimer/tsconfig": "workspace:*",
+        "@types/babel__core": "^7",
+        "rollup": "^2.30",
+        "tslib": "*",
+        "typescript": "~4.1"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/tsconfig.esm.mjs",
+            "require": "./dist/tsconfig.cjs.cjs"
+        }
+    },
     "files": [
-        "tsconfig.json"
+        "tsconfig2.json"
     ],
     "homepage": "https://github.com/goldeimer/goldeimer/etc/build/tsconfig#readme",
     "keywords": [

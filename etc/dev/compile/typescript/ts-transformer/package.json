@@ -7,7 +7,13 @@
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
+    "dependencies": {
+        "ttypescript": "^1.5.12"
+    },
     "description": "Goldeimer's TypeScript configuration(s)",
+    "exports": {
+        ".": "./src/ts-transformer.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/build/ts-transformer#readme",
     "keywords": [
         "build",
@@ -19,6 +25,10 @@
     ],
     "license": "BSD-2-Clause",
     "name": "@goldeimer/ts-transformer",
+    "peerDependencies": {
+        "ts-node": "*",
+        "typescript": "~4.1"
+    },
     "repository": {
         "directory": "etc/build/ts-transformer",
         "type": "git",
@@ -28,8 +38,5 @@
         "build": "./build.js"
     },
     "type": "module",
-    "version": "0.0.1",
-    "dependencies": {
-        "ttypescript": "^1.5.12"
-    }
+    "version": "0.0.1"
 }

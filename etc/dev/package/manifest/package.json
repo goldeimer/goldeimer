@@ -1,0 +1,71 @@
+{
+    "author": {
+        "email": "post@goldeimer.de",
+        "name": "Goldeimer gemeinnützige GmbH",
+        "url": "https://www.goldeimer.de"
+    },
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@goldeimer/compile": "workspace:*",
+        "type-fest": "^0.21.2"
+    },
+    "description": "Goldeimer's package maintenance utility",
+    "devDependencies": {
+        "@babel/core": "^7.12",
+        "@goldeimer/rollup-config": "workspace:*",
+        "@types/babel__core": "^7",
+        "@types/concurrently": "^6",
+        "@types/node": "^14.14.34",
+        "concurrently": "^6.0.0",
+        "rollup": "^2.30",
+        "tslib": "*",
+        "typescript": "~4.1"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/esm/goldeimer.manifest.esm.js",
+            "require": "./dist/cjs/goldeimer.manifest.cjs.js"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/pkg/manifest#readme",
+    "keywords": [
+        "goldeimer",
+        "monorepo",
+        "packaging"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "./dist/cjs/goldeimer.manifest.cjs.js",
+    "name": "@goldeimer/manifest",
+    "repository": {
+        "directory": "etc/pkg/manifest",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "concurrently 'yarn build:types' 'yarn build:js'",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
+        "build:shake": "yarn build:esm && yarn validate:shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "build:umd": "yarn build:js --configTarget umd",
+        "explain": "tsc --explainFiles",
+        "lint": "eslint src --ext .cjs --ext .js --ext .jsx --ext .mjs --ext .ts --ext .tsx",
+        "lint:fix": "yarn lint --fix",
+        "test": "env NODE_ENV=test echo \"[error] no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch",
+        "validate": "concurrently 'yarn validate:pnp' 'yarn validate:shake'",
+        "validate:pnp": "yarn dlx @yarnpkg/doctor",
+        "validate:publish": "yarn validate",
+        "validate:shake": "agadoo"
+    },
+    "types": "dist/types/manifest.d.ts",
+    "version": "0.0.1"
+}

@@ -9,12 +9,27 @@
     ],
     "dependencies": {
         "@goldeimer/babel": "workspace:*",
-        "@goldeimer/browserslist-config": "workspace:*",
+        "@goldeimer/browserslist": "workspace:*",
         "@goldeimer/compile-util": "workspace:*",
         "@goldeimer/postcss-config": "workspace:*",
         "@goldeimer/ts": "workspace:*"
     },
+    "devDependencies": {
+        "@babel/core": "^7.12",
+        "@goldeimer/rollup-config": "workspace:*",
+        "@goldeimer/tsconfig": "workspace:*",
+        "@types/babel__core": "^7",
+        "rollup": "^2.30",
+        "tslib": "*",
+        "typescript": "~4.1"
+    },
     "description": "Meta-package for Goldeimer's compilation tool chain",
+    "exports": {
+        ".": {
+            "import": "./dist/compile.esm.mjs",
+            "require": "./dist/compile.cjs.cjs"
+        }
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/compile/lib-compile#readme",
     "keywords": [
         "goldeimer",
@@ -33,13 +48,29 @@
         "path": "^0.12.7",
         "postcss": "^8.1",
         "rollup": "^2.30",
-        "terser": "^5.3.8",
-        "typescript": "4.1"
+        "terser": "^5.3.8"
     },
     "repository": {
         "directory": "etc/compile/lib-compile",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "scripts": {
+        "build": "yarn build:types && yarn build:js",
+        "build:cjs": "yarn build:js --configTarget cjs",
+        "build:esm": "yarn build:js --configTarget esm",
+        "build:js": "rollup -c rollup.config.js",
+        "build:shake": "yarn build:esm && yarn shake",
+        "build:types": "tsc --emitDeclarationOnly --outDir dist --declarationDir dist/types --declaration true --declarationMap true",
+        "build:umd": "yarn build:js --configTarget umd",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "shake": "agadoo",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn type-check -- --watch",
+        "validate:publish": "exit 0 || yarn shake"
+    },
+    "type": "module",
     "version": "0.0.1"
 }

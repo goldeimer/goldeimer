@@ -1,0 +1,42 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Goldeimer's TypeScript configuration(s)",
+    "files": [
+        "tsconfig.json"
+    ],
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/tsconfig#readme",
+    "keywords": [
+        "build",
+        "goldeimer",
+        "tsc",
+        "tsconfig",
+        "typescript"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "tsconfig.json",
+    "module": "tsconfig.json",
+    "name": "@goldeimer/tsconfig2",
+    "peerDependencies": {
+        "path": "^0.12.7"
+    },
+    "repository": {
+        "directory": "etc/build/tsconfig",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "./build.js"
+    },
+    "type": "module",
+    "version": "0.0.1",
+    "dependencies": {
+        "type-fest": "^0.21.2"
+    }
+}

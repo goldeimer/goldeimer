@@ -8,8 +8,7 @@
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
     "dependencies": {
-        "@goldeimer/babel-preset": "workspace:*",
-        "@goldeimer/compile-util": "workspace:*",
+        "@goldeimer/compile": "workspace:*",
         "astroturf": "^0.10.4",
         "autoprefixer": "^10.0",
         "babel-loader": "^8.1",
@@ -61,8 +60,8 @@
     "description": "Goldeimer's shared webpack configuration(s)",
     "exports": {
         ".": {
-            "import": "./webpack-config.js",
-            "require": "./webpack-config.js"
+            "import": "./src/webpack-config.js",
+            "require": "./src/webpack-config.js"
         }
     },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/build/webpack/webpack-config#readme",
@@ -74,23 +73,27 @@
         "webpack-config"
     ],
     "license": "BSD-2-Clause",
-    "main": "webpack-config.js",
     "name": "@goldeimer/webpack-config",
     "peerDependencies": {
-        "@babel/core": "^7.12",
+        "@goldeimer/babel-preset": "*",
         "eslint": "^7.0",
         "path": "^0.12.7",
         "postcss": "^8.1",
         "terser": "^5.3",
-        "typescript": "^4.1",
+        "typescript": "~4.1",
         "webpack": "^5.3",
-        "webpack-cli": "^4.1",
         "webpack-merge": "^5.3"
+    },
+    "peerDependenciesMeta": {
+        "@goldeimer/babel-preset": {
+            "optional": true
+        }
     },
     "repository": {
         "directory": "etc/build/webpack/webpack-config",
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

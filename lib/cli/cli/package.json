@@ -1,0 +1,31 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Meta-package combining Goldeimer's development utilities",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/static-external#readme",
+    "keywords": [
+        "goldeimer",
+        "meta-package",
+        "tooling"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/cli-util",
+    "repository": {
+        "directory": "etc/static-external",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "version": "0.0.1",
+    "dependencies": {
+        "localtunnel": "^2.0.1",
+        "os-name-cli": "^2.0.0",
+        "sudo-block": "^3.0.0",
+        "unicorn": "^0.0.1"
+    }
+}

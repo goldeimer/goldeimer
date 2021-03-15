@@ -1,0 +1,15 @@
+{
+    "extends": "@goldeimer/tsconfig",
+    "exclude": [
+        "dist/",
+        "**/*.spec.ts",
+        "**/*.spec.tsx"
+    ],
+    "include": [
+        "src/**/*"
+    ],
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
+    "compilerOptions": {
+        "rootDir": "./src"
+    }
+}

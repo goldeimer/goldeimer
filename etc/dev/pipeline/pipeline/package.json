@@ -1,0 +1,35 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "description": "Meta package for Goldeimer's automated tasks",
+    "exports": {
+        ".": {
+            "import": "./dist/esm/goldeimer.lib-pipeline.esm.js",
+            "require": "./dist/cjs/goldeimer.lib-pipeline.cjs.js"
+        }
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/pkg/lib-pipeline#readme",
+    "keywords": [
+        "goldeimer",
+        "monorepo",
+        "packaging"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/pipeline",
+    "repository": {
+        "directory": "etc/pkg/lib-pipeline",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build:schema": "json2ts -i src/schema/ -o dist/types/",
+        "fetch:schema": "wget https://json.schemastore.org/package"
+    },
+    "version": "0.0.1"
+}

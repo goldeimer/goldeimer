@@ -1,28 +1,12 @@
 {
-    "name": "@goldeimer/babel-preset",
-    "version": "0.0.1",
-    "description": "Goldeimer's (base) babel configuration(s)",
-    "keywords": [
-        "goldeimer",
-        "babel",
-        "babel-preset",
-        "babelrc"
-    ],
-    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/babel-preset#readme",
-    "bugs": {
-        "url": "https://github.com/goldeimer/goldeimer/issues",
-        "email": "engineering+bugs@goldeimer.de"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/goldeimer/goldeimer.git",
-        "directory": "etc/build/babel-preset"
-    },
     "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
     "contributors": [
         "Johannes Pilkahn <johannes@goldeimer.de>"
     ],
-    "license": "BSD-2-Clause",
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.12",
         "@babel/plugin-proposal-object-rest-spread": "^7.12",
@@ -38,8 +22,28 @@
         "babel-plugin-transform-dev-warning": "^0.1.1",
         "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
     },
+    "description": "Goldeimer's (base) babel configuration(s)",
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/build/babel-preset#readme",
+    "exports": {
+        ".": "./src/babel-preset.js"
+    },
+    "keywords": [
+        "goldeimer",
+        "babel",
+        "babel-preset",
+        "babelrc"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "./src/babel-preset.js",
+    "name": "@goldeimer/babel-preset",
     "peerDependencies": {
         "@babel/core": "^7.12"
     },
-    "main": "babel.config.js"
+    "repository": {
+        "directory": "etc/build/babel-preset",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "type": "module",
+    "version": "0.0.1"
 }

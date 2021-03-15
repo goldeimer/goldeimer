@@ -7,7 +7,7 @@ export default ({ transpiler }) => ({
     downlevelIteration: true,
     importHelpers: true,
     incremental: false,
-    isolatedModules: transpiler === 'babel',
+    isolatedModules: true, // transpiler === 'babel',
     jsx: 'react',
     lib: [
         'DOM',

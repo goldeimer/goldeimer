@@ -1,0 +1,33 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <post@goldeimer.de>",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "webpack-dashboard": "^3.3.1",
+        "webpackbar": "^5.0.0-3"
+    },
+    "description": "Meta-package for Goldeimer's webpack-related packages and their dependencies",
+    "exports": {
+        ".": "./src/webpack-interface.js"
+    },
+    "homepage": "https://github.com/goldeimer/goldeimer/etc/bundle/webpack/webpack-interface#readme",
+    "keywords": [
+        "goldeimer",
+        "meta-package",
+        "webpack"
+    ],
+    "license": "BSD-2-Clause",
+    "name": "@goldeimer/webpack-interface",
+    "repository": {
+        "directory": "etc/bundle/webpack/lib-webpack",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "type": "module",
+    "version": "0.0.1"
+}

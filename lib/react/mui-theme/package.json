@@ -1,0 +1,54 @@
+{
+    "author": "Goldeimer gemeinnützige GmbH <engineering@goldeimer.de>",
+    "browser": "dist/goldeimer-mui-theme.umd.js",
+    "browserslist": "extends @goldeimer/browserslist-config",
+    "bugs": {
+        "email": "engineering+bugs@goldeimer.de",
+        "url": "https://github.com/goldeimer/goldeimer/issues"
+    },
+    "contributors": [
+        "Johannes Pilkahn <johannes@goldeimer.de>"
+    ],
+    "dependencies": {
+        "@babel/runtime": "^7.12.5",
+        "@goldeimer/js-util": "workspace:*"
+    },
+    "description": "Goldeimer's material-ui theme library",
+    "devDependencies": {
+        "@goldeimer/rollup-config": "workspace:*"
+    },
+    "files": [
+        "dist/umd"
+    ],
+    "homepage": "https://github.com/goldeimer/goldeimer/lib/mui-theme#readme",
+    "keywords": [
+        "goldeimer",
+        "material-ui"
+    ],
+    "license": "BSD-2-Clause",
+    "main": "dist/goldeimer-mui-theme.esm.js",
+    "module": "dist/goldeimer-mui-theme.esm.js",
+    "name": "@goldeimer/mui-theme",
+    "peerDependencies": {
+        "@material-ui/core": "^4.11.0"
+    },
+    "repository": {
+        "directory": "lib/mui-theme",
+        "type": "git",
+        "url": "git+https://github.com/goldeimer/goldeimer.git"
+    },
+    "scripts": {
+        "build": "rollup -c rollup.config.js",
+        "build:cjs": "yarn build --configTarget cjs",
+        "build:esm": "yarn build --configTarget esm",
+        "build:umd": "yarn build --configTarget umd",
+        "build:shake": "yarn build:esm && yarn shake",
+        "lint": "eslint src --ext .js --ext .jsx",
+        "lint:fix": "eslint src --fix --ext .js --ext .jsx",
+        "validate:publish": "yarn shake",
+        "test": "env NODE_ENV=test echo \"Error: no test specified\" && exit 1",
+        "shake": "agadoo"
+    },
+    "sideEffects": false,
+    "version": "0.0.1"
+}

@@ -31,6 +31,9 @@
         "eslint-plugin-tsc": "^2.0.0"
     },
     "description": "Goldeimer's ESLint configuration(s)",
+    "exports": {
+        ".": "./src/eslint-plugin.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/eslint-plugin#readme",
     "keywords": [
         "goldeimer",
@@ -52,5 +55,6 @@
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

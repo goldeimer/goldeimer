@@ -12,6 +12,9 @@
         "rollup": "^2.30"
     },
     "description": "Meta-package for Goldeimer's tooling, configuration, and dependencies",
+    "exports": {
+        ".": "./src/rollup.js"
+    },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/rollup/lib-rollup#readme",
     "keywords": [
         "goldeimer",
@@ -31,5 +34,6 @@
         "type": "git",
         "url": "git+https://github.com/goldeimer/goldeimer.git"
     },
+    "type": "module",
     "version": "0.0.1"
 }

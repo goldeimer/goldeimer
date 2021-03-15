@@ -20,7 +20,7 @@
     },
     "description": "Goldeimer's rollup configuration(s)",
     "exports": {
-        ".": "rollup-config.js"
+        ".": "./src/rollup-config.js"
     },
     "homepage": "https://github.com/goldeimer/goldeimer/etc/bundle/rollup/rollup-config#readme",
     "keywords": [
@@ -30,6 +30,8 @@
         "rollup-config"
     ],
     "license": "BSD-2-Clause",
+    "main": "./src/rollup-config.js",
+    "module": "./src/rollup-config.js",
     "name": "@goldeimer/rollup-config",
     "peerDependencies": {
         "@babel/core": "^7.12",
